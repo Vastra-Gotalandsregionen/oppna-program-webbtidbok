@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2009 Vastra Gotalandsregionen
+
+      This library is free software; you can redistribute it and/or modify
+      it under the terms of version 2.1 of the GNU Lesser General Public
+      License as published by the Free Software Foundation.
+
+      This library is distributed in the hope that it will be useful,
+      but WITHOUT ANY WARRANTY; without even the implied warranty of
+      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+      GNU Lesser General Public License for more details.
+
+      You should have received a copy of the GNU Lesser General Public
+      License along with this library; if not, write to the
+      Free Software Foundation, Inc., 59 Temple Place, Suite 330,
+      Boston, MA 02111-1307  USA
+
+-->
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+                          http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd"
+    start-state="screening" >
+	
+	<input name="pnr" type="string"/>
+	<input name="password" type="string"/>
+	
+<!--	<on-start>-->
+<!--		<evaluate expression="userLogin.login(pnr, password)"-->
+<!--		result="flowscope.session"/>-->
+<!--	</on-start>	-->
+	
+	<view-state id="screening" view = "/screening.xhtml">
+	</view-state>
+	
+	<view-state id="loginPage" view="/loginpage.xhtml">
+
+	</view-state> 
+	<view-state id="currentNotice" view="/currentnotice.xhtml">
+		<transition on="logout" to="loggedout"/>
+		<transition on="cancelappointment" to="cancelappointmentinfo"/>
+		<transition on="rescheduleappointment" to="chooselocation"/>
+	</view-state>
+	
+	<view-state id="cancelappointmentinfo" view="/cancelappointmentinfo.xhtml">
+		<transition on="logout" to="loggedout"/>
+		<transition on="cancel" to="startpage"/>
+	</view-state>
+	
+	<view-state id="chooselocation" view="/chooselocation.xhtml">
+		<transition on="ok" to="choosedate"/>
+		<transition on="cancel" to="startpage"/>
+		<transition on="logout" to="loggedout"/>
+	</view-state>
+	
+	<view-state id="choosedate" view="/choosedate.xhtml">
+		<transition on="ok" to="choosetime"/>
+		<transition on="cancel" to="startpage"/>
+		<transition on="logout" to="loggedout"/>
+	</view-state>
+	
+	<view-state id="choosetime" view="/choosetime.xhtml">
+		<transition on="ok" to="confirmbooking"/>
+		<transition on="cancel" to="startpage"/>
+		<transition on="logout" to="loggedout"/>
+	</view-state>
+	
+	<view-state id="confirmbooking" view="/confirmbooking.xhtml">
+		<transition on="sendsms" to="confirmboking"/>
+		<transition on="sendemail" to="confirmboking"/>
+		<transition on="cancel" to="startpage"/>
+		<transition on="logout" to="loggedout"/>
+	</view-state>
+	
+	<end-state id="loggedout" view="/loggedout.xhtml">
+	</end-state>	
+</flow>
