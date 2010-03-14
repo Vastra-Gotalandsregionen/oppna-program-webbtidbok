@@ -33,11 +33,26 @@
 		<meta name="DC.description" content="Hitta-rätt-i-vården hjälper dig att att hitta information om mottagningar" /> 
 		<meta name="description" content="Hitta-rätt-i-vården hjälper dig att att hitta information om mottagningar" /> 
 		<meta name="DC.subject" content="Hitta-rätt-i-vården, sök, organisation, enhet, mottagning, telefonnummer, adress, ort" /> 
-		<meta name="robots" content="ALL" /> 
+		<meta name="robots" content="ALL" />
 	</ui:define>
 
 	<ui:define name="MainContainer">
-		<!-- <ui:include src="${Search_SettingsContainer.startPage}"/>  -->	
-		<p>Hello there! Welcome to screening</p>
+		<!-- <ui:include src="${Search_SettingsContainer.startPage}"/>  -->
+		<h1>Omboka eller avboka tid till undersökning av stora kroppspulsådern</h1>
+		<p>Här kan du logga in för att omboka eller avboka den besökstid
+		du fått i kallelsen.</p>
+		<p>Undersökningen görs med avsikt att tidigt hitta förändringar som kan
+		utvecklas till svåra sjukdomar</p>
+	</ui:define>
+	<ui:define name="LoginForm">
+		<h2>Logga in</h2>
+		<p>Lösenordet hittar du i den kallelse du fått hemskickad</p>
+	    <form name="login" method="get">
+		    Personnummer (ÅÅÅÅMMDD-XXXX)<br />
+			<input type="text" name="pnr" id="pnr" /><br />
+			Lösenord<br />
+			<input type="password" name="password" id="password" /><br />
+			<input type="submit" name="_eventId_login" value="Logga in" />
+		</form>
 	</ui:define>
 </ui:composition></div>

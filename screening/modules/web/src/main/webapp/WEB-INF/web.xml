@@ -24,7 +24,7 @@
   xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
   version="2.4">
 
-  <description>CHANGE ME!</description>
+  <description>WEBBTIDBOK-SCREENING-WEBAPP</description>
 
   <!-- resolving .xhmtl files for Facelets -->
   <context-param>
@@ -178,6 +178,23 @@
     <url-pattern>/resources/*</url-pattern>
   </servlet-mapping>
 
+<!--  -->
+<!--	<servlet>-->
+<!--		<servlet-name>JAVG Classpath Servlet</servlet-name>-->
+<!--		<servlet-class>-->
+<!--			se.vgr.javg.util.webcomponent.support.ClasspathResourceLoadingServlet</servlet-class>-->
+<!--		<load-on-startup>1</load-on-startup>-->
+<!--	</servlet>-->
+	<!--
+		Map all url:s beginning with "resource" to /resources/* for loading
+		from web composite jars on the classpath rather than the web-inf
+		directory
+	-->
+<!--	<servlet-mapping>-->
+<!--		<servlet-name>JAVG Classpath Servlet</servlet-name>-->
+<!--		<url-pattern>/resources/*</url-pattern>-->
+<!--	</servlet-mapping>-->
+<!--  -->
   <servlet>
     <servlet-name>Faces Servlet</servlet-name>
     <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
