@@ -20,10 +20,3 @@
 <% 
 request.getRequestDispatcher("screening-flow.flow").forward(request, response);
 %>
-<!-- <html>
-<head>JAVG Template default page</head>
-<body>
-<p>CHANGE THIS!</p>
-<p>OK!</p>
-</body>
-</html> -->

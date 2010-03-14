@@ -23,8 +23,13 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core">
     <head>
+		<link rel="stylesheet" type="text/css" href="resources/styles/stilmall.css" media="screen" />
     </head>
     <body onload="if (document.getElementById('unitName').value == '') {document.getElementById('unitName').value = '${msg.defaultSearchUnitName}';}" onunload="GUnload()" class="yui-skin-sam">
     	<ui:insert name="MainContainer"></ui:insert>
-    </body>
+    	
+		<div id="forms-container">
+    	<ui:insert name="LoginForm"></ui:insert>
+    	</div>
+        </body>
 </html>
