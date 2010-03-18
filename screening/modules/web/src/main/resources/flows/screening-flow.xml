@@ -31,14 +31,15 @@
 <!--		<evaluate expression="userLogin.login(pnr, password)"-->
 <!--		result="flowscope.session"/>-->
 <!--	</on-start>	-->
+
+	<view-state id="debug" view="debug.xhtml">
+	</view-state>
 	
-	<view-state id="screening" model="person" view = "/screening.xhtml">
+	<view-state id="screening" model="person" view = "debug.xhtml">
 		<transition on="login" to="debug"/>
 		<!-- om rätt inloggad visa currentNotice, annars felmeddelande -->
 	</view-state>
 	
-	<view-state id="debug" view="/debug.xhtml">
-	</view-state>
 	
 	<view-state id="currentNotice" view="/currentnotice.xhtml">
 		<transition on="logout" to="loggedout"/>
