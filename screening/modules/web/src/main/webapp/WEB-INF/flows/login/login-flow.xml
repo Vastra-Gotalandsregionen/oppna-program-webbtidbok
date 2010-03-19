@@ -22,20 +22,34 @@
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
 	
-	<var name="loginInfo" class="se.vgregion.webbtidbok.Login" />
-
+	<var name="loginCredentials" class="se.vgregion.webbtidbok.LoginCredentials" />
+	<input name="pnr" type="string" value="flowScope.loginCredentials.pnr"/>
+	<input name="passwd" type="string" value="flowScope.loginCredentials.passwd"/>
+		
 	<view-state id="start">
-		<transition on="login" to="debug">
-		<!-- validate login details.
-			if incorrect login, transition to loginerror
-			if correct login, transition to currentAppointment -->
-			
-		</transition>
+		<transition on="login" to="getBooking" />
 	</view-state>
+	
+	<action-state id="getBooking">
+    	<evaluate expression="bookingService.getDebugBooking(loginCredentials)" />
+    	<transition on="yes" to="loggedin" />
+    	<transition on="no" to="login_error" />
+	</action-state>
+	
+	<view-state id="loggedin" view="debug.xhtml">
+		<on-render>
+			<evaluate expression="bookingService.getPnr()" result="flowScope.pnr" />
+			<evaluate expression="bookingService.getBesDat()" result="flowScope.besDat" />
+		</on-render>
+	</view-state>
+	
+	<view-state id="login_error">
+	</view-state>
+	
 	
 	<view-state id="debug">
 	<!--  if we have not defined the correct transition yet, transit to this state. -->
-	
+		
 	</view-state>
 	
 	<view-state id="badlogin">

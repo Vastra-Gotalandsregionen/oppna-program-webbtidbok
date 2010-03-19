@@ -1,0 +1,56 @@
+<!--
+
+    Copyright 2009 Vastra Gotalandsregionen
+
+      This library is free software; you can redistribute it and/or modify
+      it under the terms of version 2.1 of the GNU Lesser General Public
+      License as published by the Free Software Foundation.
+
+      This library is distributed in the hope that it will be useful,
+      but WITHOUT ANY WARRANTY; without even the implied warranty of
+      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+      GNU Lesser General Public License for more details.
+
+      You should have received a copy of the GNU Lesser General Public
+      License along with this library; if not, write to the
+      Free Software Foundation, Inc., 59 Temple Place, Suite 330,
+      Boston, MA 02111-1307  USA
+
+-->
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:sf="http://www.springframework.org/tags/faces"
+				template="/WEB-INF/layouts/standard.xhtml">
+
+<ui:define name="content">
+
+	<ui:fragment id="helpFragment">
+		<div>
+		    <span class="errors">
+		       <h:messages globalOnly="true" />
+		    </span>
+		    <h1>Så här gör du om du vill omboka din tid till undersökning av stora kroppspulsådern</h1>
+		    <p>Det lösenord du använder för inloggning gäller endast för den tid du fått via kallelse. När tiden har varit eller du avbokat tiden går det inte längre att logga in. Spara det lösenord du fick i kallelsen. Du kan boka om din tid två gånger med ditt lösenord.</p>
+			<p>Du kan också boka om eller avboka tiden per telefon eller e-post. Behöver du boka om tiden fler gånger ber vi dig ringa till Kontaktpunkten på telefonnummer 031-342 69 55 tisdag, onsdag eller torsdag mellan klockan 09:00-15:00, alternativt 031-342 24 00.
+				Du kan också skicka e-post: kontaktpunkten.su@vgregion.se.</p> 
+
+			<h2>Välj plats</h2>
+			<p>Den mottagning du blivit kallad till är markerad.</p> 
+			<p>Du kan välja att göra undersökningen på en annan mottagning. Fäll ut rullgardinen med hjälp av pilen och markera den mottagning du vill se lediga tider för.</p>
+
+			<h2>Välj datum</h2>
+			<p>Klicka på det datum du vill komma på undersökning. Dagar med lediga tider är gråmarkerade. Undersökningar görs inte alla dagar i veckan.</p>
+
+			<h2>Välj tid</h2>
+			<p>Du ändrar din tid genom att klicka på knappen ”Välj” på den tid du önskar komma.</p> 
+			<p>Du kan byta plats eller datum genom att välja en annan mottagning under Välj plats, eller byta datum under Välj datum.</p>
+			<p>Du får en bekräftelse på att du bokat om din tid.</p>
+			<p>Du kan logga in igen för att kontrollera din tid eller för att omboka den på nytt. Tänk på att spara lösenordet du fick i kallelsebrevet.</p>			  
+		</div>
+	</ui:fragment>
+
+</ui:define>
+</ui:composition>
