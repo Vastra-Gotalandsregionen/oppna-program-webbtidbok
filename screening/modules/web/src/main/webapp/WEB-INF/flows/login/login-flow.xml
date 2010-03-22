@@ -31,7 +31,7 @@
 	</view-state>
 	
 	<action-state id="getBooking">
-    	<evaluate expression="bookingService.getDebugBooking(loginCredentials)" />
+    	<evaluate expression="bookingService.getBookingBoolean(loginCredentials)" />
     	<transition on="yes" to="loggedin" />
     	<transition on="no" to="login_error" />
 	</action-state>
