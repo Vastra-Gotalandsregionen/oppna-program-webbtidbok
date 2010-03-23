@@ -91,7 +91,7 @@ public class ScreeningBooking {
 		//make web service call
 		CentralBookingWS centralBookingWS = new CentralBookingWS();
 		ICentralBookingWS ws = centralBookingWS.getBasicHttpBindingICentralBookingWS();
-
+		
 		try{
 			response = ws.getBooking(request);
 			return true;
