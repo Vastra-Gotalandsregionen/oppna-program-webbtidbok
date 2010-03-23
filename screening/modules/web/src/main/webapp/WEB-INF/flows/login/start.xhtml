@@ -23,12 +23,12 @@
 	  			xmlns:h="http://java.sun.com/jsf/html"
 	  			xmlns:f="http://java.sun.com/jsf/core"
 	  			xmlns:sf="http://www.springframework.org/tags/faces"
-				template="/WEB-INF/layouts/standard.xhtml">
+				template="/WEB-INF/layouts/standard2.xhtml">
 
 <ui:define name="content">
 
 	<ui:fragment id="loginFragment">
-		<div id="qqq" class="ab">
+		<div id="main-column">
 		    <span class="errors">
 		       <h:messages globalOnly="true" />
 		    </span>
@@ -36,34 +36,37 @@
 		    <p>Här kan du logga in för att omboka eller avboka din besökstid du fått i kallelsen.</p>
 		    <p>Undersökningen görs med avsikt att tidigt hitta förändringar som kan utvecklas till svår sjukdom.</p>
 		    <a href="help">Här kan du läsa mer om hur du gör</a>
-			<h:form id="mainForm">
+			<br></br>
+			
+			<div id="forms-container">
+			
+			<h:form id="mainForm" class="search-form">
+				<h2>Logga in</h2>
+				<p>Lösenordet hittar du i den kallelse du fått hemskickad</p>
 				<fieldset>
-					<h2>Logga in</h2>
-					<p>Lösenordet hittar du i den kallelse du fått hemskickad</p>
-					<div class="field">
-						<div class="label">
-							<h:outputLabel for="pnr">Personnummer (ÅÅÅÅMMDD-XXXX)</h:outputLabel>
-						</div>
-						<div class="input">
-							<sf:clientTextValidator regExp="[0-9]{8}-[0-9]{4}" invalidMessage="Skriv ditt personnummuer på formen ÅÅÅÅMMDD-XXXX." promptMessage="Skriv in ditt personnnummer.">
-								<h:inputText id="pnr" value="#{loginCredentials.pnr}" />
-							</sf:clientTextValidator>
-						</div>
-						<div class="label">
-							<h:outputLabel for="passwd">Lösenord</h:outputLabel>
-						</div>
-						<div class="input">
-							<sf:clientTextValidator promptMessage="Skriv in lösenordet som står i kallelsen.">
-								<h:inputSecret id="passwd" value="#{loginCredentials.passwd}" />
-							</sf:clientTextValidator>
-						</div>
-						
-					</div>
-					<div class="buttonGroup">
-						<sf:commandButton id="login" value="Logga in" processIds="*" action="login" />
-					</div>
-			    </fieldset>
-			</h:form>			  
+				<div class="field">
+				<div class="label"><h:outputLabel for="pnr">Personnummer (ÅÅÅÅMMDD-XXXX)</h:outputLabel>
+				</div>
+				<div class="input"><sf:clientTextValidator
+					regExp="[0-9]{8}-[0-9]{4}"
+					invalidMessage="Skriv ditt personnummuer på formen ÅÅÅÅMMDD-XXXX."
+					promptMessage="Skriv in ditt personnnummer.">
+					<h:inputText id="pnr" value="#{loginCredentials.pnr}" />
+				</sf:clientTextValidator></div>
+				<div class="label"><h:outputLabel for="passwd">Lösenord</h:outputLabel>
+				</div>
+				<div class="input"><sf:clientTextValidator
+					promptMessage="Skriv in lösenordet som står i kallelsen.">
+					<h:inputSecret id="passwd" value="#{loginCredentials.passwd}" />
+				</sf:clientTextValidator></div>
+
+				</div>
+				<div class="buttonGroup"><sf:commandButton id="login"
+					value="Logga in" processIds="*" action="login" /></div>
+				</fieldset>
+			</h:form>
+			</div>
+						  
 		</div>
 	</ui:fragment>
 

@@ -17,6 +17,10 @@
       Boston, MA 02111-1307  USA
 
 -->
+
+
+
+  
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <f:view xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
@@ -24,12 +28,12 @@
 	xmlns:c="http://java.sun.com/jstl/core"
 	xmlns:sf="http://www.springframework.org/tags/faces"
 	contentType="text/html" encoding="UTF-8">
-	<html>
+	<html lang="sv-SE" xml:lang="sv-SE" xmlns="http://www.w3.org/1999/xhtml">
 		<head>
 			<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 			<title>Webbtidbok</title>
 
-			<!--	<sf:includeStyles/>-->
+			
 			<sf:resourceGroup>
 				<sf:resource path="/css-framework/css/tools.css" />
 				<sf:resource path="/css-framework/css/typo.css" />
@@ -39,6 +43,7 @@
 			</sf:resourceGroup>
 			<sf:resource path="/styles/style.css" />
 			<sf:resource path="/styles/main.css" />
+			<sf:resource path="/styles/grids-min.css" />
 			<link rel="stylesheet" type="text/css"
 				href="https://ajax.googleapis.com/ajax/libs/yui/2.7.0/build/autocomplete/assets/skins/sam/autocomplete.css" />
 			<script type="text/javascript"
@@ -52,21 +57,52 @@
 			<script type="text/javascript" src="resources/scripts/widget.js"></script>
 			<ui:insert name="headIncludes" />
 		</head>
-		<body>
+		<body class="yui-skin-sam">
+		
 		<div id="wrapper">
-			<div id="header">
-				<div class="headimageholder">
-					<a href="#body-content"	accesskey="S" /> <a href="/" accesskey="1">
-					<img src="/webbtidbok-screening-module-web/resources/VGRImages/head-img.gif" title="Vård i Västra Götaland"
-					alt="Vården i Västra Götaland" /></a>
+		<div id="custom-doc">
+ 		<div id="pageHeader">
+		<form action="http://vard.vgregion.se/sv/Sok1/" method="get">
+			<div id="pageHeaderSearch">
+				<div class="headerlinks">
+					<ul>
+						<li><a href="http://vard.vgregion.se/sv/Other-languages/">Other languages</a>&nbsp; | &nbsp;</li>
+						<li><a href="http://vard.vgregion.se/sv/Teckenspraksfilmer/">Teckenspr&aring;k</a></li>
+						<li>  |  <a href="http://spoxy4.insipio.com/generator/se/hittavard.vgregion.se/hriv/HRIV.Search.searchunit-flow.flow?startpage=1" title="Lyssna" class="lyssnaIkon">Lyssna</a>
+						</li>					
+					</ul>
+					<input name="quicksearchquery" id="SearchText" accesskey="4" title="Snabbs&ouml;kning" class="topSearch" type="text" />
+					<input name="Search" value="S&ouml;k" id="Search" class="standardButton marginTopFive" type="submit" />
 				</div>
 			</div>
-			<div id="content">
-				<div id="wrapper"><ui:insert name="content" /></div>
-			</div>
-			<ui:include src="footerContent.xhtml" />
-			
-			</div>
+		</form>
+	</div>
+	<div id="header">
+		<div class="headimageholder"><a accesskey="S" href="http://vard.vgregion.se/sv/#body-content"></a><a accesskey="1" href="http://vard.vgregion.se/"> <img alt="V&aring;rden i V&auml;stra G&ouml;taland" src="/webbtidbok-screening-module-web/resources/VGRImages/head-img.gif" /> </a></div>
+	<h1>V&aring;rden i V&auml;stra G&ouml;taland</h1>
+	</div>
+	<div id="menucontainer">
+		<ul>
+			<li><a class="first" href="http://vard.vgregion.se/sv/Startsidan/"> Startsidan</a></li>
+			<li><a href="http://vard.vgregion.se/sv/Sjukdomar-och-besvar/">Sjukdomar och besvär</a></li>
+			<li><a href="http://vard.vgregion.se/sv/Undersokningar--behandlingar/">Undersökningar och behandlingar</a></li>
+			<li><a href="startpage.jsp?startpage=1" class="selected first">Hitta rätt i vården</a></li>
+			<li><a href="http://vard.vgregion.se/sv/Regler-och-rattigheter/">Regler och rättigheter</a></li>
+			<li><a href="http://vard.vgregion.se/sv/Mina-tjanster/">Mina tjänster</a></li>
+		</ul>
+	</div>
+	
+	 <div id="content">
+		<div id="wrapper"><ui:insert name="content" /></div>
+	</div> 
+	
+	</div>
+	</div>
+	<ui:include src="footerContent.xhtml" />
 		</body>
 	</html>
 </f:view>
+
+
+
+
