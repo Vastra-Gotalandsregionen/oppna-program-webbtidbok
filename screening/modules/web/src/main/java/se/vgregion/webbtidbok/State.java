@@ -18,17 +18,24 @@
 package se.vgregion.webbtidbok;
 
 import java.io.Serializable;
+import se.vgregion.webbtidbok.ws.*;
+
 
 /**
  * This bean stores the user credentials
  */
 
-public class LoginCredentials implements Serializable {
+public class State implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     private String pnr = "";
     private String passwd = "";
+    //private BookingResponse bookingResponse;
+    //private BookingRequest bookingRequest;
+    
+    private static boolean loggedIn = false;
+    
     
     public String getPnr() {
     	return pnr;
@@ -46,6 +53,40 @@ public class LoginCredentials implements Serializable {
     	this.passwd = passwd;
     }
 
+    public void setLoggedIn(boolean loggedIn){
+    	this.loggedIn = loggedIn;
+    }
+    
+    public boolean isLoggedIn(){
+    	return loggedIn;
+    }
+    
+    
+    /*
+    public void setBookingResponse(BookingResponse b ){
+    	this.bookingResponse = b;
+    }
+    
+    public BookingResponse getBookingResponse(){
+    	return this.bookingResponse;
+    }
+    
+    
+    
+    public void setBookingRequest(BookingRequest br){
+    	this.bookingRequest = br;
+    }
+    
+    public BookingRequest getBookingRequest(){
+    	return this.bookingRequest;
+    }
+    */
+    
+    
+    
+    
+    
+    
     public String toString() {
     	return "[User Credentials: Personnummer = " + pnr + ", Password = " + passwd + "]";
     }

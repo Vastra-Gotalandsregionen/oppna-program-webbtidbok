@@ -55,12 +55,12 @@ public class LoginTests {
 	 */
 	@Test
 	public void testLoginBlanks(){
-		LoginCredentials credentials = new LoginCredentials();
+		State credentials = new State();
 		credentials.setPasswd("");
 		credentials.setPnr("");
 	
-		ScreeningBooking screen = new ScreeningBooking();
-		boolean loggedIn = screen.getBookingBoolean(credentials);
+		Login screen = new Login();
+		boolean loggedIn = screen.login(credentials);
 		
 		if(loggedIn == true){
 			Assert.assertFalse(true);
@@ -80,12 +80,12 @@ public class LoginTests {
 	 */
 	@Test
 	public void testLoginNullValues(){
-		LoginCredentials credentials = new LoginCredentials();
+		State credentials = new State();
 		credentials.setPasswd(null);
 		credentials.setPnr(null);
 	
-		ScreeningBooking screen = new ScreeningBooking();
-		boolean loggedIn = screen.getBookingBoolean(credentials);
+		Login screen = new Login();
+		boolean loggedIn = screen.login(credentials);
 		
 		if(loggedIn == true){
 			Assert.assertFalse(true);
@@ -105,12 +105,12 @@ public class LoginTests {
 	 */
 	@Test
 	public void testFaultyValuesSmallPnr(){
-		LoginCredentials credentials = new LoginCredentials();
+		State credentials = new State();
 		credentials.setPasswd("4444");
 		credentials.setPnr("760909");
 		
-		ScreeningBooking screen = new ScreeningBooking();
-		boolean loggedIn = screen.getBookingBoolean(credentials);
+		Login screen = new Login();
+		boolean loggedIn = screen.login(credentials);
 		
 		if(loggedIn == true){
 			Assert.assertFalse(true);
@@ -139,12 +139,12 @@ public class LoginTests {
 	 */
 	@Test
 	public void testCorrectValues(){
-		LoginCredentials credentials = new LoginCredentials();
+		State credentials = new State();
 		credentials.setPasswd("Zs12JzIW");
-		credentials.setPnr("121212-1212");
+		credentials.setPnr("19121212-1212");
 		
-		ScreeningBooking screen = new ScreeningBooking();
-		boolean loggedIn = screen.getBookingBoolean(credentials);
+		Login screen = new Login();
+		boolean loggedIn = screen.login(credentials);
 		
 		if(loggedIn == true){
 			Assert.assertTrue(true);

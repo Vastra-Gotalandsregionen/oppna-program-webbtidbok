@@ -142,7 +142,7 @@
 	border-bottom: none;
 }  /* =Forms */
 .search-form { /* padding: 0 0 0 0.5em; */
-	
+	background-color: #f3f1f2;	
 }
 
 .search-form .text {
@@ -762,7 +762,6 @@ a.unit {
 	font-weight: bold;
 	background-color: #F3F1F2;
 	width: auto;
-	border: solid 0.2em #fff;
 	padding: 1em 0em 0em 1em;
 }
 
