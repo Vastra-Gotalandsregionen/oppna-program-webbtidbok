@@ -41,11 +41,11 @@ public class ScreeningBooking {
 	
 	public String message = "";
 	public String getPnr() {
-		return debugResponse.getPnr().toString();
+		return response.getPnr().toString();
 	}
 
 	public String getBesDat() {
-		return debugResponse.getBesDat().toString();
+		return response.getBesDat().toString();
 	}
 
 	public boolean getDebugBooking(LoginCredentials loginCredentials) {
@@ -72,8 +72,14 @@ public class ScreeningBooking {
 
 	public	boolean getBookingBoolean(LoginCredentials loginCredentials) {
 		//"parameters"
-		JAXBElement<String> pnr = objectFactory.createBookingRequestPnr(loginCredentials.getPnr());
-		JAXBElement<String> pin = objectFactory.createBookingRequestPin(loginCredentials.getPasswd());
+//		JAXBElement<String> pnr = objectFactory.createBookingRequestPnr(loginCredentials.getPnr());
+//		JAXBElement<String> pin = objectFactory.createBookingRequestPin(loginCredentials.getPasswd());
+		
+//		Zs12JzIW 19 121212-1212
+		JAXBElement<String> pnr = objectFactory.createBookingRequestPnr("19121212-1212");
+		JAXBElement<String> pin = objectFactory.createBookingRequestPin("Zs12JzIW");
+
+		
 		JAXBElement<String> key = objectFactory.createBookingRequestKey("asd");
 		JAXBElement<String> cryptedKey =objectFactory.createBookingRequestCryptedKey("asd");
 		JAXBElement<String> cert = objectFactory.createBookingRequestCert("NO");
