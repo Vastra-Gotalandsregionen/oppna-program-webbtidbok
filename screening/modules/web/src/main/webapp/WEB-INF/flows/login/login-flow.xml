@@ -22,25 +22,29 @@
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
 	
-	<var name="loginCredentials" class="se.vgregion.webbtidbok.LoginCredentials" />
+	<var name="loginCredentials" class="se.vgregion.webbtidbok.State" />
 	<input name="pnr" type="string" value="flowScope.loginCredentials.pnr"/>
 	<input name="passwd" type="string" value="flowScope.loginCredentials.passwd"/>
 		
 	<view-state id="start">
-		<transition on="login" to="getBooking" />
+		<transition on="login" to="doLogin" />
 	</view-state>
 	
-	<action-state id="getBooking">
-    	<evaluate expression="bookingService.getBookingBoolean(loginCredentials)" />
+	<action-state id="doLogin">
+    	<evaluate expression="loginService.login(loginCredentials)" />
     	<transition on="yes" to="loggedin" />
     	<transition on="no" to="login_error" />
 	</action-state>
 	
 	<view-state id="loggedin" view="debug.xhtml">
 		<on-render>
-			<evaluate expression="bookingService.getPnr()" result="flowScope.pnr" />
-			<evaluate expression="bookingService.getBesDat()" result="flowScope.besDat" />
+			<evaluate expression="loginService.getPnr()" result="flowScope.pnr" />
+			<evaluate expression="loginService.getBesDat()" result="flowScope.besDat" />
+			<evaluate expression="bookingService.getBooking(loginCredentials)" result="flowScope.booking"/>
+    	
 		</on-render>
+		
+		
 	</view-state>
 	
 	<view-state id="login_error">

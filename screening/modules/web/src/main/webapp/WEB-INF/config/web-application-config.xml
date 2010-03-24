@@ -29,7 +29,9 @@
 
 	<!-- Scans for application @Components to deploy -->
 	<context:component-scan base-package="org.springframework.webflow.samples.booking" />
-	<bean id="bookingService" class="se.vgregion.webbtidbok.ScreeningBooking">
+	<bean id="loginService" class="se.vgregion.webbtidbok.Login">
+	</bean>
+	<bean id="bookingService" class="se.vgregion.webbtidbok.Booking">
 	</bean>
 
 	<!-- Imports the configurations of the different infrastructure systems of the application -->

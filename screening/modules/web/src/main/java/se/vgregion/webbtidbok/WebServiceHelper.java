@@ -19,6 +19,13 @@ package se.vgregion.webbtidbok;
 
 import javax.xml.bind.JAXBElement;
 
+import se.vgregion.webbtidbok.ws.BookingRequest;
+import se.vgregion.webbtidbok.ws.CentralBookingWS;
+import se.vgregion.webbtidbok.ws.ICentralBookingWS;
+import se.vgregion.webbtidbok.ws.ICentralBookingWSGetBookingICFaultFaultFaultMessage;
+
+import javax.xml.bind.JAXBElement;
+
 import org.apache.commons.logging.impl.Log4JLogger;
 import org.springframework.stereotype.Service;
 
@@ -31,53 +38,19 @@ import se.vgregion.webbtidbok.ws.ICentralBookingWSGetBookingICFaultFaultFaultMes
 import se.vgregion.webbtidbok.ws.ObjectFactory;
 
 
-@Service
-public class ScreeningBooking {
-	private ObjectFactory objectFactory = new ObjectFactory();
-	BookingResponse bookingRequest;
-	BookingRequest b;
-	BookingResponse debugResponse = new BookingResponse();
-	BookingResponse response;
+
+public class WebServiceHelper {
 	
-	public String message = "";
-	public String getPnr() {
-		return response.getPnr().toString();
-	}
-
-	public String getBesDat() {
-		return response.getBesDat().toString();
-	}
-
-	public boolean getDebugBooking(LoginCredentials loginCredentials) {
-		String _pnr = loginCredentials.getPnr();
-		String _passwd = loginCredentials.getPasswd();
-		JAXBElement<String> pnr = objectFactory.createBookingRequestPnr(_pnr);
-		JAXBElement<String> besDat = objectFactory.createBookingRequestBesDat("debug");
-
-		if("123456-1234".equals(_pnr) && "qwerty".equals(_passwd)) {
-			pnr = objectFactory.createBookingRequestPnr(_pnr);
-			besDat = objectFactory.createBookingRequestBesDat("debug");
-			debugResponse.setPnr(pnr);
-			debugResponse.setBesDat(besDat);
-			return true;
-		}
-		else {
-			pnr = objectFactory.createBookingRequestPnr("nologin");
-			besDat = objectFactory.createBookingRequestBesDat("debug");
-			debugResponse.setPnr(pnr);
-			debugResponse.setBesDat(besDat);
-			return false;
-		}
-	}
-
-	public	boolean getBookingBoolean(LoginCredentials loginCredentials) {
+	private ObjectFactory objectFactory = new ObjectFactory();
+	
+	public BookingRequest getQueryWSRequest(State loginCredentials){
 		//"parameters"
-//		JAXBElement<String> pnr = objectFactory.createBookingRequestPnr(loginCredentials.getPnr());
-//		JAXBElement<String> pin = objectFactory.createBookingRequestPin(loginCredentials.getPasswd());
+		JAXBElement<String> pnr = objectFactory.createBookingRequestPnr(loginCredentials.getPnr());
+		JAXBElement<String> pin = objectFactory.createBookingRequestPin(loginCredentials.getPasswd());
 		
-//		Zs12JzIW 19 121212-1212
-		JAXBElement<String> pnr = objectFactory.createBookingRequestPnr("19121212-1212");
-		JAXBElement<String> pin = objectFactory.createBookingRequestPin("Zs12JzIW");
+		//Zs12JzIW 19 121212-1212
+		//JAXBElement<String> pnr = objectFactory.createBookingRequestPnr("19121212-1212");
+		//JAXBElement<String> pin = objectFactory.createBookingRequestPin("Zs12JzIW");
 
 		
 		JAXBElement<String> key = objectFactory.createBookingRequestKey("asd");
@@ -94,24 +67,31 @@ public class ScreeningBooking {
 		request.setCryptedKey(cryptedKey);
 		request.setCert(cert);
 
+		
+		return request;
+		
+	}
+	
+	public BookingResponse getQueryWS(BookingRequest request){
+		
+		
 		//make web service call
 		CentralBookingWS centralBookingWS = new CentralBookingWS();
 		ICentralBookingWS ws = centralBookingWS.getBasicHttpBindingICentralBookingWS();
 		
 		try{
-			response = ws.getBooking(request);
-			return true;
+			
+			return ws.getBooking(request);
+			//loginCredentials.setBookingResponse(response);
+			
 		}
-
 		catch(ICentralBookingWSGetBookingICFaultFaultFaultMessage ex){
-			ex.printStackTrace();		
-			return false;
+			ex.printStackTrace();
+			System.out.println(ex.getMessage());
+			return null;
+			
 		}
 	}
-
-	private void debug(BookingRequest r) {
-		Log4JLogger log = new Log4JLogger();
-
-		log.debug(r.toString());
-	}
+	
+	
 }
