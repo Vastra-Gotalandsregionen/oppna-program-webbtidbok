@@ -28,25 +28,66 @@
 <ui:define name="content">
 
 <div class="section">
-	<h2>Debug</h2>
-	<p>Du är inloggad!</p>
+
+	<p>
+	<h:outputText> #{booking.pnr}
+	</h:outputText>
+	</p>
+	
+	<p>
+	<h:outputText>   #{booking.name}
+	</h:outputText>
+	</p>
 	
 	<!--  
-	<h:inputText id="test" value="#{booking.getName}">
-	
-	</h:inputText>
+	private String pnr;
+	private String name;
+	private String localDoctor;
+	private String address;
+	private Date timeBooking;
+	private String vTeam;
+	private String mainSector;
+	private String mobilePhone;
+	private String email;
+	private int numberBookings;
+	private int maxNbrBookings = 2;
 	-->
-	<p>
-	<h:outputText value="#{booking.getName}">
 	
+	  
+	<p>
+	<h:outputText>  #{booking.localDoctor}
 	</h:outputText>
 	</p>
 	
 	<p>
-	<h:outputText value="olle">
-	
+	<h:outputText>  #{booking.address}
 	</h:outputText>
 	</p>
+	
+	<p>
+	<h:outputText>  #{booking.mainSector}
+	</h:outputText>
+	</p>
+	
+	<p>
+	<h:outputText>  #{booking.mobilePhone}
+	</h:outputText>
+	</p>
+	
+	<p>
+	<h:outputText>  #{booking.email}
+	</h:outputText>
+	</p>
+	
+	<p>
+	<h:outputText>  #{booking.numberOfBookings}
+	</h:outputText>
+	</p>	
+		
+	
+	
+	
+	
 </div>
 
 </ui:define>
