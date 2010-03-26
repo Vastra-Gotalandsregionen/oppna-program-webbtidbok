@@ -29,9 +29,11 @@ import se.vgregion.webbtidbok.ws.GetBooking;
 import se.vgregion.webbtidbok.ws.ICentralBookingWS;
 import se.vgregion.webbtidbok.ws.ICentralBookingWSGetBookingICFaultFaultFaultMessage;
 import se.vgregion.webbtidbok.ws.ObjectFactory;
+import java.util.*;
+import java.io.*;
 
 
-public class Booking 
+public class BookingService
 {
 	
 	BookingResponse response;
@@ -42,9 +44,9 @@ public class Booking
 	//private String orderDate;
 	
 	//constructor
-	public Booking(){}
+	public BookingService(){}
 	
-	public void getBooking(State loginCredentials){
+	public BookingResponseLocal getBooking(State loginCredentials){
 		
 		if(loginCredentials.isLoggedIn()){
 			
@@ -54,48 +56,15 @@ public class Booking
 			System.out.println(this.toString());
 			
 			
-			//return this.toString();
+			BookingResponseLocal responseLocal = new BookingResponseLocal(response);
+			
+			return responseLocal;
 		}
 		
-		//return this.toString();
+		return null;
 	}
 	
 	
-	public String getOrderDate(){
-		
-		return response.getBesDat().getValue();
-		
-	}
-	
-	public int getHour(){
-		
-		return response.getBokadTid().getHour();
-	}
-	
-	public int getMinute(){
-		
-		return response.getBokadTid().getMinute();
-	}
-	
-	public String getName(){
-		
-		return response.getNamn().getValue();
-	}
-	
-	public String getReception(){
-		return response.getHuvudVdg().getValue();
-	}
-	
-	public String getSecondaryReception(){
-		
-		return response.getVardgivare().getValue();
-	}
-	
-	
-	
-	public String toString(){
-		return "BestDatum: " + getOrderDate() + " , Timma: " + getHour() + " , " + getMinute() + " , name: " +  getName() + " , reception: " + getReception() + " , secondary reception: " + getSecondaryReception(); 
-	}
 	
 	
 	

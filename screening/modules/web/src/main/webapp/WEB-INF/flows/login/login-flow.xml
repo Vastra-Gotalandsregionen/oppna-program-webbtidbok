@@ -23,29 +23,34 @@
       xsi:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
 	
 	<var name="loginCredentials" class="se.vgregion.webbtidbok.State" />
+	<var name="loginmessages" class="se.vgregion.webbtidbok.LoginMessages" />
+	
+	
 	<input name="pnr" type="string" value="flowScope.loginCredentials.pnr"/>
 	<input name="passwd" type="string" value="flowScope.loginCredentials.passwd"/>
 		
 	<view-state id="start">
 		<transition on="login" to="doLogin" />
+		<!-- ajax metoder kolla pnr, eller lösenord. --> 
 	</view-state>
 	
 	<action-state id="doLogin">
     	<evaluate expression="loginService.login(loginCredentials)" />
     	<transition on="yes" to="loggedin" />
-    	<transition on="no" to="login_error" />
+    	<transition on="no" to="start">
+    		<evaluate expression="loginmessages.setLogMessagePnr('Inloggning misslyckades')" >
+    		</evaluate>
+    	</transition>
 	</action-state>
 	
-	<view-state id="loggedin" view="debug.xhtml">
+	<view-state id="loggedin" view="welcome.xhtml" model="booking">
 		<on-render>
-			<evaluate expression="loginService.getPnr()" result="flowScope.pnr" />
-			<evaluate expression="loginService.getBesDat()" result="flowScope.besDat" />
-			<evaluate expression="bookingService.getBooking(loginCredentials)" result="flowScope.booking"/>
-    	
-		</on-render>
-		
+			<evaluate expression="bookingService.getBooking(loginCredentials)" result="flowScope.booking" />
+ 		</on-render>
 		
 	</view-state>
+	
+	
 	
 	<view-state id="login_error">
 	</view-state>

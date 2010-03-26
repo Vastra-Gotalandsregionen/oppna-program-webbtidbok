@@ -37,6 +37,7 @@ import se.vgregion.webbtidbok.ws.ICentralBookingWS;
 import se.vgregion.webbtidbok.ws.ICentralBookingWSGetBookingICFaultFaultFaultMessage;
 import se.vgregion.webbtidbok.ws.ObjectFactory;
 
+import java.io.*;
 
 
 public class WebServiceHelper {
