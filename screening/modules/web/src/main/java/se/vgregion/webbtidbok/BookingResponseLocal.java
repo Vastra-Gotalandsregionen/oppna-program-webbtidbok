@@ -24,6 +24,8 @@ import java.text.*;
 import org.apache.commons.logging.impl.Log4JLogger;
 import org.springframework.stereotype.Service;
 
+import se.vgregion.webbtidbok.lang.DateHandler;
+import se.vgregion.webbtidbok.lang.StringHandler;
 import se.vgregion.webbtidbok.ws.BookingRequest;
 import se.vgregion.webbtidbok.ws.BookingResponse;
 import se.vgregion.webbtidbok.ws.CentralBookingWS;
@@ -58,6 +60,7 @@ public class BookingResponseLocal implements Serializable{
 	private String localDoctor;
 	private String address;
 	private Date timeBooking;
+	private String timeBookingString;
 	private String vTeam;
 	private String mainSector;
 	private String mobilePhone;
@@ -87,6 +90,26 @@ public class BookingResponseLocal implements Serializable{
 		setEmail("");// missing email
 		this.setNumberOfBookings(2);
 		
+		
+		
+		//Set time booking
+		timeBooking = new Date();
+		//set hours, minutes
+		timeBooking.setHours(response.getBokadTid().getHour());
+		timeBooking.setMinutes(response.getBokadTid().getMinute());
+		timeBooking.setSeconds(response.getBokadTid().getSecond());
+		timeBooking.setMonth(response.getBokadTid().getMonth());
+		timeBooking.setYear(response.getBokadTid().getYear() - 1900);
+		timeBooking.setDate(response.getBokadTid().getDay());
+		
+		System.out.println("timebooking: " + timeBooking.toString());
+		
+		
+		setTimeBookingString(DateHandler.setLocaleString(timeBooking));
+		setTimeBookingString(StringHandler.toFirstLetterToUpperCase(getTimeBookingString()));
+		
+		System.out.println("timebooking parsed: " + timeBookingString);
+		
 	}
 	
 	public void setPnr(String pnr){
@@ -107,6 +130,10 @@ public class BookingResponseLocal implements Serializable{
 	
 	public void setTimeBooking(Date tBooking){
 		this.timeBooking = tBooking;
+	}
+	
+	public void setTimeBookingString(String sBooking){
+		this.timeBookingString = sBooking;
 	}
 	
 	public void setTeam(String t){
@@ -157,6 +184,9 @@ public class BookingResponseLocal implements Serializable{
 		return this.timeBooking;
 	}
 	
+	public String getTimeBookingString(){
+		return this.timeBookingString;
+	}
 	public String getTeam(){
 		return this.vTeam;
 	}
