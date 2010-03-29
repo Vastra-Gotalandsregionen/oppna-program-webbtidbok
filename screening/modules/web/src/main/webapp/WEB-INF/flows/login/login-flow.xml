@@ -30,17 +30,24 @@
 	<input name="passwd" type="string" value="flowScope.loginCredentials.passwd"/>
 		
 	<view-state id="start">
-		<transition on="login" to="doLogin" />
+		<transition on="login" to="validate" />
 		<!-- ajax metoder kolla pnr, eller lösenord. --> 
 	</view-state>
 	
+	<action-state id="validate">
+			<evaluate expression="validationService.validateLogin(loginCredentials, loginmessages)" />
+			<transition on="yes" to="doLogin"></transition>
+			<transition on="no" to="start"/>	
+			
+	</action-state>
+	
 	<action-state id="doLogin">
-    	<evaluate expression="loginService.login(loginCredentials)" />
-    	<transition on="yes" to="loggedin" />
-    	<transition on="no" to="start">
-    		<evaluate expression="loginmessages.setLogMessagePnr('Inloggning misslyckades')" >
-    		</evaluate>
-    	</transition>
+		
+		<evaluate expression="loginService.login(loginCredentials)" />
+    		<transition on="yes" to="loggedin" />
+    		<transition on="no" to="start">
+    			<evaluate expression="loginmessages.setLogMessagePnr('Inloggning misslyckades')" />
+    		</transition>
 	</action-state>
 	
 	<view-state id="loggedin" view="welcome.xhtml" model="booking">
