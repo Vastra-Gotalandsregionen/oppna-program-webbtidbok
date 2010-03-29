@@ -63,7 +63,7 @@
 						</goals>
 						<configuration>
 							<wsdlUrls>
-								<wsdlUrl>http://demo.insieme.se/WCFCentralBookingWS/CentralBookingWS.svc?wsdl</wsdlUrl>
+								<wsdlUrl>http://demo.insieme.se/CentralBookingWSSetup/CentralBookingWS.svc?wsdl</wsdlUrl>
 							</wsdlUrls>
 							<packageName>se.vgregion.webbtidbok.ws</packageName>
 							<sourceDestDir>${project.build.directory}/generated-sources/jaxws</sourceDestDir>

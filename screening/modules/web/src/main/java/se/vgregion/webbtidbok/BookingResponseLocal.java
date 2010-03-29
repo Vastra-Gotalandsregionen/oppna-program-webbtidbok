@@ -78,8 +78,11 @@ public class BookingResponseLocal implements Serializable{
 		setLocalDoctor(response.getVardgivare().getValue());
 		setAddress(""); //missing getmethod.
 		//setTimeBooking(new Date(response.getBokadTid().getYear()));
-		setTeam(response.getVavdTeam().getValue());
-		setMainSector(response.getHuvudVdg().getValue());
+		
+		
+		setTeam(response.getExternalID().getValue());
+		
+		setMainSector(response.getMottagning().getValue());
 		setMobilePhone(response.getMobilTel().getValue());
 		setEmail("");// missing email
 		this.setNumberOfBookings(2);

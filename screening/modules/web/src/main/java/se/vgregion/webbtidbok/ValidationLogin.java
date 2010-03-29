@@ -24,11 +24,31 @@ import java.lang.*;
 import java.text.*;
 import java.util.regex.*;
 
+import se.vgregion.webbtidbok.*;
+
 public class ValidationLogin {
 	
+	public boolean validateLogin(State st, LoginMessages lm){
+		
+		String pnr  = st.getPnr();
+		String password = st.getPasswd();
+		
+		if(pnr.length() == 0){
+			lm.setLogMessagePnr("Personnummer fält tomt, Fyll i Personnummer med ÅÅÅÅMMDD-XXXX");
+			
+		}
+		if(password.length() == 0){
+			lm.setLogMessagePassword("Lösenord fält tomt, Fyll i Lösenord");
+		}
+		if(pnr.length() == 0 || password.length() == 0){
+			return false;
+		}
+		
+		return true;
+	}
 	
 	public String validatePnr(String validateString){
-		
+	
 		String result = "";
 		
 		if(validateString.length() == 0){

@@ -45,31 +45,10 @@ public class Login {
 	}
 
 	public String getBesDat() {
-		return response.getBesDat().toString();
+		return response.getBokadTid().toString();
 	}
 
-	public boolean getDebugBooking(State loginCredentials) {
-		String _pnr = loginCredentials.getPnr();
-		String _passwd = loginCredentials.getPasswd();
-		JAXBElement<String> pnr = objectFactory.createBookingRequestPnr(_pnr);
-		JAXBElement<String> besDat = objectFactory.createBookingRequestBesDat("debug");
-
-		if("123456-1234".equals(_pnr) && "qwerty".equals(_passwd)) {
-			pnr = objectFactory.createBookingRequestPnr(_pnr);
-			besDat = objectFactory.createBookingRequestBesDat("debug");
-			debugResponse.setPnr(pnr);
-			debugResponse.setBesDat(besDat);
-			return true;
-		}
-		else {
-			pnr = objectFactory.createBookingRequestPnr("nologin");
-			besDat = objectFactory.createBookingRequestBesDat("debug");
-			debugResponse.setPnr(pnr);
-			debugResponse.setBesDat(besDat);
-			return false;
-		}
-	}
-
+	
 	public	boolean login(State loginCredentials) {
 		//"parameters"
 		JAXBElement<String> pnr = objectFactory.createBookingRequestPnr(loginCredentials.getPnr());

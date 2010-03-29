@@ -33,7 +33,9 @@
 	</bean>
 	<bean id="bookingService" class="se.vgregion.webbtidbok.BookingService">
 	</bean>
-
+	<bean id="validationService" class="se.vgregion.webbtidbok.ValidationLogin">
+	</bean>
+	
 	<!-- Imports the configurations of the different infrastructure systems of the application -->
 	<import resource="webmvc-config.xml" />
 	<import resource="webflow-config.xml" />

@@ -52,7 +52,7 @@
 					promptMessage="Skriv in ditt personnnummer.">
 					<h:inputText id="pnr" value="#{loginCredentials.pnr}" />
 				</sf:clientTextValidator></div>
-				<div class="label"><h:outputLabel for="passwd">Lösenord</h:outputLabel>
+				<div class="label"><h:outputLabel for="passwd">Lösenord #{loginmessages.logMessagePassword}</h:outputLabel>
 				</div>
 				<div class="input"><sf:clientTextValidator
 					promptMessage="Skriv in lösenordet som står i kallelsen.">
