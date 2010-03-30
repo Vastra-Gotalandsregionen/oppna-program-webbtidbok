@@ -1,3 +1,20 @@
+/**
+ * Copyright 2009 Vastra Gotalandsregionen
+ *
+ *   This library is free software; you can redistribute it and/or modify
+ *   it under the terms of version 2.1 of the GNU Lesser General Public
+ *   License as published by the Free Software Foundation.
+ *
+ *   This library is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU Lesser General Public License for more details.
+ *
+ *   You should have received a copy of the GNU Lesser General Public
+ *   License along with this library; if not, write to the
+ *   Free Software Foundation, Inc., 59 Temple Place, Suite 330,
+ *   Boston, MA 02111-1307  USA
+ */
 package se.vgregion.webbtidbok.tests;
 
 import java.util.Random;
@@ -9,12 +26,20 @@ import org.junit.Test;
 import se.vgregion.webbtidbok.lang.StringHandler;
 
 public class StringHandlerTest {
+	
 	@Test
 	public void testThatStringHandlerUppercasesAnyFirstLetter(){
-		StringHandler sh = new StringHandler();
+		String toBeVerified = randomString();
 		try {
-			System.out.println(sh.toFirstLetterToUpperCase(randomString()));
-			Assert.assertTrue(true);
+			System.out.println(StringHandler.toFirstLetterToUpperCase(toBeVerified));
+			toBeVerified = StringHandler.toFirstLetterToUpperCase(toBeVerified);
+			String charVerified = toBeVerified.substring(0, 1);
+			if(charVerified.matches("[A-Z]") ){
+				Assert.assertTrue(true);
+			}
+			else{
+				Assert.assertTrue(false);
+			}
 		}
 		catch(Exception e) {
 			System.out.println(e.getMessage());
@@ -23,41 +48,44 @@ public class StringHandlerTest {
 		
 	}
  
+	
+	
 	@Test
-	public void testThatAnyNonLetterWorks(){
-		StringHandler sh = new StringHandler();
+	public void testThatEmptyStringReturnsNOk(){
+		
+		
 		try{
-			int randomInt = randomInt();
-			String str = Integer.toString(randomInt);
-			System.out.println(sh.toFirstLetterToUpperCase(str));
-			Assert.assertTrue(true);
-		}
-		catch(Exception e){
-			Assert.assertTrue(false);
-			System.out.println(e.getMessage());			
-		}
-	}
-	@Test
-	public void testThatEmptyStringReturnsOk(){
-		StringHandler sh = new StringHandler();
-		try{
-			sh.toFirstLetterToUpperCase("");
-			Assert.assertTrue(true);
+			 String s = StringHandler.toFirstLetterToUpperCase("");
+			 String charVerified = s.substring(0, 1);
+			 if(charVerified.matches("[A-Z]")){
+				 Assert.assertTrue(false);
+			 }
+			 else{
+				 Assert.assertTrue(true);
+			 }
 		}
 		catch(Exception e) {
-			System.out.println("testThatEmptyStringReturnsOk() " + e.getMessage());
+			System.out.
+			println("testThatEmptyStringReturnsOk() " + e.getMessage());
 			Assert.assertTrue(false);
 		}
 	}
 	@Test
-	public void testThatNullStringReturnsOk(){
-		StringHandler sh = new StringHandler();
+	public void testThatNullStringReturnsNOk(){
 		try{
-			sh.toFirstLetterToUpperCase(null);
-			Assert.assertTrue(true);
+			
+			 String s = StringHandler.toFirstLetterToUpperCase(null);
+			 String charVerified = s.substring(0, 1);
+			 if(charVerified.matches("[A-Z]")){
+				 Assert.assertTrue(false);
+			 }
+			 else{
+				 Assert.assertTrue(true);
+			 }
+			
 		}
 		catch (Exception e){ 
-			Assert.assertTrue(false);
+			Assert.assertTrue(true);
 			System.out.println("testThatNullStringReturnsOk() " + e.getMessage());
 		}
 	}
