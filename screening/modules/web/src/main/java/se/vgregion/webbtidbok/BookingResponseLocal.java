@@ -41,7 +41,7 @@ public class BookingResponseLocal implements Serializable{
 	/*
 	Pnr	String	YYYMMdd-nnnn
 	Namn	String	Patientens namn
-	Vardgivare	String	Vårdgivare, klar text
+	Vardgivare	String	Vï¿½rdgivare, klar text
 	Mottgning	string	
 	Adress	String	
 	BokadTid	DateTime	Yyyy-MM-dd HH:mm
@@ -49,7 +49,7 @@ public class BookingResponseLocal implements Serializable{
 	MobilTel	String	
 	Epost	string	
 	AntalOmbok	int	Antal gjorda ombokningar
-	MaxAntalOmbok	int	Max antal tillåtna ombokningar
+	MaxAntalOmbok	int	Max antal tillï¿½tna ombokningar
 	Place	BookingPlace	
 
 	
@@ -68,6 +68,7 @@ public class BookingResponseLocal implements Serializable{
 	private int numberBookings;
 	private int maxNbrBookings = 2;
 	
+	private String displayName;
 	
 	public BookingResponseLocal() {
 		// TODO  Auto-generated constructor stub
@@ -78,6 +79,7 @@ public class BookingResponseLocal implements Serializable{
 		
 		setPnr(response.getPnr().getValue());
 		setName(response.getNamn().getValue());
+		setDisplayName(response.getNamn().getValue());
 		setLocalDoctor(response.getVardgivare().getValue());
 		setAddress(""); //missing getmethod.
 		//setTimeBooking(new Date(response.getBokadTid().getYear()));
@@ -112,6 +114,16 @@ public class BookingResponseLocal implements Serializable{
 		
 	}
 	
+	public void setDisplayName(String name) {
+		String n[] = name.toLowerCase().split(", ");
+		
+		n[0] = StringHandler.toFirstLetterToUpperCase(n[0]);
+		n[1] = StringHandler.toFirstLetterToUpperCase(n[1]);
+		displayName = n[1] + " " + n[0];
+
+		System.out.println("displayname: " + displayName);
+	}
+
 	public void setPnr(String pnr){
 		this.pnr = pnr;
 	}
@@ -170,6 +182,10 @@ public class BookingResponseLocal implements Serializable{
 	
 	public String getName(){
 		return name;
+	}
+	
+	public String getDisplayName() {
+		return displayName;
 	}
 	
 	public String getLocalDoctor(){

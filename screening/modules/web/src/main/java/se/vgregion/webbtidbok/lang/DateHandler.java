@@ -33,8 +33,6 @@ public class DateHandler {
 		//DateFormat dateFormat = new DateFormat("",locale);
 		
 		return simpleFormat.format(date);
-		
-		
 	}
 	
 	public static Date setLocaleDate(Date date){
@@ -42,7 +40,7 @@ public class DateHandler {
 		Locale locale = new Locale("sv","SE");
 		//SimpleDateFormat simpleFormat = new SimpleDateFormat("yyyy-MM-dd-hh.mm.ss",locale);
 		
-		DateFormat simpleFormat = new SimpleDateFormat("EEEE, d MMMM yyyy HH:mm:ss Z",locale);
+		DateFormat simpleFormat = new SimpleDateFormat("EEEE d MMMM yyyy HH:mm:ss Z",locale);
 		try{
 			
 			System.out.println("setLocaleDate: " + date.toString());
@@ -51,9 +49,7 @@ public class DateHandler {
 			
 			String formatString = simpleFormat.format(date);
 			Date newObject = simpleFormat.parse(formatString);
-			
-			
-			
+				
 			System.out.println("new Object " + newObject.toString());
 			
 			return simpleFormat.parse(simpleFormat.format(date));
@@ -62,16 +58,15 @@ public class DateHandler {
 			pe.printStackTrace();
 			return null;
 		}
-		
 	}
 	
-	public static String setLocaleString(Date date){
+	public static String setLocaleString(Date date) {
 		
 		Locale locale = new Locale("sv","SE");
 		//SimpleDateFormat simpleFormat = new SimpleDateFormat("yyyy-MM-dd-hh.mm.ss",locale);
 		
-		DateFormat simpleFormat = new SimpleDateFormat("EEEE, d MMMM yyyy ', klockan ' HH:mm",locale);
-		try{
+		DateFormat simpleFormat = new SimpleDateFormat("EEEE d MMMM yyyy', klockan ' HH:mm", locale);
+		try {
 			
 			System.out.println("setLocaleDate: " + date.toString());
 			
@@ -80,19 +75,13 @@ public class DateHandler {
 			String formatString = simpleFormat.format(date);
 			Date newObject = simpleFormat.parse(formatString);
 			
-			
-			
 			System.out.println("new Object " + newObject.toString());
 			
 			return simpleFormat.format(date);
 			
-		}catch(ParseException pe){
+		} catch(ParseException pe) {
 			pe.printStackTrace();
 			return null;
-		}
-		
+		}	
 	}
-	
-	
-	
 }
