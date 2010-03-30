@@ -58,7 +58,8 @@ public class LoginTests {
 		State credentials = new State();
 		credentials.setPasswd("");
 		credentials.setPnr("");
-	
+		System.out.println(credentials.toString());
+		
 		Login screen = new Login();
 		boolean loggedIn = screen.login(credentials);
 		
@@ -75,6 +76,111 @@ public class LoginTests {
 	
 	
 	/*
+	 * Test logging in with blank pwd, should return false if able to login with blank pwd
+	 * 
+	 */
+	@Test
+	public void testLoginBlankPassword(){
+		State credentials = new State();
+		credentials.setPasswd("");
+		credentials.setPnr("19121212-1212");
+		System.out.println(credentials.toString());
+		
+		Login screen = new Login();
+		boolean loggedIn = screen.login(credentials);
+		
+		if(loggedIn == true){
+			Assert.assertFalse(true);
+		}
+		else{
+			Assert.assertTrue(true);
+		}
+		
+		
+	
+	}
+	
+	
+	/*
+	 * Test logging in with blank pnr, should return false if able to login with blank pnr
+	 * 
+	 */
+	@Test
+	public void testLoginBlankPnr(){
+		State credentials = new State();
+		credentials.setPasswd("Zs12JzIW");
+		credentials.setPnr("");
+		System.out.println(credentials.toString());
+		
+		Login screen = new Login();
+		boolean loggedIn = screen.login(credentials);
+		
+		if(loggedIn == true){
+			Assert.assertFalse(true);
+		}
+		else{
+			Assert.assertTrue(true);
+		}
+		
+		
+	
+	}
+	
+	
+	/*
+	 * Test logging in with null values on pwd, should return false if able to login with null
+	 * password
+	 */ 
+	@Test
+	public void testLoginNullPassword(){
+		State credentials = new State();
+		credentials.setPasswd(null);
+		credentials.setPnr("19121212-1212");
+		System.out.println(credentials.toString());
+		
+		Login screen = new Login();
+		boolean loggedIn = screen.login(credentials);
+		
+		if(loggedIn == true){
+			Assert.assertFalse(true);
+		}
+		else{
+			Assert.assertTrue(true);
+		}
+		
+		
+	
+	}
+	
+	
+	/*
+	 * Test logging in with null values on pnr, should return false if able to login with null
+	 * pnr
+	 */ 
+	@Test
+	public void testLoginNullPnr(){
+		State credentials = new State();
+		credentials.setPasswd("Zs12JzIW");
+		credentials.setPnr(null);
+		System.out.println(credentials.toString());
+		
+		Login screen = new Login();
+		boolean loggedIn = screen.login(credentials);
+		
+		if(loggedIn == true){
+			Assert.assertFalse(true);
+		}
+		else{
+			Assert.assertTrue(true);
+		}
+		
+		
+	
+	}
+	
+	
+	
+	/*
 	 * Test logging in with null values on pid and pwd, should return false if able to login with blank
 	 * 
 	 */
@@ -83,7 +189,8 @@ public class LoginTests {
 		State credentials = new State();
 		credentials.setPasswd(null);
 		credentials.setPnr(null);
-	
+		System.out.println(credentials.toString());
+		
 		Login screen = new Login();
 		boolean loggedIn = screen.login(credentials);
 		
@@ -108,6 +215,7 @@ public class LoginTests {
 		State credentials = new State();
 		credentials.setPasswd("4444");
 		credentials.setPnr("760909");
+		System.out.println(credentials.toString());
 		
 		Login screen = new Login();
 		boolean loggedIn = screen.login(credentials);
@@ -143,6 +251,9 @@ public class LoginTests {
 		credentials.setPasswd("Zs12JzIW");
 		credentials.setPnr("19121212-1212");
 		
+		System.out.println(credentials.toString());
+		
+		
 		Login screen = new Login();
 		boolean loggedIn = screen.login(credentials);
 		
@@ -151,6 +262,77 @@ public class LoginTests {
 		}
 		else{
 			Assert.assertFalse(true);
+		}
+		
+		
+	
+	}
+	
+	
+	/*
+	 * Test logging in with correct values on pid, should return false if able to login
+	 * 
+	 * testvalues:
+	 * pwd sekel pnr
+	 * Zs12JzIW 19 121212-1212
+	 *	Y8PBZRUr 19 960103-2395
+	 *	bQwkdRrG 19 910104-2399
+	 *	fje5rnXG 19 910104-2399
+	 *	u63MvXTx 19 660223-3196
+	 *	2td3XrGx 19 030303-9804
+	 * 
+	 * 
+	 */
+	@Test
+	public void testFaultyPassword(){
+		State credentials = new State();
+		credentials.setPasswd("Zs1UYTREWQQQQ2JzIW");
+		credentials.setPnr("19121212-1212");
+		System.out.println(credentials.toString());
+		
+		Login screen = new Login();
+		boolean loggedIn = screen.login(credentials);
+		
+		if(loggedIn == true){
+			Assert.assertTrue(false);
+		}
+		else{
+			Assert.assertTrue(true);
+		}
+		
+		
+	
+	}
+	
+	/*
+	 * Test logging in with correct values on pid, should return false if able to login
+	 * 
+	 * testvalues:
+	 * pwd sekel pnr
+	 * Zs12JzIW 19 121212-1212
+	 *	Y8PBZRUr 19 960103-2395
+	 *	bQwkdRrG 19 910104-2399
+	 *	fje5rnXG 19 910104-2399
+	 *	u63MvXTx 19 660223-3196
+	 *	2td3XrGx 19 030303-9804
+	 * 
+	 * 
+	 */
+	@Test
+	public void testFaultyPnr(){
+		State credentials = new State();
+		credentials.setPasswd("Zs12JzIW");
+		credentials.setPnr("191212121212");
+		System.out.println(credentials.toString());
+		
+		Login screen = new Login();
+		boolean loggedIn = screen.login(credentials);
+		
+		if(loggedIn == true){
+			Assert.assertTrue(false);
+		}
+		else{
+			Assert.assertTrue(true);
 		}
 		
 		
