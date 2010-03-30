@@ -29,23 +29,22 @@
 
 	<ui:fragment id="loginFragment">
 
-		<div id="main-column">
-		<div id="yui-main">
+		<div id="boxcontainer" style="padding-bottom: 1em;">
+		<div id="boxleft"></div>
+		<div id="boxmiddle">
+			
 		    <h1>Omboka eller avboka tid till undersökning av stora kroppspulsådern</h1>
 		    <p>Här kan du logga in för att omboka eller avboka din besökstid du fått i kallelsen.</p>
 		    <p>Undersökningen görs med avsikt att tidigt hitta förändringar som kan utvecklas till svår sjukdom.</p>
-		    <a href="help">Här kan du läsa mer om hur du gör</a>
-			<br></br>
+		    <p><a href="help">Här kan du läsa mer om hur du gör</a></p>
 			
-			<div id="forms-container">
+			<div id="boxleft1" style="width: 90%;">
 			
-			<h:form id="mainForm" class="search-form">
+			<h:form id="mainForm" class="centerContent">
 				<h2>Logga in</h2>
+				<fieldset style="border-width: 0;">
 				<p>Lösenordet hittar du i den kallelse du fått hemskickad</p>
-				<!--  <fieldset> -->
-				<div class="field">
-				<div class="label"><h:outputLabel for="pnr">Personnummer (ÅÅÅÅMMDD-XXXX) #{loginmessages.logMessagePnr}</h:outputLabel>
-				</div>
+				<h:outputLabel for="pnr">Personnummer (ÅÅÅÅMMDD-XXXX) #{loginmessages.logMessagePnr}</h:outputLabel>
 				<div class="input"><sf:clientTextValidator
 					regExp="[0-9]{8}-[0-9]{4}"
 					invalidMessage="Skriv ditt personnummuer på formen ÅÅÅÅMMDD-XXXX."
@@ -59,10 +58,9 @@
 					<h:inputSecret id="passwd" value="#{loginCredentials.passwd}" />
 				</sf:clientTextValidator></div>
 
-				</div>
-				<div class="buttonGroup"><sf:commandButton id="login"
+				<div class="button"><sf:commandButton id="login"
 					value="Logga in" processIds="*" action="login" /></div>
-				<!--  </fieldset> -->
+				</fieldset>
 			</h:form>
 			</div>
 			</div>			  

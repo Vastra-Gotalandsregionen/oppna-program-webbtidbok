@@ -19,20 +19,23 @@
 -->
 <h:outputText xmlns:h="http://java.sun.com/jsf/html" rendered="true">
 	<div class="footerholder">
-		<div id="footbordertopLeft"><p class="footertextmini"> </p></div>
-		<div id="footbordertopRight"><p class="footertextmini"> </p></div>
-		<div id="footerleft">
-<!--			<p class="footertext">${msg.publishedBy}: ${msg.careDesk} &#160;&#160;&#160;&#160;<a href="mailto:vardredaktion@vgregion.se" class="mail-link">vardredaktion@vgregion.se</a></p>-->
+<!--		<div id="footbordertopLeft"><p class="footertextmini"> </p></div>-->
+<!--		<div id="footbordertopRight"><p class="footertextmini"> </p></div>-->
+	<div id="footerleft">
+			<p class="footertext"><span id="ctl00_Footer1_LabelAndrad"></span> Publicerad av: <span>Vårdredaktionen</span>  &#160;&#160;&#160;&#160;<a href="mailto:vardredaktion@vgregion.se" id="ctl00_Footer1_writerMailLink" class="mail-link"><span>vardredaktion@vgregion.se</span></a></p>
 		</div>
-		<div id="footerright">
-			<p class="footertext"><a class="mail-link" href="http://vard.vgregion.se/sv/Om-Webbplatsen/">${msg.aboutSite}</a> &#160;&#160;&#160;&#160;<a class="mail-link" href="http://vard.vgregion.se/sv/Om-Cookies/">${msg.aboutCookies}</a></p>
+			<div id="footerright">
+			<p class="footertext"><a class="mail-link" href="http://vard.vgregion.se/sv/Om-Webbplatsen/">Om Webbplatsen</a> &#160;&#160;&#160;&#160;<a class="mail-link" href="http://www.vgregion.se/vgrtemplates/Page.aspx?id=9485" target="_blank">Om Cookies</a></p>
+
 		</div>
+
 	</div>
 	<br class="clear" />
 	<div class="footerholder">
 		<div class="footertextBottom">
 			<div class="left"><a href="http://www.vgregion.se/"><img src="/webbtidbok-screening-module-web/resources/VGRImages/logo-small.gif" class="bottomLogo" title="Västra Götalandsregionen" alt="Västra Götalandsregionen" /></a></div>
-<!--			<div class="left"><p class="marginTopFive"><a href="#top" class="url">${msg.toTop}</a> ${msg.infoMaster}: <a href="mailto:vardredaktion@vgregion.se">Margreth Jonson Lekare</a>. ${msg.pageIsPartOf} <a href="http://www.vgregion.se/"><strong>www.vgregion.se</strong></a>. <h:outputText escape="false" value=" ${msg.mobileVersion}" /></p></div>-->
+		<div class="left"><p class="marginTopFive">Informationsansvarig: <a href="mailto:vardredaktion@vgregion.se" id="ctl00_Footer1_webbMasterMail"><span>Margreth Jonsson</span></a>. Denna sida är en del av <a href="http://www.vgregion.se/" target="_blank"><strong>www.vgregion.se</strong></a></p>
 		</div>
+	</div>
 	</div>
 </h:outputText>

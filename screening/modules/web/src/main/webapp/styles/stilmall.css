@@ -1,20 +1,3 @@
-/**
- * Copyright 2009 Vastra Gotalandsregionen
- *
- *   This library is free software; you can redistribute it and/or modify
- *   it under the terms of version 2.1 of the GNU Lesser General Public
- *   License as published by the Free Software Foundation.
- *
- *   This library is distributed in the hope that it will be useful,
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *   GNU Lesser General Public License for more details.
- *
- *   You should have received a copy of the GNU Lesser General Public
- *   License along with this library; if not, write to the
- *   Free Software Foundation, Inc., 59 Temple Place, Suite 330,
- *   Boston, MA 02111-1307  USA
- */
 ﻿
 body {
 	font: 62.5% Arial, Verdana, Helvetica, sans-serif;
@@ -32,18 +15,18 @@ img {
 
 h1, h2, h3, h4 {
 	font-family:Arial, Helvetica, sans-serif;
-	color:#333;
+	color:#222;
 }
 h1 {
 	font-size: 2.4em;
 	font-weight:normal;
 	margin:0;
 	padding:0;
-	margin-bottom:0.4em;/**/
+	margin-bottom:0.4em;
 }
 h2 {
 	font-size:1.6em;
-	font-weight:normal; /* ändrad från bold */
+	font-weight:bold;
 	margin-bottom: 2px;
 	margin-top: 1em;
 }
@@ -126,9 +109,7 @@ ol li a {
 	line-height:1.3;
 	list-style-type:circle;
 	list-style-image: url(images/punktlistepunkt-red.gif);
-}
-* html #boxmiddle ul li {		/*IE6*/
-	list-style-image: url(/VGRImages/punktlistepunkt-red-ie6.gif);	
+	
 }
 #boxmiddle p a {
 	font: normal 1em/1.2em Verdana, Arial, Helvetica, sans-serif;
@@ -204,7 +185,7 @@ ol li a {
 	margin:0;
 }
 .inline {
-    display:inline;
+display:inline;
 }
 
 /*.boxrub {
@@ -284,14 +265,12 @@ div.headimageholder img {
 	margin-left:1em;
 	border:solid 1px #8e0000;
 	background:#f2f1f2;
-	width:130px;
 }
 #pageHeader {
 	padding-right:0.5em; clear: both; display: block; margin-top:0em; padding-right:0.5em; height:3.3em;
 	}
 #pageHeaderSearch {
 	float:right;
-	width:428px;
 	}
 .headerlinks ul {
 	list-style:none;
@@ -299,7 +278,6 @@ div.headimageholder img {
 	padding:0;
 	float:left;
 	margin-top:1em;
-	width:238px;
 	}
 .headerlinks ul li {
 	float:left; 
@@ -313,18 +291,11 @@ div.headimageholder img {
 #menucontainer {
 	background-color:#9c132f;
 	width:100%;
-	/*height:2.2em;*/
+	height:2.2em;
 	float:left;
 	margin-bottom:0.4em;
 	margin-top:0.1em;
 }
-
-/* For IE6
-* html #menucontainer {  
-	margin-top:-0.1em;
-}
-*/
-
 #menucontainer ul {
 	list-style-type: none;	
 	padding: 0;
@@ -332,14 +303,12 @@ div.headimageholder img {
 	clear: both;
 }
 #menucontainer ul li {
-	float: left;
+	float: left;	
 }
 #menucontainer ul li a.first {
 	border-left: none;
 }
-#menucontainer ul li a 
-{
-    background-color:#9c132f;
+#menucontainer ul li a {
 	color:#fff;
 	padding: 0.4em 0.9em 0.5em 1.1em;
 	display: block;
@@ -373,20 +342,15 @@ div.headimageholder img {
 }
 #centercontent {
 	width:40em;
-	padding-top:2em;
+	margin-top:2em;
 	margin-left:3em;
-}
-* html #centercontent {
-	float:none;
+	display: table;
 }
 
 #centercontent h2 
 {
 	display: block;
-	font-size:1.6em;
-	font-weight:bold;
-	color:#666 /*#9C132F*/ ;
-	/*font-family:Tahoma; */
+	clear: both;	
 }
 
 #centerframe {
@@ -407,17 +371,14 @@ html>/**/body .banner {
 
 
 
-/* ------------------------------------- */
-/* -------  LEFT AND RIGHT BOXES ------- */
-/* ------------------------------------- */
-
+										  /* ------------------------------------- */
+										  /* -------  LEFT AND RIGHT BOXES ------- */
+										  /* ------------------------------------- */
+	
 .boxinside {
 	border:solid 0.2em #fff; 
-	width:24.4em;
-}	
-
-.boxinside p { padding-left: 1.5em; }
-							  
+	width:24.4em; overflow: hidden;
+}								  
 #boxleftholder {
 	float: left;
 	margin-bottom: -1500em;       /******** Ändrat 080110 *********/
@@ -426,6 +387,9 @@ html>/**/body .banner {
 	background-color:#fff;
 	display: block;
 	}
+html[xmlns*=""] body:last-child #boxleftholder {  /* Hack för SAFARI */
+	display: table;			
+} 
 #boxleft {
 	float: left;
 	border: 0.2em solid #fff;
@@ -438,7 +402,7 @@ html>/**/body .banner {
 	margin-bottom:0.2em;
 	border: 0.1em solid #91adb4;
 }
-#boxleft3, #boxright4, #boxrightbanner {
+#boxleft3, #boxright4 {
 	float: left;
 	background-color:#f3f1f2; 
 	margin-bottom: -1500em;       /******** Ändrat 080110 *********/
@@ -446,7 +410,7 @@ html>/**/body .banner {
 	width: 24.8em;
 	border: 0.1em solid #91adb4;
 }
-#boxleft3inside, #boxright4inside, #boxrightbannerinside {
+#boxleft3inside, #boxright4inside {
 	float: left;
 	background-color:#f3f1f2; 
 	margin-bottom: -1500em;       /******** Ändrat 080110 *********/
@@ -458,12 +422,6 @@ html>/**/body .banner {
 #boxright4inside div
 { padding-left: 2em; padding-right: 1em;
 }
-#boxrightbannerinside div
-{ padding-left: 1em; padding-right: 1em;
-}
-#boxright4inside ul li div, #boxrightbannerinside ul li div
-{ padding-left: 0;
-}
 #boxright4inside h2
 { margin-left: -1em;
 }
@@ -472,10 +430,6 @@ html>/**/body .banner {
 }
 .boxright4banner  {
 	margin-left: -20px;	
-}
-.boxright4banner img 
-{
-    margin-bottom: 0.1em;   
 }
 #commonboxPhone {
 	height:17.8em;
@@ -530,9 +484,6 @@ html>/**/body .banner {
 	}
 #boxright3 h2,             		  /******** Ändrat 20071112  *********/
 #boxright1 h2, 
-#boxright1 p,
-#boxright1 table,
-#boxright1 h2,
 #boxright2 h2,
 #boxright4 h2,                
 #boxinside h2, 
@@ -544,15 +495,6 @@ html>/**/body .banner {
 	margin-top:1em;
 	margin-bottom:0.4em;
 	font-weight:bold;
-}
-
-#boxright1 p,
-#boxright1 table { 
-	padding-left: 1.5em;
-	padding-right:0.7em;
-	margin-top:1em;
-	margin-bottom:0.4em;
-	font-weight:bold; 
 }
 
 #boxright4 ul {
@@ -676,7 +618,7 @@ div.phoneimageholder img {
 	margin-left:3em;
 }
 #centercontent {
-	/*margin-top:2em;*/
+	margin-top:2em;
 	margin-bottom:2em;
 }
 .newsdate {
@@ -687,11 +629,6 @@ div.phoneimageholder img {
 	padding-bottom:0;
 	margin-bottom:0;
 }
-
-.newsintro 
-{
-    display: block;
-}
 .common-news-field {
 	width:36em;
 	float:left;
@@ -699,31 +636,12 @@ div.phoneimageholder img {
 	margin-bottom:1em;
 	padding-bottom:0.5em;	
 	border-bottom: dotted 0.1em #ccc;
-	font-size: 1.05em !important;
-	font-family: Verdana, Arial, Helvetica, sans-serif;
 }
 .common-news-field a {
+	font: normal 1em/1.2em Verdana, Arial, Helvetica, sans-serif;
 	line-height:1.3em;
 	color:#222;
 	text-decoration:underline;
-}
-
-.topleftfloatingimage {
-    float: left;
-    padding: 0.4em 0.4em 0.4em 0;
-}
-
-.toprightfloatingimage {
-    float: right;
-    padding: 0.4em 0 0.4em 0.4em;
-} 
-
-.centerfloatingimage {
-    display: block;
-    margin: 0 auto;
-    clear: both;
-    padding-top: 0.4em;
-    padding-bottom: 0.6em;
 }
 
 .news-block
@@ -865,9 +783,7 @@ div.imageholder img {
 .footertextmini {
 	font-size: 0.01em;
 }
-.footertext 
-{
-    background-color:#9c132f;
+.footertext {
 	font-size:1.0em;
 	font-weight:normal;
 	color:#fff;
@@ -879,9 +795,7 @@ div.imageholder img {
 	padding-left:1.5em;
 	float:left;
 }
-.mail-link 
-{
-    background-color:#9c132f;
+.mail-link {
 	color:#fff;
 }
 .bottomLogo { 
@@ -1086,15 +1000,11 @@ background:url(images/pollen-bg.gif) top right no-repeat;
 
 .h2Chapter
 {
-	color:#9C132F;
-	background-color:#fff;
-	font-family: Arial, Verdana, Sans-Serif;
+	color:#222;
+	font-family:Arial, Helvetica, sans-serif;
 	font-size:1.4em;
 	margin-bottom:0px;
 	margin-top:0.6em;
-	width:5em;
-	
-	border-bottom:solid 1px #ccc;
 }
 
 #centercontent ul {
@@ -1312,20 +1222,6 @@ background:url(images/pollen-bg.gif) top right no-repeat;
 	outline: none;
 	text-decoration: none;
 }
-
-#leftnavcontainer #leftNav li.Level1-open a {
-	display:block;
-	background-color:#e6e6e6;
-	padding:0.2em 0.2em 0.2em 1.5em;
-	margin:0;
-	font-family:Arial, Helvetica, sans-serif;
-	font-size:1.2em;
-	color: #222;
-	font-weight:bold;
-	outline: none;
-	text-decoration: none;
-}
-
 * html #leftnavcontainer #leftNav li.Level1-selected a {   /* Hack for IE 6 */
 	width:217px;
 }
@@ -1426,16 +1322,6 @@ background:url(images/pollen-bg.gif) top right no-repeat;
 #leftnavcontainer #leftNav li.Level2-morelinks-selected a:hover {
 	text-decoration:underline;
 }
-#leftnavcontainer #leftNav li.Level2-open a {
-	display: block;/**/
-	margin:0;
-	color: #222;
-	background-color:#e6e6e6;
-	font-weight:bold;
-	outline: none;
-	padding:0.2em 0.5em 0.2em 2.5em;
-	background-color: #e6e6e6;
-}
 
 							/*--------------                   -------------------*/
 			
@@ -1455,17 +1341,9 @@ background:url(images/pollen-bg.gif) top right no-repeat;
 	padding: 0;
 	margin: 0;
 }
-
 * html #leftnavcontainer #leftNav li.Level3 {  /* ---------------- IE 6 FIX ----------- */
-	
-	display:inline;
+	display: inline;
 }
-
-* html #leftnavcontainer #leftNav li.Level3 a{  /* ---------------- IE 6 FIX ----------- */
-	display:inline-block;
-}
-
-
 #leftnavcontainer #leftNav li.Level3 a {
 	display:block;
 	padding:0.2em 0em 0.2em 3.2em;
@@ -1474,12 +1352,18 @@ background:url(images/pollen-bg.gif) top right no-repeat;
 	font-size:1.1em;
 	outline: none;
 }
+/* * html #leftnavcontainer #leftNav li.Level3 a{   /* ---------------- IE 6 FIX ----------- */
+
+/*	 width:202px;
+
+}*/
+
+* html #leftnavcontainer #leftNav li.Level3 a{  /* ---------------- IE 6 FIX ----------- */	
+	display:inline-block;
+}
+
 #leftnavcontainer #leftNav li.Level3 a:hover {
 	text-decoration:underline;
-}
-* html #leftnavcontainer #leftNav li.Level3 {   /* ---------------- IE 6 FIX ----------- */
-	
-	display: block;
 }
 #leftnavcontainer #leftNav li.Level3-selected {
 	display:block;
@@ -1611,6 +1495,16 @@ background:url(images/pollen-bg.gif) top right no-repeat;
 	font-weight:bold;
 	color:#333;
 }
+
+
+
+												/*-----------------------------------------------*/
+												/*------------------          -------------------*/
+												/* ---------------              -----------------*/
+												/*--------------    WEBBIS CSS    ---------------*/
+												/*----------------              -----------------*/
+												/*------------------          -------------------*/
+												/*-----------------------------------------------*/
 												
 												
 #centercontent #searchTabContainer {
@@ -1653,7 +1547,20 @@ background:url(images/pollen-bg.gif) top right no-repeat;
 	text-decoration: none !important;
 }
 
-				/* --- SÖKBOXEN --- */
+.arrowLinkGreenWebbis {
+	display:block;
+	font:1.1em Verdana, Helvetica, sans-serif;
+	color:#222;
+	background:url(VGRImages/arrow-green.gif) left top;
+	background-repeat:no-repeat;
+	padding: 0 0 0 0.7em;
+	margin-bottom:0.6em;
+	margin-left:0.7em;
+}
+.arrowLinkGreenWebbis a {
+	color:#222;
+}
+/* --- SÖKBOXEN --- */
 
 #tabBox {
 	clear:both;
@@ -1710,14 +1617,19 @@ background:url(images/pollen-bg.gif) top right no-repeat;
 .selectText {
 	font: normal 1.1em/1.2em Verdana, Arial, Helvetica, sans-serif;
 }
-.standardButton { 
-    background: #9c132f;
-    border: double 3px #fff;
-    color: #fff;
-    cursor: pointer;
-    font-size: 1.1em;
-    font-weight: bold;
-    padding: 1px;
+.standardButton {
+	background:url(/VGRImages/button-tile.gif) repeat-x left;
+	background-color:#eee;
+	font-size:1.1em;
+	border: 3px double #999;
+	font-weight:bold;
+	color:#333;
+	cursor: pointer;
+	padding:0;
+}
+.standardButton:hover {
+	background-color:#ddd;
+	border: 3px double #666;
 }
 
 .mapSelectField {
@@ -1755,7 +1667,6 @@ background:url(images/pollen-bg.gif) top right no-repeat;
 	font-size:1.1em;
 	padding-left:1em;
 	color: #fff;
-	background-color: #9C132F;
 	font-weight:bold;
 	text-decoration: none;
 }
@@ -1809,7 +1720,7 @@ background:url(images/pollen-bg.gif) top right no-repeat;
 			/* --- BEBISSÖK BEBISLOGIN mm --- */
 
 #bebisContainer {
-	/*float:left;*/
+	float:left;
 	margin-top:0.4em;
 }
 .bebisFrame { 		/* Används på WebbisStartSidan/sök */
@@ -1888,7 +1799,7 @@ background:url(images/pollen-bg.gif) top right no-repeat;
 	padding:.1em .1em .1em .1em;
 }
 .webbisImgBigFrame {
-	/*float:left;*/
+	float:left;
 	border: solid .4em #a5acb2;
 	margin-top:2em;
 	margin-bottom:.5em;
@@ -2049,7 +1960,7 @@ background:url(images/pollen-bg.gif) top right no-repeat;
 	padding:.1em .1em .1em .1em;
 }
 .webbisImgBigFrame {
-	/*float:left;*/
+	float:left;
 	border: solid .4em #a5acb2;
 	margin-top:2em;
 	margin-bottom:.5em;
@@ -2094,193 +2005,3 @@ background:url(images/pollen-bg.gif) top right no-repeat;
 	width: 11em;
 	margin-top:1.2em;
 }
-
-.startpageheader { margin-top: 1em; }
-
-.revidedTag {margin-bottom:-1.1em;}
-
-/* --- Tags --- */
-.tagList li { float: left; margin-right: 0.5em; }
-ul.pageNav li {
-    display:block;
-    float: left;
-    padding: 3px;
-    margin-left: 2px;
-    font-family: georgia;
-}
-ul.pageNav li.currentPage { background-color: #bb0000; }
-#boxright4 ul.pageNav li a { color: #000; margin-left: 2px; }
-#boxright4 ul.pageNav li.currentPage a { color: #fff; }
-
-
-/* --- Webbis --- */
-
-/*#webbis-widget {
-	height: 10em;
-	width: 24.4em;
-	border:0.2em solid #FFFFFF
-}*/
-
-#webbis-img {
-	float : left;
-}
-
-#webbis-txt {
-	font-size: 1em;
-	float : left;
-	height: 8em;
-	padding-top: 0.5em;
-}
-
-#webbis-txt p{
-	padding-left: 0;
-}
-
-#webbis-header {
-	color:#000;
-	font-family:Arial,Helvetica,sans-serif;
-	font-size:1.8em;
-	font-weight:normal;
-	padding-top:0.5em;
-	padding-bottom:0.5em;
-	text-align:left;
-}
-
-
-#webbis-image {
-	width: 10em;
-	height: 8em;
-	padding-top:1.0em;
-	padding-bottom:0.5em;
-	padding-left:0.4em;
-	padding-right:1.0em;
-}
-
-.hrivdiv
-{
-	clear: both;
-	padding-left: 1.5em;
-	margin-top: 1em;
-	margin-bottom: 1em;
-}
-
-.btnHitta {padding:0px 0.154em;background:#fff;border:3px double #999;color:#333;font-weight:bold;font-size:0.923em;cursor: pointer;}
-.btnHitta:hover {background:#fff;border:3px double #555;}
-
-/* ------------ BEGIN YUI AC */ 
-#autocomplete_outer 
-{
-	position: relative;
-	display: none;
-}
-
-#autocomplete_inner
-{
-	position: absolute;
-	top: 0em;
-	left: 0em;
-	width: 400px;
-	margin-left: -206px;
-}
-
-#autocomplete_boxfix
-{
-	/*float: right;*/
-}
-
-#autocomplete_choices
-{
-	border: 1px solid black;
-	background: white;
-	overflow-y: auto;
-	overflow-x: hidden;
-}
-
-#autocomplete_choices iframe 
-{
-	display: none;
-}
-
-* html div#autocomplete_choices, * html div#autocomplete_boxfix { 
-   height: expression( this.scrollHeight > 249 ? "250px" : "auto" ); /* sets max-height for IE */
-}
-div#autocomplete_choices, div#autocomplete_boxfix {
-   max-height: 250px; /* sets max-height value for all standards-compliant browsers */
-}
-
-iframe.autocomplete_overlayfix 
-{
-	position: absolute;
-	z-index: -1;
-	filter: mask();
-	border: 0;
-	margin: 0;
-	padding: 0;
-	top: 0;
-	left: 0;
-	width: 500px;
-	height: 250px;
-	overflow: hidden;
-	float: left;
-}
-
-.autocomplete_container {
-	/*height: 4em;*/
-}
-
-.yui-skin-sam .yui-ac-content
-{
-	text-align: left;
-	position: relative !important;
-	background: none !important;
-	border: none !important;
-}
-
-.yui-skin-sam .yui-ac-container
-{
-	position: relative !important;
-	top: 0em !important;
-}
-
-.yui-skin-sam .yui-ac-input
-{
-	position: relative !important;
-}
-
-#acIndicator {
-	position: absolute;
-	top: 1px;
-	left: 196px;
-}
-
-div.autocomplete {
-	margin: 0px;
-	margin-bottom: 0.5em;
-	padding: 0px;
-	font-size: 1.2em;
-}
-
-.yui-ac-content {
-	width: auto !important;
-}
-
-.yui-ac-bd ul {
-	list-style-type: none;
-	margin: 0px;
-	padding: 0px;
-}
-
-.yui-ac-bd ul li.selected {
-	background-color: #ffb;
-}
-
-.yui-ac-bd ul li {
-	list-style-type: none;
-	display: block;
-	margin: 0;
-	padding: 2px;
-	padding-right: 1.5em;
-	font-size: 1em;
-	cursor: pointer;
-}
-/*--------------- END YUI AC */
