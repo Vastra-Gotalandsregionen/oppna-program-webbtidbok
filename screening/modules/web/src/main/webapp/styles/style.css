@@ -758,6 +758,26 @@ a.unit {
 }
 */
 
+#forms-container-welcome-loggout {
+	padding: 0em 0em 0em 0em;
+	width: auto;
+} 
+
+#forms-container-welcome-loggout-label h1 {
+	margin: 0 0 0 0;
+	color: #333333;
+	line-height: normal;
+	
+	float: left;
+	width: 400px;
+	text-align: left;
+}
+
+#forms-container-welcome-loggout-button  {
+	width: auto;
+	text-align: right;
+}
+
 #forms-container {
 	font-weight: bold;
 	background-color: #F3F1F2;
