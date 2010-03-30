@@ -81,18 +81,17 @@ public class BookingResponseLocal implements Serializable{
 		setName(response.getNamn().getValue());
 		setDisplayName(response.getNamn().getValue());
 		setLocalDoctor(response.getVardgivare().getValue());
-		setAddress(""); //missing getmethod.
-		//setTimeBooking(new Date(response.getBokadTid().getYear()));
+		setAddress(response.getAddress().getValue()); //missing getmethod.
 		
 		
 		setTeam(response.getExternalID().getValue());
 		
 		setMainSector(response.getMottagning().getValue());
 		setMobilePhone(response.getMobilTel().getValue());
-		setEmail("");// missing email
-		this.setNumberOfBookings(2);
-		
-		
+		setEmail(response.getEpost().getValue());// missing email
+		this.setNumberOfBookings(response.getAntalOmbok());
+		this.setMaxNbrBookings(response.getMaxAntalOmbok());
+		//response.getCentralTidbokID()
 		
 		//Set time booking
 		timeBooking = new Date();
@@ -104,13 +103,9 @@ public class BookingResponseLocal implements Serializable{
 		timeBooking.setYear(response.getBokadTid().getYear() - 1900);
 		timeBooking.setDate(response.getBokadTid().getDay());
 		
-		System.out.println("timebooking: " + timeBooking.toString());
-		
 		
 		setTimeBookingString(DateHandler.setLocaleString(timeBooking));
 		setTimeBookingString(StringHandler.toFirstLetterToUpperCase(getTimeBookingString()));
-		
-		System.out.println("timebooking parsed: " + timeBookingString);
 		
 	}
 	
