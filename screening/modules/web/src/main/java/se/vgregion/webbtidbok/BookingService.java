@@ -53,8 +53,6 @@ public class BookingService
 			request = helper.getQueryWSRequest(loginCredentials);
 			response = helper.getQueryWS(request);
 			
-			System.out.println(this.toString());
-			
 			
 			BookingResponseLocal responseLocal = new BookingResponseLocal(response);
 			

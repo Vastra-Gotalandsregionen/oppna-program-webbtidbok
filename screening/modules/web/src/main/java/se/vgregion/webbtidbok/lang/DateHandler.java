@@ -68,9 +68,6 @@ public class DateHandler {
 		DateFormat simpleFormat = new SimpleDateFormat("EEEE d MMMM yyyy', klockan ' HH:mm", locale);
 		try {
 			
-			System.out.println("setLocaleDate: " + date.toString());
-			
-			System.out.println("parsa date" + simpleFormat.format(date));
 			
 			String formatString = simpleFormat.format(date);
 			Date newObject = simpleFormat.parse(formatString);

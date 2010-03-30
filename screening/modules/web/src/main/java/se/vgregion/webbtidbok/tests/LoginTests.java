@@ -100,7 +100,7 @@ public class LoginTests {
 	
 	
 	/*
-	 * Test logging in with null values on pid and pwd, should return false if able to login with blank
+	 * Test logging in with faulty values on pid and pwd, should return false if able to login with faulty values
 	 * 
 	 */
 	@Test
@@ -124,7 +124,7 @@ public class LoginTests {
 	}
 	
 	/*
-	 * Test logging in with null values on pid and pwd, should return false if able to login with blank
+	 * Test logging in with correct  values on pid and pwd, should return false if not able to login
 	 * 
 	 * testvalues:
 	 * pwd sekel pnr

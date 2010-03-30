@@ -81,14 +81,14 @@ public class BookingResponseLocal implements Serializable{
 		setName(response.getNamn().getValue());
 		setDisplayName(response.getNamn().getValue());
 		setLocalDoctor(response.getVardgivare().getValue());
-		setAddress(response.getAddress().getValue()); //missing getmethod.
+		setAddress(response.getAddress().getValue()); 
 		
 		
 		setTeam(response.getExternalID().getValue());
 		
 		setMainSector(response.getMottagning().getValue());
 		setMobilePhone(response.getMobilTel().getValue());
-		setEmail(response.getEpost().getValue());// missing email
+		setEmail(response.getEpost().getValue());
 		this.setNumberOfBookings(response.getAntalOmbok());
 		this.setMaxNbrBookings(response.getMaxAntalOmbok());
 		//response.getCentralTidbokID()
