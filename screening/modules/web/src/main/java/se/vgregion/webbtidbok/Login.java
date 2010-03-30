@@ -48,6 +48,11 @@ public class Login {
 		return response.getBokadTid().toString();
 	}
 
+	public void logout(State loginCredentials) {
+		loginCredentials.setPnr("");
+		loginCredentials.setPasswd("");
+		loginCredentials.setLoggedIn(false);
+	}
 	
 	public	boolean login(State loginCredentials) {
 		//"parameters"
@@ -55,8 +60,8 @@ public class Login {
 		JAXBElement<String> pin = objectFactory.createBookingRequestPin(loginCredentials.getPasswd());
 		
 //		Zs12JzIW 19 121212-1212
-		//JAXBElement<String> pnr = objectFactory.createBookingRequestPnr("19121212-1212");
-		//JAXBElement<String> pin = objectFactory.createBookingRequestPin("Zs12JzIW");
+//		JAXBElement<String> pnr = objectFactory.createBookingRequestPnr("19960103-2395");
+//		JAXBElement<String> pin = objectFactory.createBookingRequestPin("Y8PBZRUr");
 
 		
 		JAXBElement<String> key = objectFactory.createBookingRequestKey("asd");

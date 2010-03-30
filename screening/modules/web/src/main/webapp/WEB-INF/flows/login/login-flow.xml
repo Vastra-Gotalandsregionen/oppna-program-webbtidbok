@@ -37,12 +37,10 @@
 	<action-state id="validate">
 			<evaluate expression="validationService.validateLogin(loginCredentials, loginmessages)" />
 			<transition on="yes" to="doLogin"></transition>
-			<transition on="no" to="start"/>	
-			
+			<transition on="no" to="start"/>		
 	</action-state>
 	
 	<action-state id="doLogin">
-		
 		<evaluate expression="loginService.login(loginCredentials)" />
     		<transition on="yes" to="loggedin" />
     		<transition on="no" to="start">
@@ -54,11 +52,9 @@
 		<on-render>
 			<evaluate expression="bookingService.getBooking(loginCredentials)" result="flowScope.booking" />
  		</on-render>
-		
+		<transition on="logout" to="loggedout" history="invalidate"/>
 	</view-state>
-	
-	
-	
+
 	<view-state id="login_error">
 	</view-state>
 	
@@ -70,6 +66,12 @@
 	
 	<view-state id="badlogin">
 	</view-state>
-		
+	
+	<view-state id="loggedout">
+		<on-render>
+			<evaluate expression="loginService.logout(loginCredentials)" />
+		</on-render>
+	</view-state>
+	
 	<end-state id="finish" />
 	</flow>
