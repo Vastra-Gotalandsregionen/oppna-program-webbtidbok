@@ -1,3 +1,4 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <!--
 
     Copyright 2009 Vastra Gotalandsregionen
@@ -17,7 +18,7 @@
       Boston, MA 02111-1307  USA
 
 -->
-<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	    		xmlns:ui="http://java.sun.com/jsf/facelets"
 	  			xmlns:h="http://java.sun.com/jsf/html"
@@ -28,9 +29,11 @@
 <ui:define name="content">
 
 	<ui:fragment id="loginFragment">
-
-		<div id="main-column">
-   		  <div id="yui-main">
+	
+		<div id="boxcontainer" style="padding-bottom: 1em;">
+		<div id="boxleft" />
+		<div id="boxmiddle">
+	
 		    <h1>Du är utloggad</h1>
 		    <p>Du är utloggad från ändra eller avboka tid till undersökning av stora
 		    kroppspulsådern.</p>
@@ -40,7 +43,8 @@
 		    <p>Om du har frågor kan du ringa till Kontaktpunkten på telefon 031-342 24 00.<br/>
 		    Kontaktpunkten är öppen måndag - fredag 07:30 - 17:00.<br/>
 		    <a href="http://www.kontaktpunkten.sahlgrenska.se">Läs mer om Kontaktpunkten</a></p>	
-		  </div>			  
+		    
+		</div>			  
 		</div>
 	</ui:fragment>
 
