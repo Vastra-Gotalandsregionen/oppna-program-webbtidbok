@@ -48,6 +48,14 @@ public class BookingService
 	
 	public BookingResponseLocal getBooking(State loginCredentials){
 		
+//		Uncomment below for debug, you'll only have to click login, 
+//		creds below are hard coded.
+//		String pnr = "19960103-2395";
+//		String psw = "Y8PBZRUr";
+//		loginCredentials.setPnr(pnr);
+//		loginCredentials.setPasswd(psw);
+//		loginCredentials.setLoggedIn(true);
+		
 		if(loginCredentials.isLoggedIn()){
 			
 			request = helper.getQueryWSRequest(loginCredentials);
