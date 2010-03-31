@@ -44,14 +44,14 @@
 				<h2>Logga in</h2>
 				<fieldset style="border-width: 0;">
 				<p>Lösenordet hittar du i den kallelse du fått hemskickad</p>
-				<h:outputLabel for="pnr">Personnummer (ÅÅÅÅMMDD-XXXX) #{loginmessages.logMessagePnr}</h:outputLabel>
+				<h:outputLabel for="pnr">Personnummer (ÅÅÅÅMMDD-XXXX)<br/><p style="color: red; font-style: italic"> #{loginmessages.logMessagePnr}</p></h:outputLabel>
 				<div class="input"><sf:clientTextValidator
 					regExp="[0-9]{8}-[0-9]{4}"
 					invalidMessage="Skriv ditt personnummuer på formen ÅÅÅÅMMDD-XXXX."
 					promptMessage="Skriv in ditt personnnummer.">
 					<h:inputText id="pnr" value="#{loginCredentials.pnr}" />
 				</sf:clientTextValidator></div>
-				<div class="label"><h:outputLabel for="passwd">Lösenord #{loginmessages.logMessagePassword}</h:outputLabel>
+				<div class="label"><h:outputLabel for="passwd">Lösenord <br/><p style="color:red; font-style: italic"> #{loginmessages.logMessagePassword}</p></h:outputLabel>
 				</div>
 				<div class="input"><sf:clientTextValidator
 					promptMessage="Skriv in lösenordet som står i kallelsen.">

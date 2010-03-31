@@ -33,12 +33,15 @@ public class ValidationLogin {
 		String pnr  = st.getPnr();
 		String password = st.getPasswd();
 		
+		lm.clear();
 		if(pnr.length() == 0){
-			lm.setLogMessagePnr("Personnummer fält tomt, Fyll i Personnummer med ÅÅÅÅMMDD-XXXX");
+			lm.setLogMessagePnr("Fyll i ditt personnummer med Ã…Ã…Ã…Ã…MMDD-XXXX");
+			lm.setBadLogin();
 			
 		}
 		if(password.length() == 0){
-			lm.setLogMessagePassword("Lösenord fält tomt, Fyll i Lösenord");
+			lm.setLogMessagePassword("Du mÃ¥ste fylla i lÃ¶senord");
+			lm.setBadLogin();
 		}
 		if(pnr.length() == 0 || password.length() == 0){
 			return false;
@@ -52,10 +55,10 @@ public class ValidationLogin {
 		String result = "";
 		
 		if(validateString.length() == 0){
-			result = "Personnummer fält tomt, Fyll i Personnummer med ÅÅÅÅMMDD-XXXX";
+			result = "Personnummer fï¿½lt tomt, Fyll i Personnummer med ï¿½ï¿½ï¿½ï¿½MMDD-XXXX";
 		}
 		else if(validateString.length() > 0 && validateString.length() > 13){
-			result = "Personnummer för många siffror, Fyll i Personnummer med ÅÅÅÅMMDD-XXXX";
+			result = "Personnummer fï¿½r mï¿½nga siffror, Fyll i Personnummer med ï¿½ï¿½ï¿½ï¿½MMDD-XXXX";
 		}
 		else if(validateString.length() == 13){
 			//Match pattern = Pattern.
@@ -63,12 +66,12 @@ public class ValidationLogin {
 				result = "";
 			}
 			else{
-				result = "Personnummer ifyllt felaktigt, Fyll i Personnummer med ÅÅÅÅMMDD-XXXX";
+				result = "Personnummer ifyllt felaktigt, Fyll i Personnummer med ï¿½ï¿½ï¿½ï¿½MMDD-XXXX";
 			}
 			
 		}
 		else{
-			result = "Personnummer fel siffror, Fyll i Personnummer med ÅÅÅÅMMDD-XXXX";
+			result = "Personnummer fel siffror, Fyll i Personnummer med ï¿½ï¿½ï¿½ï¿½MMDD-XXXX";
 		}
 			
 			
@@ -79,7 +82,7 @@ public class ValidationLogin {
 		
 		String result = "";
 		if(validateString.length() == 0){
-			result = "Lösenord fält tomt, Fyll i Lösenord";
+			result = "Lï¿½senord fï¿½lt tomt, Fyll i Lï¿½senord";
 		}
 		
 		

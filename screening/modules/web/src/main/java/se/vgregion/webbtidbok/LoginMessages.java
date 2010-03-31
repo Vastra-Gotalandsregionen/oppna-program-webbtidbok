@@ -46,7 +46,14 @@ public class LoginMessages implements Serializable{
 		logMessagePassword =s;
 	}
 	
+	public void setBadLogin(){
+		logMessagePnr = "Fyll i ditt personnummer med ÅÅÅÅMMDD-XXXX";
+		logMessagePassword = "Lösenord som det står i kallelsen, tänk på att skilja mellan små och stora bokstäver";
+	}
 	
+	public void clear() {
+		logMessagePnr = logMessagePassword = "";
+	}
 	
 	
 	
