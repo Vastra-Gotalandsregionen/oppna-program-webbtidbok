@@ -57,13 +57,7 @@ public class Login {
 	public	boolean login(State loginCredentials) {
 		//"parameters"
 		JAXBElement<String> pnr = objectFactory.createBookingRequestPnr(loginCredentials.getPnr());
-		JAXBElement<String> pin = objectFactory.createBookingRequestPin(loginCredentials.getPasswd());
-		
-//		Zs12JzIW 19 121212-1212
-//		JAXBElement<String> pnr = objectFactory.createBookingRequestPnr("19960103-2395");
-//		JAXBElement<String> pin = objectFactory.createBookingRequestPin("Y8PBZRUr");
-
-		
+		JAXBElement<String> pin = objectFactory.createBookingRequestPin(loginCredentials.getPasswd());		
 		JAXBElement<String> key = objectFactory.createBookingRequestKey("asd");
 		JAXBElement<String> cryptedKey =objectFactory.createBookingRequestCryptedKey("asd");
 		JAXBElement<String> cert = objectFactory.createBookingRequestCert("NO");

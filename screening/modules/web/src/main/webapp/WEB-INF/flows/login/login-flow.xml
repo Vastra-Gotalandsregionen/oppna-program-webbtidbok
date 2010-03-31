@@ -29,6 +29,7 @@
 	<input name="pnr" type="string" value="flowScope.loginCredentials.pnr"/>
 	<input name="passwd" type="string" value="flowScope.loginCredentials.passwd"/>
 		
+<!--for debugging you have to replace to="validate" with to="loggedin"-->
 	<view-state id="start">
 		<transition on="login" to="validate" />
 		<!-- ajax metoder kolla pnr, eller lösenord. --> 
