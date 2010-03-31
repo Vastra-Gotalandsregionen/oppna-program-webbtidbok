@@ -45,7 +45,7 @@
 		<evaluate expression="loginService.login(loginCredentials)" />
     		<transition on="yes" to="loggedin" />
     		<transition on="no" to="start">
-    			<evaluate expression="loginmessages.setLogMessagePnr('Inloggning misslyckades')" />
+    			<evaluate expression="loginmessages.setBadLogin()" />
     		</transition>
 	</action-state>
 	
