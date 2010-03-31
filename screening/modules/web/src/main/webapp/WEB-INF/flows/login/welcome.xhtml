@@ -27,19 +27,25 @@
 
 <ui:define name="content">
 
-<div class="section">
-	<ui:fragment id="loginFragment">
-		<div id="main-column">
-			<div id="yui-main">
-				<div id="forms-container-welcome-loggout">
-					<h:form>
-						<div id="forms-container-welcome-loggout-label">
-							<h1>Välkommen #{booking.displayName}</h1>
-						</div>
-						<div id="forms-container-welcome-loggout-button" vclass="buttonGroup"><sf:commandButton id="logout"	value="Logga ut" processIds="*" action="logout" />
-						</div>
-					</h:form>
-				</div>
+<ui:fragment id="loginFragment">
+	
+		<div id="boxcontainer" style="padding-bottom: 1em;">
+		<div id="boxleft" />
+		<div id="boxmiddle">
+<!--	<table>	-->
+<!--	<tr>-->
+<!--	<td>-->
+	<h1 style="display: inline">Välkommen #{booking.displayName}</h1>
+<!--	</td>-->
+<!--	<td style="padding: left 2em">-->
+<!--	<div style="width:auto; text-align: right">-->
+	<h:form id="mainForm" style="display: inline; text-align: right; padding-left: 4em;" >
+		<sf:commandButton id="logout" value="Logga ut" processIds="*" action="logout" />
+	</h:form>	
+<!--	</div>-->
+<!--	</td>-->
+<!--	</tr>-->
+<!--	</table>-->
 				<br/>
 				
 				<p>Här kan du omboka eller avboka din tid till undersökning av stora kroppspulsådern
@@ -47,24 +53,42 @@
 				före undersökningsdatumet.</p>
 				<p>Notera att du även kan omboka eller avboka tiden per telefon. Ring då till
 				Kontaktpunkten på telefonnummer 031-342 69 55 tisdag, onsdag eller torsdag mellan
-				klockan 09:00 - 15:00, alternativt 031-342 24 00.
-				<a href="http://www.kontaktpunkten.sahlgrenska.se">Läs mer om Kontaktpunkten</a></p>
+				klockan 09:00 - 15:00, alternativt 031-342 24 00.</p>
+				<p><a href="http://www.kontaktpunkten.sahlgrenska.se">Läs mer om Kontaktpunkten</a></p>
 		
-				<div id="forms-container">
-					<h:form id="mainForm" class="search-form">
-						<p>Du har fått en kallelse till undersökning av stora kroppspulsådern:<br/>
-						<a href="">Läs mer om undersökning av stora kroppspulsådern</a><br/>
-						<a href="">Läs om ultraljudsundersökning</a></p>
-						<p>Var: #{booking.mainSector}, #{booking.address}<br/>
-						<a href="">Visa mer information om mottagningen</a></p>
-						<p>När: #{booking.timeBookingString}.<br/>
-						(besöket beräknas ta maximalt 15 minuter)</p>	
-					</h:form>
+				<div id="boxleft1" style="width: 100%">		
+		
+				<p>Du har fått en kallelse till undersökning av stora kroppspulsådern:<br/>
+				<a href="">Läs mer om undersökning av stora kroppspulsådern</a><br/>
+				<a href="">Läs om ultraljudsundersökning</a></p>
+				
+				<table>
+				<tr>
+				<td>
+				Var:</td><td style="padding-left: 2em">  #{booking.mainSector}, #{booking.address}</td>
+				</tr>
+				<tr>
+				<td></td>
+				<td style="padding-left: 2em">
+				<a href="">Visa mer information om mottagningen</a>
+				</td>
+				</tr>
+				<p></p>
+				<tr>
+				<td>
+				När:</td><td style="padding-left: 2em"> #{booking.timeBookingString}.</td>
+				</tr>
+				<tr>
+				<td></td>
+				<td style="padding-left: 2em">
+				(besöket beräknas ta maximalt 15 minuter)</td>
+				</tr>
+				</table>
+				
+				</div>	
 				</div>
-			</div>			  
-		</div>
-	</ui:fragment>
-</div>
-
+				</div>
+		
+</ui:fragment>
 </ui:define>
 </ui:composition>
