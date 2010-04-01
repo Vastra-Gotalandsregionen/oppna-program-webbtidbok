@@ -374,7 +374,40 @@ public class LoginTests {
 	
 	}
 	
+	/*
+	 * Test logging in with correct values on pid, and uppercase value on password on one letter , should return false if able to login
+	 * 
+	 * testvalues:
+	 * pwd sekel pnr
+	 * Zs12JzIW 19 121212-1212
+	 *	Y8PBZRUr 19 960103-2395
+	 *	bQwkdRrG 19 910104-2399
+	 *	fje5rnXG 19 910104-2399
+	 *	u63MvXTx 19 660223-3196
+	 *	2td3XrGx 19 030303-9804
+	 * 
+	 * 
+	 */
+	@Test
+	public void testFaultyUppercaseCasePassword(){
+		State credentials = new State();
+		credentials.setPasswd("ZS12JzIW");
+		credentials.setPnr("19121212-1212");
+		System.out.println(credentials.toString());
+		
+		Login screen = new Login();
+		boolean loggedIn = screen.login(credentials);
+		
+		if(loggedIn == true){
+			Assert.assertTrue(false);
+		}
+		else{
+			Assert.assertTrue(true);
+		}
+		
+		
 	
+	}
 	
 
 }
