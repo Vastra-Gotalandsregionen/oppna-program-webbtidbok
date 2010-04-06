@@ -29,21 +29,31 @@ import javax.xml.bind.JAXBElement;
 import org.apache.commons.logging.impl.Log4JLogger;
 import org.springframework.stereotype.Service;
 
+import se.vgregion.webbtidbok.ws.ArrayOfBookingPlace;
+import se.vgregion.webbtidbok.ws.BookingPlace;
 import se.vgregion.webbtidbok.ws.BookingRequest;
 import se.vgregion.webbtidbok.ws.BookingResponse;
 import se.vgregion.webbtidbok.ws.CentralBookingWS;
 import se.vgregion.webbtidbok.ws.GetBooking;
 import se.vgregion.webbtidbok.ws.ICentralBookingWS;
 import se.vgregion.webbtidbok.ws.ICentralBookingWSGetBookingICFaultFaultFaultMessage;
+import se.vgregion.webbtidbok.ws.ICentralBookingWSGetBookingPlaceICFaultFaultFaultMessage;
 import se.vgregion.webbtidbok.ws.ObjectFactory;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class WebServiceHelper {
 	
 	private ObjectFactory objectFactory = new ObjectFactory();
 	
+	//make web service call
+	CentralBookingWS centralBookingWS = new CentralBookingWS();
+	ICentralBookingWS ws = centralBookingWS.getBasicHttpBindingICentralBookingWS();
+	
+	//used to send whatever request, response depends on what ws-method was called
 	public BookingRequest getQueryWSRequest(State loginCredentials){
 		//"parameters"
 		JAXBElement<String> pnr = objectFactory.createBookingRequestPnr(loginCredentials.getPnr());
@@ -73,12 +83,22 @@ public class WebServiceHelper {
 		
 	}
 	
-	public BookingResponse getQueryWS(BookingRequest request){
-		
-		
-		//make web service call
-		CentralBookingWS centralBookingWS = new CentralBookingWS();
-		ICentralBookingWS ws = centralBookingWS.getBasicHttpBindingICentralBookingWS();
+	//This to get the place of the visit for Screening, ie: Example-hospital AB
+	public ArrayOfBookingPlace getBookingPlaceFromWS(BookingRequest request){
+		ArrayOfBookingPlace bookingArr = new ArrayOfBookingPlace();
+		try {
+			bookingArr = ws.getBookingPlace(request);
+			return bookingArr;
+		} catch (ICentralBookingWSGetBookingPlaceICFaultFaultFaultMessage e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+			return null;
+		}
+	}
+	
+	//Info concerning the booking, time, place, location, pnr, name etc
+	public BookingResponse getQueryWS(BookingRequest request){	
 		
 		try{
 			
@@ -93,6 +113,7 @@ public class WebServiceHelper {
 			
 		}
 	}
+	
 	
 	
 }
