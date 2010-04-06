@@ -54,6 +54,7 @@
 			<evaluate expression="bookingService.getBooking(loginCredentials)" result="flowScope.booking" />
  		</on-render>
 		<transition on="logout" to="loggedout" history="invalidate"/>
+		<transition on="update" to="update" />
 	</view-state>
 
 	<view-state id="login_error">
@@ -66,6 +67,15 @@
 	</view-state>
 	
 	<view-state id="badlogin">
+	</view-state>
+	
+	<view-state id="update" view="update.xhtml">
+		<!--  
+		<on-render>
+			  <evaluate expression="loginService.logout(loginCredentials)" /> 
+		</on-render>
+		-->
+		<transition on="logout" to="loggedout" history="invalidate"/>
 	</view-state>
 	
 	<view-state id="loggedout">
