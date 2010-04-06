@@ -389,7 +389,7 @@ public class LoginTests {
 	 * 
 	 */
 	@Test
-	public void testFaultyUppercaseCasePassword(){
+	public void testFaultyUppercasePassword(){
 		State credentials = new State();
 		credentials.setPasswd("ZS12JzIW");
 		credentials.setPnr("19121212-1212");
