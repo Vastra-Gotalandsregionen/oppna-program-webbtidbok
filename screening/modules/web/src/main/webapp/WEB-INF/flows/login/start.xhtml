@@ -1,3 +1,4 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <!--
 
     Copyright 2009 Vastra Gotalandsregionen
@@ -17,7 +18,7 @@
       Boston, MA 02111-1307  USA
 
 -->
-<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	    		xmlns:ui="http://java.sun.com/jsf/facelets"
 	  			xmlns:h="http://java.sun.com/jsf/html"
@@ -32,7 +33,7 @@
 		<div id="boxcontainer" style="padding-bottom: 1em;">
 		<div id="boxleft"></div>
 		<div id="boxmiddle">
-			
+			<p/>
 		    <h1>Omboka eller avboka tid till undersökning av stora kroppspulsådern</h1>
 		    <p>Här kan du logga in för att omboka eller avboka din besökstid du fått i kallelsen.</p>
 		    <p>Undersökningen görs med avsikt att tidigt hitta förändringar som kan utvecklas till svår sjukdom.</p>
@@ -51,6 +52,7 @@
 					promptMessage="Skriv in ditt personnnummer.">
 					<h:inputText id="pnr" value="#{loginCredentials.pnr}" />
 				</sf:clientTextValidator></div>
+				<p></p>
 				<div class="label"><h:outputLabel for="passwd">Lösenord <br/><p style="color:red; font-style: italic"> #{loginmessages.logMessagePassword}</p></h:outputLabel>
 				</div>
 				<div class="input"><sf:clientTextValidator
