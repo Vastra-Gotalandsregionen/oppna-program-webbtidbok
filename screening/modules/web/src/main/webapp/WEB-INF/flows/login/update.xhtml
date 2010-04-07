@@ -70,9 +70,59 @@
 				</td>
 				</tr>
 				
+				<tr>
+				<td></td>
+				<td style="padding-left: 2em">
+				</td>
+				</tr>
+				
+				
 				</table>
 				
-				</div>	
+				
+				
+				
+				
+				
+				</div>
+				
+				<br></br>
+				<table>
+				<tr>
+				<td>
+				<h:form id="selectForm" style="display: inline; text-align: right; padding-right: 20em;" >
+					<!--  
+					<select id="selectDepartment">
+						<option value="home">Home Furnishings</option>
+						<option value="clothing">Clothing</option>
+						<option value="sporting">Sporting Goods</option>
+						<option value="grocery">Grocery</option>
+					</select>
+					-->
+					
+					<h:selectOneMenu id="places" value="" style="width:350px">
+						  <f:selectItems value="#{bookingplaces}" />
+					
+					</h:selectOneMenu>
+					
+					
+					
+    			
+    			</h:form>
+    			</td>
+    			</tr>
+    			<tr>
+    			<td style="display: inline; text-align: right; padding-right: 1em;" >
+					<h:form id="cancelForm" style="display: inline; text-align: right; padding-right: 1em;" >
+						<sf:commandButton id="cancelButton" value="Avbryt" processIds="*" action="cancel" />
+					</h:form>
+				</td>
+    			</tr>
+    			
+    			
+				</table>
+				
+					
 				</div>
 				</div>
 		

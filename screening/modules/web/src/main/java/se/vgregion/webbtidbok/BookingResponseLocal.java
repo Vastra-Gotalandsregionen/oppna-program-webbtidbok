@@ -67,8 +67,10 @@ public class BookingResponseLocal implements Serializable{
 	private String email;
 	private int numberBookings;
 	private int maxNbrBookings = 2;
-	
 	private String displayName;
+	private int centralTimeBookingId = 0;
+	
+	
 	
 	public BookingResponseLocal() {
 		// TODO  Auto-generated constructor stub
@@ -92,6 +94,8 @@ public class BookingResponseLocal implements Serializable{
 		this.setNumberOfBookings(response.getAntalOmbok());
 		this.setMaxNbrBookings(response.getMaxAntalOmbok());
 		//response.getCentralTidbokID()
+		this.setCentralTimeBookId(response.getCentralTidbokID());
+		
 		
 		//Set time booking
 		timeBooking = new Date();
@@ -106,6 +110,18 @@ public class BookingResponseLocal implements Serializable{
 		
 		setTimeBookingString(DateHandler.setLocaleString(timeBooking));
 		setTimeBookingString(StringHandler.toFirstLetterToUpperCase(getTimeBookingString()));
+		
+	}
+	
+	
+
+	public void setCentralTimeBookId(int id){
+		centralTimeBookingId = id;
+	}
+	
+	public int getCentralTimeBookId(){
+		
+	 return centralTimeBookingId;
 		
 	}
 	
