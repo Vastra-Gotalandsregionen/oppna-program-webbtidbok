@@ -29,6 +29,7 @@ import se.vgregion.webbtidbok.ws.GetBooking;
 import se.vgregion.webbtidbok.ws.ICentralBookingWS;
 import se.vgregion.webbtidbok.ws.ICentralBookingWSGetBookingICFaultFaultFaultMessage;
 import se.vgregion.webbtidbok.ws.ObjectFactory;
+import se.vgregion.webbtidbok.ws.*;
 import java.util.*;
 import java.io.*;
 
@@ -71,6 +72,42 @@ public class BookingService
 	}
 	
 	
+	public List<BookingPlaceLocal> getBookingPlace(State loginCredentials){
+		
+		//		Uncomment below for debug, you'll only have to click login, 
+		//		creds below are hard coded.
+		//		String pnr = "19960103-2395";
+		//		String psw = "Y8PBZRUr";
+		//		loginCredentials.setPnr(pnr);
+		//		loginCredentials.setPasswd(psw);
+		//		loginCredentials.setLoggedIn(true);
+		List<BookingPlaceLocal> placeListLocal = new ArrayList<BookingPlaceLocal>();
+		
+		if(loginCredentials.isLoggedIn()){
+			
+			request = helper.getQueryWSRequest(loginCredentials);
+			ArrayOfBookingPlace places = helper.getQueryWSRequestPlaces(request);
+			//response = helper.getQueryWS(request);g
+			List<BookingPlace> placeList = places.getBookingPlace();
+			for(BookingPlace p : placeList){
+				BookingPlaceLocal pl = new BookingPlaceLocal();
+				pl.setCentralTimeBookId(p.getCentralTidbokID());
+				pl.setAddress(p.getAddress().getValue());
+				pl.setClinic(p.getMottagning().getValue());
+				
+				placeListLocal.add(pl);
+				
+				System.out.println(pl.toString());
+				
+			}
+			
+			System.out.println("size: " + placeListLocal.size());
+			
+			return placeListLocal;
+		}
+		
+		return placeListLocal;
+	}
 	
 	
 	

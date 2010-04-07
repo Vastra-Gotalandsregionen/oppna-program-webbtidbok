@@ -17,17 +17,14 @@
  */
 package se.vgregion.webbtidbok;
 
-import javax.xml.bind.JAXBElement;
-
-import se.vgregion.webbtidbok.ws.BookingRequest;
-import se.vgregion.webbtidbok.ws.CentralBookingWS;
-import se.vgregion.webbtidbok.ws.ICentralBookingWS;
-import se.vgregion.webbtidbok.ws.ICentralBookingWSGetBookingICFaultFaultFaultMessage;
 
 import javax.xml.bind.JAXBElement;
 
 import org.apache.commons.logging.impl.Log4JLogger;
 import org.springframework.stereotype.Service;
+
+
+import se.vgregion.webbtidbok.ws.*;
 
 import se.vgregion.webbtidbok.ws.ArrayOfBookingPlace;
 import se.vgregion.webbtidbok.ws.BookingPlace;
@@ -39,6 +36,7 @@ import se.vgregion.webbtidbok.ws.ICentralBookingWS;
 import se.vgregion.webbtidbok.ws.ICentralBookingWSGetBookingICFaultFaultFaultMessage;
 import se.vgregion.webbtidbok.ws.ICentralBookingWSGetBookingPlaceICFaultFaultFaultMessage;
 import se.vgregion.webbtidbok.ws.ObjectFactory;
+
 
 import java.io.*;
 import java.util.ArrayList;
@@ -70,7 +68,10 @@ public class WebServiceHelper {
 		
 		//create request object
 		BookingRequest request = objectFactory.createBookingRequest();
-
+		
+		
+		
+		
 		//setup request object
 		request.setPnr(pnr);
 		request.setPin(pin);
@@ -82,6 +83,44 @@ public class WebServiceHelper {
 		return request;
 		
 	}
+	
+
+	
+	public ArrayOfBookingPlace getQueryWSRequestPlaces(BookingRequest request){
+		//"parameters"
+		//JAXBElement<String> pnr = objectFactory.createBookingRequestPnr(loginCredentials.getPnr());
+		//JAXBElement<String> pin = objectFactory.createBookingRequestPin(loginCredentials.getPasswd());
+		
+		//Zs12JzIW 19 121212-1212
+		//JAXBElement<String> pnr = objectFactory.createBookingRequestPnr("19121212-1212");
+		//JAXBElement<String> pin = objectFactory.createBookingRequestPin("Zs12JzIW");
+
+		
+		//JAXBElement<String> key = objectFactory.createBookingRequestKey("asd");
+		//JAXBElement<String> cryptedKey =objectFactory.createBookingRequestCryptedKey("asd");
+		//JAXBElement<String> cert = objectFactory.createBookingRequestCert("NO");
+		
+		//make web service call
+		CentralBookingWS centralBookingWS = new CentralBookingWS();
+		ICentralBookingWS ws = centralBookingWS.getBasicHttpBindingICentralBookingWS();
+		
+		try{
+			
+			return ws.getBookingPlace(request);
+			//loginCredentials.setBookingResponse(response);
+			
+		}
+		catch(ICentralBookingWSGetBookingPlaceICFaultFaultFaultMessage ex){
+			ex.printStackTrace();
+			System.out.println(ex.getMessage());
+			return null;
+			
+		}
+		
+		
+	}
+	
+	
 	
 	//This to get the place of the visit for Screening, ie: Example-hospital AB
 	public ArrayOfBookingPlace getBookingPlaceFromWS(BookingRequest request){
@@ -99,6 +138,7 @@ public class WebServiceHelper {
 	
 	//Info concerning the booking, time, place, location, pnr, name etc
 	public BookingResponse getQueryWS(BookingRequest request){	
+
 		
 		try{
 			
@@ -114,6 +154,5 @@ public class WebServiceHelper {
 		}
 	}
 	
-	
-	
+
 }
