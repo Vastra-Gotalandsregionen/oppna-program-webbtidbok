@@ -18,6 +18,8 @@ import se.vgregion.webbtidbok.ws.BookingResponse;
 
 /**
  * This is only a stub. To be elaborated.
+ * This is a sandbox class to explore the WebService and
+ * see what we can get from it and how.
  * @author carstm
  *
  */
@@ -43,7 +45,6 @@ public class WSTester {
 
 			mottagning = b.getMottagning().getValue();
 			address = b.getAddress().getValue();
-
 			System.out.println("mottagning: " + mottagning + "\n"
 					 + "adress: " + address);
 		}
@@ -52,8 +53,9 @@ public class WSTester {
 	static public BookingRequest testGetWSRequest(){
 		String pnr = "19121212-1212";
 		String passwd = "Zs12JzIW";
-		
-		
+//		String pnr = "19660223-3196";
+//		String passwd = "u63MvXTx";
+				
 		State logincredentials = new State();
 		logincredentials.setPnr(pnr);
 		logincredentials.setPasswd(passwd);
@@ -71,24 +73,82 @@ public class WSTester {
 	static public BookingResponse testGetBookingResponseFromWS(){
 		String mottagning;
 		BookingResponse bookingResp = new BookingResponse();
-
-		
 		
 		BookingRequest request = testGetWSRequest();
 		WebServiceHelper wsh = new WebServiceHelper();
 		bookingResp = wsh.getQueryWS(request);		
+		
 		mottagning = bookingResp.getMottagning().getValue();
-	
-		System.out.println("BookingRequest.getMottagning().getValue(): " + mottagning);
+		System.out.println("BookingResponse.getMottagning().getValue(): " + mottagning);
 		
 		
 		return bookingResp;
 	}
+	
+	public static void testGetDateAndTimeForDefaultBooking(){
+		int year;
+		int monthNr;
+		int dayNr;
+		int hour;
+		int minute;
+		int second;
+	
+		XMLGregorianCalendar XMLcal;
+		WebServiceHelper wsh = new WebServiceHelper();
+		BookingResponse bookingResp = new BookingResponse();
+		BookingRequest request = testGetWSRequest();
+		bookingResp = wsh.getQueryWS(request);	
+		
+		XMLcal = bookingResp.getBokadTid();
+		
+		year = XMLcal.getYear();
+		System.out.println("Year: " + year);
+		monthNr = XMLcal.getMonth();
+		String strMonthNr = Integer.toString(monthNr);
+		if(strMonthNr.length() < 2){
+			String zero = "0";
+			strMonthNr = zero.concat(strMonthNr);
+			System.out.println("strMonthNr: " + strMonthNr);
+		}
+		System.out.println("MonthNr: " + monthNr);
+		dayNr = XMLcal.getDay();
+		String strDayNr = Integer.toString(monthNr);
+		if(strDayNr.length() < 2){
+			String zero = "0";
+			strDayNr = zero.concat(strDayNr);
+			System.out.println("strDayNr: " + strDayNr);
+		}
+		System.out.println("DayNr: " + dayNr);
+		String date = Integer.toString(year) + " " + strMonthNr + " " + strDayNr;
+		System.out.println("String date: " + date);
+		
+		hour = XMLcal.getHour();
+		System.out.println("Hour: " + hour);
+		String strHour = Integer.toString(hour);
+		if(strHour.length() < 2){
+			String zero ="0";
+			strHour = zero.concat(strHour);
+		}
+		minute = XMLcal.getMinute();
+		System.out.println("Minute: " + minute);
+		String strMinute = Integer.toString(minute);
+		if(strMinute.length() < 2 ){
+			String zero = "0";
+			strMinute = zero.concat(strMinute);
+		}
+		second = XMLcal.getSecond();
+		System.out.println("Second: " + second);
+		String time = strHour + ":" + strMinute; 
+		System.out.println("String time: " + time);
+	}
+	
 	public static void main(String[] args){
 		testGetBookingPlaceFromWS();
 		
 		//yes this works... Where value as when you log in thru the gui with 19121212-1212
 		testGetBookingResponseFromWS();
+		
+		testGetDateAndTimeForDefaultBooking();
 	}
 	
 	
@@ -111,5 +171,13 @@ public class WSTester {
 //	public void testWSHospitalIsCorrect(){
 //		Assert.assertTrue(false);
 //	}
+	
+	
+//	19121212-1212	Zs12JzIW
+//	19960103-2395	Y8PBZRUr
+//	19910104-2399	bQwkdRrG
+//	19910104-2399	fje5rnXG
+//	19660223-3196	u63MvXTx
+//	9030303-9804	2td3XrGx
 	
 }
