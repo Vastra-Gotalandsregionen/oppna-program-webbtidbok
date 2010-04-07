@@ -66,17 +66,18 @@ public class WSTester {
 		return request;
 	}
 	
-	//Get BookingResponse crap and get the damn mottagning from it.
-	//see BookingResponseLocal on how to get the damn BookingResponse
+	//Get BookingResponse stuff and get the mottagning from it.
+	//see BookingResponseLocal on how to get the BookingResponse
 	static public BookingResponse testGetBookingResponseFromWS(){
+		String mottagning;
 		BookingResponse bookingResp = new BookingResponse();
 
 		
 		
 		BookingRequest request = testGetWSRequest();
 		WebServiceHelper wsh = new WebServiceHelper();
-		bookingResp = wsh.getQueryWS(request);
-		String mottagning = bookingResp.getMottagning().getValue();
+		bookingResp = wsh.getQueryWS(request);		
+		mottagning = bookingResp.getMottagning().getValue();
 	
 		System.out.println("BookingRequest.getMottagning().getValue(): " + mottagning);
 		
