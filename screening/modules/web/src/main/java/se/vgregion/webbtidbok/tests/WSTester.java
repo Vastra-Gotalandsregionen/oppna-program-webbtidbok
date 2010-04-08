@@ -33,9 +33,11 @@ import org.junit.Test;
 import se.vgregion.webbtidbok.State;
 import se.vgregion.webbtidbok.WebServiceHelper;
 import se.vgregion.webbtidbok.ws.ArrayOfBookingPlace;
+import se.vgregion.webbtidbok.ws.ArrayOfBookingTime;
 import se.vgregion.webbtidbok.ws.BookingPlace;
 import se.vgregion.webbtidbok.ws.BookingRequest;
 import se.vgregion.webbtidbok.ws.BookingResponse;
+import se.vgregion.webbtidbok.ws.BookingTime;
 
 /**
  * This is only a stub. To be elaborated.
@@ -317,6 +319,24 @@ public class WSTester {
 		System.out.println("bookingPlCTID: " + bookingPlCTID + "\nbookingPlMottagning: " + bookingPlMottagning + "\nbookingPlAddress: " + bookingPlAddress);
 
 	}
+	public static void getBookingTime(){
+		BookingTime bt = new BookingTime();
+		BookingRequest request = getWSRequest();
+		WebServiceHelper wsh = new WebServiceHelper();
+		ArrayOfBookingTime bookingTimeArr = wsh.getQueryWSRequestTime(request);
+		List<BookingTime> bookingTimeList = bookingTimeArr.getBookingTime();
+		XMLGregorianCalendar XMLcal;
+		System.out.println("*** getBookingTime: ");
+		for(BookingTime b : bookingTimeList){
+			String klocka = b.getKlocka().getValue();
+			System.out.println("Klocka: " + klocka);
+			XMLcal = b.getDatum();
+			int year = XMLcal.getYear();
+			int month = XMLcal.getMonth();
+			int day = XMLcal.getDay();			
+			System.out.println("year: " + year + ", month: " + ", day: " + day);
+		}
+	}
 	
 	public static void main(String[] args){
 		Map<Integer, String> map;
@@ -344,6 +364,8 @@ public class WSTester {
 		centralTidBoksIdList = returnCentralTidBokIdFromMap(map);
 
 		exploreWS(centralTidBoksIdList);
+		
+		getBookingTime();
 		
 	}
 	
