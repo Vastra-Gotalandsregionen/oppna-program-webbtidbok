@@ -120,6 +120,77 @@ public class WebServiceHelper {
 		
 	}
 	
+	public ArrayOfCalendar getQueryWSRequestCalendar(BookingRequest request){
+		//"parameters"
+		//JAXBElement<String> pnr = objectFactory.createBookingRequestPnr(loginCredentials.getPnr());
+		//JAXBElement<String> pin = objectFactory.createBookingRequestPin(loginCredentials.getPasswd());
+		
+		//Zs12JzIW 19 121212-1212
+		//JAXBElement<String> pnr = objectFactory.createBookingRequestPnr("19121212-1212");
+		//JAXBElement<String> pin = objectFactory.createBookingRequestPin("Zs12JzIW");
+
+		
+		//JAXBElement<String> key = objectFactory.createBookingRequestKey("asd");
+		//JAXBElement<String> cryptedKey =objectFactory.createBookingRequestCryptedKey("asd");
+		//JAXBElement<String> cert = objectFactory.createBookingRequestCert("NO");
+		
+		//make web service call
+		CentralBookingWS centralBookingWS = new CentralBookingWS();
+		ICentralBookingWS ws = centralBookingWS.getBasicHttpBindingICentralBookingWS();
+		
+		try{
+			
+			return ws.getCalandar(request);
+			//loginCredentials.setBookingResponse(response);
+			
+		}
+		catch(ICentralBookingWSGetCalandarICFaultFaultFaultMessage ex){
+			ex.printStackTrace();
+			System.out.println(ex.getMessage());
+			return null;
+			
+		}
+		
+		
+	}
+	
+	
+	public ArrayOfBookingTime getQueryWSRequestTime(BookingRequest request){
+		//"parameters"
+		//JAXBElement<String> pnr = objectFactory.createBookingRequestPnr(loginCredentials.getPnr());
+		//JAXBElement<String> pin = objectFactory.createBookingRequestPin(loginCredentials.getPasswd());
+		
+		//Zs12JzIW 19 121212-1212
+		//JAXBElement<String> pnr = objectFactory.createBookingRequestPnr("19121212-1212");
+		//JAXBElement<String> pin = objectFactory.createBookingRequestPin("Zs12JzIW");
+
+		
+		//JAXBElement<String> key = objectFactory.createBookingRequestKey("asd");
+		//JAXBElement<String> cryptedKey =objectFactory.createBookingRequestCryptedKey("asd");
+		//JAXBElement<String> cert = objectFactory.createBookingRequestCert("NO");
+		
+		//make web service call
+		CentralBookingWS centralBookingWS = new CentralBookingWS();
+		ICentralBookingWS ws = centralBookingWS.getBasicHttpBindingICentralBookingWS();
+		
+		try{
+			
+			return ws.getBookingTime(request);
+			//loginCredentials.setBookingResponse(response);
+			
+		}
+		catch(ICentralBookingWSGetBookingTimeICFaultFaultFaultMessage ex){
+			ex.printStackTrace();
+			System.out.println(ex.getMessage());
+			return null;
+			
+		}
+		
+		
+	}
+	
+	
+	
 	
 	
 	//This to get the place of the visit for Screening, ie: Example-hospital AB
