@@ -72,7 +72,7 @@
 	<view-state id="update" view="update.xhtml">
 		  
 		<on-render>
-			  <evaluate expression="bookingService.getBookingPlace(loginCredentials)"  result="flowScope.bookingplaces"  >
+			  <evaluate expression="bookingService.getBookingPlaceSelectItems(loginCredentials)"  result="flowScope.bookingplaces"  >
 			 
 			  
 			  </evaluate>

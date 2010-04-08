@@ -17,6 +17,13 @@
  */
 package se.vgregion.webbtidbok.gui;
 
+
+/**
+ * Author Conny Pemfors, 2010-04-07
+ * 
+ * 
+ */
+
 import javax.faces.model.*;
 import java.util.*;
 import java.lang.*;
@@ -29,6 +36,21 @@ import se.vgregion.webbtidbok.BookingPlaceLocal;
 public class SelectItemConverter {
 	
 	List<SelectItem> items;
+	
+	
+	/**
+	 * 
+	 * Constructor
+	 */
+	public SelectItemConverter(){
+		
+	}
+	
+	
+	/**
+	 * Constructor
+	 * 
+	 */
 	public SelectItemConverter(List<BookingPlaceLocal> lList){
 		items = new ArrayList<SelectItem>();
 		for(BookingPlaceLocal p : lList){
@@ -42,6 +64,50 @@ public class SelectItemConverter {
 		
 	}
 	
+	/**
+	 * Set SelectedItems from BookingPlaceLocal List
+	 * 
+	 * @param lList
+	 */
+	public void setSelectItems(List<BookingPlaceLocal> lList){
+		
+		items = new ArrayList<SelectItem>();
+		for(BookingPlaceLocal p : lList){
+			SelectItem s = new SelectItem();
+			s.setLabel(p.getAddress() + ", " + p.getClinic());
+			s.setValue(p.getCentralTimeBookId());
+			
+			items.add(s);
+		}
+		
+	}
+	
+	
+	
+	/**
+	 * get SelectedItems from BookingPlaceLocal List
+	 * 
+	 * @param lList
+	 */
+	
+	public List<SelectItem> getSelectItems(List<BookingPlaceLocal> lList){
+		items = new ArrayList<SelectItem>();
+		for(BookingPlaceLocal p : lList){
+			SelectItem s = new SelectItem();
+			s.setLabel(p.getAddress() + ", " + p.getClinic());
+			s.setValue(p.getCentralTimeBookId());
+			
+			items.add(s);
+		}
+		
+		return items;
+	}
+	
+	/**
+	 * Get SelectedItems 
+	 * 
+	 * @param lList
+	 */
 	public List<SelectItem> getSelectItems(){
 		return items;
 	}

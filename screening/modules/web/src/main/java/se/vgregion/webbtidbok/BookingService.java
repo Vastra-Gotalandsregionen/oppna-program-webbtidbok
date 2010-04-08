@@ -33,6 +33,9 @@ import se.vgregion.webbtidbok.ws.*;
 import java.util.*;
 import java.io.*;
 
+import se.vgregion.webbtidbok.gui.*;
+import javax.faces.model.*;
+
 
 public class BookingService
 {
@@ -109,7 +112,44 @@ public class BookingService
 		return placeListLocal;
 	}
 	
-	
+
+	public List<SelectItem> getBookingPlaceSelectItems(State loginCredentials){
+		
+		//		Uncomment below for debug, you'll only have to click login, 
+		//		creds below are hard coded.
+		//		String pnr = "19960103-2395";
+		//		String psw = "Y8PBZRUr";
+		//		loginCredentials.setPnr(pnr);
+		//		loginCredentials.setPasswd(psw);
+		//		loginCredentials.setLoggedIn(true);
+		List<BookingPlaceLocal> placeListLocal = new ArrayList<BookingPlaceLocal>();
+		
+		if(loginCredentials.isLoggedIn()){
+			
+			request = helper.getQueryWSRequest(loginCredentials);
+			ArrayOfBookingPlace places = helper.getQueryWSRequestPlaces(request);
+			//response = helper.getQueryWS(request);g
+			List<BookingPlace> placeList = places.getBookingPlace();
+			for(BookingPlace p : placeList){
+				BookingPlaceLocal pl = new BookingPlaceLocal();
+				pl.setCentralTimeBookId(p.getCentralTidbokID());
+				pl.setAddress(p.getAddress().getValue());
+				pl.setClinic(p.getMottagning().getValue());
+				
+				placeListLocal.add(pl);
+				
+				System.out.println(pl.toString());
+				
+			}
+			
+			System.out.println("size: " + placeListLocal.size());
+			SelectItemConverter sc = new SelectItemConverter();
+			
+			return sc.getSelectItems(placeListLocal);
+		}
+		
+		return null;
+	}
 	
 	
 	
