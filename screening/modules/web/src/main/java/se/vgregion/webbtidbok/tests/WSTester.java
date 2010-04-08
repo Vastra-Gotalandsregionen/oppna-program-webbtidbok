@@ -19,7 +19,11 @@ package se.vgregion.webbtidbok.tests;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 
@@ -68,8 +72,10 @@ public class WSTester {
 		
 	}
 	static public BookingRequest testGetWSRequest(){
+		//Klaus K
 		String pnr = "19121212-1212";
 		String passwd = "Zs12JzIW";
+		//Bengt M
 //		String pnr = "19660223-3196";
 //		String passwd = "u63MvXTx";
 				
@@ -159,13 +165,61 @@ public class WSTester {
 		System.out.println("String time: " + time);
 	}
 	
+
+	public static Map testGetDateAndTimeForOtherAlternatives(){
+		//Maybe get tidBok for every mottagning thru getCentralTidBokId()
+		Map<Integer, String> map = new HashMap<Integer, String>();
+		WebServiceHelper wsh = new WebServiceHelper();
+		BookingRequest request = testGetWSRequest();
+		ArrayOfBookingPlace bookingPlArr = wsh.getBookingPlaceFromWS(request);
+		List<BookingPlace> bpList = new ArrayList<BookingPlace>();
+		bpList = bookingPlArr.getBookingPlace();
+		int centralTidBokId;
+		int index = 0;
+		for(BookingPlace b : bpList){
+			index++;
+			centralTidBokId = b.getCentralTidbokID();
+			System.out.println("CentralTidBokId: " + centralTidBokId);
+			String mottagning = b.getMottagning().getValue();
+			System.out.println("Mottagning: " + mottagning);
+			map.put(centralTidBokId, mottagning);
+		}
+		return map;		
+	}
+	public static void readFromMap(Map map){
+		Set keys = map.keySet();
+		Iterator iter = keys.iterator();
+		while(iter.hasNext()){
+			//Set key to start at 0
+			System.out.println("key: " + iter.next().toString());
+			System.out.println("Value: " + map.get(Integer.parseInt(iter.next().toString())));
+		}
+		
+		while(iter.hasNext()){
+			int i = Integer.parseInt(iter.next().toString());
+			System.out.println("i: " + i);
+			System.out.println("iter: " + iter.toString());
+//			System.out.println("Map something: " + map.get(iter).toString());
+			System.out.println("key thru iter.next(): " + iter.next().toString());
+			
+			System.out.println("map value thru key: " + map.get(Integer.parseInt(iter.next().toString())));
+		}
+	}
 	public static void main(String[] args){
+		Map map;
+		
 		testGetBookingPlaceFromWS();
 		
 		//yes this works... Where value as when you log in thru the gui with 19121212-1212
 		testGetBookingResponseFromWS();
 		
 		testGetDateAndTimeForDefaultBooking();
+		
+		map = testGetDateAndTimeForOtherAlternatives();
+		System.out.println("crap: " + map.get(1));
+		readFromMap(map);
+		
+		
 	}
 	
 	
