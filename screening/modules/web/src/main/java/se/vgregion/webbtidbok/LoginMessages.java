@@ -26,6 +26,21 @@ public class LoginMessages implements Serializable{
 	private String logMessagePnr = "";
 	private String logMessagePassword = "";
 	
+	/*
+	-1	General	Allmänt fel, ej specificerat
+	-1002	Not found	 Posten kunde ej hittas
+	-1008	Pwd Error	Pinkoden felaktig
+	-2014	Anulled	 Posten ar avbokad
+	-1036	CertInvalid	Certifierings fel
+	-1119	PnrError	Felaktigt personnummer
+	-10175	OmbokMax	Max antal bokning uppnådda
+	-2002		Inparamter saknas
+	-2001		Invalid paramter 
+	*/
+	
+	public static int exceptionMessage = -1;
+	public static String exceptionMessageString = "Allmänt fel, ej specificerat";
+
 	
 	public String getLogMessagePnr(){
 		
@@ -56,6 +71,42 @@ public class LoginMessages implements Serializable{
 	}
 	
 	
+	public void setExceptionMessage(int id){
+		exceptionMessage = id;
+		
+		switch(exceptionMessage){
+		  		case -1 :
+		  			exceptionMessageString = "Allmänt fel, ej specificerat";
+		  			break;
+		  		case -1002 :
+		  			exceptionMessageString = "Posten kunde ej hittas";
+		  			break;
+		  		case -1008 :
+		  			exceptionMessageString = "Pinkoden felaktig";
+		  			break;
+		  		case -2014 :
+		  			exceptionMessageString = "Posten ar avbokad";
+		  			break;
+		  		case -1036 :
+		  			exceptionMessageString = "Certifierings fel";
+		  			break;	
+		  		
+		  		case -1119 :
+		  			exceptionMessageString = "Felaktigt personnummer";
+		  			break;	
+		  		case -10175 :
+		  			exceptionMessageString = "Max antal bokning uppnådda";
+		  			break;
+		  		case -2002 :
+		  			exceptionMessageString = "Inparameter saknas";
+		  			break;
+		  		case -2001 :
+		  			exceptionMessageString = "Invalid parameter";
+		  			break;
+		  			
+		}		
+		
+	}
 	
 	
 }
