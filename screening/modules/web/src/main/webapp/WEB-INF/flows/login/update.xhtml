@@ -50,91 +50,81 @@
 		
 		
 				<table>
-				<tr>
-				<td>
-				
-				<div id="boxleft1" style="width: 100%">		
-			
-				<table>
-				<tr>
-				<td>
-				#{booking.displayName}</td><td style="padding-left: 2em">#{booking.pnr}  </td>
-				
-				</tr>
-				<p></p>
-				<tr>
-				<td align="top">
-				Ursprunglig tid:</td>
-				<td style="padding-left: 2em">#{booking.mainSector}, #{booking.address} 
-				
-				</td>
-				</tr>
-				<tr>
-				<td>&nbsp;</td>
-				<td style="padding-left: 2em">#{booking.timeBookingString}.
-				</td>
-				</tr>
-				
-				<tr>
-				<td></td>
-				<td style="padding-left: 2em">
-				</td>
-				</tr>
-				
-				
-				</table>
-				</div>
-				</td>
-				</tr>
-				<tr>
-				<td>
-				
-				
-				<br></br>
-		
-					<div id=""    style="display: inline" >
-					<table>
-						<tr>
-						<td>		
-						
-							<h3 style="display: inline"> Valj Plats</h3>
-							<h:form id="helpForm" style="display: inline; text-align: right;" >
-								<div class="image_block" style="display: inline;text-align: right;padding-left: 35em;"> <img src="../VGRImages/help.gif" />  
-								</div>
-        					</h:form>   
-        				</td>
-						</tr>
-					</table>       
-					</div>  <!-- boxleft3inside -->
-					
-					<br/>
-                </td>
-				</tr>
-				<tr>
-				<td> 
-                     
-                <div id="" style="width: 100%;background-color:#ffffff">    
-                <table>
-				<tr>
-				<td>
-					<h:form id="selectForm" style="display: inline; text-align: right; padding-right: 20em;" >
-					<h:selectOneMenu id="places" value="" style="width:320px">
-						   <f:selectItems value="#{bookingplaces}" /> 
-					
-					</h:selectOneMenu>
-				</h:form>
-    			</td>
-    			</tr>
-    			</table> 
-    			</div>
-             </td>
-			</tr>
-			</table>
-			
-			
-				
+					<tr>
+						<td>			
+							<div id="boxleft1" style="width: 100%">				
+							<table>
+								<tr>
+									<td>
+										#{booking.displayName}</td><td style="padding-left: 2em">#{booking.pnr}
+									</td>			
+								</tr>
+								<p></p>
+								<tr>
+									<td align="top">
+										Ursprunglig tid:
+									</td>
+								<td style="padding-left: 2em">
+									#{booking.mainSector}, #{booking.address} 			
+								</td>
+								</tr>
+								<tr>
+									<td>
+										&nbsp;
+									</td>
+									<td style="padding-left: 2em">
+										#{booking.timeBookingString}.
+									</td>
+								</tr>				
+								<tr>
+									<td></td>
+									<td style="padding-left: 2em">
+									</td>
+								</tr>			
+							</table>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>			
+							<br></br>	
+							<div id=""    style="display: inline" >
+								<table>
+									<tr>
+										<td>		
+										
+											<h3 style="display: inline"> Valj Plats</h3>
+											<h:form id="helpForm" style="display: inline; text-align: right;" >
+												<div class="image_block" style="display: inline;text-align: right;padding-left: 35em;"> <img src="../VGRImages/help.gif" />  
+												</div>
+				        					</h:form>   
+				        				</td>
+									</tr>
+								</table>       
+							</div>  <!-- boxleft3inside -->
+							<br/>
+		                </td>
+					</tr>
+					<tr>
+						<td>	                     
+		                <div id="" style="width: 100%;background-color:#ffffff">    
+		                <table>
+							<tr>
+								<td>
+									<h:form id="selectForm" style="display: inline; text-align: right; padding-right: 20em;" >
+										<h:selectOneMenu id="places" value="" style="width:320px">
+											   <f:selectItems value="#{bookingplaces}" /> 					
+										</h:selectOneMenu>
+									</h:form>
+				    			</td>
+			    			</tr>
+		    			</table> 
+		    			</div>
+		            	</td>
+					</tr>
+			</table>				
 		</div>	<!-- boxmiddle -->
-		</div> <!-- boxleft -->
+		</div> <!-- boxcontainer -->
 			
 		
 </ui:fragment>
