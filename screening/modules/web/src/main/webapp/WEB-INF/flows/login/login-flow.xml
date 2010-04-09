@@ -24,11 +24,18 @@
 	
 	<var name="loginCredentials" class="se.vgregion.webbtidbok.State" />
 	<var name="loginmessages" class="se.vgregion.webbtidbok.LoginMessages" />
-	
+<!--	<var name="calendar" class="se.vgregion.webbtidbok.CalendarPrinter" />-->
 	
 	<input name="pnr" type="string" value="flowScope.loginCredentials.pnr"/>
 	<input name="passwd" type="string" value="flowScope.loginCredentials.passwd"/>
-		
+
+<!-- Test state for Calendar 		-->
+<!--	<view-state id="calendar_test">-->
+<!--		<on-render>-->
+<!--			<evaluate expression="calendarService.getCalendarRowsText()" result="flowScope.cal" result-type="dataModel"/>-->
+<!--		</on-render>-->
+<!--	</view-state>-->
+
 <!--for debugging you have to replace to="validate" with to="loggedin"-->
 	<view-state id="start">
 		<transition on="login" to="validate" />
@@ -52,6 +59,7 @@
 	<view-state id="loggedin" view="welcome.xhtml" model="booking">
 		<on-render>
 			<evaluate expression="bookingService.getBooking(loginCredentials)" result="flowScope.booking" />
+			<evaluate expression="calendar.getCalendar()" result="flowScope.cal" />
  		</on-render>
 		<transition on="logout" to="loggedout" history="invalidate"/>
 		<transition on="update" to="update" />
