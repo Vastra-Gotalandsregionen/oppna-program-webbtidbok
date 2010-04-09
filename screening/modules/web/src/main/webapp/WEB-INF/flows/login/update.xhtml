@@ -48,6 +48,11 @@
 				Du kan också skicka e-post till: <a href="mailto:kontaktpunkten.su@vgregion.se">kontaktpunkten.su@vgregion.se</a>.<br/></p>
 				<p><a href="http://www.kontaktpunkten.sahlgrenska.se">Läs mer om Kontaktpunkten</a></p>
 		
+		
+				<table>
+				<tr>
+				<td>
+				
 				<div id="boxleft1" style="width: 100%">		
 			
 				<table>
@@ -78,83 +83,59 @@
 				
 				
 				</table>
-				
-				
-				
-				
-				
-				
 				</div>
-				
-				<br></br>
-				<table>
-				<tr>
-				<td>
-					<div id="boxleft3inside"  src="../VGRImages/help.gif"  style="width: 100%">		
-						
-						<h3> Valj Plats</h3>
-						<div class="image_block"><img src="../VGRImages/help.gif" />  </div>
-                  
-					</div>
-					  
-                     
 				</td>
 				</tr>
-				
 				<tr>
 				<td>
-				<h:form id="selectForm" style="display: inline; text-align: right; padding-right: 20em;" >
-					<!--  
-					<select id="selectDepartment">
-						<option value="home">Home Furnishings</option>
-						<option value="clothing">Clothing</option>
-						<option value="sporting">Sporting Goods</option>
-						<option value="grocery">Grocery</option>
-					</select>
-					-->
+				
+				
+				<br></br>
+		
+					<div id=""    style="display: inline" >
+					<table>
+						<tr>
+						<td>		
+						
+							<h3 style="display: inline"> Valj Plats</h3>
+							<h:form id="helpForm" style="display: inline; text-align: right;" >
+								<div class="image_block" style="display: inline;text-align: right;padding-left: 35em;"> <img src="../VGRImages/help.gif" />  
+								</div>
+        					</h:form>   
+        				</td>
+						</tr>
+					</table>       
+					</div>  <!-- boxleft3inside -->
 					
+					<br/>
+                </td>
+				</tr>
+				<tr>
+				<td> 
+                     
+                <div id="" style="width: 100%;background-color:#ffffff">    
+                <table>
+				<tr>
+				<td>
+					<h:form id="selectForm" style="display: inline; text-align: right; padding-right: 20em;" >
 					<h:selectOneMenu id="places" value="" style="width:320px">
 						   <f:selectItems value="#{bookingplaces}" /> 
 					
 					</h:selectOneMenu>
-					
-					
-					
-    			
-    			</h:form>
+				</h:form>
     			</td>
     			</tr>
-    			<tr>
-    			<td style="display: inline; text-align: right; padding-right: 1em;" >
-					<h:form id="cancelForm" style="display: inline; text-align: right; padding-right: 1em;" >
-						<sf:commandButton id="cancelButton" value="Avbryt" processIds="*" action="cancel" />
-					</h:form>
-				</td>
-    			</tr>
-    			<tr>
-    			<td style="display: inline;" >
-					Las mer om mottagningen och hur du hittar dit genom att klicka pa namnet
-				</td>
-    			</tr>
-    			
-    			
-    			
-				
-				<tr>
-				<td>
-					<div id="boxleft3inside" style="width: 100%">		
+    			</table> 
+    			</div>
+             </td>
+			</tr>
+			</table>
 			
-						<h3> Valj Datum</h3>
-						<div class="image_block"><img src="../VGRImages/help.gif" />  </div>
-                  
-					</div>
-				</td>
-				</tr>
-				</table>
+			
 				
-					
-				</div>
-				</div>
+		</div>	<!-- boxmiddle -->
+		</div> <!-- boxleft -->
+			
 		
 </ui:fragment>
 </ui:define>
