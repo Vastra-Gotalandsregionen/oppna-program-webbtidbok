@@ -1,0 +1,133 @@
+<!--
+
+    Copyright 2009 Vastra Gotalandsregionen
+
+      This library is free software; you can redistribute it and/or modify
+      it under the terms of version 2.1 of the GNU Lesser General Public
+      License as published by the Free Software Foundation.
+
+      This library is distributed in the hope that it will be useful,
+      but WITHOUT ANY WARRANTY; without even the implied warranty of
+      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+      GNU Lesser General Public License for more details.
+
+      You should have received a copy of the GNU Lesser General Public
+      License along with this library; if not, write to the
+      Free Software Foundation, Inc., 59 Temple Place, Suite 330,
+      Boston, MA 02111-1307  USA
+
+-->
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:sf="http://www.springframework.org/tags/faces"	  			
+				template="/WEB-INF/layouts/standard.xhtml">
+
+<ui:define name="content">
+
+<ui:fragment id="loginFragment">
+	
+		<div id="boxcontainer" style="padding-bottom: 1em;">
+		<div id="boxleft" />
+		<div id="boxmiddle">
+		<p/>
+		<h1 style="display: inline">Calendar Test</h1>
+		<p/>
+				<br/>
+<!--				#{cal}-->
+<!--				<h:outputText escape="false"-->
+<!--	              value="#{cal}"/>-->
+				
+
+<h:dataTable id="books"
+				columnClasses="list-column-center, list-column-right, list-column-center, list-column-right"
+				headerClass="list-header" rowClasses="list-row"
+				styleClass="list-background" value="#{cal}" var="myCal">
+								<h:column>
+					<f:facet name="header">
+						<h:outputText value="Må" />
+					</f:facet>
+					<h:outputText value="#{myCal.mon}" />
+				</h:column>
+				
+								<h:column>
+					<f:facet name="header">
+						<h:outputText value="Ti" />
+					</f:facet>
+					<h:outputText value="#{myCal.tue}" />
+				</h:column>
+				
+								<h:column>
+					<f:facet name="header">
+						<h:outputText value="On" />
+					</f:facet>
+					<h:outputText value="#{myCal.wed}" />
+				</h:column>
+				
+								<h:column>
+					<f:facet name="header">
+						<h:outputText value="To" />
+					</f:facet>
+					<h:outputText value="#{myCal.thu}" />
+				</h:column>
+				
+								<h:column>
+					<f:facet name="header">
+						<h:outputText value="Fr" />
+					</f:facet>
+					<h:outputText value="#{myCal.fri}" />
+				</h:column>
+				
+								<h:column>
+					<f:facet name="header">
+						<h:outputText value="Lö" />
+					</f:facet>
+					<h:outputText value="#{myCal.sat}" />
+				</h:column>
+				
+								<h:column>
+					<f:facet name="header">
+						<h:outputText value="Sö" />
+					</f:facet>
+					<h:outputText value="#{myCal.sun}" />
+				</h:column>
+				
+			</h:dataTable>
+<!--				<h:dataTable id="calendar" styleClass="summary" value="#{calendar}" var="h" rendered="#{calendar.rowCount > 0}">-->
+<!--					<h:column>-->
+<!--						<f:facet name="header">-->
+<!--							<sf:commandLink id="sortByNameLink" action="sort" value="Name" processIds="*">-->
+<!--								<f:param name="sortBy" value="name" />-->
+<!--							</sf:commandLink>-->
+<!--						</f:facet>-->
+<!--						#{h.name}-->
+<!--					</h:column>-->
+<!--					<h:column>-->
+<!--						<f:facet name="header">Address</f:facet>-->
+<!--						#{h.address}-->
+<!--					</h:column>-->
+<!--					<h:column>-->
+<!--						<f:facet name="header">-->
+<!--							<sf:commandLink id="sortByCity" action="sort" value="City, State" processIds="*" >-->
+<!--								<f:param name="sortBy" value="city" />-->
+<!--							</sf:commandLink>-->
+<!--						</f:facet>-->
+<!--						#{h.city}, #{h.state}, #{h.country}-->
+<!--					</h:column> -->
+<!--					<h:column>-->
+<!--						<f:facet name="header">Zip</f:facet>-->
+<!--						#{h.zip}-->
+<!--					</h:column>-->
+<!--					<h:column>-->
+<!--						<f:facet name="header">Action</f:facet>-->
+<!--						<sf:commandLink id="viewHotelLink" value="View Hotel" action="select"/>-->
+<!--					</h:column>-->
+<!--				</h:dataTable>-->
+				
+				</div>	
+				</div>
+</ui:fragment>
+</ui:define>
+</ui:composition>
