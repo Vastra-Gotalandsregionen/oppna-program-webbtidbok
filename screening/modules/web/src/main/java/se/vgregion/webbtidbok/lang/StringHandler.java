@@ -17,6 +17,8 @@
  */
 package se.vgregion.webbtidbok.lang;
 
+
+
 public class StringHandler {
 
 	

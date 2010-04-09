@@ -36,6 +36,7 @@ import se.vgregion.webbtidbok.ws.*;
 
 
 
+
 public class BookingPlaceLocal implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
