@@ -18,11 +18,7 @@
 package se.vgregion.webbtidbok.gui;
 
 
-/**
- * Author Conny Pemfors, 2010-04-07
- * 
- * 
- */
+
 
 import javax.faces.model.*;
 import java.util.*;
