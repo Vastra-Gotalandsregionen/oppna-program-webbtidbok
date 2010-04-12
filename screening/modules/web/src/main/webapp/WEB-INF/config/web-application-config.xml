@@ -35,6 +35,8 @@
 	</bean>
 	<bean id="validationService" class="se.vgregion.webbtidbok.ValidationLogin">
 	</bean>
+	<bean id="calendarService" class="se.vgregion.webbtidbok.CalendarPrinter">
+	</bean>
 	
 	<!-- Imports the configurations of the different infrastructure systems of the application -->
 	<import resource="webmvc-config.xml" />
