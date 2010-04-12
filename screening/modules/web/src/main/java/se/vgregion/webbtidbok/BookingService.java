@@ -64,8 +64,6 @@ public class BookingService
 			
 			request = helper.getQueryWSRequest(loginCredentials);
 			response = helper.getQueryWS(request);
-			
-			
 			BookingResponseLocal responseLocal = new BookingResponseLocal(response);
 			
 			return responseLocal;
@@ -112,6 +110,19 @@ public class BookingService
 		return placeListLocal;
 	}
 	
+	/*Method setting default value for BookingResponse, CentralTimeBookingId
+	 * 
+	 * 
+	 */
+	
+	public int getSelectedDefaultItem(State loginCredentials){
+		
+		request = helper.getQueryWSRequest(loginCredentials);
+		response = helper.getQueryWS(request);
+		BookingResponseLocal responseLocal = new BookingResponseLocal(response);
+		int centralTimeBookingId =responseLocal.getCentralTimeBookId();
+		return centralTimeBookingId;
+	}
 
 	public List<SelectItem> getBookingPlaceSelectItems(State loginCredentials){
 		

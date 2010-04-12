@@ -63,7 +63,7 @@ public class BookingPlacesTests {
 					System.out.println(bp.getAddress().getValue());
 					System.out.println(bp.getCentralTidbokID());
 					System.out.println(bp.getMottagning().getValue());
-				
+					
 				}
 			}
 			

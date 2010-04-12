@@ -59,9 +59,9 @@
 	<view-state id="loggedin" view="welcome.xhtml" model="booking">
 		<on-render>
 			<evaluate expression="bookingService.getBooking(loginCredentials)" result="flowScope.booking" />
-			<evaluate expression="calendar.getCalendar()" result="flowScope.cal" />
+			<!--  <evaluate expression="calendar.getCalendar()" result="flowScope.cal" /> -->
  		</on-render>
-		<transition on="logout" to="loggedout" history="invalidate"/>
+		<transition on="logout" to="loggedout" history="invalidate"/> 
 		<transition on="update" to="update" />
 	</view-state>
 
@@ -84,6 +84,14 @@
 			 
 			  
 			  </evaluate>
+			  
+			  <evaluate expression="bookingService.getSelectedDefaultItem(loginCredentials)"  result="flowScope.selecteditem"  >
+			 
+			  
+			  </evaluate>
+			 
+			  
+			  
 		</on-render>
 		
 		<transition on="logout" to="loggedout" history="invalidate"/>
