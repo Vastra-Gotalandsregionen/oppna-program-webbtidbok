@@ -51,7 +51,7 @@ public class SelectItemConverter {
 		items = new ArrayList<SelectItem>();
 		for(BookingPlaceLocal p : lList){
 			SelectItem s = new SelectItem();
-			s.setLabel(p.getAddress() + ", " + p.getClinic());
+			s.setLabel(p.getClinic());
 			s.setValue(p.getCentralTimeBookId());
 			
 			items.add(s);
@@ -70,7 +70,7 @@ public class SelectItemConverter {
 		items = new ArrayList<SelectItem>();
 		for(BookingPlaceLocal p : lList){
 			SelectItem s = new SelectItem();
-			s.setLabel(p.getAddress() + ", " + p.getClinic());
+			s.setLabel(p.getClinic());
 			s.setValue(p.getCentralTimeBookId());
 			
 			items.add(s);
@@ -87,10 +87,14 @@ public class SelectItemConverter {
 	 */
 	
 	public List<SelectItem> getSelectItems(List<BookingPlaceLocal> lList){
+		
+		
 		items = new ArrayList<SelectItem>();
+		
+		
 		for(BookingPlaceLocal p : lList){
 			SelectItem s = new SelectItem();
-			s.setLabel(p.getAddress() + ", " + p.getClinic());
+			s.setLabel(p.getClinic());
 			s.setValue(p.getCentralTimeBookId());
 			
 			items.add(s);
