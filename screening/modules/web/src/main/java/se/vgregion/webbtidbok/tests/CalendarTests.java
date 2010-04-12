@@ -30,10 +30,11 @@ import org.junit.Test;
 
 import se.vgregion.webbtidbok.State;
 import se.vgregion.webbtidbok.WebServiceHelper;
-import se.vgregion.webbtidbok.ws.ArrayOfBookingTime;
-import se.vgregion.webbtidbok.ws.BookingRequest;
-import se.vgregion.webbtidbok.ws.BookingTime;
 import se.vgregion.webbtidbok.ws.*;
+
+
+
+import javax.xml.bind.JAXBElement;
 
 /**
  * @author conpem
@@ -43,6 +44,7 @@ public class CalendarTests {
 	
 	
 	WebServiceHelper ws;
+	private ObjectFactory objectFactory = new ObjectFactory();
 	
 	
 	/**
@@ -63,8 +65,52 @@ public class CalendarTests {
 		credentials.setPasswd("Zs12JzIW");
 		credentials.setPnr("19121212-1212");
 		
-		BookingRequest request = ws.getQueryWSRequest(credentials);
-		ArrayOfCalendar calendars= ws.getQueryWSRequestCalendar(request);  
+		JAXBElement<String> fromDat = objectFactory.createBookingRequestFromDat("2010-03-31");
+		JAXBElement<String> toDat = objectFactory.createBookingRequestToDat("2010-05-31");
+		
+		
+		//BookingRequest request = ws.getQueryWSRequest(credentials);
+		BookingRequest request = ws.getQueryWSRequest(credentials, 1, "2010-03-31", "2010-05-31");
+		
+		
+		System.out.println("request from dat " + request.getFromDat());
+		System.out.println("request to dat " + request.getToDat());
+		
+		//JAXBElement<String> fromDat = request.getFromDat();
+		//JAXBElement<String> toDat = request.getToDat();
+		
+		
+		if(fromDat == null){
+			System.out.println("fromdat is null");
+			//fromDat = request.
+		}
+		else{
+			System.out.println(fromDat.getValue());
+			//fromDat.setValue("2010-03-31");
+		}
+		
+		if(toDat == null){
+			System.out.println("todat is null");
+		}
+		else{
+			System.out.println(toDat.getValue());
+			//toDat.setValue("2010-05-31");
+		}
+		
+		
+		//set values for getting calendars
+		//request.setFromDat(fromDat);
+		//request.setToDat(toDat);
+		//request.setCentralTidbokID(1);
+		
+		
+		ArrayOfCalendar calendars= ws.getQueryWSRequestCalendar(request);
+		if(calendars == null){
+			System.out.println("calendars = null");
+			if(calendars.equals(null)){
+				Assert.assertFalse(true);
+			}
+		}
 		List<Calendar> calendarList = calendars.getCalendar();
 		if(calendarList == null){
 			Assert.assertFalse(true);
@@ -97,6 +143,278 @@ public class CalendarTests {
 		}
 		
 	}
+	
+	/**
+	 * @throws java.lang.Exception
+	 */
+	@Test
+	public void testCalendarEmptyFromToDate(){
+		State credentials = new State();
+		credentials.setPasswd("Zs12JzIW");
+		credentials.setPnr("19121212-1212");
+		
+		JAXBElement<String> fromDat = objectFactory.createBookingRequestFromDat("2010-03-31");
+		JAXBElement<String> toDat = objectFactory.createBookingRequestToDat("2010-05-31");
+		
+		
+		//BookingRequest request = ws.getQueryWSRequest(credentials);
+		BookingRequest request = ws.getQueryWSRequest(credentials, 1, "", "");
+		
+		
+		System.out.println("request from dat " + request.getFromDat());
+		System.out.println("request to dat " + request.getToDat());
+		
+		//JAXBElement<String> fromDat = request.getFromDat();
+		//JAXBElement<String> toDat = request.getToDat();
+		
+		
+		if(fromDat == null){
+			System.out.println("fromdat is null");
+			//fromDat = request.
+		}
+		else{
+			System.out.println(fromDat.getValue());
+			//fromDat.setValue("2010-03-31");
+		}
+		
+		if(toDat == null){
+			System.out.println("todat is null");
+		}
+		else{
+			System.out.println(toDat.getValue());
+			//toDat.setValue("2010-05-31");
+		}
+		
+		
+		//set values for getting calendars
+		//request.setFromDat(fromDat);
+		//request.setToDat(toDat);
+		//request.setCentralTidbokID(1);
+		
+		
+		ArrayOfCalendar calendars= ws.getQueryWSRequestCalendar(request);
+		if(calendars == null){
+			System.out.println("calendars = null");
+			if(calendars.equals(null)){
+				Assert.assertFalse(true);
+			}
+		}
+		List<Calendar> calendarList = calendars.getCalendar();
+		if(calendarList == null){
+			Assert.assertFalse(true);
+			
+		}
+		else{
+			
+			if(calendarList.isEmpty()){
+				Assert.assertFalse(true);
+			}
+			else{
+				
+				for(Calendar c : calendarList){
+					//System.out.println(bp.getAddress().getValue());
+					//System.out.println(bp.getCentralTidbokID());
+					//System.out.println(bp.getMottagning().getValue());
+					System.out.println("Datum: "  + c.getDatum().toString());
+					System.out.println("Status: "  + c.getStatus().getValue());
+					System.out.println("Spärrad: "  + c.isSparr());
+					//System.out.println("Klocka: "  + bt.);
+					
+				}
+				
+				
+				
+			}
+			
+			
+			Assert.assertTrue(true);
+		}
+		
+	}
+	
+	
+	/**
+	 * @throws java.lang.Exception
+	 */
+	@Test
+	public void testCalendarStrangeFromToDate(){
+		State credentials = new State();
+		credentials.setPasswd("Zs12JzIW");
+		credentials.setPnr("19121212-1212");
+		
+		JAXBElement<String> fromDat = objectFactory.createBookingRequestFromDat("10-03-31");
+		JAXBElement<String> toDat = objectFactory.createBookingRequestToDat("10-05-31");
+		
+		
+		//BookingRequest request = ws.getQueryWSRequest(credentials);
+		BookingRequest request = ws.getQueryWSRequest(credentials, 1, "", "");
+		
+		
+		System.out.println("request from dat " + request.getFromDat());
+		System.out.println("request to dat " + request.getToDat());
+		
+		//JAXBElement<String> fromDat = request.getFromDat();
+		//JAXBElement<String> toDat = request.getToDat();
+		
+		
+		if(fromDat == null){
+			System.out.println("fromdat is null");
+			//fromDat = request.
+		}
+		else{
+			System.out.println(fromDat.getValue());
+			//fromDat.setValue("2010-03-31");
+		}
+		
+		if(toDat == null){
+			System.out.println("todat is null");
+		}
+		else{
+			System.out.println(toDat.getValue());
+			//toDat.setValue("2010-05-31");
+		}
+		
+		
+		//set values for getting calendars
+		//request.setFromDat(fromDat);
+		//request.setToDat(toDat);
+		//request.setCentralTidbokID(1);
+		
+		
+		ArrayOfCalendar calendars= ws.getQueryWSRequestCalendar(request);
+		if(calendars == null){
+			System.out.println("calendars = null");
+			if(calendars.equals(null)){
+				Assert.assertFalse(true);
+			}
+		}
+		List<Calendar> calendarList = calendars.getCalendar();
+		if(calendarList == null){
+			Assert.assertFalse(true);
+			
+		}
+		else{
+			
+			if(calendarList.isEmpty()){
+				Assert.assertFalse(true);
+			}
+			else{
+				
+				for(Calendar c : calendarList){
+					//System.out.println(bp.getAddress().getValue());
+					//System.out.println(bp.getCentralTidbokID());
+					//System.out.println(bp.getMottagning().getValue());
+					System.out.println("Datum: "  + c.getDatum().toString());
+					System.out.println("Status: "  + c.getStatus().getValue());
+					System.out.println("Spärrad: "  + c.isSparr());
+					//System.out.println("Klocka: "  + bt.);
+					
+				}
+				
+				
+				
+			}
+			
+			
+			Assert.assertTrue(true);
+		}
+		
+	}
+	
+	
+	
+	/**
+	 * @throws java.lang.Exception
+	 */
+	@Test
+	public void testCalendarCentralTimeBookingId(){
+		State credentials = new State();
+		credentials.setPasswd("Zs12JzIW");
+		credentials.setPnr("19121212-1212");
+		
+		JAXBElement<String> fromDat = objectFactory.createBookingRequestFromDat("2010-03-31");
+		JAXBElement<String> toDat = objectFactory.createBookingRequestToDat("2010-05-31");
+		
+		
+		//BookingRequest request = ws.getQueryWSRequest(credentials);
+		BookingRequest request = ws.getQueryWSRequest(credentials, 0, "2010-03-31", "2010-05-31");
+		
+		
+		System.out.println("request from dat " + request.getFromDat());
+		System.out.println("request to dat " + request.getToDat());
+		
+		//JAXBElement<String> fromDat = request.getFromDat();
+		//JAXBElement<String> toDat = request.getToDat();
+		
+		
+		if(fromDat == null){
+			System.out.println("fromdat is null");
+			//fromDat = request.
+		}
+		else{
+			System.out.println(fromDat.getValue());
+			//fromDat.setValue("2010-03-31");
+		}
+		
+		if(toDat == null){
+			System.out.println("todat is null");
+		}
+		else{
+			System.out.println(toDat.getValue());
+			//toDat.setValue("2010-05-31");
+		}
+		
+		
+		//set values for getting calendars
+		//request.setFromDat(fromDat);
+		//request.setToDat(toDat);
+		//request.setCentralTidbokID(1);
+		
+		
+		ArrayOfCalendar calendars= ws.getQueryWSRequestCalendar(request);
+		if(calendars == null){
+			System.out.println("calendars = null");
+			if(calendars.equals(null)){
+				Assert.assertFalse(true);
+			}
+		}
+		List<Calendar> calendarList = calendars.getCalendar();
+		if(calendarList == null){
+			Assert.assertFalse(true);
+			
+		}
+		else{
+			
+			if(calendarList.isEmpty()){
+				Assert.assertFalse(true);
+			}
+			else{
+				
+				for(Calendar c : calendarList){
+					//System.out.println(bp.getAddress().getValue());
+					//System.out.println(bp.getCentralTidbokID());
+					//System.out.println(bp.getMottagning().getValue());
+					System.out.println("Datum: "  + c.getDatum().toString());
+					System.out.println("Status: "  + c.getStatus().getValue());
+					System.out.println("Spärrad: "  + c.isSparr());
+					//System.out.println("Klocka: "  + bt.);
+					
+				}
+				
+				
+				
+			}
+			
+			
+			Assert.assertTrue(true);
+		}
+		
+	}
+	
+	
+	
+	
+	
 
 	/**
 	 * @throws java.lang.Exception
