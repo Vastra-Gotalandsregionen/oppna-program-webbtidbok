@@ -73,6 +73,21 @@ public class BookingService
 	}
 	
 	
+	/**
+	 * Method cancelBooking returns true if deleted
+	 * 
+	 * @param loginCredentials
+	 * @return
+	 */
+	public boolean cancelBooking(State loginCredentials){
+		
+		//request = helper.getQueryWSRequest(loginCredentials);
+		//boolean cancelledBooking = helper.getQueryWSCancelBooking(request);
+		
+		return false;
+	}
+	
+	
 	public List<BookingPlaceLocal> getBookingPlace(State loginCredentials){
 		
 		//		Uncomment below for debug, you'll only have to click login, 

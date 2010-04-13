@@ -264,5 +264,29 @@ public class WebServiceHelper {
 		}
 	}
 	
+	
+	/*
+	 * method cancel booking 
+	 * 
+	 * @input parameter request
+	 */
+	public boolean getQueryWSCancelBooking(BookingRequest request){	
+
+		
+		try{
+			
+			//return ws.getBooking(request);
+			//loginCredentials.setBookingResponse(response);
+			return ws.cancelBooking(request);
+			
+		}
+		catch(ICentralBookingWSCancelBookingICFaultFaultFaultMessage ex){
+			ex.printStackTrace();
+			System.out.println(ex.getMessage());
+			return false;
+			
+		}
+	}
+	
 
 }
