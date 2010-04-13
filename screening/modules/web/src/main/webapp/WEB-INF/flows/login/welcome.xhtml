@@ -32,13 +32,14 @@
 		<div id="boxcontainer" style="padding-bottom: 1em;">
 		<div id="boxleft" />
 		<div id="boxmiddle">
-		<p/>
-		<h1 style="display: inline">Välkommen #{booking.displayName}</h1>
-		<h:form id="mainForm" style="display: inline; text-align: right; padding-left: 2em;" >
-			<sf:commandButton id="logout" value="Logga ut" processIds="*" action="logout" />
-		</h:form>
-		<p/>
-				<br/><p>Här kan du omboka eller avboka din tid till undersökning av stora kroppspulsådern.
+			<p/>
+			<h1 style="display: inline">Välkommen #{booking.displayName}</h1>
+				<h:form id="mainForm" style="display: inline; text-align: right; padding-left: 2em;" >
+					<sf:commandButton id="logout" value="Logga ut" processIds="*" action="logout" />
+				</h:form>
+				<p/>
+				<br/>
+				<p>Här kan du omboka eller avboka din tid till undersökning av stora kroppspulsådern.
 				Om du behöver omboka eller avboka tiden måste du göra det senast dagen innan du ska undersökas.
 				Du kan omboka tiden maximalt två gånger. Spara ditt lösenord om du behöver logga in igen.<br/>
 				</p>
@@ -46,40 +47,53 @@
 				Kontaktpunkten på telefonnummer 031-342 69 55 tisdag, onsdag eller torsdag mellan
 				klockan 09:00 - 15:00, alternativt 031-342 24 00.<br/>
 				Du kan också skicka e-post till: <a href="mailto:kontaktpunkten.su@vgregion.se">kontaktpunkten.su@vgregion.se</a>.<br/></p>
-				<p><a href="http://www.kontaktpunkten.sahlgrenska.se">Läs mer om Kontaktpunkten</a></p>
+				<p>
+					<a href="http://www.kontaktpunkten.sahlgrenska.se">Läs mer om Kontaktpunkten</a></p>
 		
-				<div id="boxleft1" style="width: 100%">		
+					<div id="boxleft1" style="width: 100%">		
 		
-				<p>Du har fått en kallelse till undersökning av stora kroppspulsådern:<br/>
-				<a href="">Läs mer om undersökning av stora kroppspulsådern</a><br/>
-				<a href="">Läs om ultraljudsundersökning</a></p>
+						<p>Du har fått en kallelse till undersökning av stora kroppspulsådern:<br/>
+						<a href="">Läs mer om undersökning av stora kroppspulsådern</a><br/>
+						<a href="">Läs om ultraljudsundersökning</a></p>
 				
-				<table>
-				<tr>
-				<td>
-				Var:</td><td style="padding-left: 2em">  #{booking.mainSector}, #{booking.address}</td>
-				<td>
-					<h:form id="updateForm" style="display: inline; text-align: right; padding-left: 2em;" >
-						<sf:commandButton id="updateButton" value="Omboka tid" processIds="*" action="update" />
-					</h:form>
-				</td>
-				</tr>
-				<tr>
-				<td></td>
-				<td style="padding-left: 2em">
-				<a href="">Visa mer information om mottagningen</a>
-				</td>
-				</tr>
-				<p></p>
-				<tr>
-				<td>
-				När:</td><td style="padding-left: 2em"> #{booking.timeBookingString}.</td>
-				</tr>
-				<tr>
-				<td></td>
-				<td style="padding-left: 2em">
-				(besöket beräknas ta maximalt 15 minuter)</td>
-				</tr>
+						<table>
+							<tr>
+								<td >
+									Var:
+								</td>
+								<td style="padding-left: 2em">  #{booking.mainSector}, #{booking.address}
+								</td>
+								<td style="display: inline">
+									<h:form id="updateForm" style="display: inline; text-align: right;" >
+										<sf:commandButton id="updateButton" value="Omboka tid" processIds="*" action="update" />
+									</h:form>
+								</td>
+							</tr>
+							<tr>
+								<td></td>
+								<td style="padding-left: 2em">
+									<a href="">Visa mer information om mottagningen</a>
+								</td>
+							</tr>
+							<p></p>
+							<tr>
+								<td>
+									När:
+								</td>
+								<td style="padding-left: 2em"> #{booking.timeBookingString}.
+								</td>
+								<td style="display: inline">
+									<h:form id="deleteForm" style="display: inline; text-align: right;" >
+										<sf:commandButton id="deleteButton" value="Avboka tid" processIds="*" action="delete" />
+									</h:form>
+								</td>
+							</tr>
+							<tr>
+								<td></td>
+								<td style="padding-left: 2em">
+									(besöket beräknas ta maximalt 15 minuter)
+								</td>
+							</tr>
 				</table>
 				
 				</div>	

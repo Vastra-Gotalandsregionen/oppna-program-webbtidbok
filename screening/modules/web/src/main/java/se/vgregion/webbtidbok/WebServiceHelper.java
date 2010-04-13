@@ -84,6 +84,45 @@ public class WebServiceHelper {
 		
 	}
 	
+	public BookingRequest getQueryWSRequest(State loginCredentials, int centralTimeBookingId, String fromDatString, String toDatString){
+		//"parameters"
+		JAXBElement<String> pnr = objectFactory.createBookingRequestPnr(loginCredentials.getPnr());
+		JAXBElement<String> pin = objectFactory.createBookingRequestPin(loginCredentials.getPasswd());
+		
+		//Zs12JzIW 19 121212-1212
+		//JAXBElement<String> pnr = objectFactory.createBookingRequestPnr("19121212-1212");
+		//JAXBElement<String> pin = objectFactory.createBookingRequestPin("Zs12JzIW");
+
+		
+		JAXBElement<String> key = objectFactory.createBookingRequestKey("asd");
+		JAXBElement<String> cryptedKey =objectFactory.createBookingRequestCryptedKey("asd");
+		JAXBElement<String> cert = objectFactory.createBookingRequestCert("NO");
+		
+		JAXBElement<String> fromDat = objectFactory.createBookingRequestFromDat(fromDatString);
+		JAXBElement<String> toDat = objectFactory.createBookingRequestToDat(toDatString);
+		
+		
+		//create request object
+		BookingRequest request = objectFactory.createBookingRequest();
+		
+		
+		
+		
+		//setup request object
+		request.setPnr(pnr);
+		request.setPin(pin);
+		request.setKey(key);
+		request.setCryptedKey(cryptedKey);
+		request.setCert(cert);
+		//set values for getting calendars
+		request.setFromDat(fromDat);
+		request.setToDat(toDat);
+		request.setCentralTidbokID(centralTimeBookingId);
+		
+		return request;
+		
+	}
+	
 
 	
 	public ArrayOfBookingPlace getQueryWSRequestPlaces(BookingRequest request){
