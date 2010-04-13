@@ -25,6 +25,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.security.auth.login.LoginContext;
+import javax.xml.bind.JAXBElement;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.junit.Assert;
@@ -34,10 +36,14 @@ import se.vgregion.webbtidbok.State;
 import se.vgregion.webbtidbok.WebServiceHelper;
 import se.vgregion.webbtidbok.ws.ArrayOfBookingPlace;
 import se.vgregion.webbtidbok.ws.ArrayOfBookingTime;
+import se.vgregion.webbtidbok.ws.ArrayOfCalendar;
 import se.vgregion.webbtidbok.ws.BookingPlace;
 import se.vgregion.webbtidbok.ws.BookingRequest;
 import se.vgregion.webbtidbok.ws.BookingResponse;
 import se.vgregion.webbtidbok.ws.BookingTime;
+import se.vgregion.webbtidbok.ws.Calendar;
+import se.vgregion.webbtidbok.ws.GetCalandar;
+import se.vgregion.webbtidbok.ws.ObjectFactory;
 
 /**
  * This is only a stub. To be elaborated.
@@ -74,7 +80,7 @@ public class WSTester {
 			bookingPlace = b.getMottagning().getValue();
 			address = b.getAddress().getValue();
 			bookingPlaceArr.add(bookingPlace);
-			System.out.println("bookingPlace: " + bookingPlace + "\n"
+			System.out.println("BookingPlace.getMottagning(): " + bookingPlace + "\n"
 					 + "adress: " + address);
 			i++;
 		}
@@ -90,14 +96,14 @@ public class WSTester {
 //		String pnr = "19660223-3196";
 //		String passwd = "u63MvXTx";
 				
-		State logincredentials = new State();
-		logincredentials.setPnr(pnr);
-		logincredentials.setPasswd(passwd);
-		logincredentials.setLoggedIn(true);
+		State requestParameters = new State();
+		requestParameters.setPnr(pnr);
+		requestParameters.setPasswd(passwd);
+		requestParameters.setLoggedIn(true);
 	
 		BookingRequest request = new BookingRequest();
 		WebServiceHelper wsh = new WebServiceHelper();
-		request = wsh.getQueryWSRequest(logincredentials);
+		request = wsh.getQueryWSRequest(requestParameters);
 		
 		return request;
 	}
@@ -281,7 +287,7 @@ public class WSTester {
 		return list;
 	}
 	
-	public static void exploreWS(ArrayList<Integer> centralTidBoksIdList){
+	public static void exploreWSResponseAndRequest(ArrayList<Integer> centralTidBoksIdList){
 		//what do i want to do here?
 		//thru ctbId I want to get available times for the plats or mottagning associated with the id.
 		WebServiceHelper wsh = new WebServiceHelper(); 
@@ -315,6 +321,7 @@ public class WSTester {
 		String bookingPlAddress = bookingPl.getAddress().getValue();
 		int bookingPlCTID = bookingPl.getCentralTidbokID();
 		String bookingPlMottagning = bookingPl.getMottagning().getValue();
+
 		System.out.println("\nstuff from a BookingPlace object: ");
 		System.out.println("bookingPlCTID: " + bookingPlCTID + "\nbookingPlMottagning: " + bookingPlMottagning + "\nbookingPlAddress: " + bookingPlAddress);
 
@@ -322,22 +329,126 @@ public class WSTester {
 	public static void getBookingTime(){
 		BookingTime bt = new BookingTime();
 		BookingRequest request = getWSRequest();
+		ObjectFactory objectFactory = new ObjectFactory();
+
+		JAXBElement<String> fromDat = objectFactory.createBookingRequestFromDat("2010-03-03");
+		JAXBElement<String> toDat = objectFactory.createBookingRequestToDat("2010-04-15");
+		request.setCentralTidbokID(1);
+		request.setFromDat(fromDat);
+		request.setToDat(toDat);
+//		requestParameters.setFromDat("2010-03-03");
+//		requestParameters.setToDat("2010-04-15");
+
+		
 		WebServiceHelper wsh = new WebServiceHelper();
 		ArrayOfBookingTime bookingTimeArr = wsh.getQueryWSRequestTime(request);
 		List<BookingTime> bookingTimeList = bookingTimeArr.getBookingTime();
 		XMLGregorianCalendar XMLcal;
 		System.out.println("*** getBookingTime: ");
 		for(BookingTime b : bookingTimeList){
+		
+			int antalBokn = b.getAntal();
+			System.out.println("antalBokn: " + antalBokn);
 			String klocka = b.getKlocka().getValue();
-			System.out.println("Klocka: " + klocka);
+			System.out.println("Klocka: " + klocka);		
 			XMLcal = b.getDatum();
-			int year = XMLcal.getYear();
-			int month = XMLcal.getMonth();
-			int day = XMLcal.getDay();			
-			System.out.println("year: " + year + ", month: " + ", day: " + day);
+			String date =dateFormatter(XMLcal.getYear(), XMLcal.getMonth(), XMLcal.getDay());
+			System.out.println("date: " + date);
+//			int year = XMLcal.getYear();
+//			int month = XMLcal.getMonth();
+//			int day = XMLcal.getDay();			
+//			System.out.println("year: " + year + ", month: " + ", day: " + day);
 		}
 	}
 	
+	//Test what properties can be set on a request
+	//Test specific how to get a Calendar (Tidbok) thru CTID
+	//This emulates a user picking a Mottagning thru the drop down menu
+	//That would generate a new request with new properties set on it
+	public static void testGetValidCalThruCTID(){
+			
+			String key = "dsa";
+			String kryptedKey = "dsa2";
+			
+			//Klaus K
+			String pnr = "19121212-1212";
+			String passwd = "Zs12JzIW";
+			//Bengt M
+//			String pnr = "19660223-3196";
+//			String passwd = "u63MvXTx";
+			System.out.println("**** testGetValidCalThruCTID: ");
+			State requestParameters = new State();
+			requestParameters.setPnr(pnr);
+			requestParameters.setPasswd(passwd);
+			requestParameters.setLoggedIn(true);
+			
+			requestParameters.setFromDat("2010-03-03");
+			requestParameters.setToDat("2010-04-03");
+			requestParameters.setCentralTidbokId(1);
+		
+			BookingRequest request = new BookingRequest();
+			WebServiceHelper wsh = new WebServiceHelper();
+			request = wsh.getQueryWSRequest(requestParameters);
+			
+			ArrayOfCalendar calArr = wsh.getQueryWSRequestCalendar(request);
+
+			List<Calendar> calList = calArr.getCalendar();
+			System.out.println("calList.size(); " + calList.size());
+			//CalendarObj is about the same as one day
+			if(calList.isEmpty()){
+				System.out.println("calList is empty!! there'll be an exception shortly.");
+				//ITERATE thru CALLIST
+				
+			}
+			Calendar testCal = calList.get(0);
+			
+			String testCalStatus = testCal.getStatus().getValue();
+			XMLGregorianCalendar XMLcal = testCal.getDatum();
+	
+			String date = dateFormatter(XMLcal.getYear(), XMLcal.getMonth(), XMLcal.getDay());
+			
+			System.out.println("calList.get() date: " + date );
+			for(Calendar c: calList ){
+//				System.out.println("c.getSatus: " + c.getStatus().getValue());//not used
+				System.out.println("c.getDatum(): " + c.getDatum());
+			}
+//			
+//			Iterator<Calendar> iter = calList.iterator();
+//			while(iter.hasNext()){
+//				System.out.println(iter.next().toString());
+//			}
+			
+			
+//			BookingResponse response = new BookingResponse();
+//			response = wsh.getQueryWS(request);
+			
+	}
+	
+	public static String dateFormatter(int year, int month, int day){
+	
+		String date;
+		String zero = "0";
+//		System.out.println("Year: " + year);
+		int monthNr = month;
+		String strMonthNr = Integer.toString(monthNr);
+		if(strMonthNr.length() < 2){
+			strMonthNr = zero.concat(strMonthNr);
+//			System.out.println("strMonthNr: " + strMonthNr);
+		}
+//		System.out.println("MonthNr: " + monthNr);
+		int dayNr = day;
+		String strDayNr = Integer.toString(monthNr);
+		if(strDayNr.length() < 2){
+			strDayNr = zero.concat(strDayNr);
+//			System.out.println("strDayNr: " + strDayNr);
+		}
+//		System.out.println("DayNr: " + dayNr);
+		date = Integer.toString(year) + " " + strMonthNr + " " + strDayNr;
+//		System.out.println("String date: " + date);
+		
+		
+		return date;
+	}
 	public static void main(String[] args){
 		Map<Integer, String> map;
 		ArrayList<Integer> centralTidBoksIdList;
@@ -363,9 +474,12 @@ public class WSTester {
 		
 		centralTidBoksIdList = returnCentralTidBokIdFromMap(map);
 
-		exploreWS(centralTidBoksIdList);
+		exploreWSResponseAndRequest(centralTidBoksIdList);
 		
-		getBookingTime();
+		getBookingTime(); // there is no proper booking time to get from the WS yet
+		
+		testGetValidCalThruCTID();
+		
 		
 	}
 	
