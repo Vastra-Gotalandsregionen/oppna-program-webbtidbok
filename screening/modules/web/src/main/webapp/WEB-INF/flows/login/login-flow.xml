@@ -24,6 +24,7 @@
 	
 	<var name="loginCredentials" class="se.vgregion.webbtidbok.State" />
 	<var name="loginmessages" class="se.vgregion.webbtidbok.LoginMessages" />
+	<var name="cancelbookingMessages" class="se.vgregion.webbtidbok.CancelBookingMessages" />
 <!--	<var name="calendar" class="se.vgregion.webbtidbok.CalendarPrinter" />-->
 	
 	<input name="pnr" type="string" value="flowScope.loginCredentials.pnr"/>
@@ -86,6 +87,8 @@
 			<transition on="yes" to="confirmdelete" />
     		<transition on="no" to="loggedin">
     			<!-- <evaluate expression="loginmessages.setBadLogin()" /> -->
+    			<evaluate expression="cancelbookingMessages.setCancelBookingMessage()" />
+    	
     		</transition>
 	</action-state>
 	
