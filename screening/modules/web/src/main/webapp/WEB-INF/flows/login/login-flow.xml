@@ -63,6 +63,20 @@
  		</on-render>
 		<transition on="logout" to="loggedout" history="invalidate"/> 
 		<transition on="update" to="update" />
+		<transition on="delete" to="delete" />
+		
+	</view-state>
+	
+	
+	<view-state id="delete" view="delete.xhtml">
+		  
+		<on-render>
+			<evaluate expression="bookingService.getBooking(loginCredentials)" result="flowScope.booking" />
+		</on-render>
+		
+		<transition on="logout" to="loggedout" history="invalidate"/>
+		<transition on="cancel" to="loggedin" />
+		
 	</view-state>
 
 	<view-state id="login_error">
