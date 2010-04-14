@@ -208,5 +208,12 @@
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.junit</groupId>
+			<artifactId>com.springsource.junit</artifactId>
+			<version>3.8.2</version>
+			<type>pom</type>
+			<scope>compile</scope>
+		</dependency>
 	</dependencies>
 </project>
