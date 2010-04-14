@@ -157,7 +157,7 @@ public class MailSendTests {
             String message="Test Email Cliet"; 
             String[] filenames = {"D:\\tmp\\test.txt"}; 
          
-            sendMail(server,from,to,subject,message,filenames); 
+            //sendMail(server,from,to,subject,message,filenames); 
             
             Assert.assertTrue(true);
         } 

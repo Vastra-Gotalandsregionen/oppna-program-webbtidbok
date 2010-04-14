@@ -194,20 +194,19 @@ public class CalendarTests {
 		
 		ArrayOfCalendar calendars= ws.getQueryWSRequestCalendar(request);
 		if(calendars == null){
-			System.out.println("calendars = null");
-			if(calendars.equals(null)){
-				Assert.assertFalse(true);
-			}
+			Assert.assertTrue(true);
+			return;
+			
 		}
 		List<Calendar> calendarList = calendars.getCalendar();
 		if(calendarList == null){
-			Assert.assertFalse(true);
+			Assert.assertTrue(true);
 			
 		}
 		else{
 			
 			if(calendarList.isEmpty()){
-				Assert.assertFalse(true);
+				Assert.assertTrue(true);
 			}
 			else{
 				
@@ -227,7 +226,7 @@ public class CalendarTests {
 			}
 			
 			
-			Assert.assertTrue(true);
+			Assert.assertFalse(true);
 		}
 		
 	}
@@ -283,20 +282,19 @@ public class CalendarTests {
 		
 		ArrayOfCalendar calendars= ws.getQueryWSRequestCalendar(request);
 		if(calendars == null){
-			System.out.println("calendars = null");
-			if(calendars.equals(null)){
-				Assert.assertFalse(true);
-			}
+			Assert.assertTrue(true);
+			return;
+			
 		}
 		List<Calendar> calendarList = calendars.getCalendar();
 		if(calendarList == null){
-			Assert.assertFalse(true);
+			Assert.assertTrue(true);
 			
 		}
 		else{
 			
 			if(calendarList.isEmpty()){
-				Assert.assertFalse(true);
+				Assert.assertTrue(true);
 			}
 			else{
 				
@@ -316,7 +314,7 @@ public class CalendarTests {
 			}
 			
 			
-			Assert.assertTrue(true);
+			Assert.assertFalse(true);
 		}
 		
 	}
@@ -373,20 +371,19 @@ public class CalendarTests {
 		
 		ArrayOfCalendar calendars= ws.getQueryWSRequestCalendar(request);
 		if(calendars == null){
-			System.out.println("calendars = null");
-			if(calendars.equals(null)){
-				Assert.assertFalse(true);
-			}
+			Assert.assertTrue(true);
+			return;
+			
 		}
 		List<Calendar> calendarList = calendars.getCalendar();
 		if(calendarList == null){
-			Assert.assertFalse(true);
+			Assert.assertTrue(true);
 			
 		}
 		else{
 			
 			if(calendarList.isEmpty()){
-				Assert.assertFalse(true);
+				Assert.assertTrue(true);
 			}
 			else{
 				
@@ -406,7 +403,7 @@ public class CalendarTests {
 			}
 			
 			
-			Assert.assertTrue(true);
+			Assert.assertFalse(true);
 		}
 		
 	}

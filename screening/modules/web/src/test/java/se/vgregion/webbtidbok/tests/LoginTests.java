@@ -248,8 +248,8 @@ public class LoginTests {
 	@Test
 	public void testCorrectValues(){
 		State credentials = new State();
-		credentials.setPasswd("Zs12JzIW");
-		credentials.setPnr("19121212-1212");
+		credentials.setPasswd("Y8PBZRUr");
+		credentials.setPnr("19960103-2395");
 		
 		System.out.println(credentials.toString());
 		

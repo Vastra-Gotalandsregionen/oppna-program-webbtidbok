@@ -193,10 +193,14 @@ public class BookingTimeTests {
 		request.setFromDat(fromDat);
 		request.setCentralTidbokID(1);
 		
-		ArrayOfBookingTime time= ws.getQueryWSRequestTime(request);  
+		ArrayOfBookingTime time= ws.getQueryWSRequestTime(request);
+		if(time == null){
+			Assert.assertTrue(true);
+			return;
+		}
 		List<BookingTime> timeList = time.getBookingTime();
 		if(timeList == null){
-			Assert.assertFalse(true);
+			Assert.assertTrue(true);
 			
 		}
 		else{
@@ -222,7 +226,7 @@ public class BookingTimeTests {
 			}
 			
 			
-			Assert.assertTrue(true);
+			Assert.assertTrue(false);
 		}
 		
 	}
@@ -248,15 +252,19 @@ public class BookingTimeTests {
 		request.setCentralTidbokID(1);
 		
 		ArrayOfBookingTime time= ws.getQueryWSRequestTime(request);  
+		if(time == null){
+			Assert.assertTrue(true);
+			return;
+		}
 		List<BookingTime> timeList = time.getBookingTime();
 		if(timeList == null){
-			Assert.assertFalse(true);
+			Assert.assertTrue(true);
 			
 		}
 		else{
 			
 			if(timeList.isEmpty()){
-				Assert.assertFalse(true);
+				Assert.assertTrue(true);
 			}
 			else{
 				
@@ -276,7 +284,7 @@ public class BookingTimeTests {
 			}
 			
 			
-			Assert.assertTrue(true);
+			Assert.assertFalse(true);
 		}
 		
 	}
@@ -303,15 +311,19 @@ public class BookingTimeTests {
 		request.setCentralTidbokID(1);
 		
 		ArrayOfBookingTime time= ws.getQueryWSRequestTime(request);  
+		if(time == null){
+			Assert.assertTrue(true);
+			return;
+		}
 		List<BookingTime> timeList = time.getBookingTime();
 		if(timeList == null){
-			Assert.assertFalse(true);
+			Assert.assertTrue(true);
 			
 		}
 		else{
 			
 			if(timeList.isEmpty()){
-				Assert.assertFalse(true);
+				Assert.assertTrue(true);
 			}
 			else{
 				
@@ -331,7 +343,7 @@ public class BookingTimeTests {
 			}
 			
 			
-			Assert.assertTrue(true);
+			Assert.assertFalse(true);
 		}
 		
 	}
@@ -342,7 +354,7 @@ public class BookingTimeTests {
 	 * @throws java.lang.Exception
 	 */
 	@Test
-	public void testBookingTimeString2Date(){
+	public void testBookingTimeStringNullDate(){
 		State credentials = new State();
 		//credentials.setPasswd("Zs12JzIW");
 		//credentials.setPnr("19121212-1212");
@@ -359,9 +371,13 @@ public class BookingTimeTests {
 		request.setCentralTidbokID(1);
 		
 		ArrayOfBookingTime time= ws.getQueryWSRequestTime(request);  
+		if(time == null){
+			Assert.assertTrue(true);
+			return;
+		}
 		List<BookingTime> timeList = time.getBookingTime();
 		if(timeList == null){
-			Assert.assertFalse(true);
+			Assert.assertTrue(true);
 			
 		}
 		else{
@@ -387,7 +403,7 @@ public class BookingTimeTests {
 			}
 			
 			
-			Assert.assertTrue(true);
+			Assert.assertFalse(true);
 		}
 		
 	}
@@ -415,15 +431,19 @@ public class BookingTimeTests {
 		request.setCentralTidbokID(1);
 		
 		ArrayOfBookingTime time= ws.getQueryWSRequestTime(request);  
+		if(time == null){
+			Assert.assertTrue(true);
+			return;
+		}
 		List<BookingTime> timeList = time.getBookingTime();
 		if(timeList == null){
-			Assert.assertFalse(true);
+			Assert.assertTrue(true);
 			
 		}
 		else{
 			
 			if(timeList.isEmpty()){
-				Assert.assertFalse(true);
+				Assert.assertTrue(true);
 			}
 			else{
 				
@@ -443,7 +463,7 @@ public class BookingTimeTests {
 			}
 			
 			
-			Assert.assertTrue(true);
+			Assert.assertFalse(true);
 		}
 		
 	}
