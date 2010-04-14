@@ -84,6 +84,7 @@ public class BookingService
 		//request = helper.getQueryWSRequest(loginCredentials);
 		//boolean cancelledBooking = helper.getQueryWSCancelBooking(request);
 		
+		//return cancelledBooking;
 		return true;
 	}
 	

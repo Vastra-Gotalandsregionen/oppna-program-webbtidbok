@@ -70,8 +70,11 @@ public class BookingTimeTests {
 	@Test
 	public void testBookingTime(){
 		State credentials = new State();
-		credentials.setPasswd("Zs12JzIW");
-		credentials.setPnr("19121212-1212");
+		//credentials.setPasswd("Zs12JzIW");
+		//credentials.setPnr("19121212-1212");
+		credentials.setPasswd("Y8PBZRUr");
+		credentials.setPnr("19960103-2395");
+		
 		JAXBElement<String> fromDat = objectFactory.createBookingRequestFromDat("2010-03-31");
 		JAXBElement<String> toDat = objectFactory.createBookingRequestToDat("2010-05-31");
 		
@@ -99,7 +102,7 @@ public class BookingTimeTests {
 					//System.out.println(bp.getMottagning().getValue());
 					System.out.println("Antal: "  + bt.getAntal());
 					System.out.println("Datum: "  + bt.getDatum().toString());
-					System.out.println("Klocka: "  + bt.getKlocka().toString());
+					System.out.println("Klocka: "  + bt.getKlocka().getValue());
 					//System.out.println("Klocka: "  + bt.);
 					
 				}
@@ -120,8 +123,13 @@ public class BookingTimeTests {
 	@Test
 	public void testBookingTimeIncorrectDate(){
 		State credentials = new State();
-		credentials.setPasswd("Zs12JzIW");
-		credentials.setPnr("19121212-1212");
+		//credentials.setPasswd("Zs12JzIW");
+		//credentials.setPnr("19121212-1212");
+		
+		credentials.setPasswd("Y8PBZRUr");
+		credentials.setPnr("19960103-2395");
+		
+		
 		JAXBElement<String> fromDat = objectFactory.createBookingRequestFromDat("2010/03/31");
 		JAXBElement<String> toDat = objectFactory.createBookingRequestToDat("2010/05/31");
 		
@@ -149,7 +157,7 @@ public class BookingTimeTests {
 					//System.out.println(bp.getMottagning().getValue());
 					System.out.println("Antal: "  + bt.getAntal());
 					System.out.println("Datum: "  + bt.getDatum().toString());
-					System.out.println("Klocka: "  + bt.getKlocka().toString());
+					System.out.println("Klocka: "  + bt.getKlocka().getValue());
 					//System.out.println("Klocka: "  + bt.);
 					
 				}
@@ -171,8 +179,11 @@ public class BookingTimeTests {
 	@Test
 	public void testBookingTimeFunkyDate(){
 		State credentials = new State();
-		credentials.setPasswd("Zs12JzIW");
-		credentials.setPnr("19121212-1212");
+		//credentials.setPasswd("Zs12JzIW");
+		//credentials.setPnr("19121212-1212");
+		credentials.setPasswd("Y8PBZRUr");
+		credentials.setPnr("19960103-2395");
+		
 		JAXBElement<String> fromDat = objectFactory.createBookingRequestFromDat("20100331");
 		JAXBElement<String> toDat = objectFactory.createBookingRequestToDat("20100531");
 		
@@ -200,7 +211,7 @@ public class BookingTimeTests {
 					//System.out.println(bp.getMottagning().getValue());
 					System.out.println("Antal: "  + bt.getAntal());
 					System.out.println("Datum: "  + bt.getDatum().toString());
-					System.out.println("Klocka: "  + bt.getKlocka().toString());
+					System.out.println("Klocka: "  + bt.getKlocka().getValue());
 					//System.out.println("Klocka: "  + bt.);
 					
 				}
@@ -221,8 +232,12 @@ public class BookingTimeTests {
 	@Test
 	public void testBookingTimeNoDate(){
 		State credentials = new State();
-		credentials.setPasswd("Zs12JzIW");
-		credentials.setPnr("19121212-1212");
+		//credentials.setPasswd("Zs12JzIW");
+		//credentials.setPnr("19121212-1212");
+		credentials.setPasswd("Y8PBZRUr");
+		credentials.setPnr("19960103-2395");
+		
+		
 		JAXBElement<String> fromDat = objectFactory.createBookingRequestFromDat("20100331");
 		JAXBElement<String> toDat = objectFactory.createBookingRequestToDat("20100531");
 		
@@ -250,7 +265,7 @@ public class BookingTimeTests {
 					//System.out.println(bp.getMottagning().getValue());
 					System.out.println("Antal: "  + bt.getAntal());
 					System.out.println("Datum: "  + bt.getDatum().toString());
-					System.out.println("Klocka: "  + bt.getKlocka().toString());
+					System.out.println("Klocka: "  + bt.getKlocka().getValue());
 					//System.out.println("Klocka: "  + bt.);
 					
 				}
@@ -271,8 +286,13 @@ public class BookingTimeTests {
 	@Test
 	public void testBookingTimeStringDate(){
 		State credentials = new State();
-		credentials.setPasswd("Zs12JzIW");
-		credentials.setPnr("19121212-1212");
+		
+		//credentials.setPasswd("Zs12JzIW");
+		//credentials.setPnr("19121212-1212");
+		credentials.setPasswd("Y8PBZRUr");
+		credentials.setPnr("19960103-2395");
+		
+		
 		JAXBElement<String> fromDat = objectFactory.createBookingRequestFromDat("nullepullebullekullemulle");
 		JAXBElement<String> toDat = objectFactory.createBookingRequestToDat("20100531");
 		
@@ -300,7 +320,7 @@ public class BookingTimeTests {
 					//System.out.println(bp.getMottagning().getValue());
 					System.out.println("Antal: "  + bt.getAntal());
 					System.out.println("Datum: "  + bt.getDatum().toString());
-					System.out.println("Klocka: "  + bt.getKlocka().toString());
+					System.out.println("Klocka: "  + bt.getKlocka().getValue());
 					//System.out.println("Klocka: "  + bt.);
 					
 				}
@@ -323,8 +343,12 @@ public class BookingTimeTests {
 	@Test
 	public void testBookingTimeString2Date(){
 		State credentials = new State();
-		credentials.setPasswd("Zs12JzIW");
-		credentials.setPnr("19121212-1212");
+		//credentials.setPasswd("Zs12JzIW");
+		//credentials.setPnr("19121212-1212");
+		credentials.setPasswd("Y8PBZRUr");
+		credentials.setPnr("19960103-2395");
+		
+		
 		JAXBElement<String> fromDat = objectFactory.createBookingRequestFromDat(null);
 		JAXBElement<String> toDat = objectFactory.createBookingRequestToDat("20100531");
 		
@@ -352,7 +376,7 @@ public class BookingTimeTests {
 					//System.out.println(bp.getMottagning().getValue());
 					System.out.println("Antal: "  + bt.getAntal());
 					System.out.println("Datum: "  + bt.getDatum().toString());
-					System.out.println("Klocka: "  + bt.getKlocka().toString());
+					System.out.println("Klocka: "  + bt.getKlocka().getValue());
 					//System.out.println("Klocka: "  + bt.);
 					
 				}
@@ -374,8 +398,13 @@ public class BookingTimeTests {
 	@Test
 	public void testBookingTimeInAccurateStringDate(){
 		State credentials = new State();
-		credentials.setPasswd("Zs12JzIW");
-		credentials.setPnr("19121212-1212");
+		
+		//credentials.setPasswd("Zs12JzIW");
+		//credentials.setPnr("19121212-1212");
+		credentials.setPasswd("Y8PBZRUr");
+		credentials.setPnr("19960103-2395");
+		
+		
 		JAXBElement<String> fromDat = objectFactory.createBookingRequestFromDat("05/01/2001");
 		JAXBElement<String> toDat = objectFactory.createBookingRequestToDat("20100531");
 		
@@ -403,7 +432,7 @@ public class BookingTimeTests {
 					//System.out.println(bp.getMottagning().getValue());
 					System.out.println("Antal: "  + bt.getAntal());
 					System.out.println("Datum: "  + bt.getDatum().toString());
-					System.out.println("Klocka: "  + bt.getKlocka().toString());
+					System.out.println("Klocka: "  + bt.getKlocka().getValue());
 					//System.out.println("Klocka: "  + bt.);
 					
 				}
