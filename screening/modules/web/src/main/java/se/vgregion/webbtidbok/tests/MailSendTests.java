@@ -26,6 +26,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.*;
 
+import javax.activation.*;
+
 //import org.springframework.mail.MailSender;
 //import org.springframework.mail.SimpleMailMessage;
 
@@ -35,6 +37,8 @@ import javax.mail.internet.*;
 import javax.activation.*; 
 import java.io.*; 
 import java.util.Properties;
+
+
 
 
 /**
