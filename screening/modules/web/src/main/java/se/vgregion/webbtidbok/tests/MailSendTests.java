@@ -71,7 +71,7 @@ public class MailSendTests {
 			multipart.addBodyPart(messageBodyPart); 
 
 			// add any file attachments to the message 
-			addAttachments(attachments, multipart); 
+			//addAttachments(attachments, multipart); 
 
 			// Put all message parts in the message 
 			message.setContent(multipart); 
