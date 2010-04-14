@@ -42,8 +42,9 @@ public class BookingPlacesTests {
 	@Test
 	public void testBookingPlaces(){
 		State credentials = new State();
-		credentials.setPasswd("Zs12JzIW");
-		credentials.setPnr("19121212-1212");
+		credentials.setPasswd("Y8PBZRUr");
+		credentials.setPnr("19960103-2395");
+		
 		
 		BookingRequest request = ws.getQueryWSRequest(credentials);
 		ArrayOfBookingPlace places= ws.getQueryWSRequestPlaces(request);

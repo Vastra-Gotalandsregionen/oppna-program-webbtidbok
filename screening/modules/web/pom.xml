@@ -192,8 +192,6 @@
 			<version>1.1.14</version>
 			<scope>compile</scope>
 		</dependency>
-		
-		
 		<dependency>
 			<groupId>javax.mail</groupId>
 			<artifactId>mail</artifactId>
@@ -209,11 +207,11 @@
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.junit</groupId>
-			<artifactId>com.springsource.junit</artifactId>
-			<version>3.8.2</version>
-			<type>pom</type>
-			<scope>compile</scope>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.8.1</version>
+			<scope>test</scope>
 		</dependency>
+
 	</dependencies>
 </project>

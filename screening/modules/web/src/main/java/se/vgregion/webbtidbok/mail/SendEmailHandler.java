@@ -22,11 +22,10 @@ package se.vgregion.webbtidbok.mail;
 
 //import org.springframework.mail.MailSender;
 //import org.springframework.mail.SimpleMailMessage;
-
+import javax.activation.*; 
 import javax.mail.*;
 import javax.mail.*; 
 import javax.mail.internet.*; 
-import javax.activation.*; 
 import java.io.*; 
 import java.util.Properties;
 import java.util.*;
