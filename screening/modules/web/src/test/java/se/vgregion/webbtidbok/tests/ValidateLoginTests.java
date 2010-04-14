@@ -56,10 +56,10 @@ public class ValidateLoginTests {
 		String result = vL.validatePnr("199988779090");
 		System.out.println("result: " + result);
 		if(result.equals("")){
-			Assert.assertTrue(true);
+			Assert.assertFalse(true);
 		}
 		else{
-			Assert.assertFalse(true);
+			Assert.assertTrue(true);
 		}
 	}
 	
