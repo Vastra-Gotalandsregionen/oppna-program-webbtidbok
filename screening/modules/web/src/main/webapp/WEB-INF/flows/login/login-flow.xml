@@ -36,15 +36,15 @@
 	
 	    
 	<input name="email" type="string" value="flowScope.emailStringHandler.email" />
-	
-	
+
 <!-- Test state for Calendar 		-->
-<!--	<view-state id="calendar_telst">-->
+
+<!--	<view-state id="calendar_test_classic">-->
 <!--		<on-render>-->
-<!--			<evaluate expression="calendarService.getCalendarRowsText()" result="flowScope.cal" result-type="dataModel"/>-->
+<!--			<evaluate expression="calendarService.getCalendar()" result="flowScope.calendarUtil" />-->
 <!--		</on-render>-->
 <!--	</view-state>-->
-
+	
 <!--for debugging you have to replace to="validate" with to="loggedin"-->
 	<view-state id="start">
 		<transition on="login" to="validate" />
