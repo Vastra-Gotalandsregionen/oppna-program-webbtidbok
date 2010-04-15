@@ -38,6 +38,9 @@
 	<bean id="calendarService" class="se.vgregion.webbtidbok.CalendarPrinter">
 	</bean>
 	
+	<bean id="sendMailService" class="se.vgregion.webbtidbok.mail.SendEmailHandler">
+	</bean>
+	
 	<!-- Imports the configurations of the different infrastructure systems of the application -->
 	<import resource="webmvc-config.xml" />
 	<import resource="webflow-config.xml" />

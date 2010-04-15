@@ -26,11 +26,17 @@
 	<var name="loginmessages" class="se.vgregion.webbtidbok.LoginMessages" />
 	<var name="cancelbookingMessages" class="se.vgregion.webbtidbok.CancelBookingMessages" />
 <!--	<var name="calendar" class="se.vgregion.webbtidbok.CalendarPrinter" />-->
-	<var name="sendEmail" class="se.vgregion.webbtidbok.mail.SendEmailHandler" />
+	
+	<var name="emailStringHandler" class="se.vgregion.webbtidbok.mail.EmailStringHandler"  />
 	
 	<input name="pnr" type="string" value="flowScope.loginCredentials.pnr"/>
 	<input name="passwd" type="string" value="flowScope.loginCredentials.passwd"/>
-	<input name="email" type="string" value="flowScope.sendEmail.email"/>
+	
+	
+	
+	    
+	<input name="email" type="string" value="flowScope.emailStringHandler.email" />
+	
 	
 <!-- Test state for Calendar 		-->
 <!--	<view-state id="calendar_telst">-->
@@ -99,12 +105,17 @@
 	
 		
 		<transition on="logout" to="loggedout" history="invalidate"/>
-		<transition on="send" to="sendemail" />
+		<transition on="send">
+			<!--  
+			<set name="requestScope.email" value="flowScope.emailStringHandler.email" type="string" />
+			-->
+			<evaluate expression="sendMailService.sendMail(emailStringHandler)" />
+		</transition>
 		
 	</view-state>
 	
 	<action-state id="sendemail">
-		<evaluate expression="sendEmail.sendMail(email)" />        
+		<evaluate expression="sendMailService.sendMail(emailStringHandler)" />        
 	</action-state>
 
 	<view-state id="login_error">
