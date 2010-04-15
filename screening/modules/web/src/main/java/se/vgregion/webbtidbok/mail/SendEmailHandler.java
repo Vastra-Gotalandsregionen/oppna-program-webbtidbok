@@ -41,6 +41,14 @@ public class SendEmailHandler implements Serializable {
 	
 	public void setEmail(String s){
 		email = s;
+		
+		System.out.println("email value set to: " + email);
+	}
+	
+	public void setEmail(EmailStringHandler emailStringHandler){
+		email = emailStringHandler.getEmail();
+		
+		System.out.println("email value set to: " + email);
 	}
 	
 	public String getEmail(){
@@ -120,6 +128,60 @@ public class SendEmailHandler implements Serializable {
 		}
 	}
 	
+	
+	
+	public void sendMail(EmailStringHandler emailStringHandler){
+		try{
+			
+			
+			 Properties properties = getProperties();
+			
+			 String server= (String) properties.get("server.host"); 
+	         String from= (String) properties.get("server.fromemail"); 
+	         
+	         String subject="Tiden är avbokad"; 
+	         String messageBody="Tiden är avbokad"; 
+	             
+	        //String mailServer, String from, String to,String subject, String messageBody,String[] attachments
+	            
+			Properties props = System.getProperties(); 
+			props.put("mail.smtp.host", server); 
+			
+			// Get a mail session 
+			Session session = Session.getDefaultInstance(props, null); 
+
+			// Define a new mail message 
+			Message message = new MimeMessage(session); 
+			message.setFrom(new InternetAddress(from)); 
+			message.addRecipient(Message.RecipientType.TO, new InternetAddress(emailStringHandler.getEmail())); 
+			message.setSubject(subject); 
+
+			// Create a message part to represent the body text 
+			BodyPart messageBodyPart = new MimeBodyPart(); 
+			messageBodyPart.setText(messageBody); 
+			
+			//use a MimeMultipart as we need to handle the file attachments 
+			Multipart multipart = new MimeMultipart(); 
+
+			//add the message body to the mime message 
+			multipart.addBodyPart(messageBodyPart); 
+
+			// add any file attachments to the message 
+			//addAttachments(attachments, multipart); 
+
+			// Put all message parts in the message 
+			message.setContent(multipart); 
+
+			// Send the message 
+			Transport.send(message); 
+			
+			
+			
+		}catch(Exception e){
+			e.printStackTrace();
+			
+		}
+	}
 	
 	
 	
