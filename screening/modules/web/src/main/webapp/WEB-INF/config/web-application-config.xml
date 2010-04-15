@@ -35,7 +35,10 @@
 	</bean>
 	<bean id="validationService" class="se.vgregion.webbtidbok.ValidationLogin">
 	</bean>
-	<bean id="calendarService" class="se.vgregion.webbtidbok.CalendarUtil">
+	<bean id="calendarService" class="se.vgregion.webbtidbok.CalendarPrinter">
+	</bean>
+	
+	<bean id="sendMailService" class="se.vgregion.webbtidbok.mail.SendEmailHandler">
 	</bean>
 	
 	<!-- Imports the configurations of the different infrastructure systems of the application -->

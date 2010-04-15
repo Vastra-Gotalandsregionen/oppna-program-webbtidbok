@@ -81,8 +81,12 @@ public class SendEmailHandler implements Serializable {
 			
 			 Properties properties = getProperties();
 			
-			 String server= (String) properties.get("server.host"); 
-	         String from= (String) properties.get("server.fromemail"); 
+			 //String server= (String) properties.get("server.host"); 
+	         //String from= (String) properties.get("server.fromemail"); 
+	         
+	         String server = "smtp.knowit.se";
+	         String from= "DoNotReply@knowit.se";
+			 
 	         
 	         String subject="Tiden är avbokad"; 
 	         String messageBody="Tiden är avbokad"; 
