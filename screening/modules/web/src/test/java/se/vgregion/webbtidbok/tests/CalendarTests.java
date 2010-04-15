@@ -150,8 +150,9 @@ public class CalendarTests {
 	@Test
 	public void testCalendarEmptyFromToDate(){
 		State credentials = new State();
-		credentials.setPasswd("Zs12JzIW");
-		credentials.setPnr("19121212-1212");
+		credentials.setPasswd("Y8PBZRUr");
+		credentials.setPnr("19960103-2395");
+		
 		
 		JAXBElement<String> fromDat = objectFactory.createBookingRequestFromDat("2010-03-31");
 		JAXBElement<String> toDat = objectFactory.createBookingRequestToDat("2010-05-31");
@@ -238,8 +239,9 @@ public class CalendarTests {
 	@Test
 	public void testCalendarStrangeFromToDate(){
 		State credentials = new State();
-		credentials.setPasswd("Zs12JzIW");
-		credentials.setPnr("19121212-1212");
+		credentials.setPasswd("Y8PBZRUr");
+		credentials.setPnr("19960103-2395");
+		
 		
 		JAXBElement<String> fromDat = objectFactory.createBookingRequestFromDat("10-03-31");
 		JAXBElement<String> toDat = objectFactory.createBookingRequestToDat("10-05-31");
@@ -327,8 +329,9 @@ public class CalendarTests {
 	@Test
 	public void testCalendarCentralTimeBookingId(){
 		State credentials = new State();
-		credentials.setPasswd("Zs12JzIW");
-		credentials.setPnr("19121212-1212");
+		credentials.setPasswd("Y8PBZRUr");
+		credentials.setPnr("19960103-2395");
+		
 		
 		JAXBElement<String> fromDat = objectFactory.createBookingRequestFromDat("2010-03-31");
 		JAXBElement<String> toDat = objectFactory.createBookingRequestToDat("2010-05-31");

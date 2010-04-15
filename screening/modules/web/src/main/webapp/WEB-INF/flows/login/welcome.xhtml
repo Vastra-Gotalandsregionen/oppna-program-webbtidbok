@@ -33,6 +33,7 @@
 		<div id="boxleft" />
 		<div id="boxmiddle">
 			<p/>
+			<br/>
 			<h1 style="display: inline">Välkommen #{booking.displayName}</h1>
 				<h:form id="mainForm" style="display: inline; text-align: right; padding-left: 2em;" >
 					<sf:commandButton id="logout" value="Logga ut" processIds="*" action="logout" />
@@ -65,8 +66,10 @@
 								</td>
 								<td style="display: inline">
 									<h:form id="updateForm" style="display: inline; text-align: right;" >
-										<sf:commandButton id="updateButton" value="Omboka tid" processIds="*" action="update" />
-									</h:form>
+										
+											<sf:commandButton id="updateButton"  value="Omboka tid" processIds="*" action="update" style="width: 100px;"  />
+										
+									</h:form> 
 								</td>
 							</tr>
 							<tr>
@@ -84,7 +87,9 @@
 								</td>
 								<td style="display: inline">
 									<h:form id="deleteForm" style="display: inline; text-align: right;" >
-										<sf:commandButton id="deleteButton" value="Avboka tid" processIds="*" action="delete" />
+										
+											<sf:commandButton id="deleteButton" value="Avboka tid" processIds="*" action="delete" size="40" style="width: 100px;"  />
+										
 									</h:form>
 								</td>
 							</tr>
