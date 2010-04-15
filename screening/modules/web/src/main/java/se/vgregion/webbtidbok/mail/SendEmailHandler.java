@@ -79,7 +79,7 @@ public class SendEmailHandler implements Serializable {
 		try{
 			
 			
-			 Properties properties = getProperties();
+			 //Properties properties = getProperties();
 			
 			 //String server= (String) properties.get("server.host"); 
 	         //String from= (String) properties.get("server.fromemail"); 
@@ -138,7 +138,7 @@ public class SendEmailHandler implements Serializable {
 		try{
 			
 			
-			 Properties properties = getProperties();
+			 //Properties properties = getProperties();
 			
 			 //String server= (String) properties.get("server.host"); 
 	         //String from= (String) properties.get("server.fromemail"); 
