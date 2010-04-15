@@ -40,21 +40,19 @@
 				</h:form>
 				<p/>
 				<br/>
-				<p>Observera att du inte får någon ny kallelse om du avbokar din tid.
+				<p>Observera att om du avbokar din tid
 				</p>
-				<p>Du kan inte logga in igen om du avbokat din tid.
-				</p>
-				<p>Genom att avboka din tid tackar du nej till att delta i hälsoundersökningen.
-				</p>
-				
-				<p>Notera att du även kan avboka eller ändra din tid samt ställa frågor på telefon. Ring då till
-				Kontaktpunkten på telefonnummer 031-342 69 55 tisdag, onsdag eller torsdag mellan
-				klockan 09:00 - 15:00, alternativt 031-342 24 00.<br/>
+				<ul>
+					<li>får du ingen ny kallelse</li>
+					<li>kan du inte logga in igen</li>
+					<li>genom att avboka din tid tackar du nej till att delta i hälsoundersökningen</li>
+				</ul>
+				<p/>
+				Du kan också avboka eller omboka din tid samt ställa frågor på telefon.<br/> 
+				Ring då till kontaktpunkten på telefonnummer 031-342 69 55 tisdag, onsdag eller torsdag mellan
+				klockan 09:00 - 15:00, alternativt 031-342 24 00. 
 				Du kan också skicka e-post till: <a href="mailto:kontaktpunkten.su@vgregion.se">kontaktpunkten.su@vgregion.se</a>.
-				<br/>
 				<a href="http://www.kontaktpunkten.sahlgrenska.se">Läs mer om Kontaktpunkten</a>
-				</p>
-				
 				
 				<br/>
 				<a href="">Läs mer om undersökning av stora kroppspulsådern</a><br/>
@@ -74,7 +72,7 @@
 									</td>
 									<td style="display: inline">
 										<h:form id="confirmDeleteForm" style="display: inline; text-align: right;" >
-											<sf:commandButton id="confirmDeleteButton" value="Avboka tid" processIds="*" action="confirmdelete" />
+											<sf:commandButton id="confirmDeleteButton" value="Avboka tid" processIds="*" style="width: 100px;" action="confirmdelete" />
 										</h:form>
 									</td>			
 								</tr>
@@ -88,7 +86,7 @@
 									</td>
 									<td style="display: inline">
 										<h:form id="cancelForm" style="display: inline; text-align: right;" >
-											<sf:commandButton id="cancelButton" value="Avbryt" processIds="*" action="cancel" />
+											<sf:commandButton id="cancelButton" value="Avbryt" processIds="*" style="width: 100px;" action="cancel" />
 										</h:form>
 									</td>
 								</tr>
