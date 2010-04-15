@@ -356,8 +356,9 @@ public class LoginTests {
 	@Test
 	public void testFaultyLowerCasePassword(){
 		State credentials = new State();
-		credentials.setPasswd("Zs12jzIW");
-		credentials.setPnr("19121212-1212");
+		credentials.setPasswd("Y8PBZRUR");
+		credentials.setPnr("19960103-2395");
+		
 		System.out.println(credentials.toString());
 		
 		Login screen = new Login();
@@ -391,8 +392,9 @@ public class LoginTests {
 	@Test
 	public void testFaultyUppercasePassword(){
 		State credentials = new State();
-		credentials.setPasswd("ZS12JzIW");
-		credentials.setPnr("19121212-1212");
+		credentials.setPasswd("Y8PbZRUr");
+		credentials.setPnr("19960103-2395");
+		
 		System.out.println(credentials.toString());
 		
 		Login screen = new Login();
