@@ -291,17 +291,20 @@ public class WSTester {
 		System.out.println("bookingPlCTID: " + bookingPlCTID + "\nbookingPlMottagning: " + bookingPlMottagning + "\nbookingPlAddress: " + bookingPlAddress);
 
 	}
-	public static List<BookingTime> getBookingTime(){
+	
+	//gets both time and date available for a 
+	public static List<BookingTime> getBookingTime(String fromDat, String toDat, int ctid){
 
 		BookingRequest request = getWSRequest();
 		ObjectFactory objectFactory = new ObjectFactory();
 
-		JAXBElement<String> fromDat = objectFactory.createBookingRequestFromDat("2010-03-03");
-		JAXBElement<String> toDat = objectFactory.createBookingRequestToDat("2010-04-15");
+		JAXBElement<String> jaxbFromDat = objectFactory.createBookingRequestFromDat(fromDat);
+		JAXBElement<String> jaxbToDat = objectFactory.createBookingRequestToDat(toDat);
 		
-		request.setCentralTidbokID(1);
-		request.setFromDat(fromDat);
-		request.setToDat(toDat);
+		//This is the CTID as parameter 1. 
+		request.setCentralTidbokID(ctid);
+		request.setFromDat(jaxbFromDat);
+		request.setToDat(jaxbToDat);
 		
 		WebServiceHelper wsh = new WebServiceHelper();
 		ArrayOfBookingTime bookingTimeArr = wsh.getQueryWSRequestTime(request);
@@ -396,7 +399,10 @@ public class WSTester {
 
 		exploreWSResponseAndRequest(centralTidBoksIdList);
 		
-		getBookingTime();
+		String fromDat = "2010-03-30";
+		String toDat = "2010-04-15";
+		int ctid = 1;
+		getBookingTime(fromDat, toDat, ctid);
 	
 //		key/CID: 1 value/PLACE: IC-Sjukhuset
 //		key/CID: 2 value/PLACE: Surf-Sjukhuset
