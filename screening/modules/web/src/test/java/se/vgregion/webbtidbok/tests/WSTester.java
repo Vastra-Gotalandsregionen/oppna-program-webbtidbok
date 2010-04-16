@@ -123,24 +123,24 @@ public class WSTester {
 		return bookingResp;
 	}
 	
-	//gets XMLcal via request. does NOT WORK to get this from a request.
-	public static String getTimeForDefaultBookingViaRequest(){
-
-		String time;
-		XMLGregorianCalendar XMLcal;
-		BookingRequest bookingReq = getWSRequest();
-		
-		System.out.println("\n*** getTimeForDefaultBookingViaRequest(): ");
-		
-		//This renders a NullPointer because the Request does not have a bokad tid other than null
-		//Since the request probably doesn't have a bokad tid this method should not exist as public.
-		//What you can do is probably to use setBokadTid() on a request if you want to make a new appointment.
-		XMLcal = bookingReq.getBokadTid();
-		time = timeFormatter(XMLcal);	
-		System.out.println("String time from request: " + time);
-		
-		return time;
-	}
+//	//gets XMLcal via request. does NOT WORK to get this from a request.
+//	public static String getTimeForDefaultBookingViaRequest(){
+//
+//		String time;
+//		XMLGregorianCalendar XMLcal;
+//		BookingRequest bookingReq = getWSRequest();
+//		
+//		System.out.println("\n*** getTimeForDefaultBookingViaRequest(): ");
+//		
+//		//This renders a NullPointer because the Request does not have a bokad tid other than null
+//		//Since the request probably doesn't have a bokad tid this method should not exist as public.
+//		//What you can do is probably to use setBokadTid() on a request if you want to make a new appointment.
+//		XMLcal = bookingReq.getBokadTid();
+//		time = timeFormatter(XMLcal);	
+//		System.out.println("String time from request: " + time);
+//		
+//		return time;
+//	}
 	
 	public static String timeFormatter(XMLGregorianCalendar XMLcal){
 		
@@ -186,7 +186,7 @@ public class WSTester {
 		return time;
 	}
 	
-	//gets XMLcal via response
+	//gets the date which the patient is originally booked for
 	public static String getDateForDefaultBookingViaResponse(){
 		
 		String date;
@@ -206,7 +206,7 @@ public class WSTester {
 		
 	}
 	
-
+	//gets the CentralTidbokId and Name of a mottagning combined in a map
 	public static Map<Integer, String> getCTIDAndNameForPlaces(){
 		//Maybe get tid for every mottagning thru getCentralTidBokId()
 		Map<Integer, String> ctidAndNameMap = new HashMap<Integer, String>();
@@ -229,7 +229,7 @@ public class WSTester {
 		
 		return ctidAndNameMap;		
 	}
-	
+	//reads from the map returned from getCTIDAndNameForPlaces()
 	public static void readFromMap(Map<Integer, String> map){
 		Set<Integer> keys = map.keySet();
 		Iterator<Integer> iter = keys.iterator();
@@ -241,6 +241,7 @@ public class WSTester {
 		}
 	}
 	
+	//returns the CentralTidbokID as an int list for all the mottagningar in the map above
 	public static ArrayList<Integer> returnCentralTidBokIdFromMap(Map<Integer, String> map){
 		ArrayList<Integer> list = new ArrayList<Integer>();
 		Set<Integer> keys = map.keySet();
@@ -253,6 +254,7 @@ public class WSTester {
 		return list;
 	}
 	
+	//this gets what the systemout's says
 	public static void exploreWSResponseAndRequest(ArrayList<Integer> centralTidBoksIdList){
 		//what do i want to do here?
 		//thru ctbId I want to get available times for the plats or mottagning associated with the id.
@@ -292,7 +294,7 @@ public class WSTester {
 
 	}
 	
-	//gets both time and date available for a 
+	//gets both time and date available for a visit to the specified mottagning(ctid)
 	public static List<BookingTime> getBookingTime(String fromDat, String toDat, int ctid){
 
 		BookingRequest request = getWSRequest();
@@ -301,7 +303,7 @@ public class WSTester {
 		JAXBElement<String> jaxbFromDat = objectFactory.createBookingRequestFromDat(fromDat);
 		JAXBElement<String> jaxbToDat = objectFactory.createBookingRequestToDat(toDat);
 		
-		//This is the CTID as parameter 1. 
+		//This is the CTID as parameter. 
 		request.setCentralTidbokID(ctid);
 		request.setFromDat(jaxbFromDat);
 		request.setToDat(jaxbToDat);
@@ -328,24 +330,24 @@ public class WSTester {
 	//Test specific how to get a Calendar (Tidbok) thru CTID
 	//This emulates a user picking a Mottagning thru the drop down menu
 	//That would generate a new request with new properties set on it
-	public static List<Calendar> getPlaceCalendarThruCTID(int CTID){
+	public static List<Calendar> getPlaceCalendarThruCTID(String fromDat, String toDat, int CTID){
 		ObjectFactory objectFactory = new ObjectFactory();
 	
 		BookingRequest request = getWSRequest();
 	
-		JAXBElement<String> fromDat = objectFactory.createBookingRequestFromDat("2010-03-30");
-		JAXBElement<String> toDat = objectFactory.createBookingRequestToDat("2010-04-03");		
+		JAXBElement<String> jaxbFromDat = objectFactory.createBookingRequestFromDat(fromDat);
+		JAXBElement<String> jaxbToDat = objectFactory.createBookingRequestToDat(toDat);		
 		request.setCentralTidbokID(CTID);
-		request.setFromDat(fromDat);
-		request.setToDat(toDat);
+		request.setFromDat(jaxbFromDat);
+		request.setToDat(jaxbToDat);
 		WebServiceHelper wsh = new WebServiceHelper();		
 		ArrayOfCalendar calArr = wsh.getQueryWSRequestCalendar(request);
 		List<Calendar> calList = calArr.getCalendar();
-		System.out.println("\n**** testGetValidCalThruCTID: ");
+		System.out.println("\n**** getPlaceCalendarThruCTID: ");
 		System.out.println("calList.size() - ammount of bookable dates within fromDat & toDat: " + calList.size());
 		//CalendarObj is about the same as one day
 		if(!calList.isEmpty()){		
-			System.out.println("fromDat: " + fromDat.getValue() + ", toDat: " + toDat.getValue());
+			System.out.println("fromDat: " + jaxbFromDat.getValue() + ", toDat: " + jaxbToDat.getValue());
 			int availTimeToBook = 1;
 			for(Calendar c: calList ){
 
@@ -407,7 +409,10 @@ public class WSTester {
 //		key/CID: 1 value/PLACE: IC-Sjukhuset
 //		key/CID: 2 value/PLACE: Surf-Sjukhuset
 //		key/CID: 3 value/PLACE: Elvis-Sjukhuset
-		getPlaceCalendarThruCTID(1);
+		
+		String fromDat2 = "2010-03-30";
+		String toDat2 = "2010-04-03";
+		getPlaceCalendarThruCTID(fromDat2, toDat2, ctid);
 
 		
 	}
