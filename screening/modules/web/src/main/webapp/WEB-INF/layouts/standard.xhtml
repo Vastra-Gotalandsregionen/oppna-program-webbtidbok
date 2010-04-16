@@ -42,6 +42,35 @@
 			<script type="text/javascript" src="resources/scripts/script.js"></script>
 			<script type="text/javascript" src="resources/scripts/widget.js"></script>
 			<ui:insert name="headIncludes" />
+			
+	<SCRIPT TYPE="text/javascript">
+			<!--
+			function popup(mylink, windowname)
+			{
+				if (! window.focus)return true;
+				var href;
+				if (typeof(mylink) == 'string')
+				   href=mylink;
+				else
+				   href=mylink.href;
+				window.open(href, windowname, 'width=300,height=200,scrollbars=no,menubar=0,toolbar=0,resizable=0');
+				return false;
+			}
+			
+			function toggle(obj)
+			{
+				var div = document.getElementById(obj)
+				if (div.style.display == 'none') 
+				{
+					div.style.display = 'block'
+				} else 
+				{
+					div.style.display = 'none'
+				}
+			}
+			//-->
+	</SCRIPT>
+	
 		</head>
 		<body>
 		<div id="wrapper">
