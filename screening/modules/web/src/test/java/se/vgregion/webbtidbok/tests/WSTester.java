@@ -59,12 +59,9 @@ public class WSTester {
 	static public ArrayList<String> getBookingPlaceFromWS(){
 		
 		BookingRequest request = getWSRequest();
-		WebServiceHelper wsh = new WebServiceHelper();
-		
-		ArrayOfBookingPlace bookingPlArr = new ArrayOfBookingPlace();
-		
+		WebServiceHelper wsh = new WebServiceHelper();	
+		ArrayOfBookingPlace bookingPlArr = new ArrayOfBookingPlace();	
 		bookingPlArr = wsh.getBookingPlaceFromWS(request);
-
 		List<BookingPlace> bpList = new ArrayList<BookingPlace>();
 		bpList = bookingPlArr.getBookingPlace();
 		
@@ -73,6 +70,7 @@ public class WSTester {
 		String bookingPlace;
 		ArrayList <String> bookingPlaceArr = new ArrayList<String>();
 		String address;
+		
 		int i = 0;
 		for(BookingPlace b : bpList){
 
@@ -90,11 +88,11 @@ public class WSTester {
 	//Normal stuff... only pnr and pin is provided
 	static public BookingRequest getWSRequest(){
 		//Klaus K
-		String pnr = "19121212-1212";
-		String passwd = "Zs12JzIW";
+//		String pnr = "19121212-1212";
+//		String passwd = "nEoZMD7G";
 		//Bengt M
-//		String pnr = "19660223-3196";
-//		String passwd = "u63MvXTx";
+		String pnr = "19660223-3196";
+		String passwd = "u63MvXTx";
 				
 		State requestParameters = new State();
 		requestParameters.setPnr(pnr);
@@ -109,7 +107,7 @@ public class WSTester {
 	}
 	
 	
-	//the response privded thru getQueryWSRequest with pnr and pin
+	//the response provided thru getQueryWSRequest with pnr and pin
 	static public BookingResponse getBookingResponseFromWS(){
 		String mottagning;
 		BookingResponse bookingResp = new BookingResponse();
@@ -125,12 +123,11 @@ public class WSTester {
 		return bookingResp;
 	}
 	
-	//gets XMLcal via request
+	//gets XMLcal via request. does NOT WORK to get this from a request.
 	public static String getTimeForDefaultBookingViaRequest(){
 
 		String time;
 		XMLGregorianCalendar XMLcal;
-
 		BookingRequest bookingReq = getWSRequest();
 		
 		System.out.println("\n*** getTimeForDefaultBookingViaRequest(): ");
@@ -139,8 +136,7 @@ public class WSTester {
 		//Since the request probably doesn't have a bokad tid this method should not exist as public.
 		//What you can do is probably to use setBokadTid() on a request if you want to make a new appointment.
 		XMLcal = bookingReq.getBokadTid();
-		time = timeFormatter(XMLcal);
-		
+		time = timeFormatter(XMLcal);	
 		System.out.println("String time from request: " + time);
 		
 		return time;
@@ -211,9 +207,9 @@ public class WSTester {
 	}
 	
 
-	public static Map<Integer, String> getDateAndTimeForOtherAlternatives(){
+	public static Map<Integer, String> getCTIDAndNameForPlaces(){
 		//Maybe get tid for every mottagning thru getCentralTidBokId()
-		Map<Integer, String> map = new HashMap<Integer, String>();
+		Map<Integer, String> ctidAndNameMap = new HashMap<Integer, String>();
 		WebServiceHelper wsh = new WebServiceHelper();
 		BookingRequest request = getWSRequest();
 		
@@ -228,10 +224,10 @@ public class WSTester {
 			index++;
 			centralTidBokId = b.getCentralTidbokID();
 			String mottagning = b.getMottagning().getValue();
-			map.put(centralTidBokId, mottagning);
+			ctidAndNameMap.put(centralTidBokId, mottagning);
 		}
 		
-		return map;		
+		return ctidAndNameMap;		
 	}
 	
 	public static void readFromMap(Map<Integer, String> map){
@@ -263,8 +259,7 @@ public class WSTester {
 		WebServiceHelper wsh = new WebServiceHelper(); 
 		
 		//what can a request provide?
-		BookingRequest request = getWSRequest();
-		
+		BookingRequest request = getWSRequest();	
 		
 		BookingResponse response = wsh.getQueryWS(request);
 		
@@ -296,8 +291,8 @@ public class WSTester {
 		System.out.println("bookingPlCTID: " + bookingPlCTID + "\nbookingPlMottagning: " + bookingPlMottagning + "\nbookingPlAddress: " + bookingPlAddress);
 
 	}
-	public static void getBookingTime(){
-		BookingTime bt = new BookingTime();
+	public static List<BookingTime> getBookingTime(){
+
 		BookingRequest request = getWSRequest();
 		ObjectFactory objectFactory = new ObjectFactory();
 
@@ -313,23 +308,24 @@ public class WSTester {
 		List<BookingTime> bookingTimeList = bookingTimeArr.getBookingTime();
 		XMLGregorianCalendar XMLcal;
 		System.out.println("\n*** getBookingTime: ");
+	
 		for(BookingTime b : bookingTimeList){
 		
 			int nBookings = b.getAntal();
-//			System.out.println("antalBokn: " + nBookings);
 			String time = b.getKlocka().getValue();	
 			XMLcal = b.getDatum();
 			String date = dateFormatter(XMLcal);
-//			String date =dateFormatter(XMLcal.getYear(), XMLcal.getMonth(), XMLcal.getDay());
 			System.out.println("time: " + time + ", date: " + date + ", no. bookings: " + nBookings);
 		}
+		
+		return bookingTimeList;
 	}
 	
 	//Test what properties can be set on a request
 	//Test specific how to get a Calendar (Tidbok) thru CTID
 	//This emulates a user picking a Mottagning thru the drop down menu
 	//That would generate a new request with new properties set on it
-	public static void getPlaceCalendarThruCTID(int CTID){
+	public static List<Calendar> getPlaceCalendarThruCTID(int CTID){
 		ObjectFactory objectFactory = new ObjectFactory();
 	
 		BookingRequest request = getWSRequest();
@@ -349,12 +345,13 @@ public class WSTester {
 			System.out.println("fromDat: " + fromDat.getValue() + ", toDat: " + toDat.getValue());
 			int availTimeToBook = 1;
 			for(Calendar c: calList ){
-//				System.out.println("availTimeToBook: " + availTimeToBook);
+
 				System.out.println("c.getDatum(): " + dateFormatter(c.getDatum()) + ", availTimeToBook: " + availTimeToBook);
-//					System.out.println("c.getSatus: " + c.getStatus().getValue());//not used
 				availTimeToBook++;
 			}
 		}
+		
+		return calList;
 	}
 	
 	public static String dateFormatter(XMLGregorianCalendar XMLcal){
@@ -391,7 +388,7 @@ public class WSTester {
 		
 		getTimeForDefaultBookingViaResponse();
 		
-		map = getDateAndTimeForOtherAlternatives();
+		map = getCTIDAndNameForPlaces();
 
 		readFromMap(map);
 		
@@ -409,29 +406,7 @@ public class WSTester {
 		
 	}
 	
-	
-//	//Test the WS connection is ok
-//	@Test
-//	public void testWSCalendarObj(){
-//		String xmlCal = null;
-//		XMLGregorianCalendar gregCal = connectToWS();
-//		xmlCal = gregCal.toXMLFormat();
-//		System.out.println("xmlCal: " + xmlCal);
-//		
-//		
-//		Assert.assertTrue(false);
-//	}
-//	
-//	//Test getting relevant hospital instance from the WS
-//	//What is correct depends on what person you log in as
-//	//Use different test persons as reference for true/false
-//	@Test
-//	public void testWSHospitalIsCorrect(){
-//		Assert.assertTrue(false);
-//	}
-	
-	
-//	19121212-1212	Zs12JzIW
+//	19121212-1212	nEoZMD7G
 //	19960103-2395	Y8PBZRUr
 //	19910104-2399	bQwkdRrG
 //	19910104-2399	fje5rnXG
