@@ -46,93 +46,85 @@
 				<p>Du kan också omboka eller avboka tiden per telefon. Ring då till
 				Kontaktpunkten på telefonnummer 031-342 69 55 tisdag, onsdag eller torsdag mellan
 				klockan 09:00 - 15:00, alternativt 031-342 24 00.<br/>
-				<a href="http://www.kontaktpunkten.sahlgrenska.se">Läs mer om Kontaktpunkten</a></p>
-		
-		
+				<a href="http://www.kontaktpunkten.sahlgrenska.se">Läs mer om Kontaktpunkten</a></p>	
 				<table>
 					<tr>
 						<td>			
 							<div id="boxleft1" style="width: 100%">				
-							<table>
-								<tr>
-									<td>
-										#{booking.displayName}</td><td style="padding-left: 2em">#{booking.pnr}
-									</td>			
-								</tr>
-								<p></p>
-								<tr>
-									<td align="top">
-										Ursprunglig tid:
-									</td>
-								<td style="padding-left: 2em">
-									#{booking.mainSector}, #{booking.address} 			
-								</td>
-								</tr>
-								<tr>
-									<td>
-										&nbsp;
-									</td>
-									<td style="padding-left: 2em">
-										#{booking.timeBookingString}.
-									</td>
-								</tr>				
-								<tr>
-									<td></td>
-									<td style="padding-left: 2em">
-									</td>
-								</tr>			
-							</table>
+								<table>
+									<tr>
+										<td>
+											#{booking.displayName}</td><td style="padding-left: 2em">#{booking.pnr}
+										</td>			
+									</tr>
+									<p />
+									<tr>
+										<td align="top">
+											Ursprunglig tid:
+										</td>
+										<td style="padding-left: 2em">
+											#{booking.mainSector}, #{booking.address} 			
+										</td>
+									</tr>
+									<tr>
+										<td>
+											&nbsp;
+										</td>
+										<td style="padding-left: 2em">
+											#{booking.timeBookingString}.
+										</td>
+									</tr>				
+									<tr>
+										<td></td>
+										<td style="padding-left: 2em"></td>
+									</tr>			
+								</table>
 							</div>
 						</td>
 					</tr>
 					<tr>
 						<td>			
-							<br></br>	
-							<div id="placediv"    style="display: inline;background-color:#f3f1f2;" >
-								<table>
-									<tr>
-										<td style="background-color:#f3f1f2;" >		
-						
-											<h3 style="display: inline"> Välj Plats</h3>
+							<br />	
+								<div id="placediv_place" style="display: inline;background-color:#f3f1f2;" >
+									<table>
+										<tr>
+											<td style="background-color:#f3f1f2;width: 800px" >						
+												<h3 style="display: inline"> Välj plats</h3>
 												<h:form id="helpForm" style="display: inline; text-align: right;" >
 													<div class="image_block" style="display: inline;text-align: right;padding-left: 35em;"> <img src="../VGRImages/help.gif" />  
 													</div>
         										</h:form>   
-        								</td>
-									</tr>
-								</table>       
-							</div>  <!-- boxleft3inside -->
-							
-							
-							
+	        								</td>
+										</tr>
+									</table>       
+								</div>  <!-- boxleft3inside -->
 							<br/>
 		                </td>
 					</tr>
 					<tr>
 						<td>	                     
-		                <div id="" style="width: 100%;background-color:#ffffff">    
-		                <table>
-							<tr>
-								<td>
-									<h:form id="selectForm" style="display: inline; text-align: right; padding-right: 20em;" >
-										<h:selectOneMenu id="places" value="#{selecteditem}" style="width:320px">
-											   <f:selectItems value="#{bookingplaces}" /> 					
-										</h:selectOneMenu>
-									</h:form>
-				    			</td>
-			    			</tr>
-		    			</table> 
-		    			</div>
+			                <div id="" style="width: 100%;background-color:#ffffff">    
+				                <table>
+									<tr>
+										<td>
+											<h:form id="selectForm" style="display: inline; text-align: right; padding-right: 20em;" >
+												<h:selectOneMenu id="places" value="#{selecteditem}" style="width:320px">
+													   <f:selectItems value="#{bookingplaces}" /> 					
+												</h:selectOneMenu>
+											</h:form>
+						    			</td>
+					    			</tr>
+				    			</table> 
+			    			</div>
 		            	</td>
-					</tr>
-					
+					</tr>				
 					<tr>
 						<td>
 							<table>
 								<tr>
     								<td style="display: inline; text-align: right;" >
 										<h:form id="displayTimeForm" style="display: inline; text-align: right;padding-left: 37.5em;" >
-											<sf:commandButton id="displayButton" value="Visa tider" processIds="*" action="display" style="width: 100px;" />
+											<sf:commandButton id="displayButton" onclick="javascript: toggle('placediv_date')" value="Visa tider" processIds="*" action="display" style="width: 100px;" />
 										</h:form>
 									</td>
     							</tr>
@@ -150,29 +142,26 @@
     							</tr>
     						</table>
 						</td>
-					</tr>
-					
+					</tr>	
+					<!-- This should be dynamic! only visable after clicking on the "Visa tid" button -->					
 					<tr>
 						<td>
-							<div id="placediv"    style="display: inline;background-color:#f3f1f2;" >
+							<div id="placediv_date" style="display:none;inline;background-color:#f3f1f2;" >
 								<table>
 									<tr>
-										<td style="background-color:#f3f1f2;" >		
-						
+										<td style="background-color:#f3f1f2;width: 800px" >		
 											<h3 style="display: inline"> Välj Datum</h3>
-												<h:form id="helpForm" style="display: inline; text-align: right;" >
-													<div class="image_block" style="display: inline;text-align: right;padding-left: 34em;"> <img src="../VGRImages/help.gif" />  
-													</div>
-        										</h:form>   
+											<h:form id="helpForm" style="display: inline; text-align: right;" >
+												<div class="image_block" style="display: inline;text-align: right;padding-left: 35em;"> <img src="../VGRImages/help.gif" />  
+												</div>
+       										</h:form>   
         								</td>
 									</tr>
 								</table>       
-							</div>  <!-- boxleft3inside -->
+							</div>   <!-- boxleft3inside -->
 						</td>
-					</tr>
-					
-					
-			</table>				
+					</tr>					
+				</table>				
 		</div>	<!-- boxmiddle -->
 		</div> <!-- boxcontainer -->
 			
