@@ -35,7 +35,7 @@
 	</bean>
 	<bean id="validationService" class="se.vgregion.webbtidbok.ValidationLogin">
 	</bean>
-	<bean id="calendarService" class="se.vgregion.webbtidbok.CalendarPrinter">
+	<bean id="calendarService" class="se.vgregion.webbtidbok.CalendarUtil">
 	</bean>
 	
 	<bean id="sendMailService" class="se.vgregion.webbtidbok.mail.SendEmailHandler">

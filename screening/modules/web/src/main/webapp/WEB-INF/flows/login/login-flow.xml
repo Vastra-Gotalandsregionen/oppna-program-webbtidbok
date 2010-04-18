@@ -39,11 +39,7 @@
 
 <!-- Test state for Calendar 		-->
 
-<!--	<view-state id="calendar_test_classic">-->
-<!--		<on-render>-->
-<!--			<evaluate expression="calendarService.getCalendar()" result="flowScope.calendarUtil" />-->
-<!--		</on-render>-->
-<!--	</view-state>-->
+
 	
 <!--for debugging you have to replace to="validate" with to="loggedin"-->
 	<view-state id="start">
@@ -60,11 +56,19 @@
 	<action-state id="doLogin">
 		<evaluate expression="loginService.login(loginCredentials)" />
     		<transition on="yes" to="loggedin" />
+<!--    		<transition on="yes" to="calendar_test_classic" />-->
     		<transition on="no" to="start">
     			<evaluate expression="loginmessages.setBadLogin()" />
     		</transition>
 	</action-state>
-	
+
+	<view-state id="calendar_test_classic">
+		<on-render>
+			<evaluate expression="calendarService.getCalendar(loginCredentials)" /> 
+<!--			result="flowScope.calendarUtil" />-->
+		</on-render>
+	</view-state>
+		
 	<view-state id="loggedin" view="welcome.xhtml" model="booking">
 		<on-render>
 			<evaluate expression="bookingService.getBooking(loginCredentials)" result="flowScope.booking" />
@@ -133,23 +137,14 @@
 	<view-state id="update" view="update.xhtml">
 		  
 		<on-render>
-			  <evaluate expression="bookingService.getBookingPlaceSelectItems(loginCredentials)"  result="flowScope.bookingplaces"  >
+			  <evaluate expression="calendarService.getCalendar(loginCredentials)" /> 
+			  <evaluate expression="bookingService.getBookingPlaceSelectItems(loginCredentials)"  result="flowScope.bookingplaces" />
+			  <evaluate expression="bookingService.getSelectedDefaultItem(loginCredentials)"  result="flowScope.selecteditem" />
 			 
-			  
-			  </evaluate>
-			  
-			  <evaluate expression="bookingService.getSelectedDefaultItem(loginCredentials)"  result="flowScope.selecteditem"  >
-			 
-			  
-			  </evaluate>
-			 
-			  
-			  
 		</on-render>
 		
 		<transition on="logout" to="loggedout" history="invalidate"/>
 		<transition on="cancel" to="loggedin" />
-		
 	</view-state>
 	
 	<view-state id="loggedout">

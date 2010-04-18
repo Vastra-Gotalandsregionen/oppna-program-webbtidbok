@@ -18,10 +18,19 @@
 package se.vgregion.webbtidbok;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
+import javax.xml.bind.JAXBElement;
+
+import se.vgregion.webbtidbok.ws.ArrayOfCalendar;
+import se.vgregion.webbtidbok.ws.BookingRequest;
+import se.vgregion.webbtidbok.ws.ObjectFactory;
 
 public class CalendarUtil implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -39,8 +48,13 @@ public class CalendarUtil implements Serializable {
 			"September", "October", "November", "December"};
 	
 	Calendar calendar = Calendar.getInstance();
+	WebServiceHelper wsh = new WebServiceHelper();
+	BookingRequest request;
+	BookingResponseLocal r;
 
-	private List<Calendar> renderList = new ArrayList<Calendar>();
+
+	private List<Calendar> availableDates = new ArrayList<Calendar>();
+//	private List<Calendar> renderList = new ArrayList<Calendar>();
 	
 	private List<String> days;
 	private List<Boolean> isLink;
@@ -171,10 +185,83 @@ public class CalendarUtil implements Serializable {
 		createCalendarForMonth();
 		return this;
 	}
+	
+	public CalendarUtil getCalendar(State state) {
+		System.out.println("Today is "+calendar.getTime().toString());
+		index = 0;
+		webService(state);
+//		XMLGregorianCalendar d = r.getTimeBooking();
+		Calendar c = Calendar.getInstance();
+		c.setTime(r.getTimeBooking());
+
+		System.out.println("         ****** "+state.getPnr());
+		
+		//calendar.set(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DATE), c.get(Calendar.HOUR), c.get(Calendar.MINUTE));
+		availableDates = getAvailableDates(state);
+		
+		createCalendarForMonth();
+		return this;
+	}
+	
+	private void webService(State state) {
+		wsh = new WebServiceHelper();
+		request = wsh.getQueryWSRequest(state);
+		r = new BookingResponseLocal(wsh.getQueryWS(request));
+	}
+	
+	private List<Calendar> getAvailableDates(State state){
+		ObjectFactory objectFactory = new ObjectFactory();
+		java.util.Calendar temp;
+
+		String pattern = "yyyy-MM-dd";
+	    SimpleDateFormat format = new SimpleDateFormat(pattern);
+	    	    
+	    temp = Calendar.getInstance();
+	    temp.set(Calendar.YEAR, calendar.get(Calendar.YEAR));
+	    temp.set(Calendar.DATE, 1);
+	    String from = format.format(calendar.getTime());
+	    
+		int lastDay = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+	    temp.set(Calendar.DATE, lastDay);
+	    String to = format.format(calendar.getTime());
+
+//		JAXBElement<String> fromDat = objectFactory.createBookingRequestFromDat(from);
+//		JAXBElement<String> toDat = objectFactory.createBookingRequestToDat(to);
+		
+		JAXBElement<String> fromDat = objectFactory.createBookingRequestFromDat("2010-04-01");
+		JAXBElement<String> toDat = objectFactory.createBookingRequestToDat("2010-04-31");
+		
+		request.setCentralTidbokID(1);
+		request.setFromDat(fromDat);
+		request.setToDat(toDat);
+		
+		ArrayOfCalendar calArr = wsh.getQueryWSRequestCalendar(request);
+		List<se.vgregion.webbtidbok.ws.Calendar> calList = new ArrayList<se.vgregion.webbtidbok.ws.Calendar>();
+		try {
+			calList = calArr.getCalendar();
+		} catch (NullPointerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		Set<Calendar> dateSet = new HashSet<Calendar>();
+		for(se.vgregion.webbtidbok.ws.Calendar c : calList) {
+			temp.set(Calendar.YEAR, c.getDatum().getYear());
+			temp.set(Calendar.MONTH, c.getDatum().getMonth());
+			temp.set(Calendar.DATE, c.getDatum().getDay());
+			dateSet.add(temp);
+		}
+
+		List<Calendar> ret = new ArrayList<Calendar>();
+		for(Calendar t : dateSet) {
+			ret.add(t);
+		}
+		
+		System.out.println("ret.size() - amount of bookable dates within fromDat & toDat: " + ret.size());
+		return ret;
+	}
 		
 	private void createCalendarForMonth() {
-		System.out.println("Today is "+calendar.getTime().toString());
-
 		//TODO: grey out the days before current date
 		//TODO: highlight exam date
 		//TODO: grey out unavailable dates
@@ -182,20 +269,25 @@ public class CalendarUtil implements Serializable {
 		days = new ArrayList<String>();
 		isLink = new ArrayList<Boolean>();
 
-		List<Calendar> testDates = testData();
-	
-		int today = 1; //cal.get(Calendar.DAY_OF_MONTH);
+		int today = calendar.get(Calendar.DAY_OF_MONTH);
 
-		for(int i = 0; i < testDates.size(); i++) {
-			if(testDates.get(0).get(Calendar.DAY_OF_MONTH) < today) {
-				testDates.remove(0);
+		//uncomment this to use testdata instead of data from the web service
+//		List<Calendar> testDates = testData();
+//		for(int i = 0; i < testDates.size(); i++) {
+//			if(testDates.get(0).get(Calendar.DAY_OF_MONTH) < today) {
+//				testDates.remove(0);
+//			}
+//		}
+		
+		for(int i = 0; i < availableDates.size(); i++) {
+			if(availableDates.get(0).get(Calendar.DAY_OF_MONTH) < today) {
+				availableDates.remove(0);
 			}
 		}
 		
-		renderList = new ArrayList<Calendar>(testDates);
-		Collections.copy(renderList, testDates);
+//		renderList = new ArrayList<Calendar>(testDates);
+//		Collections.copy(renderList, testDates);
 
-		calendar.set(2010, 3, 1);
 		List<List<Integer>> rows = getRows(calendar);
 
 		for(List<Integer> row : rows) {
@@ -209,12 +301,12 @@ public class CalendarUtil implements Serializable {
 					isLink.add(false);
 				}
 				else {
-					if(testDates.size() > 0) {
-						Calendar b = testDates.get(0);
+					if(availableDates.size() > 0) {
+						Calendar b = availableDates.get(0);
 						if(b.get(Calendar.DAY_OF_MONTH) == day) {
 							days.add("" + day);
 							isLink.add(true);
-							testDates.remove(0);
+							availableDates.remove(0);
 						}
 						else {
 							days.add("" + day);
@@ -236,7 +328,9 @@ public class CalendarUtil implements Serializable {
 		int emptySlots;
 	
 		//which day is the first day of the month?
-		int firstDay = cal.get(Calendar.DAY_OF_WEEK);
+		Calendar temp = cal;
+		temp.set(Calendar.DATE, 1);
+		int firstDay = temp.get(Calendar.DAY_OF_WEEK);
 		if(firstDay == 1) {
 			emptySlots = 7;
 		}
@@ -244,7 +338,7 @@ public class CalendarUtil implements Serializable {
 			emptySlots = firstDay - 1;	
 		}
 		int printed = 0;
-
+		System.out.println(cal.get(Calendar.MONTH)+" emptySlots: "+emptySlots);
 		for(int i = 1; i < emptySlots; ++i) {
 			row.add(0);
 			printed++;
