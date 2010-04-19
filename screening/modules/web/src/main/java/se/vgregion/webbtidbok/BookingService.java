@@ -81,11 +81,11 @@ public class BookingService
 	 */
 	public boolean cancelBooking(State loginCredentials){
 		
-		//request = helper.getQueryWSRequest(loginCredentials);
-		//boolean cancelledBooking = helper.getQueryWSCancelBooking(request);
+		request = helper.getQueryWSRequest(loginCredentials);
+		boolean cancelledBooking = helper.getQueryWSCancelBooking(request);
 		
-		//return cancelledBooking;
-		return true;
+		return cancelledBooking;
+		//return true;
 	}
 	
 	
