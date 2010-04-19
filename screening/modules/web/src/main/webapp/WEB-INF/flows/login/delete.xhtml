@@ -40,7 +40,7 @@
 				</h:form>
 				<p/>
 				<br/>
-				<p>Observera att om du avbokar din tid
+				<p><b>Observera</b> att om du avbokar din tid
 				</p>
 				<ul>
 					<li>får du ingen ny kallelse</li>
@@ -52,33 +52,29 @@
 				Du kan också avboka eller omboka din tid samt ställa frågor på telefon.<br/> 
 				Ring då till kontaktpunkten på telefonnummer 031-342 69 55 tisdag, onsdag eller torsdag mellan
 				klockan 09:00 - 15:00, alternativt 031-342 24 00. 
-				Du kan också skicka e-post till: <a href="mailto:kontaktpunkten.su@vgregion.se">kontaktpunkten.su@vgregion.se</a>.
+				Du kan också skicka e-post till: <a href="mailto:kontaktpunkten.su@vgregion.se">kontaktpunkten.su@vgregion.se</a>.<br/>
 				<a href="http://www.kontaktpunkten.sahlgrenska.se">Läs mer om Kontaktpunkten</a>
 				</p>
 				<br/>
 				<a href="">Läs mer om undersökning av stora kroppspulsådern</a><br/>
 				<a href="">Läs om ultraljudsundersökning</a>
-				<br/>
-				
-				<p/>
-				
-		
-					<div id="boxleft1" style="width: 100%">		
-						 
-						
-						
+				<br/>			
+				<p/>	
+					<div id="boxleft1" style="width: 100%">					
 						<table>
-								<tr>
-									<td>
-										#{booking.displayName}</td><td style="padding-left: 2em">#{booking.pnr}
-									</td>
-									<td style="display: inline">
-										<h:form id="confirmDeleteForm" style="display: inline; text-align: right;" >
-											<sf:commandButton id="confirmDeleteButton" value="Avboka tid" processIds="*" style="width: 100px;" action="confirmdelete" />
-										</h:form>
-									</td>			
-								</tr>
-								
+							<tr>
+								<td style="padding-left: 2em">
+									#{booking.displayName}
+								</td>
+								<td style="padding-left: 2em">
+										#{booking.pnr}
+								</td>
+								<td style="display: inline">
+									<h:form id="confirmDeleteForm" style="display: inline; text-align: right;" >
+										<sf:commandButton id="confirmDeleteButton" value="Avboka tid" processIds="*" style="width: 100px;" action="confirmdelete" />
+									</h:form>
+								</td>			
+							</tr>							
 								<tr>
 									<td align="top">
 										&nbsp;
@@ -105,16 +101,11 @@
 									<td style="padding-left: 2em">
 									</td>
 								</tr>			
-							</table>
-						
-						
+							</table>		
 					</div>	
-						
-				
-				</div>	
-				</div>
-				
-		
+	
+		</div>	
+		</div>				
 </ui:fragment>
 </ui:define>
 </ui:composition>
