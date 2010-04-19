@@ -62,13 +62,15 @@
     		</transition>
 	</action-state>
 
+<!--  
 	<view-state id="calendar_test_classic">
 		<on-render>
 			<evaluate expression="calendarService.getCalendar(loginCredentials)" /> 
-<!--			result="flowScope.calendarUtil" />-->
+			result="flowScope.calendarUtil" />
 		</on-render>
 	</view-state>
-		
+-->
+
 	<view-state id="loggedin" view="welcome.xhtml" model="booking">
 		<on-render>
 			<evaluate expression="bookingService.getBooking(loginCredentials)" result="flowScope.booking" />
@@ -137,10 +139,16 @@
 	<view-state id="update" view="update.xhtml">
 		  
 		<on-render>
+			  <!--  
 			  <evaluate expression="calendarService.getCalendar(loginCredentials)" /> 
 			  <evaluate expression="bookingService.getBookingPlaceSelectItems(loginCredentials)"  result="flowScope.bookingplaces" />
 			  <evaluate expression="bookingService.getSelectedDefaultItem(loginCredentials)"  result="flowScope.selecteditem" />
-			 
+			  -->
+			  
+			  <evaluate expression="bookingService.getBookingPlaceSelectItems(loginCredentials)"  result="flowScope.bookingplaces"  >
+			  </evaluate>
+			  <evaluate expression="bookingService.getSelectedDefaultItem(loginCredentials)"  result="flowScope.selecteditem"  >
+			  </evaluate>
 		</on-render>
 		
 		<transition on="logout" to="loggedout" history="invalidate"/>
