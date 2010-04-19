@@ -40,14 +40,14 @@
 				</h:form>
 				<p/>
 				<br/>
-				<p>Här kan du omboka eller avboka din tid till undersökning av stora kroppspulsådern.
+				<p>Här kan du omboka eller avboka den tid du fått till undersökning av stora kroppspulsådern.
 				Om du behöver omboka eller avboka tiden måste du göra det senast dagen innan du ska undersökas.
 				Du kan omboka tiden maximalt två gånger. Spara ditt lösenord om du behöver logga in igen.<br/>
 				</p>
 				<p>Du kan också omboka eller avboka tiden per telefon. Ring då till
 				Kontaktpunkten på telefonnummer 031-342 69 55 tisdag, onsdag eller torsdag mellan
 				klockan 09:00 - 15:00, alternativt 031-342 24 00.<br/>
-				Du kan också skicka e-post till: <a href="mailto:kontaktpunkten.su@vgregion.se">kontaktpunkten.su@vgregion.se</a>.<br/></p>
+				Du kan också skicka e-post: <a href="mailto:kontaktpunkten.su@vgregion.se">kontaktpunkten.su@vgregion.se</a>.<br/></p>
 				<p>
 					<a href="http://www.kontaktpunkten.sahlgrenska.se">Läs mer om Kontaktpunkten</a></p>
 		
@@ -59,7 +59,7 @@
 						<h:outputLabel for="cancelmessage"><p style="color:red; font-style: italic"> #{cancelbookingMessages.cancelBookingMessage}</p></h:outputLabel>
 						<table>
 							<tr>
-								<td >
+								<td style="padding-left: 2em" valign="top" >
 									Var:
 								</td>
 								<td style="padding-left: 2em">  #{booking.mainSector}, #{booking.address}
@@ -80,7 +80,7 @@
 							</tr>
 							<p></p>
 							<tr>
-								<td>
+								<td style="padding-left: 2em" valign="top">
 									När:
 								</td>
 								<td style="padding-left: 2em"> #{booking.timeBookingString}.
