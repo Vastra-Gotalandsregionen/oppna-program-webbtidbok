@@ -219,17 +219,17 @@ public class CalendarUtil implements Serializable {
 	    temp = Calendar.getInstance();
 	    temp.set(Calendar.YEAR, calendar.get(Calendar.YEAR));
 	    temp.set(Calendar.DATE, 1);
-	    String from = format.format(calendar.getTime());
+	    String from = format.format(temp.getTime());
 	    
 		int lastDay = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
 	    temp.set(Calendar.DATE, lastDay);
-	    String to = format.format(calendar.getTime());
+	    String to = format.format(temp.getTime());
 
-//		JAXBElement<String> fromDat = objectFactory.createBookingRequestFromDat(from);
-//		JAXBElement<String> toDat = objectFactory.createBookingRequestToDat(to);
+		JAXBElement<String> fromDat = objectFactory.createBookingRequestFromDat(from);
+		JAXBElement<String> toDat = objectFactory.createBookingRequestToDat(to);
 		
-		JAXBElement<String> fromDat = objectFactory.createBookingRequestFromDat("2010-04-01");
-		JAXBElement<String> toDat = objectFactory.createBookingRequestToDat("2010-04-31");
+//		JAXBElement<String> fromDat = objectFactory.createBookingRequestFromDat("2010-04-01");
+//		JAXBElement<String> toDat = objectFactory.createBookingRequestToDat("2010-04-31");
 		
 		request.setCentralTidbokID(1);
 		request.setFromDat(fromDat);
