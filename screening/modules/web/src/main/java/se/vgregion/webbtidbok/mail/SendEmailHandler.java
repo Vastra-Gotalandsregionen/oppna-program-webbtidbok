@@ -84,9 +84,11 @@ public class SendEmailHandler implements Serializable {
 			 //String server= (String) properties.get("server.host"); 
 	         //String from= (String) properties.get("server.fromemail"); 
 	         
-	         String server = "smtp.knowit.se";
-	         String from= "DoNotReply@knowit.se";
-			 
+	         //String server = "smtp.knowit.se";
+			String server = "smtp.gmail.com";
+			String from= "DoNotReply@knowit.se";
+			String userName="conny.pemfors@gmail.com";
+			String password="gmail77";
 	         
 	         String subject="Tiden är avbokad"; 
 	         String messageBody="Tiden är avbokad"; 
@@ -95,6 +97,16 @@ public class SendEmailHandler implements Serializable {
 	            
 			Properties props = System.getProperties(); 
 			props.put("mail.smtp.host", server); 
+			
+			
+			//user authentication with gmail.
+			props.put("mail.smtp.user", userName); 
+			props.put("mail.smtp.password", password); 
+			props.put("mail.smtp.port", "465"); // 587 is the port number of yahoo mail 
+			props.put("mail.smtp.auth", "true"); 
+
+			
+			
 			
 			// Get a mail session 
 			Session session = Session.getDefaultInstance(props, null); 
