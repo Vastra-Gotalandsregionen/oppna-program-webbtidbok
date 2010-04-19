@@ -69,7 +69,7 @@
 								<td style="padding-left: 2em">
 										#{booking.pnr}
 								</td>
-								<td style="display: inline">
+								<td style="display: inline;padding-left:10em">
 									<h:form id="confirmDeleteForm" style="display: inline; text-align: right;" >
 										<sf:commandButton id="confirmDeleteButton" value="Avboka tid" processIds="*" style="width: 100px;" action="confirmdelete" />
 									</h:form>
@@ -82,7 +82,7 @@
 									<td style="padding-left: 2em">
 										#{booking.mainSector}, #{booking.address} 			
 									</td>
-									<td style="display: inline">
+									<td style="display: inline;padding-left:10em">
 										<h:form id="cancelForm" style="display: inline; text-align: right;" >
 											<sf:commandButton id="cancelButton" value="Avbryt" processIds="*" style="width: 100px;" action="cancel" />
 										</h:form>
