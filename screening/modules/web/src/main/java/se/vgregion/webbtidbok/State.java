@@ -31,6 +31,7 @@ public class State implements Serializable {
 
     private String pnr = "";
     private String passwd = "";
+    private int centralTidbokID = 0;
     //private BookingResponse bookingResponse;
     //private BookingRequest bookingRequest;
     
@@ -60,32 +61,14 @@ public class State implements Serializable {
     public boolean isLoggedIn(){
     	return loggedIn;
     }
-    
-    
-    /*
-    public void setBookingResponse(BookingResponse b ){
-    	this.bookingResponse = b;
-    }
-    
-    public BookingResponse getBookingResponse(){
-    	return this.bookingResponse;
-    }
-    
-    
-    
-    public void setBookingRequest(BookingRequest br){
-    	this.bookingRequest = br;
-    }
-    
-    public BookingRequest getBookingRequest(){
-    	return this.bookingRequest;
-    }
-    */
-    
-    
-    
-    
-    
+ 
+	public void setCentralTidbokID(int centralTidbokID) {
+		this.centralTidbokID = centralTidbokID;
+	}
+
+	public int getCentralTidbokID() {
+		return centralTidbokID;
+	}
     
     public String toString() {
     	return "[User Credentials: Personnummer = " + pnr + ", Password = " + passwd + "]";
