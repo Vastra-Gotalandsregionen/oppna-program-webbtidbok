@@ -207,6 +207,7 @@ public class CalendarUtil implements Serializable {
 		wsh = new WebServiceHelper();
 		request = wsh.getQueryWSRequest(state);
 		r = new BookingResponseLocal(wsh.getQueryWS(request));
+		state.setCentralTidbokID(r.getCentralTimeBookId());
 	}
 	
 	private List<Calendar> getAvailableDates(State state){
@@ -231,7 +232,7 @@ public class CalendarUtil implements Serializable {
 //		JAXBElement<String> fromDat = objectFactory.createBookingRequestFromDat("2010-04-01");
 //		JAXBElement<String> toDat = objectFactory.createBookingRequestToDat("2010-04-31");
 		
-		request.setCentralTidbokID(1);
+		request.setCentralTidbokID(state.getCentralTidbokID());
 		request.setFromDat(fromDat);
 		request.setToDat(toDat);
 		
