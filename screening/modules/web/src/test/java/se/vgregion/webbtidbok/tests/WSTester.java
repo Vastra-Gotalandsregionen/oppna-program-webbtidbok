@@ -91,8 +91,14 @@ public class WSTester {
 //		String pnr = "19121212-1212";
 //		String passwd = "nEoZMD7G";
 		//Bengt M
-		String pnr = "19660223-3196";
-		String passwd = "u63MvXTx";
+//		String pnr = "19660223-3196";
+//		String passwd = "u63MvXTx";
+		//Harald 		
+//		String pnr = "19910104-2399";
+//		String passwd = "bQwkdRrG";
+		
+		String pnr = "19910104-2399";
+		String passwd = "fje5rnXG";
 				
 		State requestParameters = new State();
 		requestParameters.setPnr(pnr);
@@ -294,7 +300,11 @@ public class WSTester {
 
 	}
 	
-	//gets both time and date available for a visit to the specified mottagning(ctid)
+	/*
+	 * This retrieves the times possible to book within a certain date interval for a specific mottagning.
+	 * The interval is provided thru fromDat and toDat
+	 * The specific mottagning is identified by the provided CTID.
+	 */
 	public static List<BookingTime> getBookingTime(String fromDat, String toDat, int ctid){
 
 		BookingRequest request = getWSRequest();
@@ -313,13 +323,13 @@ public class WSTester {
 		List<BookingTime> bookingTimeList = bookingTimeArr.getBookingTime();
 		XMLGregorianCalendar XMLcal;
 		System.out.println("\n*** getBookingTime: ");
-	
-		for(BookingTime b : bookingTimeList){
-		
+		System.out.println("Bokningsbara tider för CTID: " + ctid + ", i datumintervallet: " + fromDat + " - " + toDat);
+		for(BookingTime b : bookingTimeList){	
 			int nBookings = b.getAntal();
 			String time = b.getKlocka().getValue();	
 			XMLcal = b.getDatum();
 			String date = dateFormatter(XMLcal);
+//			System.out.println("b.getDatum(): " + b.getDatum());
 			System.out.println("time: " + time + ", date: " + date + ", no. bookings: " + nBookings);
 		}
 		
@@ -330,6 +340,12 @@ public class WSTester {
 	//Test specific how to get a Calendar (Tidbok) thru CTID
 	//This emulates a user picking a Mottagning thru the drop down menu
 	//That would generate a new request with new properties set on it
+	
+	/*
+	 * returns a list of Calendar objects. Each object is a bookable date for a certain mottagning
+	 * you provide CTID to identify which mottagnings tidbok you want back.
+	 * you provide fromDat and toDat for the date interval in which you want to look for bookable dates.
+	 */
 	public static List<Calendar> getPlaceCalendarThruCTID(String fromDat, String toDat, int CTID){
 		ObjectFactory objectFactory = new ObjectFactory();
 	
@@ -347,10 +363,9 @@ public class WSTester {
 		System.out.println("calList.size() - ammount of bookable dates within fromDat & toDat: " + calList.size());
 		//CalendarObj is about the same as one day
 		if(!calList.isEmpty()){		
-			System.out.println("fromDat: " + jaxbFromDat.getValue() + ", toDat: " + jaxbToDat.getValue());
+			System.out.println("Tidbok for CTID: " + CTID + ", fromDat: " + jaxbFromDat.getValue() + ", toDat: " + jaxbToDat.getValue());
 			int availTimeToBook = 1;
 			for(Calendar c: calList ){
-
 				System.out.println("c.getDatum(): " + dateFormatter(c.getDatum()) + ", availTimeToBook: " + availTimeToBook);
 				availTimeToBook++;
 			}
@@ -370,7 +385,7 @@ public class WSTester {
 			strMonthNr = zero.concat(strMonthNr);
 		}
 		int dayNr = XMLcal.getDay();
-		String strDayNr = Integer.toString(monthNr);
+		String strDayNr = Integer.toString(dayNr);
 		if(strDayNr.length() < 2){
 			strDayNr = zero.concat(strDayNr);
 		}
@@ -384,10 +399,8 @@ public class WSTester {
 		ArrayList<Integer> centralTidBoksIdList;
 
 		ArrayList<String> bookingPlaceArr = getBookingPlaceFromWS();
-		
+//		
 		getBookingResponseFromWS();
-		
-//		testGetTimeForDefaultBookingViaRequest(); It looks like you can do this - you can't. See method for further info.
 		
 		getDateForDefaultBookingViaResponse();
 		
@@ -400,20 +413,25 @@ public class WSTester {
 		centralTidBoksIdList = returnCentralTidBokIdFromMap(map);
 
 		exploreWSResponseAndRequest(centralTidBoksIdList);
+
 		
-		String fromDat = "2010-03-30";
-		String toDat = "2010-04-15";
-		int ctid = 1;
-		getBookingTime(fromDat, toDat, ctid);
-	
+		
 //		key/CID: 1 value/PLACE: IC-Sjukhuset
 //		key/CID: 2 value/PLACE: Surf-Sjukhuset
 //		key/CID: 3 value/PLACE: Elvis-Sjukhuset
-		
-		String fromDat2 = "2010-03-30";
-		String toDat2 = "2010-04-03";
-		getPlaceCalendarThruCTID(fromDat2, toDat2, ctid);
+		String fromDat = "2010-07-07";
+		String toDat = "2010-08-30";
 
+		getBookingTime(fromDat, toDat, 1);
+		getBookingTime(fromDat, toDat, 2);//returns null
+		getBookingTime(fromDat, toDat, 3);//returns null
+
+		
+		String fromDat2 = "2010-07-07";
+		String toDat2 = "2010-08-30";
+		getPlaceCalendarThruCTID(fromDat2, toDat2, 1);
+		getPlaceCalendarThruCTID(fromDat2, toDat2, 2);
+		getPlaceCalendarThruCTID(fromDat2, toDat2, 3);
 		
 	}
 	
