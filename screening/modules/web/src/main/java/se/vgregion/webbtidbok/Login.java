@@ -79,6 +79,10 @@ public class Login {
 		try{
 			
 			response = ws.getBooking(request);
+			System.out.println("*********Login.login(State loginCredentials): ************");
+			System.out.println("Login.login(State loginCredentials): " + " response.ltidbokid: " + response.getCentralTidbokID());
+			System.out.println("*********Login.login(State loginCredentials): ************");
+			
 			//loginCredentials.setBookingResponse(response);
 			loginCredentials.setBookingResponse(response);
 			loginCredentials.setLoggedIn(true);

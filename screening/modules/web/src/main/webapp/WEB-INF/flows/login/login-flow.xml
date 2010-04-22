@@ -27,15 +27,19 @@
 	<var name="cancelbookingMessages" class="se.vgregion.webbtidbok.CancelBookingMessages" />
 	<var name="emailStringHandler" class="se.vgregion.webbtidbok.mail.EmailStringHandler"  />
 	
+	<var name="placesHandler" class="se.vgregion.webbtidbok.Places"  />
+	
+	
 	<input name="pnr" type="string" value="flowScope.loginCredentials.pnr"/>
 	<input name="passwd" type="string" value="flowScope.loginCredentials.passwd"/>
-	
-	
-	
-	    
 	<input name="email" type="string" value="flowScope.emailStringHandler.email" />
-
-<!-- Test state for Calendar 		-->
+	
+	<!--       
+	<input name="places" type="integer" value="flowScope.placesHandler.placesId" />
+	-->
+	
+	
+	<!-- Test state for Calendar 		-->
 
 
 	
@@ -136,20 +140,53 @@
 	
 	<view-state id="update" view="update.xhtml">
 		  
+		 
 		<on-render>
-			  <evaluate expression="calendarService.getCalendar(loginCredentials)" /> 
+
+			    
+			    
+			  <evaluate expression="calendarService.getCalendar(loginCredentials)"  /> 
+			  
+			  
+
 			  <!--<evaluate expression="bookingService.getBookingPlaceSelectItems(loginCredentials)"  result="flowScope.bookingplaces" />
 			  <evaluate expression="bookingService.getSelectedDefaultItem(loginCredentials)"  result="flowScope.selecteditem" />
 			  -->
 			  
 			  <evaluate expression="bookingService.getBookingPlaceSelectItems(loginCredentials)"  result="flowScope.bookingplaces"  >
 			  </evaluate>
-			  <evaluate expression="bookingService.getSelectedDefaultItem(loginCredentials)"  result="flowScope.selecteditem"  >
+			  
+			  
+			 
+			  <!--  
+			  <evaluate expression="placesHandler.setPlacesId(bookingService.getSelectedDefaultItem(loginCredentials))"  result="flowScope.selecteditem"  >
 			  </evaluate>
+			  -->
+			  <evaluate expression="placesHandler.setPlacesId(bookingService.getSelectedDefaultItem(loginCredentials))" >
+			  </evaluate>
+			  
 		</on-render>
 		
 		<transition on="logout" to="loggedout" history="invalidate"/>
-		<transition on="cancel" to="loggedin" />
+		<transition on="cancel" to="loggedin">
+			<evaluate expression="bookingService.setFirstPlacesBoolean(true)" />
+		</transition>
+		<transition on="displaytimes" to="update">
+			
+			<!--  
+			<evaluate expression="placesHandler.setPlacesId(placesHandler.placesId)"   >
+			</evaluate>
+			-->
+			<evaluate expression="bookingService.setSelectedItem(placesHandler, loginCredentials)"   >
+			</evaluate>
+			
+			<evaluate expression="placesHandler.getPlacesId()"  result="viewScope.placesId">
+			</evaluate>
+			
+			
+			
+		</transition>
+		
 		<transition on="prev" to="update">
 				<evaluate expression="calendarService.setCalendarMonth(loginCredentials, -1)" />
 				<evaluate expression="calendarService.getCalendar(loginCredentials)" />
@@ -173,6 +210,8 @@ h-namespace is normal java faces. sf supports ajax-stuff like partial page loadi
 	<view-state id="loggedout">
 		<on-render>
 			<evaluate expression="loginService.logout(loginCredentials)" />
+			<evaluate expression="bookingService.setFirstPlacesBoolean(true)" />
+			
 		</on-render>
 	</view-state>
 	

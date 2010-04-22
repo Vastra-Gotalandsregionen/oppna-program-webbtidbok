@@ -44,11 +44,28 @@ public class BookingService
 	BookingRequest request;
 	WebServiceHelper helper = new WebServiceHelper();
 	
+	public boolean isFirstPlaces = true;
 	
 	//private String orderDate;
-	
+	 
 	//constructor
 	public BookingService(){}
+	
+	
+	public void setFirstPlacesBoolean(boolean b){
+		
+		isFirstPlaces = b;
+		System.out.println("BookingServices.setFirstPlacesBoolean: " + isFirstPlaces);
+	}
+	
+	
+	
+	public boolean isFirstPlaces(){
+		System.out.println("BookingServices.isFirstBoolean: " + isFirstPlaces);
+
+		return isFirstPlaces;
+	}
+	
 	
 	public BookingResponseLocal getBooking(State loginCredentials){
 		
@@ -126,6 +143,41 @@ public class BookingService
 		return placeListLocal;
 	}
 	
+	/***
+	 * 	method set selected item
+	 * 
+	 * @param selectedItem
+	 */
+
+	public void setSelectedItem(int selectedItem){
+		System.out.println("selectitem: " + selectedItem);
+	}
+	
+	
+	/***
+	 * 
+	 * @param places
+	 */
+	public void setSelectedItem(Places places){
+		System.out.println("selectitem: " + places.getPlacesId());
+	}
+	
+	
+	/***
+	 * 
+	 * 
+	 * @param places
+	 * @param state
+	 */
+	public void setSelectedItem(Places places, State state){
+		System.out.println("BookingServices.setSelectedItem: " + places.getPlacesId());
+		state.setCentralTidbokID(places.getPlacesId());
+		System.out.println("BookingServices.state.centraltidbokid: " + state.getCentralTidbokID());
+	}
+	
+	
+	
+	
 	/*Method setting default value for BookingResponse, CentralTimeBookingId
 	 * 
 	 * 
@@ -133,11 +185,24 @@ public class BookingService
 	
 	public int getSelectedDefaultItem(State loginCredentials){
 		
-		request = helper.getQueryWSRequest(loginCredentials);
-		response = helper.getQueryWS(request);
-		BookingResponseLocal responseLocal = new BookingResponseLocal(response);
-		int centralTimeBookingId =responseLocal.getCentralTimeBookId();
-		return centralTimeBookingId;
+		if(this.isFirstPlaces()){
+			
+			request = helper.getQueryWSRequest(loginCredentials);
+			response = helper.getQueryWS(request);
+			BookingResponseLocal responseLocal = new BookingResponseLocal(response);
+			int centralTimeBookingId =responseLocal.getCentralTimeBookId();
+			
+			
+			this.setFirstPlacesBoolean(false);
+			return centralTimeBookingId;
+			
+		}
+		else{
+			System.out.println("BookingServices.getSelectedDefaultItem: " + loginCredentials.getCentralTidbokID());
+			
+			return loginCredentials.getCentralTidbokID();
+		}
+		
 	}
 
 	public List<SelectItem> getBookingPlaceSelectItems(State loginCredentials){
