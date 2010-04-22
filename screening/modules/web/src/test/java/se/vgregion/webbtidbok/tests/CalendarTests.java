@@ -62,15 +62,15 @@ public class CalendarTests {
 	@Test
 	public void testCalendar(){
 		State credentials = new State();
-		credentials.setPasswd("Y8PBZRUr");
-		credentials.setPnr("19960103-2395");
-		
+		credentials.setPasswd("NC1dqBZa");
+		credentials.setPnr("19030311-9804");
+		//NC1dqBZa         19030311-9804
 		JAXBElement<String> fromDat = objectFactory.createBookingRequestFromDat("2010-03-31");
-		JAXBElement<String> toDat = objectFactory.createBookingRequestToDat("2010-05-31");
+		JAXBElement<String> toDat = objectFactory.createBookingRequestToDat("2010-04-30");
 		
 		
 		//BookingRequest request = ws.getQueryWSRequest(credentials);
-		BookingRequest request = ws.getQueryWSRequest(credentials, 1, "2010-03-31", "2010-05-31");
+		BookingRequest request = ws.getQueryWSRequest(credentials, 1, "2010-03-31", "2010-04-30");
 		
 		
 		System.out.println("request from dat " + request.getFromDat());

@@ -27,4 +27,9 @@
 		<!-- Enables Facelets -->
 		<view-handler>com.sun.facelets.FaceletViewHandler</view-handler>  
 	</application>
+	<managed-bean>
+    	<managed-bean-name>Places</managed-bean-name>
+   	 	<managed-bean-class>se.vgregion.webbtidbok</managed-bean-class>
+    	<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
 </faces-config>

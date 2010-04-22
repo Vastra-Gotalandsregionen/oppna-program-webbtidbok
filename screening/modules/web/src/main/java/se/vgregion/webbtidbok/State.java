@@ -38,7 +38,7 @@ public class State implements Serializable {
     private Calendar selectedDate;
     private boolean isDefaultDate = true;
     private static boolean loggedIn = false;
-    
+    private boolean isFirst = true;
     
     public String getPnr() {
     	return pnr;
@@ -55,10 +55,19 @@ public class State implements Serializable {
     public void setPasswd(String passwd) {
     	this.passwd = passwd;
     }
-
+    
+    public void setFirst(boolean first){
+    	this.isFirst = first;
+    }
+    
+    public boolean isFirst(){
+    	return isFirst;
+    }
+    
     public void setLoggedIn(boolean loggedIn){
     	this.loggedIn = loggedIn;
     }
+    
     
     public boolean isLoggedIn(){
     	return loggedIn;
