@@ -17,24 +17,23 @@
  */
 package se.vgregion.webbtidbok;
 
-import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import javax.xml.bind.JAXBElement;
+import javax.xml.datatype.XMLGregorianCalendar;
 
 import se.vgregion.webbtidbok.ws.ArrayOfCalendar;
 import se.vgregion.webbtidbok.ws.BookingRequest;
 import se.vgregion.webbtidbok.ws.ObjectFactory;
 
-public class CalendarUtil implements Serializable {
-	private static final long serialVersionUID = 1L;
-	
+public class CalendarUtil {
+	static int PREVIOUS = -1;
+	static int NEXT = 1;
 	//Empty first element to start actual days on index 1
 	String[] weekDaysSv = { "", "Söndag", "Måndag", "Tisdag", "Onsdag", "Torsdag",
 		"Fredag", "Lördag" };
@@ -50,12 +49,8 @@ public class CalendarUtil implements Serializable {
 	Calendar calendar = Calendar.getInstance();
 	WebServiceHelper wsh = new WebServiceHelper();
 	BookingRequest request;
-	BookingResponseLocal r;
-
 
 	private List<Calendar> availableDates = new ArrayList<Calendar>();
-//	private List<Calendar> renderList = new ArrayList<Calendar>();
-	
 	private List<String> days;
 	private List<Boolean> isLink;
 	private int index = 0;
@@ -133,6 +128,10 @@ public class CalendarUtil implements Serializable {
 		return monthsSv[month];
 	}
 	
+	public String getCurrentMonthAndYear() {
+		return getCurrentMonth() + " " + calendar.get(Calendar.YEAR);
+	}
+	
 	/**
 	 * Returns the name of the previous month
 	 * @return the name of the month previous to the current month
@@ -163,76 +162,101 @@ public class CalendarUtil implements Serializable {
 		return monthsSv[month];
 	}
 	
-	/**
-	 * Initialize a CalenderUtil object for the given month
-	 * @param c a Calendar object
-	 * @return a CalendarUtil object
-	 */
-	public CalendarUtil getCalendar() {
-		index = 0;
-		createCalendarForMonth();
-		return this;
+	public int getCalendarMonth(){
+		return this.calendar.get(Calendar.MONTH);
 	}
 	
-	/**
-	 * Initialize a CalenderUtil object for the given month
-	 * @param c a Calendar object
-	 * @return a CalendarUtil object
-	 */
-	public CalendarUtil getCalendar(Calendar c) {
-		index = 0;
-		this.calendar = c;
-		createCalendarForMonth();
-		return this;
-	}
-	
-	public CalendarUtil getCalendar(State state) {
-		System.out.println("Today is "+calendar.getTime().toString());
-		index = 0;
-		webService(state);
-//		XMLGregorianCalendar d = r.getTimeBooking();
+	public void setCalendarMonth(State state, int direction){
 		Calendar c = Calendar.getInstance();
-		c.setTime(r.getTimeBooking());
+		int currentYear = state.getSelectedDate().get(Calendar.YEAR);
+		int currentMonth = state.getSelectedDate().get(Calendar.MONTH);
 
+		if(direction == PREVIOUS) {
+			System.out.print("     ***** PREVIOUS clicked: ");
+			if(currentMonth == Calendar.JANUARY) {
+				currentMonth = Calendar.DECEMBER;
+				currentYear--;
+			}
+			else {
+				currentMonth--;
+			}
+		}
+		
+		if(direction == NEXT) {
+			System.out.print("     ***** NEXT clicked: ");
+			if(currentMonth == Calendar.DECEMBER) {
+				currentMonth = Calendar.JANUARY;
+				currentYear++;
+			}
+			else {
+				currentMonth++;
+			}
+		}
+		
+		c.set(Calendar.YEAR, currentYear);
+		c.set(Calendar.MONTH, currentMonth);
+		c.set(Calendar.DATE, 1);
+		
+		System.out.println("" + currentYear + "-" + currentMonth + "-" +c.get(Calendar.DATE));
+		state.setSelectedDate(c);
+	}
+	
+	public void getCalendar(State state) {
+		System.out.println("Today is " + calendar.getTime().toString());
+		index = 0;
+		
+		if(state.getBookingResponse() == null) {
+			webService(state);
+		}
+		
 		System.out.println("         ****** "+state.getPnr());
-		
-		//calendar.set(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DATE), c.get(Calendar.HOUR), c.get(Calendar.MINUTE));
-		availableDates = getAvailableDates(state);
-		
-		createCalendarForMonth();
-		return this;
+		createCalendarForMonth(state);
 	}
 	
 	private void webService(State state) {
 		wsh = new WebServiceHelper();
 		request = wsh.getQueryWSRequest(state);
-		r = new BookingResponseLocal(wsh.getQueryWS(request));
-		state.setCentralTidbokID(r.getCentralTimeBookId());
+		state.setBookingResponse(wsh.getQueryWS(request));
 	}
 	
 	private List<Calendar> getAvailableDates(State state){
 		ObjectFactory objectFactory = new ObjectFactory();
-		java.util.Calendar temp;
+		Calendar tempCal = Calendar.getInstance();
+		//calendar = Calendar.getInstance();
 
 		String pattern = "yyyy-MM-dd";
 	    SimpleDateFormat format = new SimpleDateFormat(pattern);
-	    	    
-	    temp = Calendar.getInstance();
-	    temp.set(Calendar.YEAR, calendar.get(Calendar.YEAR));
-	    temp.set(Calendar.DATE, 1);
-	    String from = format.format(temp.getTime());
-	    
-		int lastDay = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
-	    temp.set(Calendar.DATE, lastDay);
-	    String to = format.format(temp.getTime());
+    	
+	    if(state.isDefaultDate()) {
+	    	//temp.set(Calendar.YEAR, calendar.get(Calendar.YEAR));
+	    	//temp.set(Calendar.MONTH, this.getCalendarMonth());
+	    	XMLGregorianCalendar xc = state.getBookingResponse().getBokadTid();
+	    	calendar.set(Calendar.YEAR, xc.getYear());
+	    	calendar.set(Calendar.MONTH, xc.getMonth());
+	    	calendar.set(Calendar.DATE, xc.getDay());
+	    	state.setSelectedDate(calendar);
+	    	state.setDefaultDate(false);
+	    }
+	    else {
+	    	calendar = state.getSelectedDate();
+	    }	    
+	    calendar.set(Calendar.DATE, 1);
+    	int year  = calendar.get(Calendar.YEAR);
+    	int month = calendar.get(Calendar.MONTH);
+    	int date  = calendar.get(Calendar.DATE);
 
+	    String from = format.format(calendar.getTime());
+    
+		int lastDay = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+		calendar.set(Calendar.DATE, lastDay);
+	    String to = format.format(calendar.getTime());
+
+	    System.out.println("FROM: " + from + ", TO: " + to);
 		JAXBElement<String> fromDat = objectFactory.createBookingRequestFromDat(from);
 		JAXBElement<String> toDat = objectFactory.createBookingRequestToDat(to);
 		
-//		JAXBElement<String> fromDat = objectFactory.createBookingRequestFromDat("2010-04-01");
-//		JAXBElement<String> toDat = objectFactory.createBookingRequestToDat("2010-04-31");
-		
-		request.setCentralTidbokID(state.getCentralTidbokID());
+		//request.setCentralTidbokID(state.getCentralTidbokID());
+		request.setCentralTidbokID(1);
 		request.setFromDat(fromDat);
 		request.setToDat(toDat);
 		
@@ -247,10 +271,10 @@ public class CalendarUtil implements Serializable {
 		
 		Set<Calendar> dateSet = new HashSet<Calendar>();
 		for(se.vgregion.webbtidbok.ws.Calendar c : calList) {
-			temp.set(Calendar.YEAR, c.getDatum().getYear());
-			temp.set(Calendar.MONTH, c.getDatum().getMonth());
-			temp.set(Calendar.DATE, c.getDatum().getDay());
-			dateSet.add(temp);
+			tempCal.set(Calendar.YEAR, c.getDatum().getYear());
+			tempCal.set(Calendar.MONTH, c.getDatum().getMonth());
+			tempCal.set(Calendar.DATE, c.getDatum().getDay());
+			dateSet.add(tempCal);
 		}
 
 		List<Calendar> ret = new ArrayList<Calendar>();
@@ -261,12 +285,13 @@ public class CalendarUtil implements Serializable {
 		System.out.println("ret.size() - amount of bookable dates within fromDat & toDat: " + ret.size());
 		return ret;
 	}
-		
-	private void createCalendarForMonth() {
+	 	
+	private void createCalendarForMonth(State state) {
 		//TODO: grey out the days before current date
 		//TODO: highlight exam date
 		//TODO: grey out unavailable dates
 
+		availableDates = getAvailableDates(state);
 		days = new ArrayList<String>();
 		isLink = new ArrayList<Boolean>();
 
@@ -286,9 +311,6 @@ public class CalendarUtil implements Serializable {
 			}
 		}
 		
-//		renderList = new ArrayList<Calendar>(testDates);
-//		Collections.copy(renderList, testDates);
-
 		List<List<Integer>> rows = getRows(calendar);
 
 		for(List<Integer> row : rows) {
