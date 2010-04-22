@@ -80,6 +80,7 @@ public class Login {
 			
 			response = ws.getBooking(request);
 			//loginCredentials.setBookingResponse(response);
+			loginCredentials.setBookingResponse(response);
 			loginCredentials.setLoggedIn(true);
 			
 			return true;

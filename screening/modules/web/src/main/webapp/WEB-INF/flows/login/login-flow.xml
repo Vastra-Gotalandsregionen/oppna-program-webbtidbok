@@ -25,8 +25,6 @@
 	<var name="loginCredentials" class="se.vgregion.webbtidbok.State" />
 	<var name="loginmessages" class="se.vgregion.webbtidbok.LoginMessages" />
 	<var name="cancelbookingMessages" class="se.vgregion.webbtidbok.CancelBookingMessages" />
-<!--	<var name="calendar" class="se.vgregion.webbtidbok.CalendarPrinter" />-->
-	
 	<var name="emailStringHandler" class="se.vgregion.webbtidbok.mail.EmailStringHandler"  />
 	
 	<input name="pnr" type="string" value="flowScope.loginCredentials.pnr"/>
@@ -139,9 +137,8 @@
 	<view-state id="update" view="update.xhtml">
 		  
 		<on-render>
-			  <!--  
 			  <evaluate expression="calendarService.getCalendar(loginCredentials)" /> 
-			  <evaluate expression="bookingService.getBookingPlaceSelectItems(loginCredentials)"  result="flowScope.bookingplaces" />
+			  <!--<evaluate expression="bookingService.getBookingPlaceSelectItems(loginCredentials)"  result="flowScope.bookingplaces" />
 			  <evaluate expression="bookingService.getSelectedDefaultItem(loginCredentials)"  result="flowScope.selecteditem" />
 			  -->
 			  
@@ -153,6 +150,14 @@
 		
 		<transition on="logout" to="loggedout" history="invalidate"/>
 		<transition on="cancel" to="loggedin" />
+		<transition on="prev" to="update">
+				<evaluate expression="calendarService.setCalendarMonth(loginCredentials, -1)" />
+		</transition>
+		<transition on="next" to="loggedout">
+			<evaluate expression="calendarService.setCalendarMonth(loginCredentials, 1)" />
+			<evaluate expression="calendarService.getCalendar(loginCredentials)" />
+<!--			<render fragments="displayTimeForm:calendarFragment" />-->
+		</transition>
 	</view-state>
 	
 	<view-state id="loggedout">
