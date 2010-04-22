@@ -152,12 +152,22 @@
 		<transition on="cancel" to="loggedin" />
 		<transition on="prev" to="update">
 				<evaluate expression="calendarService.setCalendarMonth(loginCredentials, -1)" />
+				<evaluate expression="calendarService.getCalendar(loginCredentials)" />
+				<render fragments="displayTimeForm:calendarFragment" />
 		</transition>
-		<transition on="next" to="loggedout">
+		<transition on="next">
+<!--		<transition on="next" to="update">--> <!-- UGLY, reloads the whole page -->
 			<evaluate expression="calendarService.setCalendarMonth(loginCredentials, 1)" />
 			<evaluate expression="calendarService.getCalendar(loginCredentials)" />
-<!--			<render fragments="displayTimeForm:calendarFragment" />-->
+			<render fragments="displayTimeForm:calendarFragment" />
+<!--			<render fragments="displayTimeForm:calendarFragment" />--> <!-- <render fragments="modmeo"> is bound to the sf-namespace
+h-namespace is normal java faces. sf supports ajax-stuff like partial page loading -->
 		</transition>
+		
+		<transition on="test_link" to="loggedout">
+		
+		</transition>
+		
 	</view-state>
 	
 	<view-state id="loggedout">
@@ -167,4 +177,4 @@
 	</view-state>
 	
 	<end-state id="finish" />
-	</flow>
+</flow>
