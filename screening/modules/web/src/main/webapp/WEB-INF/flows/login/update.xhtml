@@ -112,19 +112,32 @@
 										<td>
 											
 											<f:view>
-											<h:form id="selectForm" style="display: inline; text-align: right; padding-right: 20em;" >
+												<h:form id="selectForm" style="display: inline; text-align: right; padding-right: 20em;" >
 											
-												<h:selectOneMenu rendered="true" id="places" value="#{placesHandler.placesId}"  onchange=""  style="width:320px">
+													<h:selectOneMenu rendered="true" id="places" value="#{placesHandler.placesId}"  onchange=""  style="width:320px">
 													   <f:selectItems value="#{bookingplaces}" /> 					
-												</h:selectOneMenu>
+													</h:selectOneMenu>
 												
-												<sf:commandButton id="displayButton" value="Visa tider" processIds="*" action="displaytimes" style="width: 100px;" />
+													<sf:commandButton id="displayButton" value="Visa tider" processIds="*" action="displaytimes" style="width: 100px;" />
 											
-											</h:form>
-										</f:view>
+												</h:form>
+											</f:view>
 											
 						    			</td>
+						    			
 					    			</tr>
+					    			<tr>
+					    				<td style="display: inline; text-align: right;" >
+											<h:form id="cancelForm" style="display: inline; text-align: right;padding-left: 37.5em;" >
+												<sf:commandButton id="cancelButton" value="Avbryt" processIds="*" action="cancel" style="width: 100px;" />
+											</h:form>
+										</td>
+					    			</tr>
+					    			<tr>
+    									<td style="display: inline;" >
+											Läs mer om mottagningen och hur du hittar dit genom att klicka på namnet
+										</td>
+    								</tr>  
 				    			</table> 
 			    			</div>
 		            	</td>
@@ -350,11 +363,7 @@
 										</h:form>
 									</td>
     							</tr>
-    							<tr>
-    								<td style="display: inline;" >
-										Läs mer om mottagningen och hur du hittar dit genom att klicka på namnet
-									</td>
-    							</tr>   							
+    													
     						</table>
 						</td>
 					</tr>	
