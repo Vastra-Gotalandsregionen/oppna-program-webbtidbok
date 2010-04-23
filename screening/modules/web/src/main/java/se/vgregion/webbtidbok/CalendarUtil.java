@@ -311,6 +311,7 @@ public class CalendarUtil {
 			}
 		}
 		
+		//is rows == weeks of the month?
 		List<List<Integer>> rows = getRows(calendar);
 
 		for(List<Integer> row : rows) {
@@ -325,10 +326,10 @@ public class CalendarUtil {
 				}
 				else {
 					if(availableDates.size() > 0) {
-						Calendar b = availableDates.get(0);
-						if(b.get(Calendar.DAY_OF_MONTH) == day) {
+						Calendar availDay = availableDates.get(0);
+						if(availDay.get(Calendar.DAY_OF_MONTH) == day) {
 							days.add("" + day);
-							isLink.add(true);
+							isLink.add(false);
 							availableDates.remove(0);
 						}
 						else {
@@ -347,21 +348,25 @@ public class CalendarUtil {
 	
 	private List<List<Integer>> getRows(Calendar cal) {
 		List<List<Integer>> rows = new ArrayList<List<Integer>>();
+		// is row == week?
 		List<Integer> row = new ArrayList<Integer>();
 		int emptySlots;
 	
 		//which day is the first day of the month?
-		Calendar temp = cal;
-		temp.set(Calendar.DATE, 1);
-		int firstDay = temp.get(Calendar.DAY_OF_WEEK);
+		Calendar tempCal = cal;
+		tempCal.set(Calendar.DATE, 1);
+		int firstDay = tempCal.get(Calendar.DAY_OF_WEEK);
+		System.out.println(" **** FIRSTDAY: " + firstDay);
 		if(firstDay == 1) {
 			emptySlots = 7;
+			System.out.println(" #### in IF(firstDay == 1), emptyslots = " + emptySlots);
 		}
 		else {
 			emptySlots = firstDay - 1;	
+			System.out.println(" #### in ELSE, emptyslots = " + emptySlots);
 		}
 		int printed = 0;
-		System.out.println(cal.get(Calendar.MONTH)+" emptySlots: "+emptySlots);
+		System.out.println(cal.get(Calendar.MONTH)+" emptySlots: " + emptySlots);
 		for(int i = 1; i < emptySlots; ++i) {
 			row.add(0);
 			printed++;
