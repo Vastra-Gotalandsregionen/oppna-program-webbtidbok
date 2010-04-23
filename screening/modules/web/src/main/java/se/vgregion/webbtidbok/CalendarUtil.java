@@ -56,6 +56,30 @@ public class CalendarUtil {
 	private int index = 0;
 	private boolean gotALink = false;
 	
+	private List<String> color = new ArrayList<String>();
+	
+	
+	public void setColor(String colorCode, int index){
+		//color.add(colorCode);
+		color.add(index, colorCode);
+		//color.set(index, colorCode);
+	}
+	
+	public String getColor(int index){
+		return color.get(index);
+	}
+	
+
+	public String getColor(){
+		return color.get(index);
+	}
+	
+
+	public void setColor(String colorCode){
+		color.add(colorCode);
+	}
+	
+	
 	/**
 	 * Returns the date for the current day
 	 * 
@@ -89,6 +113,7 @@ public class CalendarUtil {
 		if(link == true) {
 			state = 1;
 			gotALink = true;
+			this.setColor("#ffffff", index);
 		}
 		return state;
 	}
@@ -115,6 +140,7 @@ public class CalendarUtil {
 		boolean link = isLink.get(index);
 		if(link == false) {
 			state = 1;
+			this.setColor("#f3f1f2", index);
 		}
 		return state;
 	}
