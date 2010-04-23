@@ -83,6 +83,9 @@ public class BookingService
 			response = helper.getQueryWS(request);
 			BookingResponseLocal responseLocal = new BookingResponseLocal(response);
 			
+			//set the Place for States used in getCalendar method
+			loginCredentials.setCentralTidbokID(responseLocal.getCentralTimeBookId());
+			
 			return responseLocal;
 		}
 		
