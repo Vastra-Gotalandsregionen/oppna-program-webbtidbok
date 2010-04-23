@@ -46,7 +46,7 @@ public class CalendarUtil {
 	String[] monthsEn = { "January", "February", "March", "April", "May", "June", "July", "August",
 			"September", "October", "November", "December"};
 	
-	Calendar calendar = Calendar.getInstance();
+	Calendar masterCalendar = Calendar.getInstance();
 	WebServiceHelper wsh = new WebServiceHelper();
 	BookingRequest request;
 
@@ -124,12 +124,12 @@ public class CalendarUtil {
 	 * @return the name of the current month
 	 */
 	public String getCurrentMonth() {
-		int month = calendar.get(Calendar.MONTH);
+		int month = masterCalendar.get(Calendar.MONTH);
 		return monthsSv[month];
 	}
 	
 	public String getCurrentMonthAndYear() {
-		return getCurrentMonth() + " " + calendar.get(Calendar.YEAR);
+		return getCurrentMonth() + " " + masterCalendar.get(Calendar.YEAR);
 	}
 	
 	/**
@@ -137,7 +137,7 @@ public class CalendarUtil {
 	 * @return the name of the month previous to the current month
 	 */
 	public String getPreviousMonth() {
-		int month = calendar.get(Calendar.MONTH);
+		int month = masterCalendar.get(Calendar.MONTH);
 		if(month == Calendar.JANUARY) {
 			month = Calendar.DECEMBER;
 		}
@@ -152,7 +152,7 @@ public class CalendarUtil {
 	 * @return the name of the month after to the current month
 	 */
 	public String getNextMonth() {
-		int month = calendar.get(Calendar.MONTH);
+		int month = masterCalendar.get(Calendar.MONTH);
 		if(month == Calendar.DECEMBER) {
 			month = Calendar.JANUARY;
 		}
@@ -163,7 +163,7 @@ public class CalendarUtil {
 	}
 	
 	public int getCalendarMonth(){
-		return this.calendar.get(Calendar.MONTH);
+		return this.masterCalendar.get(Calendar.MONTH);
 	}
 	
 	public void setCalendarMonth(State state, int direction){
@@ -202,7 +202,7 @@ public class CalendarUtil {
 	}
 	
 	public void getCalendar(State state) {
-		System.out.println("Today is " + calendar.getTime().toString());
+		System.out.println("Today is " + masterCalendar.getTime().toString());
 		index = 0;
 		
 		if(state.getBookingResponse() == null) {
@@ -230,33 +230,43 @@ public class CalendarUtil {
 	    if(state.isDefaultDate()) {
 	    	//temp.set(Calendar.YEAR, calendar.get(Calendar.YEAR));
 	    	//temp.set(Calendar.MONTH, this.getCalendarMonth());
-	    	XMLGregorianCalendar xc = state.getBookingResponse().getBokadTid();
-	    	calendar.set(Calendar.YEAR, xc.getYear());
-	    	calendar.set(Calendar.MONTH, xc.getMonth());
-	    	calendar.set(Calendar.DATE, xc.getDay());
-	    	state.setSelectedDate(calendar);
+	    	XMLGregorianCalendar xmlCal = state.getBookingResponse().getBokadTid();
+	    	masterCalendar.set(Calendar.YEAR, xmlCal.getYear());
+	    	masterCalendar.set(Calendar.MONTH, xmlCal.getMonth());
+	    	masterCalendar.set(Calendar.DATE, xmlCal.getDay());
+	    	state.setSelectedDate(masterCalendar);
 	    	state.setDefaultDate(false);
 	    }
 	    else {
-	    	calendar = state.getSelectedDate();
-	    }	    
-	    calendar.set(Calendar.DATE, 1);
-    	int year  = calendar.get(Calendar.YEAR);
-    	int month = calendar.get(Calendar.MONTH);
-    	int date  = calendar.get(Calendar.DATE);
+	    	masterCalendar = state.getSelectedDate();
+	    }
+	    
+	    Calendar tmpCalendar = Calendar.getInstance();
+	    tmpCalendar.set(Calendar.YEAR, masterCalendar.get(Calendar.YEAR));
+    	tmpCalendar.set(Calendar.MONTH, masterCalendar.get(Calendar.MONTH));
+    	tmpCalendar.set(Calendar.DATE, masterCalendar.get(Calendar.DAY_OF_MONTH));
+    	
+	    
+	    tmpCalendar.set(Calendar.DATE, 1);
+    	int year  = masterCalendar.get(Calendar.YEAR);
+    	int month = masterCalendar.get(Calendar.MONTH);
+    	int date  = masterCalendar.get(Calendar.DATE);
 
-	    String from = format.format(calendar.getTime());
+	    String from = format.format(masterCalendar.getTime());
     
-		int lastDay = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
-		calendar.set(Calendar.DATE, lastDay);
-	    String to = format.format(calendar.getTime());
+		int lastDay = tmpCalendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+		tmpCalendar.set(Calendar.DATE, lastDay);
+	    String to = format.format(tmpCalendar.getTime());
 
 	    System.out.println("FROM: " + from + ", TO: " + to);
 		JAXBElement<String> fromDat = objectFactory.createBookingRequestFromDat(from);
 		JAXBElement<String> toDat = objectFactory.createBookingRequestToDat(to);
 		
 		//request.setCentralTidbokID(state.getCentralTidbokID());
-		request.setCentralTidbokID(1);
+		
+		System.out.println("CalendarUtil.getCalendar.centraltidbokid: " + state.getCentralTidbokID());
+	
+		request.setCentralTidbokID(state.getCentralTidbokID());
 		request.setFromDat(fromDat);
 		request.setToDat(toDat);
 		
@@ -264,26 +274,50 @@ public class CalendarUtil {
 		List<se.vgregion.webbtidbok.ws.Calendar> calList = new ArrayList<se.vgregion.webbtidbok.ws.Calendar>();
 		try {
 			calList = calArr.getCalendar();
+			
+			System.out.println(calArr.getCalendar().size());
+			
+			for(se.vgregion.webbtidbok.ws.Calendar c : calList){
+//				System.out.println("DDDD Datum: " + c.getDatum());
+//				System.out.println(".toString: " + c.getDatum().toString());
+				
+			}
+				
 		} catch (NullPointerException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		List<Calendar> returnCal = new ArrayList<Calendar>();
 		Set<Calendar> dateSet = new HashSet<Calendar>();
 		for(se.vgregion.webbtidbok.ws.Calendar c : calList) {
-			tempCal.set(Calendar.YEAR, c.getDatum().getYear());
-			tempCal.set(Calendar.MONTH, c.getDatum().getMonth());
-			tempCal.set(Calendar.DATE, c.getDatum().getDay());
-			dateSet.add(tempCal);
+			Calendar tCal = Calendar.getInstance();
+			
+			tCal.set(Calendar.YEAR, c.getDatum().getYear());
+			tCal.set(Calendar.MONTH, c.getDatum().getMonth());
+			tCal.set(Calendar.DATE, c.getDatum().getDay());
+			dateSet.add(tCal);
+			returnCal.add(tCal);
+//			System.out.println("tCal.DayOfMonth: " + tCal.get(Calendar.DAY_OF_MONTH));
 		}
 
-		List<Calendar> ret = new ArrayList<Calendar>();
+//		List<Calendar> returnCal = new ArrayList<Calendar>();
+		/*
 		for(Calendar t : dateSet) {
-			ret.add(t);
+			//returnCal.add(t);
+	
+			//System.out.println("OOOOO returnCal.get: " + returnCal.get(Calendar.DAY_OF_MONTH));
 		}
 		
-		System.out.println("ret.size() - amount of bookable dates within fromDat & toDat: " + ret.size());
-		return ret;
+		for(Calendar c: returnCal){
+			System.out.println("returnCal.toString: "  +  c.get(Calendar.DAY_OF_MONTH));
+			
+		}
+		*/
+		
+		System.out.println("ret.size() - amount of bookable dates within fromDat & toDat: " + returnCal.size());
+		
+		
+		return returnCal;
 	}
 	 	
 	private void createCalendarForMonth(State state) {
@@ -292,11 +326,18 @@ public class CalendarUtil {
 		//TODO: grey out unavailable dates
 
 		availableDates = getAvailableDates(state);
+		System.out.println(" AAAA availableDates.size(): " + availableDates.size());
+		int i = 0;
+
 		days = new ArrayList<String>();
 		isLink = new ArrayList<Boolean>();
 
-		int today = calendar.get(Calendar.DAY_OF_MONTH);
-
+		//int today = calendar.get(Calendar.DAY_OF_MONTH);
+		int today = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+		int currentMonth = Calendar.getInstance().get(Calendar.MONTH);
+		int currentYear  = Calendar.getInstance().get(Calendar.YEAR);
+		
+		
 		//uncomment this to use testdata instead of data from the web service
 //		List<Calendar> testDates = testData();
 //		for(int i = 0; i < testDates.size(); i++) {
@@ -305,46 +346,129 @@ public class CalendarUtil {
 //			}
 //		}
 		
+		
+		
+		//removes the available dates except for the last one
+		/*
 		for(int i = 0; i < availableDates.size(); i++) {
 			if(availableDates.get(0).get(Calendar.DAY_OF_MONTH) < today) {
 				availableDates.remove(0);
 			}
 		}
+		*/
+		
 		
 		//is rows == weeks of the month?
-		List<List<Integer>> rows = getRows(calendar);
+		List<List<Integer>> rows = getRows(masterCalendar);
 
 		for(List<Integer> row : rows) {
-			for(Integer day : row) {
-				if(day == 0) {
+			for(Integer dayToEvaluate : row) {
+				
+				//there is no day in the week which is 0, only 1-7, thus days.add("<empty string")
+				if(dayToEvaluate.intValue() == 0) {
 					days.add("");
 					isLink.add(false);
-				}
-				else if(day < today) {
-					days.add("" + day);
+					System.out.println("1 isLink == FALSE");
+				} //if day from row is before today, do not render it in calendar, thus days.add("<empty string")
+				else if(dayToEvaluate.intValue() < today && masterCalendar.get(Calendar.MONTH) == currentMonth) {
+					days.add("" + dayToEvaluate);
 					isLink.add(false);
+					System.out.println("2 isLink == FALSE");
 				}
-				else {
+				
+				else if( (dayToEvaluate.intValue() == today || dayToEvaluate.intValue() > today &&
+						 masterCalendar.get(Calendar.MONTH) == currentMonth  )  || 
+						 (  masterCalendar.get(Calendar.MONTH) > currentMonth  ) ) {
+					
+					
+					if( availableDates.size() > 0   ){
+						
+						boolean dayToEvaluateIsFound = false;
+						for(int index = 0; index < availableDates.size(); index++  ){
+							Calendar tmpCalendar = availableDates.get(index);
+							if(dayToEvaluate.intValue() == tmpCalendar.get(Calendar.DAY_OF_MONTH) ){
+								dayToEvaluateIsFound = true;
+							}
+						}						
+						
+						if(dayToEvaluateIsFound){
+							days.add("" + dayToEvaluate);
+							isLink.add(true);
+						}
+						else{
+							days.add("" + dayToEvaluate);
+							isLink.add(false);				
+						}						
+					}
+					else{
+						days.add("" + dayToEvaluate);
+						isLink.add(false); 
+						
+					}
+					//availableDates.remove(k);
+				
+					/*
+					System.out.println("another day: " + day);
 					if(availableDates.size() > 0) {
-						Calendar availDay = availableDates.get(0);
-						if(availDay.get(Calendar.DAY_OF_MONTH) == day) {
-							days.add("" + day);
-							isLink.add(false);
-							availableDates.remove(0);
+						System.out.println("APAPA    availableDates.size(): " + availableDates.size());
+//						Calendar availDay = availableDates.get(0);
+//						int index = 0;
+						for(int k = 0; !availableDates.isEmpty() && k < availableDates.size(); k++)
+//						for(Calendar c: availableDates){							
+							if(day.intValue() == availableDates.get(k).get(Calendar.DAY_OF_MONTH)){					
+								days.add("true_" + day);
+								isLink.add(true);
+								availableDates.remove(k);
+								break;
+							}						
+							else{
+								days.add("-" + day.intValue());
+								isLink.add(false);
+								System.out.println("3 isLink == FALSE");
+							}
 						}
-						else {
-							days.add("" + day);
-							isLink.add(false);
+						*/
+						
+						/*
+						for(Calendar c : availableDates){
+							System.out.println("YYY  c.get(Calendar.DAY_OF_MONTH): " + c.get(Calendar.DAY_OF_MONTH) + ", day: " + day);
+							//if int day of month == int day (the current day in the row to be checked if it is teh same as one of the int availableDates.get(DAY).
+							if(c.get(Calendar.DAY_OF_MONTH) == day.intValue()){
+								days.add("" + day.intValue());
+								isLink.add(true);
+								System.out.println("isLink == TRUE. c.get(Calendar.DAY_OF_MONTH): " + c.get(Calendar.DAY_OF_MONTH));
+							}
+							else {
+								days.add("-" + day.intValue());
+								isLink.add(false);
+								System.out.println("3 isLink == FALSE");
+							}						
 						}
+						*/
+						
+//						if(availDay.get(Calendar.DAY_OF_MONTH) == day) {
+//							System.out.println("DODODOD: " + availDay.get(Calendar.DAY_OF_MONTH));
+//							days.add("" + day);
+//							isLink.add(true);
+//							availableDates.remove(0);
+//						}
+//						else {
+//							days.add("" + day);
+//							isLink.add(false);
+//						}
 					}
+					/*
 					else {
-						days.add("" + day);
+						days.add("*" + day);
 						isLink.add(false);
+						System.out.println("4  isLink == FALSE");
 					}
+					*/
+				
 				}
 			}
 		}
-	}
+	
 	
 	private List<List<Integer>> getRows(Calendar cal) {
 		List<List<Integer>> rows = new ArrayList<List<Integer>>();
