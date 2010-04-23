@@ -423,8 +423,9 @@ public class WSTester {
 		String toDat = "2010-08-30";
 
 		getBookingTime(fromDat, toDat, 1);
-		getBookingTime(fromDat, toDat, 2);//returns null
-		getBookingTime(fromDat, toDat, 3);//returns null
+		getBookingTime(fromDat, toDat, 2);
+		getBookingTime(fromDat, toDat, 3);
+//		getBookingTime(fromDat, toDat, 4); //null - contains NO booking times
 
 		
 		String fromDat2 = "2010-07-07";
@@ -432,6 +433,7 @@ public class WSTester {
 		getPlaceCalendarThruCTID(fromDat2, toDat2, 1);
 		getPlaceCalendarThruCTID(fromDat2, toDat2, 2);
 		getPlaceCalendarThruCTID(fromDat2, toDat2, 3);
+//		getPlaceCalendarThruCTID(fromDat2, toDat2, 4); //null - contains NO booking dates
 		
 	}
 	
