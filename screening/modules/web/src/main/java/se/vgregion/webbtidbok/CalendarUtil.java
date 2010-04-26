@@ -55,6 +55,8 @@ public class CalendarUtil {
 	private List<Boolean> isLink;
 	private int index = 0;
 	private boolean gotALink = false;
+	private boolean isEmptyCalendar = true;
+	
 	
 	private List<String> color = new ArrayList<String>();
 	
@@ -65,34 +67,43 @@ public class CalendarUtil {
 		//color.set(index, colorCode);
 	}
 	
+	
+	//only here to avoid that the color array/list might return a null value
 	public String getColor(int index){
 		
 		if(color.size()== 0){
-			return "#ffffff";
+			return "#BBBBBB";
 		}
 		if(color.get(index).equals(null)){
-			return "#ffffff";
+			return "#BBBBBB";
 		}
 		if(color.size() < index){
-			return "#ffffff";
+			return "##BBBBBB";
 		}
 		
 		return color.get(index);
 	}
 	
-
+	//only here to avoid that the color array/list might return a null value
 	public String getColor(){
 		
 		if(color.size()== 0){
-			return "#ffffff";
+			return "#BBBBBB";
 		}
-		if(color.get(index)== null){
-			return "#ffffff";
+		else if(color.size() > index && color.get(index)== null){
+			return "#BBBBBB";
 		}
-		if(color.size() < index){
-			return "#ffffff";
+		else if(color.size() < index){
+			return "#BBBBBB";
 		}
-		return color.get(index);
+		else{
+			if(color.size() > index){
+				return color.get(index);	
+			}
+			else{
+				return "#BBBBBB";
+			}
+		}		
 	}
 	
 
@@ -101,9 +112,22 @@ public class CalendarUtil {
 	}
 	
 	
+	public void emptyColorList(){
+		
+		int tmpIndex = 0;
+		//color.clear();0 
+		
+		if(color.size() > 0 && !color.get(tmpIndex).equals(null)){
+			for(int i = 0; i < color.size();i++){
+				color.remove(i);					
+				tmpIndex++;
+			}		
+		}	
+	}
+	
 	/**
 	 * Returns the date for the current day
-	 * 
+	 * : 
 	 * @return the day
 	 */
 	public String getDay() {
@@ -134,7 +158,8 @@ public class CalendarUtil {
 		if(link == true) {
 			state = 1;
 			gotALink = true;
-			this.setColor("#ffffff", index);
+//			this.setColor("#ffffff", index);
+//			System.out.println("++++ white");
 		}
 		return state;
 	}
@@ -161,7 +186,8 @@ public class CalendarUtil {
 		boolean link = isLink.get(index);
 		if(link == false) {
 			state = 1;
-			this.setColor("#f3f1f2", index);
+//			this.setColor("#BBBBBB", index);
+//			System.out.println("++++ grey");
 		}
 		return state;
 	}
@@ -258,6 +284,19 @@ public class CalendarUtil {
 		
 		System.out.println("         ****** "+state.getPnr());
 		createCalendarForMonth(state);
+		
+		int tmpIndex = 0;
+		for(String s : color){	
+			System.out.println("color.size(): " + color.size() + ", tempIndex: " + tmpIndex + ", s: " + s);
+
+			tmpIndex++;
+		}
+		System.out.println("index: " + index);
+		tmpIndex = 0;
+		
+		this.emptyColorList();
+		
+		
 	}
 	
 	private void webService(State state) {
@@ -275,6 +314,15 @@ public class CalendarUtil {
 		wsh = new WebServiceHelper();
 		request = wsh.getQueryWSRequest(state);
 		state.setBookingResponse(wsh.getQueryWS(request));
+	}
+	
+	
+	public void setEmptyCalendar(boolean isEmpty){
+		isEmptyCalendar = isEmpty;
+	}
+	
+	public boolean isEmptyCalendar(){
+		return this.isEmptyCalendar;
 	}
 	
 	private List<Calendar> getAvailableDates(State state){
@@ -343,11 +391,19 @@ public class CalendarUtil {
 //				System.out.println(".toString: " + c.getDatum().toString());
 				
 			}
+			
+			if(calList.isEmpty()){
+				this.setEmptyCalendar(true);
+			}
+			else{
+				this.setEmptyCalendar(false);
+			}
 				
 
 		} catch (NullPointerException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			this.setEmptyCalendar(true);
 		}
 		List<Calendar> returnCal = new ArrayList<Calendar>();
 		Set<Calendar> dateSet = new HashSet<Calendar>();
@@ -362,26 +418,12 @@ public class CalendarUtil {
 			tCal.set(Calendar.DATE, c.getDatum().getDay());
 			dateSet.add(tCal);
 			returnCal.add(tCal);
-			
-			
+					
 			System.out.println("CalendarUtil.getAvailableDates.ListCalendar: " + tCal.get(Calendar.DAY_OF_MONTH));
 
-//			System.out.println("tCal.DayOfMonth: " + tCal.get(Calendar.DAY_OF_MONTH));
 
 		}
 
-
-		/*
-
-//		List<Calendar> returnCal = new ArrayList<Calendar>();
-		/*
-
-		for(Calendar t : dateSet) {
-			//returnCal.add(t);
-	
-			//System.out.println("OOOOO returnCal.get: " + returnCal.get(Calendar.DAY_OF_MONTH));
-		}
-		*/
 		
 		for(Calendar c: returnCal){
 			System.out.println("returnCal.toString: "  +  c.get(Calendar.DAY_OF_MONTH));
@@ -419,30 +461,6 @@ public class CalendarUtil {
 		int today = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
 		int currentMonth = Calendar.getInstance().get(Calendar.MONTH);
 		int currentYear  = Calendar.getInstance().get(Calendar.YEAR);
-
-
-		//uncomment this to use testdata instead of data from the web service
-//		List<Calendar> testDates = testData();
-//		for(int i = 0; i < testDates.size(); i++) {
-//			if(testDates.get(0).get(Calendar.DAY_OF_MONTH) < today) {
-//				testDates.remove(0);
-//			}
-//		}
-		
-
-		/*
-
-		
-		
-		//removes the available dates except for the last one
-		/*
-
-		for(int i = 0; i < availableDates.size(); i++) {
-			if(availableDates.get(0).get(Calendar.DAY_OF_MONTH) < today) {
-				availableDates.remove(0);
-			}
-		}
-		*/
 		
 
 		//is rows == weeks of the month?
@@ -452,16 +470,18 @@ public class CalendarUtil {
 		for(List<Integer> row : rows) {
 			for(Integer dayToEvaluate : row) {
 				
-				//there is no day in the week which is 0, only 1-7, thus days.add("<empty string")
+				//there is no day in the week which is 0, only 1-7, thus days.add("<empty string>")
 				if(dayToEvaluate.intValue() == 0) {
 					days.add("");
 					isLink.add(false);
 					System.out.println("1 isLink == FALSE");
-				} //if day from row is before today, do not render it in calendar, thus days.add("<empty string")
+					this.setColor("#BBBBBB");
+				} //if day from row is before today, do not render it in calendar, thus days.add("<empty string>")
 				else if(dayToEvaluate.intValue() < today && masterCalendar.get(Calendar.MONTH) == currentMonth) {
 					days.add("" + dayToEvaluate);
 					isLink.add(false);
 					System.out.println("2 isLink == FALSE");
+					this.setColor("#BBBBBB");
 				}
 				
 				else if( (dayToEvaluate.intValue() == today || dayToEvaluate.intValue() > today &&
@@ -482,77 +502,22 @@ public class CalendarUtil {
 						if(dayToEvaluateIsFound){
 							days.add("" + dayToEvaluate);
 							isLink.add(true);
+							this.setColor("#FFFFFF");
 						}
 						else{
 							days.add("" + dayToEvaluate);
-							isLink.add(false);				
+							isLink.add(false);	
+							this.setColor("#BBBBBB");
 						}						
 					}
 					else{
 						days.add("" + dayToEvaluate);
 						isLink.add(false); 
+						setColor("#BBBBBB");
 						
 					}
-					//availableDates.remove(k);
-				
-					/*
-					System.out.println("another day: " + day);
-					if(availableDates.size() > 0) {
-						System.out.println("APAPA    availableDates.size(): " + availableDates.size());
-//						Calendar availDay = availableDates.get(0);
-//						int index = 0;
-						for(int k = 0; !availableDates.isEmpty() && k < availableDates.size(); k++)
-//						for(Calendar c: availableDates){							
-							if(day.intValue() == availableDates.get(k).get(Calendar.DAY_OF_MONTH)){					
-								days.add("true_" + day);
-								isLink.add(true);
-								availableDates.remove(k);
-								break;
-							}						
-							else{
-								days.add("-" + day.intValue());
-								isLink.add(false);
-								System.out.println("3 isLink == FALSE");
-							}
-						}
-						*/
-						
-						/*
-						for(Calendar c : availableDates){
-							System.out.println("YYY  c.get(Calendar.DAY_OF_MONTH): " + c.get(Calendar.DAY_OF_MONTH) + ", day: " + day);
-							//if int day of month == int day (the current day in the row to be checked if it is teh same as one of the int availableDates.get(DAY).
-							if(c.get(Calendar.DAY_OF_MONTH) == day.intValue()){
-								days.add("" + day.intValue());
-								isLink.add(true);
-								System.out.println("isLink == TRUE. c.get(Calendar.DAY_OF_MONTH): " + c.get(Calendar.DAY_OF_MONTH));
-							}
-							else {
-								days.add("-" + day.intValue());
-								isLink.add(false);
-								System.out.println("3 isLink == FALSE");
-							}						
-						}
-						*/
-						
-//						if(availDay.get(Calendar.DAY_OF_MONTH) == day) {
-//							System.out.println("DODODOD: " + availDay.get(Calendar.DAY_OF_MONTH));
-//							days.add("" + day);
-//							isLink.add(true);
-//							availableDates.remove(0);
-//						}
-//						else {
-//							days.add("" + day);
-//							isLink.add(false);
-//						}
+					//availableDates.remove(k);								
 					}
-					/*
-					else {
-						days.add("*" + day);
-						isLink.add(false);
-						System.out.println("4  isLink == FALSE");
-					}
-					*/
-				
 				}
 			}
 		}
