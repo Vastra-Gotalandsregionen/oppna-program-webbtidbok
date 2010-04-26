@@ -22,18 +22,15 @@ import javax.xml.bind.JAXBElement;
 import org.apache.commons.logging.impl.Log4JLogger;
 import org.springframework.stereotype.Service;
 
-import se.vgregion.webbtidbok.ws.BookingRequest;
-import se.vgregion.webbtidbok.ws.BookingResponse;
-import se.vgregion.webbtidbok.ws.CentralBookingWS;
-import se.vgregion.webbtidbok.ws.GetBooking;
-import se.vgregion.webbtidbok.ws.ICentralBookingWS;
-import se.vgregion.webbtidbok.ws.ICentralBookingWSGetBookingICFaultFaultFaultMessage;
-import se.vgregion.webbtidbok.ws.ObjectFactory;
 import se.vgregion.webbtidbok.ws.*;
-import java.util.*;
-import java.io.*;
 
+import java.util.*;
+import java.util.Calendar;
+import java.io.*;
+import java.lang.*;
 import se.vgregion.webbtidbok.gui.*;
+import se.vgregion.webbtidbok.lang.DateHandler;
+
 import javax.faces.model.*;
 
 
@@ -43,6 +40,7 @@ public class BookingService
 	BookingResponse response;
 	BookingRequest request;
 	WebServiceHelper helper = new WebServiceHelper();
+	private ObjectFactory objectFactory = new ObjectFactory();
 	
 	public boolean isFirstPlaces = true;
 	
@@ -146,6 +144,74 @@ public class BookingService
 		return placeListLocal;
 	}
 	
+	public List<BookingTimeLocal> getBookingTime(State loginCredentials){
+		
+		//		Uncomment below for debug, you'll only have to click login, 
+		//		creds below are hard coded.
+		//		String pnr = "19960103-2395";
+		//		String psw = "Y8PBZRUr";
+		//		loginCredentials.setPnr(pnr);
+		//		loginCredentials.setPasswd(psw);
+		//		loginCredentials.setLoggedIn(true);
+		List<BookingTimeLocal> timeListLocal = new ArrayList<BookingTimeLocal>();
+		
+		if(loginCredentials.isLoggedIn()){
+			java.util.Calendar selectedDate = loginCredentials.getSelectedDate();
+			String fromDate = DateHandler.setCalendarDateFormat(selectedDate);
+			JAXBElement<String> fromDat = objectFactory.createBookingRequestFromDat(fromDate);
+			
+			System.out.println("fromDate: " + fromDate);
+			System.out.println("JAXB-FROMDATE: " + fromDat.getValue());
+			
+			System.out.println("CentralTidBokID: " + loginCredentials.getCentralTidbokID());
+			
+			request = helper.getQueryWSRequest(loginCredentials);
+			request.setCentralTidbokID(loginCredentials.getCentralTidbokID());
+			request.setFromDat(fromDat);
+			
+			ArrayOfBookingTime times = helper.getQueryWSRequestTime(request);
+			List<BookingTime> timeList = times.getBookingTime();
+			int id = 1; 
+			for(BookingTime b : timeList){
+				
+				
+				Calendar dateCal = Calendar.getInstance();
+				dateCal.set(Calendar.YEAR, b.getDatum().getYear());
+				dateCal.set(Calendar.MONTH, b.getDatum().getMonth());
+				dateCal.set(Calendar.DATE, b.getDatum().getDay());
+				
+				String day = DateHandler.setCalendarDateFormat(dateCal);
+				
+				
+				//dateCal.set(Calendar.HOUR, b.getKlocka());
+				//dateCal.set(Calendar.MINUTE, b.getDatum().getMinute());
+				
+				String hourTime = DateHandler.setCalendarTimeFormat(dateCal);
+				
+				
+				BookingTimeLocal pl = new BookingTimeLocal();
+				pl.setNumbers(b.getAntal());
+				pl.setDay(day);
+				pl.setHour(b.getKlocka().getValue());
+				pl.setBookingTimeId(id);
+				
+				
+				timeListLocal.add(pl);
+				
+				
+				
+				System.out.println(pl.toString());
+				
+				id++;
+			}
+			
+			System.out.println("size: " + timeListLocal.size());
+			
+			return timeListLocal;
+		}
+		
+		return timeListLocal;
+	}
 	
 	
 	
@@ -277,6 +343,9 @@ public class BookingService
 		
 		return null;
 	}
+	
+	
+	
 	
 	
 	

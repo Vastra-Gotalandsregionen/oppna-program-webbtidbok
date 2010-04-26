@@ -123,7 +123,28 @@ public class WebServiceHelper {
 		
 	}
 	
-
+	
+	
+	public ArrayOfBookingTime getQueryWSRequestBookingTime(BookingRequest request){
+		
+		CentralBookingWS centralBookingWS = new CentralBookingWS();
+		ICentralBookingWS ws = centralBookingWS.getBasicHttpBindingICentralBookingWS();
+		
+		try{
+			
+			return ws.getBookingTime(request);
+			//loginCredentials.setBookingResponse(response);
+			
+		}
+		catch(ICentralBookingWSGetBookingTimeICFaultFaultFaultMessage ex){
+			ex.printStackTrace();
+			System.out.println(ex.getMessage());
+			return null;
+			
+		}
+		
+		
+	}
 	
 	public ArrayOfBookingPlace getQueryWSRequestPlaces(BookingRequest request){
 		//"parameters"
