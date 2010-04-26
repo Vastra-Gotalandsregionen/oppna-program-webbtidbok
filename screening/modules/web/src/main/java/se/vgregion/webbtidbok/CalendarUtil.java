@@ -261,6 +261,17 @@ public class CalendarUtil {
 	}
 	
 	private void webService(State state) {
+		
+		/****
+		 * 
+		 * Check that selected place is used for gettting calendar with available Dates
+		 * 
+		 */
+		System.out.println("CalendarUtil.webService:CentraltidBokidId " + state.getCentralTidbokID() );
+		
+		
+		
+		
 		wsh = new WebServiceHelper();
 		request = wsh.getQueryWSRequest(state);
 		state.setBookingResponse(wsh.getQueryWS(request));
@@ -339,19 +350,11 @@ public class CalendarUtil {
 			e.printStackTrace();
 		}
 		List<Calendar> returnCal = new ArrayList<Calendar>();
-		List<Calendar> ret = new ArrayList<Calendar>();
 		Set<Calendar> dateSet = new HashSet<Calendar>();
 		for(se.vgregion.webbtidbok.ws.Calendar c : calList) {
 
-			Calendar tmpCal = Calendar.getInstance();
-			tmpCal.set(Calendar.YEAR, c.getDatum().getYear());
-			tmpCal.set(Calendar.MONTH, c.getDatum().getMonth());
-			tmpCal.set(Calendar.DATE, c.getDatum().getDay());
-			dateSet.add(tmpCal);
-			ret.add(tmpCal);
 			
-			System.out.println("CalendarUtil.getAvailableDates.ListCalendar: " + tmpCal.get(Calendar.DAY_OF_MONTH));
-
+			
 			Calendar tCal = Calendar.getInstance();
 			
 			tCal.set(Calendar.YEAR, c.getDatum().getYear());
@@ -359,6 +362,10 @@ public class CalendarUtil {
 			tCal.set(Calendar.DATE, c.getDatum().getDay());
 			dateSet.add(tCal);
 			returnCal.add(tCal);
+			
+			
+			System.out.println("CalendarUtil.getAvailableDates.ListCalendar: " + tCal.get(Calendar.DAY_OF_MONTH));
+
 //			System.out.println("tCal.DayOfMonth: " + tCal.get(Calendar.DAY_OF_MONTH));
 
 		}
