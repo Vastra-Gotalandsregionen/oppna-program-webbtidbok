@@ -1,0 +1,236 @@
+
+<!--
+
+    Copyright 2009 Vastra Gotalandsregionen
+
+      This library is free software; you can redistribute it and/or modify
+      it under the terms of version 2.1 of the GNU Lesser General Public
+      License as published by the Free Software Foundation.
+
+      This library is distributed in the hope that it will be useful,
+      but WITHOUT ANY WARRANTY; without even the implied warranty of
+      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+      GNU Lesser General Public License for more details.
+
+      You should have received a copy of the GNU Lesser General Public
+      License along with this library; if not, write to the
+      Free Software Foundation, Inc., 59 Temple Place, Suite 330,
+      Boston, MA 02111-1307  USA
+
+-->
+
+
+
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:sf="http://www.springframework.org/tags/faces"
+	  			xmlns:t="http://myfaces.apache.org/tomahawk"
+	  			xmlns:s="http://myfaces.apache.org/sandbox"	  			
+				template="/WEB-INF/layouts/standard.xhtml">
+
+
+
+<script type="text/javascript">
+function submitForm()
+{
+ 	alert('submitForm');
+    document.selectForm.submit();
+ 
+}
+</script>
+
+<ui:define name="content">
+
+<ui:fragment id="loginFragment">
+	
+		<div id="boxcontainer" style="padding-bottom: 1em;">
+		<div id="boxleft" />
+		<div id="boxmiddle">
+		<p/>
+		<br/>
+		<h1 style="display: inline">Ändra tid/plats för undersökning av stora kroppspulsådern</h1>
+		<h:form id="mainForm" style="display: inline; text-align: right; padding-left: 19em;" >
+			<sf:commandButton id="logout" value="Logga ut" processIds="*" action="logout" />
+		</h:form>
+		<p/>
+				<br/><p>Här kan du omboka eller avboka din tid till undersökning av stora kroppspulsådern.
+				Om du behöver omboka eller avboka tiden måste du göra det senast dagen innan du ska undersökas.
+				</p>
+				<p>Du kan också omboka eller avboka tiden per telefon. Ring då till
+				Kontaktpunkten på telefonnummer 031-342 69 55 tisdag, onsdag eller torsdag mellan
+				klockan 09:00 - 15:00, alternativt 031-342 24 00.<br/>
+				<a href="http://www.kontaktpunkten.sahlgrenska.se">Läs mer om Kontaktpunkten</a></p>	
+				<table>
+					<tr>
+						<td>			
+							<div id="boxleft1" style="width: 100%">				
+								<table>
+									<tr>
+										<td>
+											#{booking.displayName}</td><td style="padding-left: 2em">#{booking.pnr}
+										</td>			
+									</tr>
+									<p />
+									<tr>
+										<td align="top">
+											Ursprunglig tid:
+										</td>
+										<td style="padding-left: 2em">
+											#{booking.mainSector}, #{booking.address} 			
+										</td>
+									</tr>
+									<tr>
+										<td>
+											&nbsp;
+										</td>
+										<td style="padding-left: 2em">
+											#{booking.timeBookingString}.
+										</td>
+									</tr>				
+									<tr>
+										<td></td>
+										<td style="padding-left: 2em"></td>
+									</tr>			
+								</table>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>			
+							<br />	
+								<div id="placediv_place" style="display: inline;background-color:#f3f1f2;" >
+									<table>
+										<tr>
+											<td style="background-color:#f3f1f2;width: 800px" >						
+												<h3 style="display: inline"> Välj plats</h3>
+												<h:form id="helpForm" style="display: inline; text-align: right;" >
+													<div class="image_block" style="display: inline;text-align: right;padding-left: 35em;"> <img src="../VGRImages/help.gif" />  
+													</div>
+        										</h:form>   
+	        								</td>
+										</tr>
+									</table>       
+								</div>  <!-- boxleft3inside -->
+							<br/>
+		                </td>
+					</tr>
+					<tr>
+						<td>	                     
+			                <div id="" style="width: 100%;background-color:#ffffff">    
+				                <table>
+									<tr>
+										<td>
+											
+											<f:view>
+												<h:form id="selectForm" action="displaytimes" style="display: inline; text-align: right; padding-right: 20em;" >
+											
+													<h:selectOneMenu rendered="true" id="places" value="#{placesHandler.placesId}"  onchange="alert('test');submitForm();"  style="width:320px">
+													   <f:selectItems value="#{bookingplaces}" /> 					
+													</h:selectOneMenu>
+												
+													<sf:commandButton id="displayButton" value="Visa tider" processIds="*" action="displaytimes" style="width: 100px;" />
+											
+												</h:form>
+											</f:view>
+											
+						    			</td>
+						    			
+					    			</tr>
+					    			<tr>
+					    				<td style="display: inline; text-align: right;" >
+											<h:form id="cancelForm" style="display: inline; text-align: right;padding-left: 37.5em;" >
+												<sf:commandButton id="cancelButton" value="Avbryt" processIds="*" action="cancel" style="width: 100px;" />
+											</h:form>
+										</td>
+					    			</tr>
+					    			<tr>
+    									<td style="display: inline;" >
+											Läs mer om mottagningen och hur du hittar dit genom att klicka på namnet
+										</td>
+    								</tr>  
+				    			</table> 
+			    			</div>
+		            	</td>
+					</tr>
+					<tr>
+						<td>
+							<div id="placediv_date" style="display:inline;inline;background-color:#f3f1f2;" >
+								<table>
+									<tr>
+										<td style="background-color:#f3f1f2;width: 800px" >		
+											<h3 style="display: inline"> Välj datum</h3>
+											<h:form id="helpForm" style="display: inline; text-align: right;" >
+												<div class="image_block" style="display: inline;text-align: right;padding-left: 35em;"> <img src="../VGRImages/help.gif" />  
+												</div>
+       										</h:form>   
+        								</td>
+									</tr>
+									
+								</table>       
+							</div>   <!-- boxleft3inside -->
+							<table>
+								<tr>
+										<td style="">
+											#{selectedPlace.clinic} , #{selectedPlace.address}
+										 			
+									
+										</td>
+								</tr>
+							</table>
+							
+						</td>
+					</tr>
+									
+					<tr>
+						<td>
+							<table>
+								<tr>
+									<td>
+										<p>Det finns tyvärr inga lediga tider för undersökning på den mottagning du valt. </p>
+									</td>
+								</tr>
+							
+							</table>
+    						
+    						
+    						
+    						
+    						
+    						
+    						
+    						
+						</td>
+					</tr>	
+					<!-- This should be dynamic! only visable after clicking on the "Visa tid" button -->					
+					
+					<!-- This should be dynamic! only visable after clicking on the a date in the calendar -->		
+					<tr>
+						<td>
+							<div id="placediv_time" style="display:none;inline;background-color:#f3f1f2;" >
+								<table>
+									<tr>
+										<td style="background-color:#f3f1f2;width: 800px" >		
+											<h3 style="display: inline"> Välj tid</h3>
+											<h:form id="helpForm" style="display: inline; text-align: right;" >
+												<div class="image_block" style="display: inline;text-align: right;padding-left: 35em;"> <img src="../VGRImages/help.gif" />  
+												</div>
+       										</h:form>   
+        								</td>
+									</tr>
+								</table>       
+							</div>   <!-- boxleft3inside -->
+						</td>
+					</tr>					
+				</table>				
+		</div>	<!-- boxmiddle -->
+		</div> <!-- boxcontainer -->
+			
+		
+</ui:fragment>
+</ui:define>
+
+
+</ui:composition>

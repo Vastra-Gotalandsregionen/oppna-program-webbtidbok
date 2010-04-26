@@ -139,17 +139,54 @@
 	<view-state id="badlogin">
 	</view-state>
 	
+	<action-state id="isEmptyCalendar">
+			 <evaluate expression="bookingService.getBookingPlaceSelectItems(loginCredentials)"  result="flowScope.bookingplaces"  >
+			 </evaluate>
+			  
+			 <evaluate expression="placesHandler.setPlacesId(bookingService.getSelectedDefaultItem(loginCredentials))" >
+			 </evaluate>
+			  
+			 <evaluate expression="bookingService.getSelectedPlace(placesHandler, loginCredentials)" result="flowScope.selectedPlace"  >
+			 </evaluate>
+			 <evaluate expression="calendarService.getCalendar(loginCredentials)"  /> 
+			 <evaluate expression="calendarService.isEmptyCalendar()" />
+			 <transition on="yes" to="updateNoCalendar"></transition>
+			 <transition on="no" to="update"/>	
+			
+				
+	</action-state>
+	
+	<view-state id="updateNoCalendar" view="updateNoCalendar.xhtml">
+	
+		<transition on="logout" to="loggedout" history="invalidate"/>
+		<transition on="cancel" to="loggedin">
+			<evaluate expression="bookingService.setFirstPlacesBoolean(true)" />
+		</transition>
+		<transition on="displaytimes" to="isEmptyCalendar">
+			
+			<!--  
+			<evaluate expression="placesHandler.setPlacesId(placesHandler.placesId)"   >
+			</evaluate>
+			-->
+			<evaluate expression="bookingService.setSelectedItem(placesHandler, loginCredentials)"   >
+			</evaluate>
+			
+			<evaluate expression="placesHandler.getPlacesId()"  result="viewScope.placesId">
+			</evaluate>
+			
+			
+			
+		</transition>
+	</view-state>
+	
+	
+
 	<view-state id="update" view="update.xhtml">
 		  
 		 
-		<on-render>
+		<on-render >
 
-			    
-			    
-			  <evaluate expression="calendarService.getCalendar(loginCredentials)"  /> 
-			  
-			  
-
+			
 			  <!--<evaluate expression="bookingService.getBookingPlaceSelectItems(loginCredentials)"  result="flowScope.bookingplaces" />
 			  <evaluate expression="bookingService.getSelectedDefaultItem(loginCredentials)"  result="flowScope.selecteditem" />
 			  -->
@@ -157,12 +194,11 @@
 			  <evaluate expression="bookingService.getBookingPlaceSelectItems(loginCredentials)"  result="flowScope.bookingplaces"  >
 			  </evaluate>
 			  
-			  
-			 
 			  <!--  
 			  <evaluate expression="placesHandler.setPlacesId(bookingService.getSelectedDefaultItem(loginCredentials))"  result="flowScope.selecteditem"  >
 			  </evaluate>
 			  -->
+			  
 			  <evaluate expression="placesHandler.setPlacesId(bookingService.getSelectedDefaultItem(loginCredentials))" >
 			  </evaluate>
 			  
@@ -171,13 +207,18 @@
 			  
 			  
 			  
+			  <evaluate expression="calendarService.getCalendar(loginCredentials)"  /> 
+		
+			  
 		</on-render>
+		
+		
 		
 		<transition on="logout" to="loggedout" history="invalidate"/>
 		<transition on="cancel" to="loggedin">
 			<evaluate expression="bookingService.setFirstPlacesBoolean(true)" />
 		</transition>
-		<transition on="displaytimes" to="update">
+		<transition on="displaytimes" to="isEmptyCalendar">
 			
 			<!--  
 			<evaluate expression="placesHandler.setPlacesId(placesHandler.placesId)"   >
@@ -193,6 +234,13 @@
 			<evaluate expression="bookingService.getSelectedPlace(placesHandler, loginCredentials)" result="flowScope.selectedPlace"  >
 			</evaluate>
 			-->
+			
+			
+			<!--  
+			<evaluate expression="calendarService.isEmptyCalendar()">
+			 	
+			</evaluate>
+			--> 
 			
 		</transition>
 		
@@ -215,6 +263,9 @@ h-namespace is normal java faces. sf supports ajax-stuff like partial page loadi
 		</transition>
 		
 	</view-state>
+	
+
+	
 	
 	<view-state id="loggedout">
 		<on-render>
