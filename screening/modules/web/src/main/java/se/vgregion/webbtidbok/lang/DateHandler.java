@@ -19,8 +19,6 @@ package se.vgregion.webbtidbok.lang;
 
 import java.lang.*;
 import java.text.*;
-import java.util.Date;
-import java.util.Locale;
 import java.util.*;
 
 
@@ -35,6 +33,23 @@ public class DateHandler {
 		//DateFormat dateFormat = new DateFormat("",locale);
 		
 		return simpleFormat.format(date);
+	}
+	
+	
+	public static String setCalendarDateFormat(Calendar selectedCalendar){
+		
+		String pattern = "yyyy-MM-dd";
+	    SimpleDateFormat format = new SimpleDateFormat(pattern);
+	    String toBeFormatted = format.format(selectedCalendar.getTime());
+	    return toBeFormatted;
+	}
+	
+	public static String setCalendarTimeFormat(Calendar selectedCalendar){
+		
+		String pattern = "HH:mm";
+	    SimpleDateFormat format = new SimpleDateFormat(pattern);
+	    String toBeFormatted = format.format(selectedCalendar.getTime());
+	    return toBeFormatted;
 	}
 	
 	public static Date setLocaleDate(Date date){

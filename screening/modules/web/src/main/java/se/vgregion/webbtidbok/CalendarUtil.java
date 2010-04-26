@@ -56,7 +56,7 @@ public class CalendarUtil {
 	private int index = 0;
 	private boolean gotALink = false;
 	private boolean isEmptyCalendar = true;
-	
+	private String selectedDay = "";
 	
 	private List<String> color = new ArrayList<String>();
 	
@@ -125,9 +125,50 @@ public class CalendarUtil {
 		}	
 	}
 	
+	
+	
+	/***
+	 * 
+	 */
+	public void setSelectedDay(){
+		int year = masterCalendar.get(Calendar.YEAR);
+		int month = masterCalendar.get(Calendar.MONTH);
+		int day = Integer.valueOf(this.getDay());
+		
+		
+		System.out.println("/******");
+		System.out.println("*******"); 
+		System.out.println("*******"); 
+		System.out.println("*******"); 
+		System.out.println("*******");
+		System.out.println("Selected Date, year: " + year + " month: " + month + ", day: " + day);
+		
+		
+	} 
+	
+	/***
+	 * 
+	 */
+	public String getSelectedDay(){
+		int year = masterCalendar.get(Calendar.YEAR);
+		int month = masterCalendar.get(Calendar.MONTH);
+		int day = Integer.valueOf(this.getDay());
+		
+		
+		System.out.println("/******");
+		System.out.println("*******"); 
+		System.out.println("*******"); 
+		System.out.println("*******"); 
+		System.out.println("*******");
+		System.out.println("Selected Date, year: " + year + " month: " + month + ", day: " + day);
+		
+		return String.valueOf(year +  month + day);
+	} 
+	
+	
 	/**
 	 * Returns the date for the current day
-	 * : 
+	 * : d
 	 * @return the day
 	 */
 	public String getDay() {
