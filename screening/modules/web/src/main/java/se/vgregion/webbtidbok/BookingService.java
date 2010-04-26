@@ -82,7 +82,7 @@ public class BookingService
 			request = helper.getQueryWSRequest(loginCredentials);
 			response = helper.getQueryWS(request);
 			BookingResponseLocal responseLocal = new BookingResponseLocal(response);
-			
+			loginCredentials.setCentralTidbokID(response.getCentralTidbokID());
 			//set the Place for States used in getCalendar method
 			loginCredentials.setCentralTidbokID(responseLocal.getCentralTimeBookId());
 			
@@ -146,6 +146,9 @@ public class BookingService
 		return placeListLocal;
 	}
 	
+	
+	
+	
 	/***
 	 * 	method set selected item
 	 * 
@@ -206,6 +209,35 @@ public class BookingService
 			return loginCredentials.getCentralTidbokID();
 		}
 		
+	}
+	
+	/**
+	 * Method finding a selected place in the list of chosen bookingplaces return the object to print the selected place
+	 * 
+	 * 
+	 * 
+	 * @param places
+	 * @param login
+	 * @return
+	 */
+	
+	public Places getSelectedPlace(Places places, State login){
+		Places place = new Places();
+		List<BookingPlaceLocal> bookingPlaces = getBookingPlace(login);
+		for(BookingPlaceLocal bl : bookingPlaces){
+			if(bl.getCentralTimeBookId() == places.getPlacesId()){
+				
+				place.setPlacesId(bl.getCentralTimeBookId());
+				place.setClinic(bl.getClinic());
+				place.setAddress(bl.getAddress());
+				place.setRepresentationPlace();
+				
+				
+			}
+		}
+		
+		
+		return place;
 	}
 
 	public List<SelectItem> getBookingPlaceSelectItems(State loginCredentials){

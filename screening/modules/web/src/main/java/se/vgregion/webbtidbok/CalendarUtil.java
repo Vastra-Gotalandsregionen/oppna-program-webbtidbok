@@ -66,11 +66,32 @@ public class CalendarUtil {
 	}
 	
 	public String getColor(int index){
+		
+		if(color.size()== 0){
+			return "#ffffff";
+		}
+		if(color.get(index).equals(null)){
+			return "#ffffff";
+		}
+		if(color.size() < index){
+			return "#ffffff";
+		}
+		
 		return color.get(index);
 	}
 	
 
 	public String getColor(){
+		
+		if(color.size()== 0){
+			return "#ffffff";
+		}
+		if(color.get(index)== null){
+			return "#ffffff";
+		}
+		if(color.size() < index){
+			return "#ffffff";
+		}
 		return color.get(index);
 	}
 	
@@ -288,11 +309,10 @@ public class CalendarUtil {
 		JAXBElement<String> fromDat = objectFactory.createBookingRequestFromDat(from);
 		JAXBElement<String> toDat = objectFactory.createBookingRequestToDat(to);
 		
-		//request.setCentralTidbokID(state.getCentralTidbokID());
-		
-		System.out.println("CalendarUtil.getCalendar.centraltidbokid: " + state.getCentralTidbokID());
-	
 		request.setCentralTidbokID(state.getCentralTidbokID());
+
+		System.out.println("CalendarUtil.getCalendar.centraltidbokid: " + state.getCentralTidbokID());
+
 		request.setFromDat(fromDat);
 		request.setToDat(toDat);
 		
@@ -300,6 +320,10 @@ public class CalendarUtil {
 		List<se.vgregion.webbtidbok.ws.Calendar> calList = new ArrayList<se.vgregion.webbtidbok.ws.Calendar>();
 		try {
 			calList = calArr.getCalendar();
+
+			System.out.println("CalList.size: " + calList.size());
+			
+
 			
 			System.out.println(calArr.getCalendar().size());
 			
@@ -309,13 +333,25 @@ public class CalendarUtil {
 				
 			}
 				
+
 		} catch (NullPointerException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		List<Calendar> returnCal = new ArrayList<Calendar>();
+		List<Calendar> ret = new ArrayList<Calendar>();
 		Set<Calendar> dateSet = new HashSet<Calendar>();
 		for(se.vgregion.webbtidbok.ws.Calendar c : calList) {
+
+			Calendar tmpCal = Calendar.getInstance();
+			tmpCal.set(Calendar.YEAR, c.getDatum().getYear());
+			tmpCal.set(Calendar.MONTH, c.getDatum().getMonth());
+			tmpCal.set(Calendar.DATE, c.getDatum().getDay());
+			dateSet.add(tmpCal);
+			ret.add(tmpCal);
+			
+			System.out.println("CalendarUtil.getAvailableDates.ListCalendar: " + tmpCal.get(Calendar.DAY_OF_MONTH));
+
 			Calendar tCal = Calendar.getInstance();
 			
 			tCal.set(Calendar.YEAR, c.getDatum().getYear());
@@ -324,21 +360,27 @@ public class CalendarUtil {
 			dateSet.add(tCal);
 			returnCal.add(tCal);
 //			System.out.println("tCal.DayOfMonth: " + tCal.get(Calendar.DAY_OF_MONTH));
+
 		}
+
+
+		/*
 
 //		List<Calendar> returnCal = new ArrayList<Calendar>();
 		/*
+
 		for(Calendar t : dateSet) {
 			//returnCal.add(t);
 	
 			//System.out.println("OOOOO returnCal.get: " + returnCal.get(Calendar.DAY_OF_MONTH));
 		}
+		*/
 		
 		for(Calendar c: returnCal){
 			System.out.println("returnCal.toString: "  +  c.get(Calendar.DAY_OF_MONTH));
 			
 		}
-		*/
+	
 		
 		System.out.println("ret.size() - amount of bookable dates within fromDat & toDat: " + returnCal.size());
 		
@@ -358,12 +400,20 @@ public class CalendarUtil {
 		days = new ArrayList<String>();
 		isLink = new ArrayList<Boolean>();
 
+
+		//int today = calendar.get(Calendar.DAY_OF_MONTH);
+		
+		for(Calendar c : availableDates){
+			System.out.println("CalendarUtil.createCalendarForMonth: " + c.get(Calendar.DAY_OF_MONTH));
+		}
+
+
 		//int today = calendar.get(Calendar.DAY_OF_MONTH);
 		int today = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
 		int currentMonth = Calendar.getInstance().get(Calendar.MONTH);
 		int currentYear  = Calendar.getInstance().get(Calendar.YEAR);
-		
-		
+
+
 		//uncomment this to use testdata instead of data from the web service
 //		List<Calendar> testDates = testData();
 //		for(int i = 0; i < testDates.size(); i++) {
@@ -372,10 +422,14 @@ public class CalendarUtil {
 //			}
 //		}
 		
+
+		/*
+
 		
 		
 		//removes the available dates except for the last one
 		/*
+
 		for(int i = 0; i < availableDates.size(); i++) {
 			if(availableDates.get(0).get(Calendar.DAY_OF_MONTH) < today) {
 				availableDates.remove(0);
@@ -383,9 +437,10 @@ public class CalendarUtil {
 		}
 		*/
 		
-		
+
 		//is rows == weeks of the month?
 		List<List<Integer>> rows = getRows(masterCalendar);
+
 
 		for(List<Integer> row : rows) {
 			for(Integer dayToEvaluate : row) {

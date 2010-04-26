@@ -89,6 +89,7 @@
 		  
 		<on-render>
 			<evaluate expression="bookingService.getBooking(loginCredentials)" result="flowScope.booking" />
+			
 		</on-render>
 		
 		<transition on="logout" to="loggedout" history="invalidate"/>
@@ -165,6 +166,11 @@
 			  <evaluate expression="placesHandler.setPlacesId(bookingService.getSelectedDefaultItem(loginCredentials))" >
 			  </evaluate>
 			  
+			  <evaluate expression="bookingService.getSelectedPlace(placesHandler, loginCredentials)" result="flowScope.selectedPlace"  >
+			  </evaluate>
+			  
+			  
+			  
 		</on-render>
 		
 		<transition on="logout" to="loggedout" history="invalidate"/>
@@ -183,7 +189,10 @@
 			<evaluate expression="placesHandler.getPlacesId()"  result="viewScope.placesId">
 			</evaluate>
 			
-			
+			<!--  
+			<evaluate expression="bookingService.getSelectedPlace(placesHandler, loginCredentials)" result="flowScope.selectedPlace"  >
+			</evaluate>
+			-->
 			
 		</transition>
 		

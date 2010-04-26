@@ -24,6 +24,9 @@ import javax.faces.component.html.*;
 public class Places implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private int placesId = 0;
+	private String address = "";
+	private String clinic = "";
+	private String representationString = "";
 	
 	//private HtmlSelectOneMenu selectItem = new HtmlSelectOneMenu();
 	private SelectItem selectedItem = new SelectItem();
@@ -35,6 +38,22 @@ public class Places implements Serializable {
 		return placesId;
 	}
 	
+	public void setClinic(String value){
+		clinic = value;
+	}
+	
+	public void setAddress(String value){
+		address = value;
+	}
+	
+	public String getClinic(){
+		return clinic;
+	}
+	
+	public String getAddress(){
+		return address;
+	}
+	
 	public void setSelectItem(SelectItem value){
 		selectedItem = value;
 		System.out.println("selectItem: " + selectedItem.toString());
@@ -44,6 +63,33 @@ public class Places implements Serializable {
 		System.out.println("selectItem: " + selectedItem.toString());
 		return selectedItem;
 	}
+	
+	
+	public String getRepresentationPlace(){
+		if(representationString.equals("")){
+			setRepresentationPlace();
+			return representationString;
+		}
+		else{
+			
+			return getClinic() + ", " + getClinic();
+			
+		}
+	}
+	
+	public void setRepresentationPlace(){
+		
+		representationString =  getClinic() + ", " + getClinic();
+		
+	}
+	
+	public void setRepresentationPlace(String s){
+		
+		representationString = s;
+		
+	}
+	
+	
 	
 	/*
 	public void setSelectItem(HtmlSelectOneMenu value){

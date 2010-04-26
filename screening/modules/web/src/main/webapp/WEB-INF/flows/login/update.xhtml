@@ -18,6 +18,9 @@
       Boston, MA 02111-1307  USA
 
 -->
+
+
+
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	    		xmlns:ui="http://java.sun.com/jsf/facelets"
@@ -28,6 +31,16 @@
 	  			xmlns:s="http://myfaces.apache.org/sandbox"	  			
 				template="/WEB-INF/layouts/standard.xhtml">
 
+
+
+<script type="text/javascript">
+function submitForm()
+{
+ 	alert('submitForm');
+    document.selectForm.submit();
+ 
+}
+</script>
 
 <ui:define name="content">
 
@@ -112,9 +125,9 @@
 										<td>
 											
 											<f:view>
-												<h:form id="selectForm" style="display: inline; text-align: right; padding-right: 20em;" >
+												<h:form id="selectForm" action="displaytimes" style="display: inline; text-align: right; padding-right: 20em;" >
 											
-													<h:selectOneMenu rendered="true" id="places" value="#{placesHandler.placesId}"  onchange=""  style="width:320px">
+													<h:selectOneMenu rendered="true" id="places" value="#{placesHandler.placesId}"  onchange="alert('test');submitForm();"  style="width:320px">
 													   <f:selectItems value="#{bookingplaces}" /> 					
 													</h:selectOneMenu>
 												
@@ -141,7 +154,36 @@
 				    			</table> 
 			    			</div>
 		            	</td>
-					</tr>				
+					</tr>
+					<tr>
+						<td>
+							<div id="placediv_date" style="display:inline;inline;background-color:#f3f1f2;" >
+								<table>
+									<tr>
+										<td style="background-color:#f3f1f2;width: 800px" >		
+											<h3 style="display: inline"> Välj datum</h3>
+											<h:form id="helpForm" style="display: inline; text-align: right;" >
+												<div class="image_block" style="display: inline;text-align: right;padding-left: 35em;"> <img src="../VGRImages/help.gif" />  
+												</div>
+       										</h:form>   
+        								</td>
+									</tr>
+									
+								</table>       
+							</div>   <!-- boxleft3inside -->
+							<table>
+								<tr>
+										<td style="">
+											#{selectedPlace.clinic} , #{selectedPlace.address}
+										 			
+									
+										</td>
+								</tr>
+							</table>
+							
+						</td>
+					</tr>
+									
 					<tr>
 						<td>
 							<table>
@@ -166,19 +208,19 @@
 												<th style="width: 2em;">To</th><th style="width: 2em;">Fr</th><th style="width: 2em;">Lö</th><th style="width: 2em;">Sö</th>
 												<!-- week 1 -->
 												<tr>
-													<td style="width: 2em">
+													<td style="width: 2em;background: #{calendarService.color};">
 														<h:commandLink escape="false" id="mon1" value="#{calendarService.day}" action="showtimes" rendered="#{calendarService.isLink == 1}"/>
 														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
 													</td>
-													<td style="width: 2em">
+													<td style="width: 2em;background: #{calendarService.color};">
 														<h:commandLink escape="false" id="mon1" value="#{calendarService.day}" action="showtimes" rendered="#{calendarService.isLink == 1}"/>
 														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
 													</td>
-													<td style="width: 2em">
+													<td style="width: 2em;background: #{calendarService.color};">
 														<h:commandLink escape="false" id="mon1" value="#{calendarService.day}" action="showtimes" rendered="#{calendarService.isLink == 1}"/>
 														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
 													</td>
-													<td style="width: 2em">
+													<td style="width: 2em;background: #{calendarService.color};">
 														<h:commandLink escape="false" id="mon1" value="#{calendarService.day}" action="showtimes" rendered="#{calendarService.isLink == 1}"/>
 														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
 													</td>
@@ -186,104 +228,104 @@
 														<h:commandLink escape="false" id="fri1" value="#{calendarService.day}" action="showtimes" rendered="#{calendarService.isLink == 1}"/>
 														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
 													</td>
-													<td style="width: 2em">
+													<td style="width: 2em;background: #{calendarService.color};">
 														<h:commandLink escape="false" id="sat1" value="#{calendarService.day}" action="showtimes" rendered="#{calendarService.isLink == 1}"/>
 														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
 													</td>
-													<td style="width: 2em">
+													<td style="width: 2em;background: #{calendarService.color};">
 														<h:commandLink escape="false" id="sun1" value="#{calendarService.day}" action="showtimes" rendered="#{calendarService.isLink == 1}"/>
 														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
 													</td>
 												</tr>
 												<!-- week 2 -->
 												<tr>
-													<td style="width: 2em">
+													<td style="width: 2em;background: #{calendarService.color};">
 														<h:commandLink escape="false" id="mon2" value="#{calendarService.day}" action="showtimes" rendered="#{calendarService.isLink == 1}"/>
 														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
 													</td>
-													<td style="width: 2em">
+													<td style="width: 2em;background: #{calendarService.color};">
 														<h:commandLink escape="false" id="tue2" value="#{calendarService.day}" action="showtimes" rendered="#{calendarService.isLink == 1}"/>
 														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
 													</td>
-													<td style="width: 2em">
+													<td style="width: 2em;background: #{calendarService.color};">
 														<h:commandLink escape="false" id="wed2" value="#{calendarService.day}" action="showtimes" rendered="#{calendarService.isLink == 1}"/>
 														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
 													</td>
-													<td style="width: 2em">
+													<td style="width: 2em;background: #{calendarService.color};">
 														<h:commandLink escape="false" id="thu2" value="#{calendarService.day}" action="showtimes" rendered="#{calendarService.isLink == 1}"/>
 														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
 													</td>
-													<td style="width: 2em">
+													<td style="width: 2em;background: #{calendarService.color};">
 														<h:commandLink escape="false" id="fri2" value="#{calendarService.day}" action="showtimes" rendered="#{calendarService.isLink == 1}"/>
 														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
 													</td>
-													<td style="width: 2em">
+													<td style="width: 2em;background: #{calendarService.color};">
 														<h:commandLink escape="false" id="sat2" value="#{calendarService.day}" action="showtimes" rendered="#{calendarService.isLink == 1}"/>
 														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
 													</td>
-													<td style="width: 2em">
+													<td style="width: 2em;background: #{calendarService.color};">
 														<h:commandLink escape="false" id="sun2" value="#{calendarService.day}" action="showtimes" rendered="#{calendarService.isLink == 1}"/>
 														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
 													</td>
 												</tr>
 												<!-- week 3 -->
 												<tr>
-													<td style="width: 2em">
+													<td style="width: 2em;background: #{calendarService.color};">
 														<h:commandLink escape="false" id="mon3" value="#{calendarService.day}" action="showtimes" rendered="#{calendarService.isLink == 1}"/>
 														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
 													</td>
-													<td style="width: 2em">
+													<td style="width: 2em;background: #{calendarService.color};">
 														<h:commandLink escape="false" id="tue3" value="#{calendarService.day}" action="showtimes" rendered="#{calendarService.isLink == 1}"/>
 														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
 													</td>
-													<td style="width: 2em">
+													<td style="width: 2em;background: #{calendarService.color};">
 														<h:commandLink escape="false" id="wed3" value="#{calendarService.day}" action="showtimes" rendered="#{calendarService.isLink == 1}"/>
 														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
 													</td>
-													<td style="width: 2em">
+													<td style="width: 2em;background: #{calendarService.color};">
 														<h:commandLink escape="false" id="thu3" value="#{calendarService.day}" action="showtimes" rendered="#{calendarService.isLink == 1}"/>
 														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
 													</td>
-													<td style="width: 2em">
+													<td style="width: 2em;background: #{calendarService.color};">
 														<h:commandLink escape="false" id="fri3" value="#{calendarService.day}" action="showtimes" rendered="#{calendarService.isLink == 1}"/>
 														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
 													</td>
-													<td style="width: 2em">
+													<td style="width: 2em;background: #{calendarService.color};">
 														<h:commandLink escape="false" id="sat3" value="#{calendarService.day}" action="showtimes" rendered="#{calendarService.isLink == 1}"/>
 														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
 													</td>
-													<td style="width: 2em">
+													<td style="width: 2em;background: #{calendarService.color};">
 														<h:commandLink escape="false" id="sun3" value="#{calendarService.day}" action="showtimes" rendered="#{calendarService.isLink == 1}"/>
 														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
 													</td>
 												</tr>
 												<!-- week 4 -->
 												<tr>
-													<td style="width: 2em">
+													<td style="width: 2em;background: #{calendarService.color};">
 														<h:commandLink escape="false" id="mon4" value="#{calendarService.day}" action="showtimes" rendered="#{calendarService.isLink == 1}"/>
 														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
 													</td>
-													<td style="width: 2em">
+													<td style="width: 2em;background: #{calendarService.color};">
 														<h:commandLink escape="false" id="tue4" value="#{calendarService.day}" action="showtimes" rendered="#{calendarService.isLink == 1}"/>
 														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
 													</td>
-													<td style="width: 2em">
+													<td style="width: 2em;background: #{calendarService.color};">
 														<h:commandLink escape="false" id="wed4" value="#{calendarService.day}" action="showtimes" rendered="#{calendarService.isLink == 1}"/>
 														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
 													</td>
-													<td style="width: 2em">
+													<td style="width: 2em;background: #{calendarService.color};">
 														<h:commandLink escape="false" id="thu4" value="#{calendarService.day}" action="showtimes" rendered="#{calendarService.isLink == 1}"/>
 														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
 													</td>
-													<td style="width: 2em">
+													<td style="width: 2em;background: #{calendarService.color};">
 														<h:commandLink escape="false" id="fri4" value="#{calendarService.day}" action="showtimes" rendered="#{calendarService.isLink == 1}"/>
 														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
 													</td>
-													<td style="width: 2em">
+													<td style="width: 2em;background: #{calendarService.color};">
 														<h:commandLink escape="false" id="sat4" value="#{calendarService.day}" action="showtimes" rendered="#{calendarService.isLink == 1}"/>
 														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
 													</td>
-													<td style="width: 2em">
+													<td style="width: 2em;background: #{calendarService.color};">
 														<h:commandLink escape="false" id="sun4" value="#{calendarService.day}" action="showtimes" rendered="#{calendarService.isLink == 1}"/>
 														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
 													</td>
@@ -321,31 +363,31 @@
 												</tr>
 												<!-- week 6 -->
 												<tr>
-													<td style="width: 2em">
+													<td style="width: 2em;background: #{calendarService.color};">
 														<h:commandLink escape="false" id="mon6" value="#{calendarService.day}" action="showtimes" rendered="#{calendarService.isLink == 1}"/>
 														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
 													</td>
-													<td style="width: 2em">
+													<td style="width: 2em;background: #{calendarService.color};">
 														<h:commandLink escape="false" id="tue6" value="#{calendarService.day}" action="showtimes" rendered="#{calendarService.isLink == 1}"/>
 														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
 													</td>
-													<td style="width: 2em">
+													<td style="width: 2em;background: #{calendarService.color};">
 														<h:commandLink escape="false" id="wed6" value="#{calendarService.day}" action="showtimes" rendered="#{calendarService.isLink == 1}"/>
 														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
 													</td>
-													<td style="width: 2em">
+													<td style="width: 2em;background: #{calendarService.color};">
 														<h:commandLink escape="false" id="thu6" value="#{calendarService.day}" action="showtimes" rendered="#{calendarService.isLink == 1}"/>
 														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
 													</td>
-													<td style="width: 2em">
+													<td style="width: 2em;background: #{calendarService.color};">
 														<h:commandLink escape="false" id="fri6" value="#{calendarService.day}" action="showtimes" rendered="#{calendarService.isLink == 1}"/>
 														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
 													</td>
-													<td style="width: 2em">
+													<td style="width: 2em;background: #{calendarService.color};">
 														<h:commandLink escape="false" id="sat6" value="#{calendarService.day}" action="showtimes" rendered="#{calendarService.isLink == 1}"/>
 														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
 													</td>
-													<td style="width: 2em">
+													<td style="width: 2em;background: #{calendarService.color};">
 														<h:commandLink escape="false" id="sun6" value="#{calendarService.day}" action="showtimes" rendered="#{calendarService.isLink == 1}"/>
 														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
 													</td>
@@ -370,23 +412,7 @@
 						</td>
 					</tr>	
 					<!-- This should be dynamic! only visable after clicking on the "Visa tid" button -->					
-					<tr>
-						<td>
-							<div id="placediv_date" style="display:none;inline;background-color:#f3f1f2;" >
-								<table>
-									<tr>
-										<td style="background-color:#f3f1f2;width: 800px" >		
-											<h3 style="display: inline"> Välj datum</h3>
-											<h:form id="helpForm" style="display: inline; text-align: right;" >
-												<div class="image_block" style="display: inline;text-align: right;padding-left: 35em;"> <img src="../VGRImages/help.gif" />  
-												</div>
-       										</h:form>   
-        								</td>
-									</tr>
-								</table>       
-							</div>   <!-- boxleft3inside -->
-						</td>
-					</tr>
+					
 					<!-- This should be dynamic! only visable after clicking on the a date in the calendar -->		
 					<tr>
 						<td>
@@ -412,4 +438,6 @@
 		
 </ui:fragment>
 </ui:define>
+
+
 </ui:composition>
