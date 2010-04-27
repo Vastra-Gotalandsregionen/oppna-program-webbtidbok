@@ -20,8 +20,7 @@ package se.vgregion.webbtidbok.lang;
 import java.lang.*;
 import java.text.*;
 import java.util.*;
-
-
+import javax.xml.datatype.*;
 
 public class DateHandler {
 
@@ -43,6 +42,38 @@ public class DateHandler {
 	    String toBeFormatted = format.format(selectedCalendar.getTime());
 	    return toBeFormatted;
 	}
+	
+	public static Calendar setCalendarFromGregorianCalendar(XMLGregorianCalendar c){
+		
+		
+		Calendar tmpCalendar = Calendar.getInstance();
+		tmpCalendar.set(Calendar.YEAR, c.getYear());
+		tmpCalendar.set(Calendar.MONTH, c.getMonth());
+		tmpCalendar.set(Calendar.DATE, c.getDay());
+		tmpCalendar.set(Calendar.HOUR, c.getHour());
+		tmpCalendar.set(Calendar.MINUTE, c.getMinute());
+		
+		return tmpCalendar;
+	}
+	
+	
+	public static String setCalendarDateFormat(String selectedDate){
+		try{
+			
+		
+			String pattern = "yyyy-MM-dd";
+			SimpleDateFormat format = new SimpleDateFormat(pattern);
+			Date toBeFormatted = format.parse(selectedDate);
+			String strFormatted = format.format(toBeFormatted.getTime());
+			return strFormatted;
+	    
+		}catch(ParseException e){
+			e.printStackTrace();
+		}
+		
+		return "";
+	}
+
 	
 	public static String setCalendarTimeFormat(Calendar selectedCalendar){
 		
