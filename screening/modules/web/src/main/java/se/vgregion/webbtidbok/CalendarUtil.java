@@ -377,7 +377,7 @@ public class CalendarUtil {
     	tmpCalendar.set(Calendar.MONTH, masterCalendar.get(Calendar.MONTH));
     	tmpCalendar.set(Calendar.DATE, masterCalendar.get(Calendar.DAY_OF_MONTH));    
 	    tmpCalendar.set(Calendar.DATE, 1);
-    	String from = format.format(masterCalendar.getTime());
+    	String from = format.format(tmpCalendar.getTime());
     
 		int lastDay = tmpCalendar.getActualMaximum(Calendar.DAY_OF_MONTH);
 		tmpCalendar.set(Calendar.DATE, lastDay);
@@ -489,18 +489,18 @@ public class CalendarUtil {
 						}						
 						
 						if(dayToEvaluateIsFound){
-							days.add("" + dayToEvaluate);
+							days.add("a" + dayToEvaluate);
 							isLink.add(true);
 							this.setColor("#FFFFFF");
 						}
 						else{
-							days.add("" + dayToEvaluate);
+							days.add("b" + dayToEvaluate);
 							isLink.add(false);	
 							this.setColor("#BBBBBB");
 						}						
 					}
 					else{
-						days.add("" + dayToEvaluate);
+						days.add("c" + dayToEvaluate);
 						isLink.add(false); 
 						setColor("#BBBBBB");
 					}
