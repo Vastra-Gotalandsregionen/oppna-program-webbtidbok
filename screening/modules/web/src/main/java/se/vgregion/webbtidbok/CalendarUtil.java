@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.xml.bind.JAXBElement;
+import javax.xml.datatype.DatatypeConstants;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 import se.vgregion.webbtidbok.ws.ArrayOfCalendar;
@@ -67,37 +68,23 @@ public class CalendarUtil {
 	}
 	
 	//only here to avoid that the color array/list might return a null value
-	public String getColor(int index){
-		if(color.size()== 0){
-			return "#BBBBBB";
-		}
-		if(color.get(index).equals(null)){
-			return "#BBBBBB";
-		}
-		if(color.size() < index){
-			return "##BBBBBB";
-		}
-		
-		return color.get(index);
-	}
-	
-	//only here to avoid that the color array/list might return a null value
 	public String getColor(){
 		if(color.size()== 0){
-			return "#BBBBBB";
+			return "#fff";
 		}
 		else if(color.size() > index && color.get(index)== null){
-			return "#BBBBBB";
+			return "#fff";
 		}
 		else if(color.size() < index){
-			return "#BBBBBB";
+			return "#fff";
 		}
 		else{
 			if(color.size() > index){
+				System.out.println("Returned color for index " + index + ": " + color.get(index));
 				return color.get(index);	
 			}
 			else{
-				return "#BBBBBB";
+				return "#fff";
 			}
 		}		
 	}
@@ -306,7 +293,7 @@ public class CalendarUtil {
 		System.out.println("Today is " + masterCalendar.getTime().toString());
 		index = 0;
 		gotALink = false;
-		
+		color = new ArrayList<String>(); 
 		if(state.getBookingResponse() == null) {
 			webService(state);
 		}
@@ -323,7 +310,7 @@ public class CalendarUtil {
 		System.out.println("index: " + index);
 		tmpIndex = 0;
 		
-		this.emptyColorList();
+		//this.emptyColorList();
 		
 		
 	}
@@ -419,13 +406,13 @@ public class CalendarUtil {
 			this.setEmptyCalendar(true);
 		}
 		List<Calendar> returnCal = new ArrayList<Calendar>();
-		Set<Calendar> dateSet = new HashSet<Calendar>();
+		//Set<Calendar> dateSet = new HashSet<Calendar>();
 		for(se.vgregion.webbtidbok.ws.Calendar c : calList) {
 			Calendar tCal = Calendar.getInstance();
 			tCal.set(Calendar.YEAR, c.getDatum().getYear());
-			tCal.set(Calendar.MONTH, c.getDatum().getMonth());
+			tCal.set(Calendar.MONTH, c.getDatum().getMonth() - 1);
 			tCal.set(Calendar.DATE, c.getDatum().getDay());
-			dateSet.add(tCal);
+			//dateSet.add(tCal);
 			returnCal.add(tCal);
 			System.out.println("CalendarUtil.getAvailableDates.ListCalendar: " + tCal.get(Calendar.DAY_OF_MONTH));
 		}
@@ -461,19 +448,20 @@ public class CalendarUtil {
 		//is rows == weeks of the month?
 		List<List<Integer>> rows = getRows(masterCalendar);
 		for(List<Integer> row : rows) {
+			System.out.println("rows size is: " + rows.size());
 			for(Integer dayToEvaluate : row) {
 				//there is no day in the week which is 0, only 1-7, thus days.add("<empty string>")
 				if(dayToEvaluate.intValue() == 0) {
 					days.add("");
 					isLink.add(false);
 					System.out.println("1 isLink == FALSE");
-					this.setColor("#BBBBBB");
+					this.setColor("#fff");
 				} //if day from row is before today, do not render it in calendar, thus days.add("<empty string>")
 				else if(dayToEvaluate.intValue() < today && masterCalendar.get(Calendar.MONTH) == currentMonth) {
 					days.add("" + dayToEvaluate);
 					isLink.add(false);
 					System.out.println("2 isLink == FALSE");
-					this.setColor("#BBBBBB");
+					this.setColor("#e6e6e6");
 				}
 				
 				else if( (dayToEvaluate.intValue() == today || dayToEvaluate.intValue() > today &&
@@ -489,20 +477,20 @@ public class CalendarUtil {
 						}						
 						
 						if(dayToEvaluateIsFound){
-							days.add("a" + dayToEvaluate);
+							days.add("" + dayToEvaluate);
 							isLink.add(true);
-							this.setColor("#FFFFFF");
+							this.setColor("#fff");
 						}
 						else{
-							days.add("b" + dayToEvaluate);
+							days.add("" + dayToEvaluate);
 							isLink.add(false);	
-							this.setColor("#BBBBBB");
+							this.setColor("#e6e6e6");
 						}						
 					}
 					else{
-						days.add("c" + dayToEvaluate);
+						days.add("" + dayToEvaluate);
 						isLink.add(false); 
-						setColor("#BBBBBB");
+						setColor("#e6e6e6");
 					}
 					//availableDates.remove(k);								
 					}
