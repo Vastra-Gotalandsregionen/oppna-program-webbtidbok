@@ -463,16 +463,35 @@
 									<div style="text-align: left; width: 14em;">
 										<table>
 											<tr>
-												
+												<!--  
 												<h:panelGroup>
-													<td>
-														<h:outputText escape="false" value="#{bookingtimes}"  />
-													</td>
-													<td>
-														<h:commandButton action="setBookingTime" image="" rendered="true" id="" value="Välj"   />
-												    </td>
+													<ui:repeat value="#{bookingTimesDataModel}" var="column">
+													
+														<td>
+															<h:outputText escape="false"  value="#{column[2]} " />
+														</td>
+														<td>
+															<h:commandButton action="setBookingTime" image="" rendered="true" id="" value="Välj"   />
+												    	</td>
+												    </ui:repeat>
+												    
 												</h:panelGroup>
-										
+												-->
+												
+												
+													<h:dataTable id="timeTable" value="#{timeListLocal}" var="btl" rendered="true">
+														
+															<h:column>
+															<f:facet name="header">Tid</f:facet>
+																#{btl.hour}
+															</h:column>
+														    <h:column>
+														    	<sf:commandLink id="viewHotelLink" value="Välj" action="selectTime"/>
+																<sf:commandButton id="timeButton" value="Välj" action="selectTime"/>
+				
+														    	<!--  <h:selectBooleanCheckbox value="" /> -->
+														    </h:column>
+													</h:dataTable>
 										
 											</tr>
 										</table>
