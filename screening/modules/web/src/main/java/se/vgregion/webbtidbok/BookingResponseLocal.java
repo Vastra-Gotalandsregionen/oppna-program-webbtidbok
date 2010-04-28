@@ -103,7 +103,7 @@ public class BookingResponseLocal implements Serializable{
 		timeBooking.setHours(response.getBokadTid().getHour());
 		timeBooking.setMinutes(response.getBokadTid().getMinute());
 		timeBooking.setSeconds(response.getBokadTid().getSecond());
-		timeBooking.setMonth(response.getBokadTid().getMonth());
+		timeBooking.setMonth(response.getBokadTid().getMonth() - 1);
 		timeBooking.setYear(response.getBokadTid().getYear() - 1900);
 		timeBooking.setDate(response.getBokadTid().getDay());
 		
