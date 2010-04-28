@@ -367,6 +367,11 @@ public class CalendarUtil {
 		//this.emptyColorList();
 		
 		
+		
+		System.out.println("CalendarUtil.getCalendar.last.state.getSelectedDate: " + state.getSelectedDate().getTime().toString());
+		
+		
+		
 	}
 	
 	private void webService(State state) {
@@ -389,6 +394,8 @@ public class CalendarUtil {
 		
 		System.out.println("CalendarUtil.webservice.response: " + response.getBokadTid().toString());
 		state.setBookingResponse(response);
+		
+		
 	}
 	
 	public void setEmptyCalendar(boolean isEmpty){
@@ -451,6 +458,7 @@ public class CalendarUtil {
 		request.setCentralTidbokID(state.getCentralTidbokID());
 
 		System.out.println("CalendarUtil.getCalendar.centraltidbokid: " + state.getCentralTidbokID());
+		System.out.println("CalendarUtil.getCalendar.centraltidbokid.state.getSelectedDay: " + state.getSelectedDate().getTime().toString());
 
 		request.setFromDat(fromDat);
 		request.setToDat(toDat);
@@ -495,6 +503,10 @@ public class CalendarUtil {
 			System.out.println("returnCal.toString: "  +  c.get(Calendar.DAY_OF_MONTH));
 		}
 		System.out.println("ret.size() - amount of bookable dates within fromDat & toDat: " + returnCal.size());
+		
+		System.out.println("CalendarUtil.getCalendar.centraltidbokid.state.getSelectedDay: " + state.getSelectedDate().getTime().toString());
+
+		
 		return returnCal;
 	}
 	 	
@@ -504,6 +516,10 @@ public class CalendarUtil {
 		//TODO: grey out unavailable dates
 
 		availableDates = getAvailableDates(state);
+		
+		System.out.println("CalendarUtil.getCalendar.centraltidbokid.state.getSelectedDay: " + state.getSelectedDate().getTime().toString());
+
+		
 		System.out.println(" AAAA availableDates.size(): " + availableDates.size());
 		int i = 0;
 
@@ -521,6 +537,9 @@ public class CalendarUtil {
 
 		//is rows == weeks of the month?
 		List<List<Integer>> rows = getRows(masterCalendar);
+		
+		System.out.println("After List<List<Integer>> rows  CalendarUtil.getCalendar.centraltidbokid.state.getSelectedDay: " + state.getSelectedDate().getTime().toString());
+
 		for(List<Integer> row : rows) {
 			System.out.println("rows size is: " + rows.size());
 			for(Integer dayToEvaluate : row) {
@@ -578,9 +597,18 @@ public class CalendarUtil {
 		//A row represents a single week
 		List<Integer> row = new ArrayList<Integer>();
 		int emptySlots = 0;
+		
+		System.out.println("After List<List<Integer>> rows  CalendarUtil.getCalendar.centraltidbokid.cal.getSelectedDay: " + cal.getTime().toString());
 
-		Calendar tempCal = cal;
+		//Calendar tempCal = cal; do not use a calendar -> masterCalendar you change the objects value by using =, commented by Conny to Örjan
+		Calendar tempCal = Calendar.getInstance();
+	    tempCal.set(Calendar.YEAR, cal.get(Calendar.YEAR));
+    	tempCal.set(Calendar.MONTH, cal.get(Calendar.MONTH));
+    	//tempCal.set(Calendar.DATE, cal.get(Calendar.DAY_OF_MONTH));
 		tempCal.set(Calendar.DATE, 1);
+		
+		System.out.println("After List<List<Integer>> rows  CalendarUtil.getCalendar.centraltidbokid.cal.getSelectedDay: " + cal.getTime().toString());
+
 
 		//what is the weekday of the first day of the month?
 		//weekdays start from Sunday == 1
