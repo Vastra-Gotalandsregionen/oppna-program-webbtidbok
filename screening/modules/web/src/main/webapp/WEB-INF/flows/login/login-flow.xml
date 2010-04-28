@@ -208,9 +208,25 @@
 			  
 			  
 			  <evaluate expression="calendarService.getCalendar(loginCredentials)"  /> 
-		
+				
+			  	
+			  <evaluate expression="bookingService.getBookingTime(loginCredentials)" result="flowScope.bookingtimes" /> 
+				
+			 
+			  
 			  
 		</on-render>
+		
+		  
+		<transition on="showTimeCalendar">
+			<evaluate expression="calendarService.setSelectedDay()"   >
+			
+		</evaluate>
+			
+			
+			
+			<!--   <render fragments="displayTimeForm:calendarFragment" /> -->
+		</transition>
 		
 		
 		
@@ -264,7 +280,11 @@ h-namespace is normal java faces. sf supports ajax-stuff like partial page loadi
 		
 	</view-state>
 	
-
+	<action-state  id="setTimeCalendar">
+		 <render fragments="displayTimeForm:calendarFragment" />
+		 <evaluate expression="calendarService.setSelectedDay()"   >
+		</evaluate>
+	</action-state>
 	
 	
 	<view-state id="loggedout">
