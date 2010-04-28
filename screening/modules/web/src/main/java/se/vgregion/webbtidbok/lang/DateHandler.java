@@ -45,10 +45,13 @@ public class DateHandler {
 	
 	public static Calendar setCalendarFromGregorianCalendar(XMLGregorianCalendar c){
 		
+		System.out.println("XMLGregorianCalendar: " + c.toString());
+		
+		
 		
 		Calendar tmpCalendar = Calendar.getInstance();
 		tmpCalendar.set(Calendar.YEAR, c.getYear());
-		tmpCalendar.set(Calendar.MONTH, c.getMonth());
+		tmpCalendar.set(Calendar.MONTH, c.getMonth() - 1);
 		tmpCalendar.set(Calendar.DATE, c.getDay());
 		tmpCalendar.set(Calendar.HOUR, c.getHour());
 		tmpCalendar.set(Calendar.MINUTE, c.getMinute());

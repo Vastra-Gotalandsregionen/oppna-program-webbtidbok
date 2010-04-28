@@ -83,6 +83,11 @@ public class BookingService
 			loginCredentials.setCentralTidbokID(response.getCentralTidbokID());
 			//set the Place for States used in getCalendar method
 			loginCredentials.setCentralTidbokID(responseLocal.getCentralTimeBookId());
+			loginCredentials.setSelectedDate(DateHandler.setCalendarFromGregorianCalendar(response.getBokadTid()));
+			
+			 
+			System.out.println("get month: " + response.getBokadTid().getMonth());
+			System.out.println("logincredentials.getSelectedDate: " + loginCredentials.getSelectedDate().getTime().toString());
 			
 			return responseLocal;
 		}
@@ -144,6 +149,13 @@ public class BookingService
 		return placeListLocal;
 	}
 	
+	
+	/***
+	 * 
+	 * 
+	 * @param loginCredentials
+	 * @return
+	 */
 	public List<BookingTimeLocal> getBookingTime(State loginCredentials){
 		
 		//		Uncomment below for debug, you'll only have to click login, 
@@ -165,24 +177,38 @@ public class BookingService
 			
 			System.out.println("CentralTidBokID: " + loginCredentials.getCentralTidbokID());
 			
+			System.out.println("Before Calendar: " + selectedDate.toString());
+			
 			request = helper.getQueryWSRequest(loginCredentials);
 			request.setCentralTidbokID(loginCredentials.getCentralTidbokID());
 			request.setFromDat(fromDat);
 			
+			//JAXBElement<String> fromDat2 = objectFactory.createBookingRequestFromDat("2010-05-30");
+			
+			//request.setFromDat(fromDat2);
+			System.out.println("XML ELEMENT: " + request.getFromDat().getValue() );
+			
 			ArrayOfBookingTime times = helper.getQueryWSRequestTime(request);
+			if(times == null){
+				System.out.println("ArrayOfBookingTime.null");
+			}
 			List<BookingTime> timeList = times.getBookingTime();
 			int id = 1; 
 			for(BookingTime b : timeList){
 				
+				
+				System.out.println("bookingTime.MONTH: + " + b.getDatum().getMonth());
+				System.out.println("bookingTime.DAY: + " + b.getDatum().getDay());
+				System.out.println("bookingTime.YEAR: + " + b.getDatum().getYear());
 				
 				Calendar dateCal = Calendar.getInstance();
 				dateCal.set(Calendar.YEAR, b.getDatum().getYear());
 				dateCal.set(Calendar.MONTH, b.getDatum().getMonth());
 				dateCal.set(Calendar.DATE, b.getDatum().getDay());
 				
-				String day = DateHandler.setCalendarDateFormat(dateCal);
-				
-				
+				//String day = DateHandler.setCalendarDateFormat(dateCal);
+				String day= DateHandler.setCalendarDateFormat(b.getDatum().toString());
+				System.out.println("After Calendar: " + dateCal.toString());
 				//dateCal.set(Calendar.HOUR, b.getKlocka());
 				//dateCal.set(Calendar.MINUTE, b.getDatum().getMinute());
 				
@@ -194,7 +220,7 @@ public class BookingService
 				pl.setDay(day);
 				pl.setHour(b.getKlocka().getValue());
 				pl.setBookingTimeId(id);
-				
+				//b.getDatum().getMonth();
 				
 				timeListLocal.add(pl);
 				

@@ -235,8 +235,16 @@ public class WebServiceHelper {
 		
 		try{
 			
-			return ws.getBookingTime(request);
+			ArrayOfBookingTime arrays = ws.getBookingTime(request);
 			//loginCredentials.setBookingResponse(response);
+			List<BookingTime> list = arrays.getBookingTime();
+			for(BookingTime bt: list){
+				
+				System.out.println("BookingTime Month: " + bt.getDatum().getMonth());
+				
+			}
+			
+			return arrays;
 			
 		}
 		catch(ICentralBookingWSGetBookingTimeICFaultFaultFaultMessage ex){
