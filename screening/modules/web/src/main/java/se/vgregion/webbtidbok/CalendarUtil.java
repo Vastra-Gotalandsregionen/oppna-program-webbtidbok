@@ -31,6 +31,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
 import se.vgregion.webbtidbok.ws.ArrayOfCalendar;
 import se.vgregion.webbtidbok.ws.BookingRequest;
 import se.vgregion.webbtidbok.ws.ObjectFactory;
+import se.vgregion.webbtidbok.ws.*;
 
 public class CalendarUtil {
 	static int PREVIOUS = -1;
@@ -112,8 +113,58 @@ public class CalendarUtil {
 	public void setSelectedDay(){
 		int year = masterCalendar.get(Calendar.YEAR);
 		int month = masterCalendar.get(Calendar.MONTH);
-		int day = Integer.valueOf(this.getDay());
+		int day = masterCalendar.get(Calendar.DAY_OF_MONTH);
 			
+		System.out.println("/******");
+		System.out.println("*******"); 
+		System.out.println("*******"); 
+		System.out.println("*******"); 
+		System.out.println("*******");
+		System.out.println("/******");
+		System.out.println("*******"); 
+		System.out.println("*******"); 
+		System.out.println("*******"); 
+		System.out.println("*******");
+		System.out.println("/******");
+		System.out.println("*******"); 
+		System.out.println("*******"); 
+		System.out.println("*******"); 
+		System.out.println("*******");
+		System.out.println("/******");
+		System.out.println("*******"); 
+		System.out.println("*******"); 
+		System.out.println("*******"); 
+		System.out.println("*******");
+		System.out.println("/******");
+		System.out.println("*******"); 
+		System.out.println("*******"); 
+		System.out.println("*******"); 
+		System.out.println("*******");
+		System.out.println("/******");
+		System.out.println("*******"); 
+		System.out.println("*******"); 
+		System.out.println("*******"); 
+		System.out.println("*******");
+		System.out.println("/******");
+		System.out.println("*******"); 
+		System.out.println("*******"); 
+		System.out.println("*******"); 
+		System.out.println("*******");
+		System.out.println("/******");
+		System.out.println("*******"); 
+		System.out.println("*******"); 
+		System.out.println("*******"); 
+		System.out.println("*******");
+		System.out.println("/******");
+		System.out.println("*******"); 
+		System.out.println("*******"); 
+		System.out.println("*******"); 
+		System.out.println("*******");
+		System.out.println("/******");
+		System.out.println("*******"); 
+		System.out.println("*******"); 
+		System.out.println("*******"); 
+		System.out.println("*******");
 		System.out.println("/******");
 		System.out.println("*******"); 
 		System.out.println("*******"); 
@@ -291,6 +342,9 @@ public class CalendarUtil {
 	
 	public void getCalendar(State state) {
 		System.out.println("Today is " + masterCalendar.getTime().toString());
+		System.out.println("CalendarUtil.getCalendar.getSelectedDate: " + state.getSelectedDate().getTime().toString() );
+		
+		
 		index = 0;
 		gotALink = false;
 		color = new ArrayList<String>(); 
@@ -329,7 +383,12 @@ public class CalendarUtil {
 		
 		wsh = new WebServiceHelper();
 		request = wsh.getQueryWSRequest(state);
-		state.setBookingResponse(wsh.getQueryWS(request));
+		System.out.println("CalendarUtil.webservice.request: ");
+		
+		BookingResponse response = wsh.getQueryWS(request);
+		
+		System.out.println("CalendarUtil.webservice.response: " + response.getBokadTid().toString());
+		state.setBookingResponse(response);
 	}
 	
 	public void setEmptyCalendar(boolean isEmpty){
@@ -349,14 +408,29 @@ public class CalendarUtil {
 	    	//temp.set(Calendar.YEAR, calendar.get(Calendar.YEAR));
 	    	//temp.set(Calendar.MONTH, this.getCalendarMonth());
 	    	XMLGregorianCalendar xmlCal = state.getBookingResponse().getBokadTid();
+	    	
+	    	System.out.println("CalendarUtil.getAvailableDates.xmlCal: " + xmlCal.toString());
+	    	
 	    	masterCalendar.set(Calendar.YEAR, xmlCal.getYear());
-	    	masterCalendar.set(Calendar.MONTH, xmlCal.getMonth());
+	    	masterCalendar.set(Calendar.MONTH, xmlCal.getMonth() - 1);
 	    	masterCalendar.set(Calendar.DATE, xmlCal.getDay());
 	    	state.setSelectedDate(masterCalendar);
 	    	state.setDefaultDate(false);
+	    	
+	    	System.out.println("state.isDefaultDate()--------");
+	    	System.out.println("CalendarUtil.getAvailableDates.masterCalendar: " + state.getSelectedDate().getTime().toString());
+	    	
+	    	
 	    }
 	    else {
+	    	System.out.println("*******ELSE state.isDefaultDate()--------");
+	    	
+	    	
 	    	masterCalendar = state.getSelectedDate();
+	    	
+	    	System.out.println("CalendarUtil.getAvailableDates.masterCalendar: " + state.getSelectedDate().getTime().toString());
+	    	
+	    	
 	    }
 	    
 	    Calendar tmpCalendar = Calendar.getInstance();
