@@ -21,7 +21,11 @@
 package se.vgregion.webbtidbok.tests;
 
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -30,8 +34,9 @@ import org.junit.Test;
 
 import se.vgregion.webbtidbok.State;
 import se.vgregion.webbtidbok.WebServiceHelper;
+import se.vgregion.webbtidbok.lang.DateHandler;
 import se.vgregion.webbtidbok.ws.*;
-
+import se.vgregion.webbtidbok.lang.DateHandler;
 
 
 import javax.xml.bind.JAXBElement;
@@ -111,7 +116,7 @@ public class CalendarTests {
 				Assert.assertFalse(true);
 			}
 		}
-		List<Calendar> calendarList = calendars.getCalendar();
+		List<se.vgregion.webbtidbok.ws.Calendar> calendarList = calendars.getCalendar();
 		if(calendarList == null){
 			Assert.assertFalse(true);
 			
@@ -123,7 +128,7 @@ public class CalendarTests {
 			}
 			else{
 				
-				for(Calendar c : calendarList){
+				for(se.vgregion.webbtidbok.ws.Calendar c : calendarList){
 					//System.out.println(bp.getAddress().getValue());
 					//System.out.println(bp.getCentralTidbokID());
 					//System.out.println(bp.getMottagning().getValue());
@@ -150,20 +155,69 @@ public class CalendarTests {
 	@Test
 	public void testCalendarEmptyFromToDate(){
 		State credentials = new State();
-		credentials.setPasswd("Y8PBZRUr");
-		credentials.setPnr("19960103-2395");
+		credentials.setPasswd("fje5rnXG");
+		credentials.setPnr("19910104-2399");
 		
 		
-		JAXBElement<String> fromDat = objectFactory.createBookingRequestFromDat("2010-03-31");
-		JAXBElement<String> toDat = objectFactory.createBookingRequestToDat("2010-05-31");
+		JAXBElement<String> fromDat = objectFactory.createBookingRequestFromDat("2010-07-01");
+		JAXBElement<String> toDat = objectFactory.createBookingRequestToDat("2010-07-31");
 		
 		
 		//BookingRequest request = ws.getQueryWSRequest(credentials);
 		BookingRequest request = ws.getQueryWSRequest(credentials, 1, "", "");
+		ArrayOfCalendar calArr = ws.getQueryWSRequestCalendar(request);
+		List<se.vgregion.webbtidbok.ws.Calendar> calList = new ArrayList<se.vgregion.webbtidbok.ws.Calendar>();
+		try {
+			calList = calArr.getCalendar();
+
+			System.out.println("CalList.size: " + calList.size());
+			System.out.println(calArr.getCalendar().size());
+			
+			for(se.vgregion.webbtidbok.ws.Calendar c : calList){
+//				System.out.println("DDDD Datum: " + c.getDatum().getDay());
+//				//System.out.println(".toString: " + c.getDatum().toString());
+				
+				
+				java.util.Calendar tCal = Calendar.getInstance();
+				tCal.set(Calendar.YEAR, c.getDatum().getYear());
+				tCal.set(Calendar.MONTH, c.getDatum().getMonth());
+				tCal.set(Calendar.DATE, c.getDatum().getDay());
+				System.out.println(DateHandler.setCalendarDateFormat(tCal));
+				
+			}
+			
+			if(calList.isEmpty()){
+				//this.setEmptyCalendar(true);
+			}
+			else{
+				//this.setEmptyCalendar(false);
+			}
+		} catch (NullPointerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			//this.setEmptyCalendar(true);
+		}
+		List<Calendar> returnCal = new ArrayList<Calendar>();
+		Set<Calendar> dateSet = new HashSet<Calendar>();
+		for(se.vgregion.webbtidbok.ws.Calendar c : calList) {
+			Calendar tCal = Calendar.getInstance();
+			tCal.set(Calendar.YEAR, c.getDatum().getYear());
+			tCal.set(Calendar.MONTH, c.getDatum().getMonth());
+			tCal.set(Calendar.DATE, c.getDatum().getDay());
+			dateSet.add(tCal);
+			returnCal.add(tCal);
+			System.out.println("CalendarUtil.getAvailableDates.ListCalendar: " + tCal.get(Calendar.DAY_OF_MONTH));
+		}
+
+		for(Calendar c: returnCal){
+			System.out.println("returnCal.toString: "  +  c.get(Calendar.DAY_OF_MONTH));
+		}
+		System.out.println("ret.size() - amount of bookable dates within fromDat & toDat: " + returnCal.size());
+		
 		
 		
 		System.out.println("request from dat " + request.getFromDat());
-		System.out.println("request to dat " + request.getToDat());
+		// aSystem.out.println("request to dat " + request.getBokadTid().getDay());
 		
 		//JAXBElement<String> fromDat = request.getFromDat();
 		//JAXBElement<String> toDat = request.getToDat();
@@ -199,7 +253,7 @@ public class CalendarTests {
 			return;
 			
 		}
-		List<Calendar> calendarList = calendars.getCalendar();
+		List<se.vgregion.webbtidbok.ws.Calendar> calendarList = calendars.getCalendar();
 		if(calendarList == null){
 			Assert.assertTrue(true);
 			
@@ -211,7 +265,7 @@ public class CalendarTests {
 			}
 			else{
 				
-				for(Calendar c : calendarList){
+				for(se.vgregion.webbtidbok.ws.Calendar c : calendarList){
 					//System.out.println(bp.getAddress().getValue());
 					//System.out.println(bp.getCentralTidbokID());
 					//System.out.println(bp.getMottagning().getValue());
@@ -288,7 +342,7 @@ public class CalendarTests {
 			return;
 			
 		}
-		List<Calendar> calendarList = calendars.getCalendar();
+		List<se.vgregion.webbtidbok.ws.Calendar> calendarList = calendars.getCalendar();
 		if(calendarList == null){
 			Assert.assertTrue(true);
 			
@@ -300,7 +354,7 @@ public class CalendarTests {
 			}
 			else{
 				
-				for(Calendar c : calendarList){
+				for(se.vgregion.webbtidbok.ws.Calendar c : calendarList){
 					//System.out.println(bp.getAddress().getValue());
 					//System.out.println(bp.getCentralTidbokID());
 					//System.out.println(bp.getMottagning().getValue());
@@ -378,7 +432,7 @@ public class CalendarTests {
 			return;
 			
 		}
-		List<Calendar> calendarList = calendars.getCalendar();
+		List<se.vgregion.webbtidbok.ws.Calendar> calendarList = calendars.getCalendar();
 		if(calendarList == null){
 			Assert.assertTrue(true);
 			
@@ -390,7 +444,7 @@ public class CalendarTests {
 			}
 			else{
 				
-				for(Calendar c : calendarList){
+				for(se.vgregion.webbtidbok.ws.Calendar c : calendarList){
 					//System.out.println(bp.getAddress().getValue());
 					//System.out.println(bp.getCentralTidbokID());
 					//System.out.println(bp.getMottagning().getValue());
