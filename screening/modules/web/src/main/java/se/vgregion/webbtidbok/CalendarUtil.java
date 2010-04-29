@@ -317,7 +317,7 @@ public class CalendarUtil {
 	    if(state.isDefaultDate()) {
 	    	XMLGregorianCalendar xmlCal = state.getBookingResponse().getBokadTid();
 	    	masterCalendar.set(Calendar.YEAR, xmlCal.getYear());
-	    	masterCalendar.set(Calendar.MONTH, xmlCal.getMonth());
+	    	masterCalendar.set(Calendar.MONTH, xmlCal.getMonth() - 1);
 	    	masterCalendar.set(Calendar.DATE, xmlCal.getDay());
 	    	state.setSelectedDate(masterCalendar);
 	    	state.setDefaultDate(false);
