@@ -28,13 +28,19 @@
 	  			xmlns:f="http://java.sun.com/jsf/core"
 	  			xmlns:sf="http://www.springframework.org/tags/faces"
 	  			xmlns:t="http://myfaces.apache.org/tomahawk"
-	  			xmlns:s="http://jboss.com/products/seam/taglib"
-	  			xmlns:a="http://richfaces.org/a4j"
-	  			template="/WEB-INF/layouts/standard.xhtml">
+	  			xmlns:s="http://myfaces.apache.org/sandbox"	  			
+				template="/WEB-INF/layouts/standard.xhtml">
 
 
 
-
+<script type="text/javascript">
+function submitForm()
+{
+ 	alert('submitForm');
+    document.selectForm.submit();
+ 
+}
+</script>
 
 <ui:define name="content">
 
@@ -121,7 +127,7 @@
 											<f:view>
 												<h:form id="selectForm" action="displaytimes" style="display: inline; text-align: right; padding-right: 20em;" >
 											
-													<h:selectOneMenu rendered="true" id="places" value="#{placesHandler.placesId}"  onchange=""  style="width:320px">
+													<h:selectOneMenu rendered="true" id="places" value="#{placesHandler.placesId}"  onchange="alert('test');submitForm();"  style="width:320px">
 													   <f:selectItems value="#{bookingplaces}" /> 					
 													</h:selectOneMenu>
 												
@@ -183,19 +189,17 @@
 							<table>
 								<tr>
     								<td style="display: inline; text-align: right;" >
-										<h:form id="displayTimeForm" style="display: inline; text-align: right;padding-left: 37.5em;" >
+										<h:form id="displayDateForm" style="display: inline; text-align: right;padding-left: 37.5em;" >
 											<sf:commandButton id="displayButton" onclick="javascript: toggle('placediv_date')" value="Visa tider" processIds="*" action="display" style="width: 100px;" />
 <!--											<ui:fragment id="calendarFragment">-->
-										
-										
 									<div class="placediv_date">
 										<div style="text-align: left; width: 14em;">
 											<!--		HEADER		-->
 											<!--	 <   April  >	 	-->
 											<table border="2" style="margin-left: auto; margin-right: auto">
-												<th style="width: 2em; text-align: left;"><h:commandLink id="prev" value="&lt;" action="prev"/></th>
-												<th style="width: 10em; text-align: center"><h3 style="display: inline"><h:outputText value="#{calendarService.currentMonthAndYear}" /></h3></th>
-												<th style="width: 2em; text-align: right"><h:commandLink id="next" value="&gt;" action="next"/></th>
+												<th style="width: 2em; text-align: left; background: #e6e6e6"><h:commandLink id="prev" value="&lt;" action="prev"/></th>
+												<th style="width: 10em; text-align: center; background: #e6e6e6"><h3 style="display: inline"><h:outputText value="#{calendarService.currentMonthAndYear}" /></h3></th>
+												<th style="width: 2em; text-align: right; background: #e6e6e6"><h:commandLink id="next" value="&gt;" action="next"/></th>
 											</table>
 											<!--		HEADER		-->
 											<!--	Må Ti On To Fr Lö Sö	-->
@@ -205,205 +209,229 @@
 												<!-- week 1 -->
 												<tr>
 													<td style="width: 2em;background: #{calendarService.color};">
-													 	<h:commandLink escape="false" id="mon1" value="#{calendarService.day}" action="showTimeCalendar" rendered="#{calendarService.isLink == 1}"/>
-														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
+														<h:commandLink escape="false" id="mon1" value="#{calendarService.day}" action="showTimeCalendar" >
+															<f:param name="selectedDay" value="#{calendarService.commandLinkDay}"></f:param>
+														</h:commandLink>
 													</td>
 													<td style="width: 2em;background: #{calendarService.color};">
-														<h:commandLink escape="false" id="mon1" value="#{calendarService.day}" action="showTimeCalendar" rendered="#{calendarService.isLink == 1}"/>
-														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
-											 		</td>
-													<td style="width: 2em;background: #{calendarService.color};">
-														<h:commandLink escape="false" id="mon1" value="#{calendarService.day}" action="showTimeCalendar" rendered="#{calendarService.isLink == 1}"/>
-														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
+														<h:commandLink escape="false" id="mon1" value="#{calendarService.day}" action="showTimeCalendar" >
+															<f:param name="selectedDay" value="#{calendarService.commandLinkDay}"></f:param>
+														</h:commandLink>
 													</td>
 													<td style="width: 2em;background: #{calendarService.color};">
-														<h:commandLink escape="false" id="mon1" value="#{calendarService.day}" action="showTimeCalendar" rendered="#{calendarService.isLink == 1}"/>
-														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
+														<h:commandLink escape="false" id="mon1" value="#{calendarService.day}" action="showTimeCalendar" >
+															<f:param name="selectedDay" value="#{calendarService.commandLinkDay}"></f:param>
+														</h:commandLink>
 													</td>
 													<td style="width: 2em;background: #{calendarService.color};">
-														<h:commandLink escape="false" id="fri1" value="#{calendarService.day}" action="showTimeCalendar" rendered="#{calendarService.isLink == 1}"/>
-														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
+														<h:commandLink escape="false" id="mon1" value="#{calendarService.day}" action="showTimeCalendar" >
+															<f:param name="selectedDay" value="#{calendarService.commandLinkDay}"></f:param>
+														</h:commandLink>
 													</td>
 													<td style="width: 2em;background: #{calendarService.color};">
-														<h:commandLink escape="false" id="sat1" value="#{calendarService.day}" action="showTimeCalendar" rendered="#{calendarService.isLink == 1}"/>
-														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
+														<h:commandLink escape="false" id="fri1" value="#{calendarService.day}" action="showTimeCalendar" >
+															<f:param name="selectedDay" value="#{calendarService.commandLinkDay}"></f:param>
+														</h:commandLink>
 													</td>
 													<td style="width: 2em;background: #{calendarService.color};">
-														<h:commandLink escape="false" id="sun1" value="#{calendarService.day}" action="showTimeCalendar" rendered="#{calendarService.isLink == 1}" />
-														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
+														<h:commandLink escape="false" id="sat1" value="#{calendarService.day}" action="showTimeCalendar" >
+															<f:param name="selectedDay" value="#{calendarService.commandLinkDay}"></f:param>
+														</h:commandLink>
+													</td>
+													<td style="width: 2em;background: #{calendarService.color};">
+														<h:commandLink escape="false" id="sun1" value="#{calendarService.day}" action="showTimeCalendar" >
+															<f:param name="selectedDay" value="#{calendarService.commandLinkDay}"></f:param>
+														</h:commandLink>
 													</td>
 												</tr>
 												<!-- week 2 -->
 												<tr>
 													<td style="width: 2em;background: #{calendarService.color};">
-													  
-													<!--  
-										            <t:div rendered="#{calendarService.isLink == 1}">
-										            	 <t:commandLink escape="false" id="mon1" value="#{calendarService.day}" action="showTimeCalendar"  />
-										            	 <h:outputText escape="false" value="#{calendarService.day}" />
-											    	</t:div>
-										         	<t:div  rendered="#{calendarService.isLink == 0}">
-										         		 <t:commandLink escape="false" id="mon1" value="#{calendarService.day}"   />
-										         		 <h:outputText escape="false" value="#{calendarService.day}" />
-												   	</t:div>
-										         	-->
-										         		<!--  
-										         		<a:commandLink escape="false" id="mon2" value="#{calendarService.day}"  action="showTimeCalendar" rendered="#{calendarService.isLink == 1}" />
-										         		<s:link escape="false" id="mon2" value="#{calendarService.day}"  action="showTimeCalendar" rendered="#{calendarService.isLink == 1}"  /> 
-														<s:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
-														-->
-														<h:commandLink escape="false" id="mon2" value="#{calendarService.day}" action="showTimeCalendar" rendered="#{calendarService.isLink == 1}"/>
-														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
-												
-														
+														<h:commandLink escape="false" id="mon2" value="#{calendarService.day}" action="showTimeCalendar" >
+															<f:param name="selectedDay" value="#{calendarService.commandLinkDay}"></f:param>
+														</h:commandLink>
 													</td>
 													<td style="width: 2em;background: #{calendarService.color};">
-														<h:commandLink escape="false" id="tue2" value="#{calendarService.day}" action="showTimeCalendar" rendered="#{calendarService.isLink == 1}"/>
-														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
+														<h:commandLink escape="false" id="tue2" value="#{calendarService.day}" action="showTimeCalendar" >
+															<f:param name="selectedDay" value="#{calendarService.commandLinkDay}"></f:param>
+														</h:commandLink>
 													</td>
 													<td style="width: 2em;background: #{calendarService.color};">
-														<h:commandLink escape="false" id="wed2" value="#{calendarService.day}" action="showTimeCalendar" rendered="#{calendarService.isLink == 1}"/>
-														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
+														<h:commandLink escape="false" id="wed2" value="#{calendarService.day}" action="showTimeCalendar" >
+															<f:param name="selectedDay" value="#{calendarService.commandLinkDay}"></f:param>
+														</h:commandLink>
 													</td>
 													<td style="width: 2em;background: #{calendarService.color};">
-														<h:commandLink escape="false" id="thu2" value="#{calendarService.day}" action="showTimeCalendar" rendered="#{calendarService.isLink == 1}"/>
-														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
+														<h:commandLink escape="false" id="thu2" value="#{calendarService.day}" action="showTimeCalendar" >
+															<f:param name="selectedDay" value="#{calendarService.commandLinkDay}"></f:param>
+														</h:commandLink>
 													</td>
 													<td style="width: 2em;background: #{calendarService.color};">
-														<h:commandLink escape="false" id="fri2" value="#{calendarService.day}" action="showTimeCalendar" rendered="#{calendarService.isLink == 1}"/>
-														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
+														<h:commandLink escape="false" id="fri2" value="#{calendarService.day}" action="showTimeCalendar" >
+															<f:param name="selectedDay" value="#{calendarService.commandLinkDay}"></f:param>
+														</h:commandLink>
 													</td>
 													<td style="width: 2em;background: #{calendarService.color};">
-														<h:commandLink escape="false" id="sat2" value="#{calendarService.day}" action="showTimeCalendar" rendered="#{calendarService.isLink == 1}"/>
-														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
+														<h:commandLink escape="false" id="sat2" value="#{calendarService.day}" action="showTimeCalendar" >
+															<f:param name="selectedDay" value="#{calendarService.commandLinkDay}"></f:param>
+														</h:commandLink>
 													</td>
 													<td style="width: 2em;background: #{calendarService.color};">
-														<h:commandLink escape="false" id="sun2" value="#{calendarService.day}" action="showTimeCalendar" rendered="#{calendarService.isLink == 1}"/>
-														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
+														<h:commandLink escape="false" id="sun2" value="#{calendarService.day}" action="showTimeCalendar" >
+															<f:param name="selectedDay" value="#{calendarService.commandLinkDay}"></f:param>
+														</h:commandLink>
 													</td>
 												</tr>
 												<!-- week 3 -->
 												<tr>
 													<td style="width: 2em;background: #{calendarService.color};">
-														<h:commandLink escape="false" id="mon3" value="#{calendarService.day}" action="showTimeCalendar" rendered="#{calendarService.isLink == 1}"/>
-														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
+														<h:commandLink escape="false" id="mon3" value="#{calendarService.day}" action="showTimeCalendar" >
+															<f:param name="selectedDay" value="#{calendarService.commandLinkDay}"></f:param>
+														</h:commandLink>
 													</td>
 													<td style="width: 2em; background: #{calendarService.color};">
-														<h:commandLink escape="false" id="tue3" value="#{calendarService.day}" action="showTimeCalendar" rendered="#{calendarService.isLink == 1}"/>
-														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
+														<h:commandLink escape="false" id="tue3" value="#{calendarService.day}" action="showTimeCalendar" >
+															<f:param name="selectedDay" value="#{calendarService.commandLinkDay}"></f:param>
+														</h:commandLink>
 													</td>
 													<td style="width: 2em; background: #{calendarService.color};">
-														<h:commandLink escape="false" id="wed3" value="#{calendarService.day}" action="showTimeCalendar" rendered="#{calendarService.isLink == 1}"/>
-														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
+														<h:commandLink escape="false" id="wed3" value="#{calendarService.day}" action="showTimeCalendar" >
+															<f:param name="selectedDay" value="#{calendarService.commandLinkDay}"></f:param>
+														</h:commandLink>
 													</td>
 													<td style="width: 2em; background: #{calendarService.color};">
-														<h:commandLink escape="false" id="thu3" value="#{calendarService.day}" action="showTimeCalendar" rendered="#{calendarService.isLink == 1}"/>
-														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
+														<h:commandLink escape="false" id="thu3" value="#{calendarService.day}" action="showTimeCalendar" >
+															<f:param name="selectedDay" value="#{calendarService.commandLinkDay}"></f:param>
+														</h:commandLink>
 													</td>
 													<td style="width: 2em; background: #{calendarService.color};">
-														<h:commandLink escape="false" id="fri3" value="#{calendarService.day}" action="showTimeCalendar" rendered="#{calendarService.isLink == 1}"/>
-														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
+														<h:commandLink escape="false" id="fri3" value="#{calendarService.day}" action="showTimeCalendar" >
+															<f:param name="selectedDay" value="#{calendarService.commandLinkDay}"></f:param>
+														</h:commandLink>
 													</td>
 													<td style="width: 2em; background: #{calendarService.color};">
-														<h:commandLink escape="false" id="sat3" value="#{calendarService.day}" action="showTimeCalendar" rendered="#{calendarService.isLink == 1}"/>
-														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
+														<h:commandLink escape="false" id="sat3" value="#{calendarService.day}" action="showTimeCalendar" >
+															<f:param name="selectedDay" value="#{calendarService.commandLinkDay}"></f:param>
+														</h:commandLink>
 													</td>
 													<td style="width: 2em; background: #{calendarService.color};">
-														<h:commandLink escape="false" id="sun3" value="#{calendarService.day}" action="showTimeCalendar" rendered="#{calendarService.isLink == 1}"/>
-														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
+														<h:commandLink escape="false" id="sun3" value="#{calendarService.day}" action="showTimeCalendar" >
+															<f:param name="selectedDay" value="#{calendarService.commandLinkDay}"></f:param>
+														</h:commandLink>
 													</td>
 												</tr>
 												<!-- week 4 -->
 												<tr>
 													<td style="width: 2em; background: #{calendarService.color};">
-														<h:commandLink escape="false" id="mon4" value="#{calendarService.day}" action="showTimeCalendar" rendered="#{calendarService.isLink == 1}"/>
-														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
+														<h:commandLink escape="false" id="mon4" value="#{calendarService.day}" action="showTimeCalendar" >
+															<f:param name="selectedDay" value="#{calendarService.commandLinkDay}"></f:param>
+														</h:commandLink>
 													</td>
 													<td style="width: 2em; background: #{calendarService.color};">
-														<h:commandLink escape="false" id="tue4" value="#{calendarService.day}" action="showTimeCalendar" rendered="#{calendarService.isLink == 1}"/>
-														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
+														<h:commandLink escape="false" id="tue4" value="#{calendarService.day}" action="showTimeCalendar" >
+															<f:param name="selectedDay" value="#{calendarService.commandLinkDay}"></f:param>
+														</h:commandLink>
 													</td>
 													<td style="width: 2em; background: #{calendarService.color};">
-														<h:commandLink escape="false" id="wed4" value="#{calendarService.day}" action="showTimeCalendar" rendered="#{calendarService.isLink == 1}"/>
-														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
+														<h:commandLink escape="false" id="wed4" value="#{calendarService.day}" action="showTimeCalendar" >
+															<f:param name="selectedDay" value="#{calendarService.commandLinkDay}"></f:param>
+														</h:commandLink>
 													</td>
 													<td style="width: 2em; background: #{calendarService.color};">
-														<h:commandLink escape="false" id="thu4" value="#{calendarService.day}" action="showTimeCalendar" rendered="#{calendarService.isLink == 1}"/>
-														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
+														<h:commandLink escape="false" id="thu4" value="#{calendarService.day}" action="showTimeCalendar" >
+															<f:param name="selectedDay" value="#{calendarService.commandLinkDay}"></f:param>
+														</h:commandLink>
 													</td>
 													<td style="width: 2em; background: #{calendarService.color};">
-														<h:commandLink escape="false" id="fri4" value="#{calendarService.day}" action="showTimeCalendar" rendered="#{calendarService.isLink == 1}"/>
-														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
+														<h:commandLink escape="false" id="fri4" value="#{calendarService.day}" action="showTimeCalendar" >
+															<f:param name="selectedDay" value="#{calendarService.commandLinkDay}"></f:param>
+														</h:commandLink>
 													</td>
 													<td style="width: 2em; background: #{calendarService.color};">
-														<h:commandLink escape="false" id="sat4" value="#{calendarService.day}" action="showTimeCalendar" rendered="#{calendarService.isLink == 1}"/>
-														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
+														<h:commandLink escape="false" id="sat4" value="#{calendarService.day}" action="showTimeCalendar" >
+															<f:param name="selectedDay" value="#{calendarService.commandLinkDay}"></f:param>
+														</h:commandLink>
 													</td>
 													<td style="width: 2em; background: #{calendarService.color};">
-														<h:commandLink escape="false" id="sun4" value="#{calendarService.day}" action="showTimeCalendar" rendered="#{calendarService.isLink == 1}"/>
-														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
+														<h:commandLink escape="false" id="sun4" value="#{calendarService.day}" action="showTimeCalendar" >
+															<f:param name="selectedDay" value="#{calendarService.commandLinkDay}"></f:param>
+														</h:commandLink>
 													</td>
 												</tr>
 												<!-- week 5 -->
 												<tr>
 													<td style="width: 2em; background: #{calendarService.color};" >
-														<h:commandLink escape="false" id="mon5" value="#{calendarService.day}" action="showTimeCalendar" rendered="#{calendarService.isLink == 1}"/>
-														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
+														<h:commandLink escape="false" id="mon5" value="#{calendarService.day}" action="showTimeCalendar" >
+															<f:param name="selectedDay" value="#{calendarService.commandLinkDay}"></f:param>
+														</h:commandLink>
 													</td>
 													<td style="width: 2em; background: #{calendarService.color};" >
-														<h:commandLink escape="false" id="tue5" value="#{calendarService.day}" action="showTimeCalendar" rendered="#{calendarService.isLink == 1}"/>
-														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
+														<h:commandLink escape="false" id="tue5" value="#{calendarService.day}" action="showTimeCalendar" >
+															<f:param name="selectedDay" value="#{calendarService.commandLinkDay}"></f:param>
+														</h:commandLink>
 													</td>
 													<td style="width: 2em; background: #{calendarService.color};" >
-														<h:commandLink escape="false" id="wed5" value="#{calendarService.day}" action="showTimeCalendar" rendered="#{calendarService.isLink == 1}"/>
-														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
+														<h:commandLink escape="false" id="wed5" value="#{calendarService.day}" action="showTimeCalendar" >
+															<f:param name="selectedDay" value="#{calendarService.commandLinkDay}"></f:param>
+														</h:commandLink>
 													</td>
 													<td style="width: 2em; background: #{calendarService.color};" >
-														<h:commandLink escape="false" id="thu5" value="#{calendarService.day}" action="showTimeCalendar" rendered="#{calendarService.isLink == 1}"/>
-														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
+														<h:commandLink escape="false" id="thu5" value="#{calendarService.day}" action="showTimeCalendar" >
+															<f:param name="selectedDay" value="#{calendarService.commandLinkDay}"></f:param>
+														</h:commandLink>
 													</td>
 													<td style="width: 2em; background: #{calendarService.color};" >
-														<h:commandLink escape="false" id="fri5" value="#{calendarService.day}" action="showTimeCalendar" rendered="#{calendarService.isLink == 1}"/>
-														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
+														<h:commandLink escape="false" id="fri5" value="#{calendarService.day}" action="showTimeCalendar" >
+															<f:param name="selectedDay" value="#{calendarService.commandLinkDay}"></f:param>
+														</h:commandLink>
 													</td>
 													<td style="width: 2em; background: #{calendarService.color};" >
-														<h:commandLink escape="false" id="sat5" value="#{calendarService.day}" action="showTimeCalendar" rendered="#{calendarService.isLink == 1}"/>
-														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
+														<h:commandLink escape="false" id="sat5" value="#{calendarService.day}" action="showTimeCalendar" >
+															<f:param name="selectedDay" value="#{calendarService.commandLinkDay}"></f:param>
+														</h:commandLink>
 													</td>
 													<td style="width: 2em; background: #{calendarService.color};" >
-														<h:commandLink escape="false" id="sun5" value="#{calendarService.day}" action="showTimeCalendar" rendered="#{calendarService.isLink == 1}"/>
-														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
+														<h:commandLink escape="false" id="sun5" value="#{calendarService.day}" action="showTimeCalendar" >
+															<f:param name="selectedDay" value="#{calendarService.commandLinkDay}"></f:param>
+														</h:commandLink>
 													</td>
 												</tr>
 												<!-- week 6 -->
 												<tr>
 													<td style="width: 2em; background: #{calendarService.color};">
-														<h:commandLink escape="false" id="mon6" value="#{calendarService.day}" action="showTimeCalendar" rendered="#{calendarService.isLink == 1}"/>
-														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
+														<h:commandLink escape="false" id="mon6" value="#{calendarService.day}" action="showTimeCalendar" >
+															<f:param name="selectedDay" value="#{calendarService.commandLinkDay}"></f:param>
+														</h:commandLink>
 													</td>
 													<td style="width: 2em; background: #{calendarService.color};">
-														<h:commandLink escape="false" id="tue6" value="#{calendarService.day}" action="showTimeCalendar" rendered="#{calendarService.isLink == 1}"/>
-														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
+														<h:commandLink escape="false" id="tue6" value="#{calendarService.day}" action="showTimeCalendar" >
+															<f:param name="selectedDay" value="#{calendarService.commandLinkDay}"></f:param>
+														</h:commandLink>
 													</td>
 													<td style="width: 2em; background: #{calendarService.color};">
-														<h:commandLink escape="false" id="wed6" value="#{calendarService.day}" action="showTimeCalendar" rendered="#{calendarService.isLink == 1}"/>
-														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
+														<h:commandLink escape="false" id="wed6" value="#{calendarService.day}" action="showTimeCalendar" >
+															<f:param name="selectedDay" value="#{calendarService.commandLinkDay}"></f:param>
+														</h:commandLink>
 													</td>
 													<td style="width: 2em; background: #{calendarService.color};">
-														<h:commandLink escape="false" id="thu6" value="#{calendarService.day}" action="showTimeCalendar" rendered="#{calendarService.isLink == 1}"/>
-														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
+														<h:commandLink escape="false" id="thu6" value="#{calendarService.day}" action="showTimeCalendar" >
+															<f:param name="selectedDay" value="#{calendarService.commandLinkDay}"></f:param>
+														</h:commandLink>
 													</td>
 													<td style="width: 2em; background: #{calendarService.color};">
-														<h:commandLink escape="false" id="fri6" value="#{calendarService.day}" action="showTimeCalendar" rendered="#{calendarService.isLink == 1}"/>
-														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
+														<h:commandLink escape="false" id="fri6" value="#{calendarService.day}" action="showTimeCalendar" >
+															<f:param name="selectedDay" value="#{calendarService.commandLinkDay}"></f:param>
+														</h:commandLink>
 													</td>
 													<td style="width: 2em; background: #{calendarService.color};">
-														<h:commandLink escape="false" id="sat6" value="#{calendarService.day}" action="showTimeCalendar" rendered="#{calendarService.isLink == 1}"/>
-														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
+														<h:commandLink escape="false" id="sat6" value="#{calendarService.day}" action="showTimeCalendar" >
+															<f:param name="selectedDay" value="#{calendarService.commandLinkDay}"></f:param>
+														</h:commandLink>
 													</td>
 													<td style="width: 2em; background: #{calendarService.color};">
-														<h:commandLink escape="false" id="sun6" value="#{calendarService.day}" action="showTimeCalendar" rendered="#{calendarService.isLink == 1}"/>
-														<h:outputText escape="false" value="#{calendarService.day}" rendered="#{calendarService.isNotLink == 1}"/>
+														<h:commandLink escape="false" id="sun6" value="#{calendarService.day}" action="showTimeCalendar" >
+															<f:param name="selectedDay" value="#{calendarService.commandLinkDay}"></f:param>
+														</h:commandLink>
 													</td>
 												</tr>
 												
@@ -441,72 +469,25 @@
        										</h:form>   
         								</td>
 									</tr>
-								</table>       
-							</div>   <!-- boxleft3inside -->
-							
-							
-						</td>
-					</tr>
-				</table>
-				<table>
-					<tr>
-						<td style="">
-						#{selectedPlace.clinic} , #{selectedPlace.address}
-						</td>
-					</tr>
-				</table>
-				<table>
-					<tr>
-						<td style="display: inline;right;">
-							<h:form id="displaySelectTimeForm" style="display: inline; text-align: right;padding-left: 37.5em;" >
-								<div class="placediv_date">
-									<div style="text-align: left; width: 14em;">
-										<table>
-											<tr>
-												<!--  
-												<h:panelGroup>
-													<ui:repeat value="#{bookingTimesDataModel}" var="column">
-													
-														<td>
-															<h:outputText escape="false"  value="#{column[2]} " />
-														</td>
-														<td>
-															<h:commandButton action="setBookingTime" image="" rendered="true" id="" value="Välj"   />
-												    	</td>
-												    </ui:repeat>
-												    
-												</h:panelGroup>
-												-->
-												
-												
-													<h:dataTable id="timeTable" value="#{timeListLocal}" var="btl" rendered="true">
-														
-															<h:column>
-															<f:facet name="header">Tid</f:facet>
-																#{btl.hour}
-															</h:column>
-														    <h:column>
-														    	<sf:commandLink id="viewHotelLink" value="Välj" action="selectTime"/>
-																<sf:commandButton id="timeButton" value="Välj" action="selectTime"/>
-				
-														    	<!--  <h:selectBooleanCheckbox value="" /> -->
-														    </h:column>
-													</h:dataTable>
-										
-											</tr>
-										</table>
-									</div>
-								</div>		
-							</h:form>			
-						</td>
-					</tr>
-				</table>
-				
-				
-				
-				
-				
+								</table> 
+		
+								<h:dataTable id="timeTable" value="#{timeListLocal}" var="btl" rendered="true">
+									<h:column>
+										<f:facet name="header">Datum</f:facet>
+										#{btl.day}
+									</h:column>
+									<h:column>
 								
+									
+									<f:facet name="header">Tid</f:facet>
+										#{btl.time}
+									</h:column>
+								</h:dataTable>
+								
+							</div>   <!-- boxleft3inside -->
+						</td>
+					</tr>					
+				</table>				
 		</div>	<!-- boxmiddle -->
 		</div> <!-- boxcontainer -->
 			

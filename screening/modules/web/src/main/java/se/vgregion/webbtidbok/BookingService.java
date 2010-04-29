@@ -43,6 +43,7 @@ public class BookingService
 	private ObjectFactory objectFactory = new ObjectFactory();
 	
 	public boolean isFirstPlaces = true;
+
 	
 	//private String orderDate;
 	 
@@ -53,13 +54,13 @@ public class BookingService
 	public void setFirstPlacesBoolean(boolean b){
 		
 		isFirstPlaces = b;
-		System.out.println("BookingServices.setFirstPlacesBoolean: " + isFirstPlaces);
+//		System.out.println("BookingServices.setFirstPlacesBoolean: " + isFirstPlaces);
 	}
 	
 	
 	
 	public boolean isFirstPlaces(){
-		System.out.println("BookingServices.isFirstBoolean: " + isFirstPlaces);
+//		System.out.println("BookingServices.isFirstBoolean: " + isFirstPlaces);
 
 		return isFirstPlaces;
 	}
@@ -83,11 +84,6 @@ public class BookingService
 			loginCredentials.setCentralTidbokID(response.getCentralTidbokID());
 			//set the Place for States used in getCalendar method
 			loginCredentials.setCentralTidbokID(responseLocal.getCentralTimeBookId());
-			loginCredentials.setSelectedDate(DateHandler.setCalendarFromGregorianCalendar(response.getBokadTid()));
-			
-			 
-			System.out.println("get month: " + response.getBokadTid().getMonth());
-			System.out.println("logincredentials.getSelectedDate: " + loginCredentials.getSelectedDate().getTime().toString());
 			
 			return responseLocal;
 		}
@@ -137,11 +133,11 @@ public class BookingService
 				
 				placeListLocal.add(pl);
 				
-				System.out.println(pl.toString());
+//				System.out.println(pl.toString());
 				
 			}
 			
-			System.out.println("size: " + placeListLocal.size());
+//			System.out.println("size: " + placeListLocal.size());
 			
 			return placeListLocal;
 		}
@@ -149,13 +145,6 @@ public class BookingService
 		return placeListLocal;
 	}
 	
-	
-	/***
-	 * 
-	 * 
-	 * @param loginCredentials
-	 * @return
-	 */
 	public List<BookingTimeLocal> getBookingTime(State loginCredentials){
 		
 		//		Uncomment below for debug, you'll only have to click login, 
@@ -168,64 +157,60 @@ public class BookingService
 		List<BookingTimeLocal> timeListLocal = new ArrayList<BookingTimeLocal>();
 		
 		if(loginCredentials.isLoggedIn()){
-			java.util.Calendar selectedDate = loginCredentials.getSelectedDate();
+			Calendar selectedDate = loginCredentials.getSelectedDate();
+			
+//			if(selectedDate == null){
+//				loginCredentials.setDefaultDate(true);
+//				return null;
+//			}
+			
+//			System.out.println("SELECTED DATE YEAR: " + selectedDate.get(Calendar.YEAR));
+//			System.out.println("SELECTED DATE MONTH: " + selectedDate.get(Calendar.MONTH));
+//			System.out.println("SELECTED DATE DAY: " + selectedDate.get(Calendar.DAY_OF_MONTH));
 			String fromDate = DateHandler.setCalendarDateFormat(selectedDate);
 			JAXBElement<String> fromDat = objectFactory.createBookingRequestFromDat(fromDate);
-			
-			System.out.println("fromDate: " + fromDate);
-			System.out.println("JAXB-FROMDATE: " + fromDat.getValue());
-			
-			System.out.println("CentralTidBokID: " + loginCredentials.getCentralTidbokID());
-			
-			System.out.println("Before Calendar: " + selectedDate.toString());
+//			
+//			System.out.println("fromDate: " + fromDate);
+//			System.out.println("JAXB-FROMDATE: " + fromDat.getValue());
+//			
+//			System.out.println("CentralTidBokID: " + loginCredentials.getCentralTidbokID());
 			
 			request = helper.getQueryWSRequest(loginCredentials);
 			request.setCentralTidbokID(loginCredentials.getCentralTidbokID());
 			request.setFromDat(fromDat);
 			
-			//JAXBElement<String> fromDat2 = objectFactory.createBookingRequestFromDat("2010-05-30");
-			
-			//request.setFromDat(fromDat2);
-			System.out.println("XML ELEMENT: " + request.getFromDat().getValue() );
-			
 			ArrayOfBookingTime times = helper.getQueryWSRequestTime(request);
-			if(times == null){
-				System.out.println("ArrayOfBookingTime.null");
+			
+			List<BookingTime> timeList;
+			try {
+				timeList = times.getBookingTime();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return null;
 			}
-			List<BookingTime> timeList = times.getBookingTime();
+			
 			int id = 1; 
 			for(BookingTime b : timeList){
 				
 				
-				System.out.println("bookingTime.MONTH: + " + b.getDatum().getMonth());
-				System.out.println("bookingTime.DAY: + " + b.getDatum().getDay());
-				System.out.println("bookingTime.YEAR: + " + b.getDatum().getYear());
-				
 				Calendar dateCal = Calendar.getInstance();
 				dateCal.set(Calendar.YEAR, b.getDatum().getYear());
-				dateCal.set(Calendar.MONTH, b.getDatum().getMonth());
+				dateCal.set(Calendar.MONTH, b.getDatum().getMonth() - 1);
 				dateCal.set(Calendar.DATE, b.getDatum().getDay());
 				
-				//String day = DateHandler.setCalendarDateFormat(dateCal);
-				String day= DateHandler.setCalendarDateFormat(b.getDatum().toString());
-				System.out.println("After Calendar: " + dateCal.toString());
-				//dateCal.set(Calendar.HOUR, b.getKlocka());
-				//dateCal.set(Calendar.MINUTE, b.getDatum().getMinute());
-				
-				String hourTime = DateHandler.setCalendarTimeFormat(dateCal);
+				String day = DateHandler.setCalendarDateFormat(dateCal);
+
+//				String hourTime = DateHandler.setCalendarTimeFormat(dateCal);
 				
 				
 				BookingTimeLocal pl = new BookingTimeLocal();
 				pl.setNumbers(b.getAntal());
 				pl.setDay(day);
-				pl.setHour(b.getKlocka().getValue());
-				pl.setBookingTimeId(id);
-				//b.getDatum().getMonth();
-				
+				pl.setTime(b.getKlocka().getValue());
+				pl.setBookingTimeId(id);			
 				timeListLocal.add(pl);
-				
-				
-				
+			
 				System.out.println(pl.toString());
 				
 				id++;
@@ -307,7 +292,6 @@ public class BookingService
 	 * Method finding a selected place in the list of chosen bookingplaces return the object to print the selected place
 	 * 
 	 * 
-	 * 
 	 * @param places
 	 * @param login
 	 * @return
@@ -326,8 +310,7 @@ public class BookingService
 				
 				
 			}
-		}
-		
+		}		
 		
 		return place;
 	}
@@ -347,7 +330,7 @@ public class BookingService
 			
 			request = helper.getQueryWSRequest(loginCredentials);
 			ArrayOfBookingPlace places = helper.getQueryWSRequestPlaces(request);
-			//response = helper.getQueryWS(request);g
+			//response = helper.getQueryWS(request);
 			List<BookingPlace> placeList = places.getBookingPlace();
 			for(BookingPlace p : placeList){
 				BookingPlaceLocal pl = new BookingPlaceLocal();

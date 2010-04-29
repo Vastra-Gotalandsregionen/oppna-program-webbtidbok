@@ -47,7 +47,7 @@ public class BookingTimeLocal implements Serializable{
 	
 	private int numbers = 0;
 	private String day = "";
-	private String hour = "";
+	private String time = "";
 	private int bookingTimeId = 0;
 	
 	public BookingTimeLocal() {
@@ -62,12 +62,12 @@ public class BookingTimeLocal implements Serializable{
 		return day;
 	}
 	
-	public void setHour(String s){
-		hour = s;
+	public void setTime(String s){
+		time = s;
 	}
 	
-	public String getHour(){
-		return hour;
+	public String getTime(){
+		return time;
 	}
 	
 	public void setNumbers(int number){
@@ -90,7 +90,6 @@ public class BookingTimeLocal implements Serializable{
 		return "ID:" + this.getBookingTimeId() +
 			   "Numbers: " + this.getNumbers() +
 			   "Day: " + this.getDay() +
-			   "Hour:" + this.getHour();
+			   "Hour:" + this.getTime();
 	}
-
 }

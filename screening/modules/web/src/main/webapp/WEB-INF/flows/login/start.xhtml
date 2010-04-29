@@ -50,14 +50,14 @@
 					regExp="[0-9]{8}-[0-9]{4}"
 					invalidMessage="Skriv ditt personnummuer på formen ÅÅÅÅMMDD-XXXX."
 					promptMessage="Skriv in ditt personnnummer.">
-					<h:inputText id="pnr" value="#{loginCredentials.pnr}" />
+					<h:inputText id="pnr" value="#{state.pnr}" />
 				</sf:clientTextValidator></div>
 				<p></p>
 				<div class="label"><h:outputLabel for="passwd">Lösenord <br/><p style="color:red; font-style: italic"> #{loginmessages.logMessagePassword}</p></h:outputLabel>
 				</div>
 				<div class="input"><sf:clientTextValidator
 					promptMessage="Skriv in lösenordet som står i kallelsen.">
-					<h:inputSecret id="passwd" value="#{loginCredentials.passwd}" />
+					<h:inputSecret id="passwd" value="#{state.passwd}" />
 				</sf:clientTextValidator></div>
 
 				<div class="button"><sf:commandButton id="login"
