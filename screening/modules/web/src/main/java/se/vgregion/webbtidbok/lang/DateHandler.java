@@ -86,6 +86,24 @@ public class DateHandler {
 	    return toBeFormatted;
 	}
 	
+	public static Date setCalendarTimeFormat(String selectedTime){
+		try{
+			
+			
+			String pattern = "HH:mm";
+			SimpleDateFormat format = new SimpleDateFormat(pattern);
+			Date toBeFormatted = format.parse(selectedTime);
+			
+			
+			return toBeFormatted;
+	    
+		}catch(ParseException e){
+			e.printStackTrace();
+		}
+		
+		return new Date();
+	}
+	
 	public static Date setLocaleDate(Date date){
 		
 		Locale locale = new Locale("sv","SE");
