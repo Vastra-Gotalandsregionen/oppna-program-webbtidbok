@@ -173,6 +173,8 @@
 	</view-state>
 	
 	
+	
+	
 
 	<view-state id="update" view="update.xhtml">
 		<on-render >			  
@@ -189,7 +191,24 @@
 <!--	only want to do getTimeForChosenDate first time around AND when a NEW date is selected, now it's also done when click on < or >		  -->
 			  <evaluate expression="calendarService.getTimeForChosenDate(state)" />
 			  
+
+			  <evaluate expression="bookingService.getSelectedPlace(placesHandler, loginCredentials)" result="flowScope.selectedPlace"  >
+			  </evaluate>
+			  
+			  
+			  
+			  <evaluate expression="calendarService.getCalendar(loginCredentials)"  /> 
+				
+			  	
+			  <evaluate expression="bookingService.getBookingTime(loginCredentials)" result="flowScope.timeListLocal"  result-type="dataModel"/> 
+				
+			  <!--  
+			  <evaluate expression="bookingTimeBean.getBookingTimeList(bookingService.getBookingTime(loginCredentials))" result="flowScope.bookingTimesDataModel" /> 
+			   -->		  
+			  
+
 			  <evaluate expression="bookingService.getBookingTime(state)" result="flashScope.timeListLocal" result-type="dataModel" /> 
+
 		</on-render>
 				
 		<transition on="showTimeCalendar" to="update">
@@ -255,8 +274,27 @@
 					
 		</transition>
 		
+
+		
+		<transition on="selectTime" >
+			
+			<evaluate expression="calendarService.setSelectedDay()" >
+			</evaluate>
+			
+			<set name="conversationScope.timeTable" value="timeListLocal.selectedRow"  />
+			
+			<evaluate expression="bookingService.setBookingTime(conversationScope.timeTable, loginCredentials)" >
+			</evaluate>
+			
+		</transition>
+		
+		<transition on="prev" to="update">
+				<evaluate expression="calendarService.setCalendarMonth(loginCredentials, -1)" />
+				<evaluate expression="calendarService.getCalendar(loginCredentials)" />
+		</transition>		
 		<transition on="prev" to="update2">
 				<evaluate expression="calendarService.setCalendarMonth(state, -1)" />
+
 				<render fragments="displayTimeForm:calendarFragment" />
 		</transition>
 		

@@ -294,6 +294,40 @@ public class WebServiceHelper {
 	}
 	
 	
+	
+	//Info concerning the booking, time, place, location, pnr, name etc
+	/***
+	 * method update booking
+	 * 
+	 */
+	public BookingResponse setBookingUpdate(BookingRequest request){	
+
+		
+		try{
+			System.out.println("---------XXXXXXXXXXXXXX-----------");
+			
+			System.out.println(request.getBokadTid().getDay() + " " + request.getBokadTid().getMonth() + " " + request.getBokadTid().getYear()  + " " + request.getBokadTid().getHour() + request.getBokadTid().getMinute()  );
+			System.out.println(request.getCentralTidbokID());
+			System.out.println(request.getPin());
+			System.out.println(request.getPnr());
+			//System.out.println(request.getFromDat().getValue());
+			//System.out.println(request.getToDat().getValue());
+			
+			
+			
+			return ws.confirmBooking(request);
+			//loginCredentials.setBookingResponse(response);
+			
+		}
+		catch(ICentralBookingWSConfirmBookingICFaultFaultFaultMessage ex){
+			ex.printStackTrace();
+			System.out.println(ex.getMessage());
+			return null;
+			
+		}
+	}
+	
+	
 	/*
 	 * method cancel booking 
 	 * 
