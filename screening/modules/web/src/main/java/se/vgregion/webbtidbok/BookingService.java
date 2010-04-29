@@ -368,7 +368,7 @@ public class BookingService
 		System.out.println("-----------------------");
 		System.out.println("-----------------------");
 		
-		
+		System.out.println("------------" + credentials.getSelectedDate().getTime().toString() );
 		System.out.println("-----------------------");
 		System.out.println("-----------------------");
 		System.out.println("-----------------------");
@@ -413,7 +413,7 @@ public class BookingService
 				xmlCal =  DatatypeFactory.newInstance().newXMLGregorianCalendar();
 			
 				//XMLGregorianCalendar xmlCal = credentials.getBookingResponse().getBokadTid();
-				xmlCal.setDay(cal.get(Calendar.DATE) - 1 );
+				xmlCal.setDay(cal.get(Calendar.DATE)  );
 				xmlCal.setMonth(cal.get(Calendar.MONTH) + 1 );
 				xmlCal.setYear(cal.get(Calendar.YEAR));
 			

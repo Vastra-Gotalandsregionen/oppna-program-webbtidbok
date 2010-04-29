@@ -18,6 +18,7 @@
       Boston, MA 02111-1307  USA
 
 -->
+
 <flow xmlns="http://www.springframework.org/schema/webflow"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
@@ -192,18 +193,18 @@
 			  <evaluate expression="calendarService.getTimeForChosenDate(state)" />
 			  
 
-			  <evaluate expression="bookingService.getSelectedPlace(placesHandler, loginCredentials)" result="flowScope.selectedPlace"  >
+			  <evaluate expression="bookingService.getSelectedPlace(placesHandler, state)" result="flowScope.selectedPlace"  >
 			  </evaluate>
 			  
 			  
 			  
-			  <evaluate expression="calendarService.getCalendar(loginCredentials)"  /> 
+			  <evaluate expression="calendarService.getCalendar(state)"  /> 
 				
 			  	
-			  <evaluate expression="bookingService.getBookingTime(loginCredentials)" result="flowScope.timeListLocal"  result-type="dataModel"/> 
+			  <evaluate expression="bookingService.getBookingTime(state)" result="flowScope.timeListLocal"  result-type="dataModel"/> 
 				
 			  <!--  
-			  <evaluate expression="bookingTimeBean.getBookingTimeList(bookingService.getBookingTime(loginCredentials))" result="flowScope.bookingTimesDataModel" /> 
+			  <evaluate expression="bookingTimeBean.getBookingTimeList(bookingService.getBookingTime(state))" result="flowScope.bookingTimesDataModel" /> 
 			   -->		  
 			  
 
@@ -226,6 +227,18 @@
 			<evaluate expression="placesHandler.getPlacesId()"  result="viewScope.placesId">
 			</evaluate>
 					
+		</transition>
+		
+		<transition on="selectTime" >
+			
+			<evaluate expression="calendarService.setSelectedDay(calendarService.selectedDay)" >
+			</evaluate>
+			
+			<set name="conversationScope.timeTable" value="timeListLocal.selectedRow"  />
+			
+			<evaluate expression="bookingService.setBookingTime(conversationScope.timeTable, state)" >
+			</evaluate>
+			
 		</transition>
 		
 		<transition on="prev" to="update2">
@@ -278,19 +291,19 @@
 		
 		<transition on="selectTime" >
 			
-			<evaluate expression="calendarService.setSelectedDay()" >
+			<evaluate expression="calendarService.setSelectedDay(calendarService.selectedDay)" >
 			</evaluate>
 			
 			<set name="conversationScope.timeTable" value="timeListLocal.selectedRow"  />
 			
-			<evaluate expression="bookingService.setBookingTime(conversationScope.timeTable, loginCredentials)" >
+			<evaluate expression="bookingService.setBookingTime(conversationScope.timeTable, state)" >
 			</evaluate>
 			
 		</transition>
 		
 		<transition on="prev" to="update">
-				<evaluate expression="calendarService.setCalendarMonth(loginCredentials, -1)" />
-				<evaluate expression="calendarService.getCalendar(loginCredentials)" />
+				<evaluate expression="calendarService.setCalendarMonth(state, -1)" />
+				<evaluate expression="calendarService.getCalendar(state)" />
 		</transition>		
 		<transition on="prev" to="update2">
 				<evaluate expression="calendarService.setCalendarMonth(state, -1)" />
