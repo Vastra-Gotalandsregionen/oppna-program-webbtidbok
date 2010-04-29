@@ -1,0 +1,78 @@
+<!--
+
+    Copyright 2009 Vastra Gotalandsregionen
+
+      This library is free software; you can redistribute it and/or modify
+      it under the terms of version 2.1 of the GNU Lesser General Public
+      License as published by the Free Software Foundation.
+
+      This library is distributed in the hope that it will be useful,
+      but WITHOUT ANY WARRANTY; without even the implied warranty of
+      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+      GNU Lesser General Public License for more details.
+
+      You should have received a copy of the GNU Lesser General Public
+      License along with this library; if not, write to the
+      Free Software Foundation, Inc., 59 Temple Place, Suite 330,
+      Boston, MA 02111-1307  USA
+
+-->
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:sf="http://www.springframework.org/tags/faces"	  			
+				template="/WEB-INF/layouts/standard.xhtml">
+
+<ui:define name="content">
+
+<ui:fragment id="loginFragment">
+	
+		<div id="boxcontainer" style="padding-bottom: 1em;">
+		<div id="boxleft" />
+		<div id="boxmiddle">
+			<p/>
+			<br />
+			<h1 style="display: inline">Bekräftelse av ny Frälsning</h1>
+				<h:form id="mainForm" style="display: inline; text-align: right; padding-left: 7em;" >
+					<sf:commandButton id="logout" value="Logga ut" processIds="*" action="logout" />
+				</h:form>
+				<p/>
+				<br/>
+				Om du behöver kontrollera din tid eller boka om den kan logga in igen. Du kan boka om din tid maximalt två gånger. Spara lösenordet du fick i kallelsen. 
+				Du kan också ta kontakt med Kontaktpunkten för att boka om eller avboka din tid. Ring då på telefonnummer 031- 324 69 55 tisdag, onsdag eller torsdag mellan klockan 09:00-15:00, alternativt 031-342 24 00. 
+				Du kan också skicka e-post: <a href="mailto:kontaktpunkten.su@vgregion.se">kontaktpunkten.su@vgregion.se</a>.<br/></p>
+				<br/>
+				
+				<h3> Din tid för undersökning av stora kroppspulsådern är ombokad </h3>
+				<br />
+				
+				
+				</p>
+					<div id="boxleft1" style="width: 100%">							
+						<h:form id="sendForm" class="centerContent" style="display: inline; text-align: left;">
+							<table>
+								<tr>
+									<td >
+										<h4>E-post address</h4> 
+									</td>								
+								</tr>
+								<tr>
+									<td>
+										<h:inputText id="email" value="#{emailStringHandler.email}" size="50" />								
+									</td>							
+								</tr>							
+								<tr>
+									<td>								
+										<sf:commandButton id="sendButton" value="Skicka e-post" processIds="*" action="send" style="width: 100px;" />
+									</td>					
+								</tr>
+							</table>
+						</h:form>
+					</div>	
+				</div>
+				</div>		
+</ui:fragment>
+</ui:define>
+</ui:composition>
