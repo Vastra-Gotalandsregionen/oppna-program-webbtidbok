@@ -476,7 +476,7 @@ function submitForm()
        										</h:form>   
         								</td>
 									</tr>
-								</table>       
+								</table> 
 							</div>   <!-- boxleft3inside -->
 							
 							
@@ -485,22 +485,16 @@ function submitForm()
 				</table>
 				<table>
 					<tr>
-						<td style="">
+						<td>
 						#{selectedPlace.clinic} , #{selectedPlace.address}
 
-						<td>
+						</td>
+					</tr>
+					<tr>
+						<td>	
 							<div id="placediv_time" style="display:inline;background-color:#f3f1f2;" >
-								<table>
-									<tr>
-										<td style="background-color:#f3f1f2;width: 800px" >		
-											<h3 style="display: inline"> Välj tid</h3>
-											<h:form id="helpForm" style="display: inline; text-align: right;" >
-												<div class="image_block" style="display: inline;text-align: right;padding-left: 35em;"> <img src="../VGRImages/help.gif" />  
-												</div>
-       										</h:form>   
-        								</td>
-									</tr>
-								</table> 
+								
+								
 								<h:form id="timeTable" style="display: inline; text-align: right;" >
 									<h:dataTable id="timeTable" value="#{timeListLocal}" var="btl" rendered="#{timeListLocal.rowCount > 0}">
 									
@@ -533,9 +527,6 @@ function submitForm()
 				
 					
 
-
-    				</tr>					
-				</table>				
 
 		</div>	<!-- boxmiddle -->
 		</div> <!-- boxcontainer -->

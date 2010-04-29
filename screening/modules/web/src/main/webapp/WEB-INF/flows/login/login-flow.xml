@@ -211,7 +211,7 @@
 					
 		</transition>
 		
-		<transition on="selectTime" >
+		<transition on="selectTime" to="confirmUpdate.xhtml">
 			
 			<evaluate expression="calendarService.setSelectedDay(calendarService.selectedDay)" >
 			</evaluate>
@@ -220,6 +220,8 @@
 			
 			<evaluate expression="bookingService.setBookingTime(conversationScope.timeTable, state)" >
 			</evaluate>
+			
+			<evaluate expression="bookingService.getBooking(state)" result="flowScope.booking" />
 			
 		</transition>
 		
@@ -271,7 +273,7 @@
 		
 
 		
-		<transition on="selectTime" >
+		<transition on="selectTime" to="confirmUpdate.xhtml">
 			
 			<evaluate expression="calendarService.setSelectedDay(calendarService.selectedDay)" >
 			</evaluate>
@@ -280,6 +282,8 @@
 			
 			<evaluate expression="bookingService.setBookingTime(conversationScope.timeTable, state)" >
 			</evaluate>
+			
+			<evaluate expression="bookingService.getBooking(state)" result="flowScope.booking" />
 			
 		</transition>
 		
