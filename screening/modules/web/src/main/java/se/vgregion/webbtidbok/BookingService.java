@@ -187,8 +187,6 @@ public class BookingService
 			try {
 				timeList = times.getBookingTime();
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 				return null;
 			}
 			
@@ -368,7 +366,7 @@ public class BookingService
 		System.out.println("-----------------------");
 		System.out.println("-----------------------");
 		
-		System.out.println("------------" + credentials.getSelectedDate().getTime().toString() );
+		
 		System.out.println("-----------------------");
 		System.out.println("-----------------------");
 		System.out.println("-----------------------");
@@ -413,7 +411,7 @@ public class BookingService
 				xmlCal =  DatatypeFactory.newInstance().newXMLGregorianCalendar();
 			
 				//XMLGregorianCalendar xmlCal = credentials.getBookingResponse().getBokadTid();
-				xmlCal.setDay(cal.get(Calendar.DATE)  );
+				xmlCal.setDay(cal.get(Calendar.DATE) - 1 );
 				xmlCal.setMonth(cal.get(Calendar.MONTH) + 1 );
 				xmlCal.setYear(cal.get(Calendar.YEAR));
 			
@@ -437,7 +435,7 @@ public class BookingService
 			
 			BookingResponse response = helper.setBookingUpdate(request);
 			
-			//System.out.println("CentraltidBokiD: " + response.getCentralTidbokID());
+			System.out.println("CentraltidBokiD: " + response.getCentralTidbokID());
 			System.out.println("DATUM: " + response.getBokadTid().toString());
 			System.out.println("PNR: " + response.getPnr().getValue());
 			System.out.println("ToString: " + response.toString());
