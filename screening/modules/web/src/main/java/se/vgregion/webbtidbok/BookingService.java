@@ -45,12 +45,21 @@ public class BookingService
 	private ObjectFactory objectFactory = new ObjectFactory();
 	
 	public boolean isFirstPlaces = true;
-
+	public boolean isUpdated = false;
 	
 	//private String orderDate;
 	 
 	//constructor
 	public BookingService(){}
+	
+	
+	public void setIsUpdated(boolean b){
+		isUpdated = true;
+	}
+	
+	public boolean isUpdated(){
+		return isUpdated;
+	}
 	
 	
 	public void setFirstPlacesBoolean(boolean b){
@@ -366,7 +375,7 @@ public class BookingService
 		System.out.println("-----------------------");
 		System.out.println("-----------------------");
 		
-		
+		System.out.println("--date, selectedday" + credentials.getSelectedDate().getTime().toString());
 		System.out.println("-----------------------");
 		System.out.println("-----------------------");
 		System.out.println("-----------------------");
@@ -385,7 +394,7 @@ public class BookingService
 		cal.set(Calendar.YEAR, credentials.getSelectedDate().get(Calendar.YEAR));
 	    cal.set(Calendar.MONTH, credentials.getSelectedDate().get(Calendar.MONTH));
 	    //tempCal.set(Calendar.DATE, cal.get(Calendar.DAY_OF_MONTH));
-		cal.set(Calendar.DAY_OF_MONTH, credentials.getSelectedDate().get(Calendar.DAY_OF_MONTH));
+		cal.set(Calendar.DAY_OF_MONTH, credentials.getSelectedDate().get(Calendar.DAY_OF_MONTH) - 1);
 		
 		cal.set(Calendar.HOUR, Integer.parseInt(hourMinute[0]));
 		cal.set(Calendar.MINUTE, Integer.parseInt(hourMinute[1]));
@@ -411,7 +420,7 @@ public class BookingService
 				xmlCal =  DatatypeFactory.newInstance().newXMLGregorianCalendar();
 			
 				//XMLGregorianCalendar xmlCal = credentials.getBookingResponse().getBokadTid();
-				xmlCal.setDay(cal.get(Calendar.DATE) - 1 );
+				xmlCal.setDay(cal.get(Calendar.DATE)  );
 				xmlCal.setMonth(cal.get(Calendar.MONTH) + 1 );
 				xmlCal.setYear(cal.get(Calendar.YEAR));
 			
@@ -434,6 +443,13 @@ public class BookingService
 			request.setCentralTidbokID(credentials.getCentralTidbokID());
 			
 			BookingResponse response = helper.setBookingUpdate(request);
+			
+			if(response == null){
+				this.setIsUpdated(false);
+			}
+			else{
+				this.setIsUpdated(true);
+			}
 			
 			System.out.println("CentraltidBokiD: " + response.getCentralTidbokID());
 			System.out.println("DATUM: " + response.getBokadTid().toString());
