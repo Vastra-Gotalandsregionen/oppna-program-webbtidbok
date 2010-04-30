@@ -17,6 +17,8 @@
       Boston, MA 02111-1307  USA
 
 -->
+
+
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	    		xmlns:ui="http://java.sun.com/jsf/facelets"
@@ -34,29 +36,81 @@
 		<div id="boxmiddle">
 			<p/>
 			<br />
-			<h1 style="display: inline">Bekräftelse av ny Frälsning</h1>
-				<h:form id="mainForm" style="display: inline; text-align: right; padding-left: 7em;" >
+			<h1 style="display: inline">Bekräftelse av ny tid</h1>
+				<h:form id="mainForm" style="display: inline; text-align: right; padding-left: 16em;" >
 					<sf:commandButton id="logout" value="Logga ut" processIds="*" action="logout" />
 				</h:form>
 				<p/>
 				<br/>
-				Om du behöver kontrollera din tid eller boka om den kan logga in igen. Du kan boka om din tid maximalt två gånger. Spara lösenordet du fick i kallelsen. 
+				<p>Om du behöver kontrollera din tid eller boka om den kan logga in igen. Du kan boka om din tid maximalt två gånger. Spara lösenordet du fick i kallelsen. 
 				Du kan också ta kontakt med Kontaktpunkten för att boka om eller avboka din tid. Ring då på telefonnummer 031- 324 69 55 tisdag, onsdag eller torsdag mellan klockan 09:00-15:00, alternativt 031-342 24 00. 
-				Du kan också skicka e-post: <a href="mailto:kontaktpunkten.su@vgregion.se">kontaktpunkten.su@vgregion.se</a>.<br/></p>
-				<br/>
+				Du kan också skicka e-post: <a href="mailto:kontaktpunkten.su@vgregion.se">kontaktpunkten.su@vgregion.se</a>.</p><br/>
+				
 				
 				<h3> Din tid för undersökning av stora kroppspulsådern är ombokad </h3>
 				<br />
 				
 				
-				</p>
+				<div id="boxleft1" style="width: 100%">
+				
+				<table>
+							<tr>
+										<td>
+											#{booking.displayName}</td><td style="padding-left: 2em">#{booking.pnr}
+										</td>			
+							</tr>
+							
+						
+							<tr>
+								<td style="padding-left: 2em" valign="top" >
+									Var:
+								</td>
+								<td style="padding-left: 2em">  #{booking.mainSector}, #{booking.address}
+								</td>
+								
+							</tr>
+							
+							
+							<tr>
+								<td style="padding-left: 2em" valign="top">
+									När:
+								</td>
+								<td style="padding-left: 2em"> #{booking.timeBookingString}.
+								</td>
+								
+							</tr>
+							
+				</table>
+				
+				</div>
+				
+				
+				<br />
+				<p></p>
+				<table>
+								<tr>
+									<td >
+										<h4>Bekfräftelse vi E-post</h4> 
+									</td>								
+								</tr>
+								<tr>
+									<td><p>
+										Du kan välja att få en bekräftelse med den nya tiden till din e-postadress. 
+										Genom att fylla i din e-postadress nedan och klicka på Skicka e-post ger du ditt medgivande till att e-postmeddelande med bekräftelse på tiden får skickas. 
+										Vad innebär att jag lämnar mitt medgivande.
+										
+										</p>
+									</td>
+								</tr>
+				</table>
+				<p/>
 					<div id="boxleft1" style="width: 100%">							
 						<h:form id="sendForm" class="centerContent" style="display: inline; text-align: left;">
 							<table>
 								<tr>
-									<td >
-										<h4>E-post address</h4> 
-									</td>								
+									<td>
+										<p>E-postaddress</p>
+									</td>
 								</tr>
 								<tr>
 									<td>
@@ -71,8 +125,52 @@
 							</table>
 						</h:form>
 					</div>	
+					
+					<table>
+						<tr>
+									<td >
+										<h4>påminnelse om besök via SMS</h4> 
+									</td>								
+								</tr>
+								<tr>
+									<td><p>
+										Du kan få en påminnelse om besöket via SMS dagen före besöket. 
+										Genom att fylla i ditt mobilnummer nedan och klicka på Skicka SMS lämnar du medgivande till att SMS med påminnelse om tid får skickas till numret. 
+										Vad innebär att jag lämnar mitt medgivande.
+										</p>
+										
+									</td>
+						</tr>
+					
+					</table>
+					
+					<p/>
+					<div id="boxleft1" style="width: 100%">							
+						<h:form id="sendSMSForm" class="centerContent" style="display: inline; text-align: left;">
+							<table>
+								<tr>
+									<td>
+										<p>Mobilnummer (07XXXXXXXXX)</p>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h:inputText id="sms" value="#{emailStringHandler.email}" size="50" />								
+									</td>							
+								</tr>							
+								<tr>
+									<td>								
+										<sf:commandButton id="sendButton" value="Skicka SMS" processIds="*" action="sendsms" style="width: 100px;" />
+									</td>					
+								</tr>
+							</table>
+						</h:form>
+					</div>	
+					
+					
+				</div>	
 				</div>
-				</div>		
+						
 </ui:fragment>
 </ui:define>
 </ui:composition>

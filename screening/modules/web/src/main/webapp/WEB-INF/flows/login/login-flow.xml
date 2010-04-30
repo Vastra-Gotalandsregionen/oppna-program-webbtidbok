@@ -211,19 +211,23 @@
 					
 		</transition>
 		
-		<transition on="selectTime" to="confirmUpdate.xhtml">
-			
+		<transition on="selecttime" to="confirmupdate">
+			 
+			  
 			<evaluate expression="calendarService.setSelectedDay(calendarService.selectedDay)" >
 			</evaluate>
 			
 			<set name="conversationScope.timeTable" value="timeListLocal.selectedRow"  />
 			
+			 
 			<evaluate expression="bookingService.setBookingTime(conversationScope.timeTable, state)" >
 			</evaluate>
 			
-			<evaluate expression="bookingService.getBooking(state)" result="flowScope.booking" />
 			
 		</transition>
+		
+		
+		
 		
 		<transition on="prev" to="update2">
 				<evaluate expression="calendarService.setCalendarMonth(state, -1)" />
@@ -237,6 +241,31 @@
 		
 	</view-state>
 	
+	<action-state id="confirmupdateaction">
+			<evaluate expression="bookingService.isUpdated()" />
+			<transition on="yes" to="confirmupdate"></transition>
+			<transition on="no" to="loggedin"/>		
+	</action-state>
+	
+	
+	
+	<view-state id="confirmupdate" view="confirmUpdate.xhtml">
+	
+		   
+		<on-render >
+			  <evaluate expression="bookingService.getBooking(state)" result="flowScope.booking" /> 
+		</on-render>
+		
+		<transition on="logout" to="loggedout" history="invalidate"/>
+		
+		<transition on="send">
+			
+			<evaluate expression="sendMailService.sendMail(emailStringHandler)" />
+		</transition>
+		
+		
+	</view-state>
+		
 	<!-- 	update2 is the same as update except there's no call to getBookingTime(state) AND getTimeForChosenDate(state)	 -->
 	<!--	this so that the time will not be provided as defualt before you've actually clicked on a specific date -->
 	<view-state id="update2" view="update.xhtml">
@@ -273,7 +302,7 @@
 		
 
 		
-		<transition on="selectTime" to="confirmUpdate.xhtml">
+		<transition on="selecttime" to="confirmupdate">
 			
 			<evaluate expression="calendarService.setSelectedDay(calendarService.selectedDay)" >
 			</evaluate>
@@ -283,7 +312,7 @@
 			<evaluate expression="bookingService.setBookingTime(conversationScope.timeTable, state)" >
 			</evaluate>
 			
-			<evaluate expression="bookingService.getBooking(state)" result="flowScope.booking" />
+			
 			
 		</transition>
 		
