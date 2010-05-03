@@ -192,6 +192,13 @@ public class CalendarUtil {
 		return getCurrentMonth() + " " + masterCalendar.get(Calendar.YEAR);
 	}
 	
+	public String getCurrentDayMonthAndYear(){
+		String dayMonthYear;
+		dayMonthYear = weekDaysSv[ masterCalendar.get(Calendar.DAY_OF_WEEK)] + " " + masterCalendar.get(Calendar.DATE) + " " + getCurrentMonthAndYear().toLowerCase();
+		
+		return dayMonthYear;
+	}
+	
 	/**
 	 * Returns the name of the previous month
 	 * @return the name of the month previous to the current month
