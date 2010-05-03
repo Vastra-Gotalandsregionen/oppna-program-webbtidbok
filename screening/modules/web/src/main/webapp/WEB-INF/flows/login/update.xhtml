@@ -107,7 +107,7 @@ function submitForm()
 											<td style="background-color:#f3f1f2;width: 800px" >						
 												<h3 style="display: inline"> Välj plats</h3>
 												<h:form id="helpForm" style="display: inline; text-align: right;" >
-													<div class="image_block" style="display: inline;text-align: right;padding-left: 36.9em;"><a href="help"  target="_new"> <img src="../VGRImages/help.gif" /> </a> 
+													<div class="image_block" style="display: inline;text-align: right;padding-left: 35.9em;"><a href="help"><img src="../VGRImages/help.gif" /></a>
 													</div>
         										</h:form>   
 	        								</td>
@@ -122,6 +122,7 @@ function submitForm()
 			                <div id="" style="width: 100%;background-color:#ffffff">    
 				                <table>
 									<tr>
+	
 										<td>
 											
 											<f:view>
@@ -130,7 +131,7 @@ function submitForm()
 													<h:selectOneMenu rendered="true" id="places" value="#{placesHandler.placesId}"  onchange=""  style="width:320px">
 													   <f:selectItems value="#{bookingplaces}" /> 					
 													</h:selectOneMenu>
-												
+													<p />
 													<sf:commandButton id="displayButton" value="Visa tider" processIds="*" action="displaytimes" style="width: 100px;" />
 											
 												</h:form>
@@ -163,7 +164,7 @@ function submitForm()
 										<td style="background-color:#f3f1f2;width: 800px" >		
 											<h3 style="display: inline"> Välj datum</h3>
 											<h:form id="helpForm" style="display: inline; text-align: right;" >
-												<div class="image_block" style="display: inline;text-align: right;padding-left: 36em;"><a href="help"  target="_new"> <img src="../VGRImages/help.gif" /> </a>   
+												<div class="image_block" style="display: inline;text-align: right;padding-left: 35em;"><a href="help"><img src="../VGRImages/help.gif" /></a>
 												</div>
        										</h:form>   
         								</td>
@@ -188,22 +189,23 @@ function submitForm()
 						<td>
 							<table>
 								<tr>
+								<p />
     								<td style="display: inline; text-align: right;" >
-										<h:form id="displayDateForm" style="display: inline; text-align: right;padding-left: 36em;" >
-											<sf:commandButton id="displayButton" onclick="javascript: toggle('placediv_date')" value="Visa tider" processIds="*" action="display" style="width: 100px;" />
+										<h:form id="displayDateForm" style="display: inline; text-align: right;padding-left: 37.5em;" >
+											
 <!--											<ui:fragment id="calendarFragment">-->
 									<div class="placediv_date">
 										<div style="text-align: left; width: 14em;">
 											<!--		HEADER		-->
 											<!--	 <   April  >	 	-->
-											<table border="2" style="margin-left: auto; margin-right: auto">
+											<table border="0" style="margin-left: auto; margin-right: auto">
 												<th style="width: 2em; text-align: left; background: #e6e6e6"><h:commandLink id="prev" value="&lt;" action="prev"/></th>
 												<th style="width: 10em; text-align: center; background: #e6e6e6"><h3 style="display: inline"><h:outputText value="#{calendarService.currentMonthAndYear}" /></h3></th>
 												<th style="width: 2em; text-align: right; background: #e6e6e6"><h:commandLink id="next" value="&gt;" action="next"/></th>
 											</table>
 											<!--		HEADER		-->
 											<!--	Må Ti On To Fr Lö Sö	-->
-											<table border="1" style="text-align: right; width: 14em;">
+											<table border="0" style="text-align: right; width: 14em;">
 												<th style="width: 2em;">Må</th><th style="width: 2em;">Ti</th><th style="width: 2em;">On</th>
 												<th style="width: 2em;">To</th><th style="width: 2em;">Fr</th><th style="width: 2em;">Lö</th><th style="width: 2em;">Sö</th>
 												<!-- week 1 -->
@@ -471,10 +473,11 @@ function submitForm()
 										<td style="background-color:#f3f1f2;width: 800px" >		
 											<h3 style="display: inline"> Välj tid</h3>
 											<h:form id="helpForm" style="display: inline; text-align: right;" >
-												<div class="image_block" style="display: inline;text-align: right;padding-left: 36.8em;"> <a href="help"  target="_new"> <img src="../VGRImages/help.gif" /> </a> 
+											<div class="image_block" style="display: inline;text-align: right;padding-left: 36em;"><a href="help"><img src="../VGRImages/help.gif" /></a>
 												</div>
        										</h:form>   
         								</td>
+        								
 									</tr>
 								</table> 
 							</div>   <!-- boxleft3inside -->
@@ -490,39 +493,31 @@ function submitForm()
 
 						</td>
 					</tr>
+					<p />
+					
+					<h:form id="timeTable" style="display: inline; text-align: right;" >
+						<table border="0">
+							
+							<th style="text-align: center; background: #e6e6e6"><h3 style="display: inline"><h:outputText value="#{calendarService.currentDayMonthAndYear}" /></h3></th>
+	
+						</table>
+					</h:form>
 					<tr>
 						<td>	
 							<div id="placediv_time" style="display:inline;background-color:#f3f1f2;" >
 								
 								
 								<h:form id="timeTable" style="display: inline; text-align: right;" >
+									<h:dataTable id="timeTable" value="#{timeListLocal}" var="btl" rendered="#{timeListLocal.rowCount > 0}">
 									
-									<h:dataTable id="timeTable" value="#{timeListLocal}" var="btl" rendered="#{timeListLocal.rowCount > 0}" >
-										<f:facet name="header">
-											<h:panelGrid columns="2" border="0" style="width:100px">
-                                				<h:outputLabel style="width: 50px; text-align: left;" value="Tid" />
-                                				<h:outputLabel style="width: 50px; text-align: right;" value="" />
-                        					</h:panelGrid>
-										</f:facet>
-										
-										
-											<h:column style="width: 50px; text-align: left;">
-											
-                                				<h:outputText value="#{btl.time}" />
-                        					
-											</h:column>
-										
-										
-											<h:column style="width: 50px; text-align: right;">
-										
-											
-												<sf:commandButton id="timeButton" value="Välj" action="selecttime" processIds="*" />
-											</h:column>
-										
-										
-										
+										<h:column>
+										<f:facet name="header">Tid</f:facet>
+											#{btl.time}
+										</h:column>
+										<h:column>
+											<sf:commandButton id="timeButton" value="Välj" action="selecttime" processIds="*" />
+										</h:column>
 									</h:dataTable>
-									
 								</h:form>
 							</div>   <!-- boxleft3inside -->
 
@@ -538,13 +533,6 @@ function submitForm()
 					</tr>
 				</table>
 				
-				
-				
-				
-				
-					
-
-
 		</div>	<!-- boxmiddle -->
 		</div> <!-- boxcontainer -->
 			
