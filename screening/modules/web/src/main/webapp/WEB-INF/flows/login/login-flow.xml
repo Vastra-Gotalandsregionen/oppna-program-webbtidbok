@@ -259,8 +259,12 @@
 		<transition on="logout" to="loggedout" history="invalidate"/>
 		
 		<transition on="send">
-			
-			<evaluate expression="sendMailService.sendMail(emailStringHandler)" />
+		
+		  	
+		<evaluate expression="sendMailService.sendMailTotalRecallBooking(emailStringHandler, bookingService.getBooking(state))" />
+		
+		<!--  
+		<evaluate expression="sendMailService.sendMail(emailStringHandler)" /> -->
 		</transition>
 		
 		
