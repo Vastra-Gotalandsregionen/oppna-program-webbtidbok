@@ -394,7 +394,7 @@ public class BookingService
 		cal.set(Calendar.YEAR, credentials.getSelectedDate().get(Calendar.YEAR));
 	    cal.set(Calendar.MONTH, credentials.getSelectedDate().get(Calendar.MONTH));
 	    //tempCal.set(Calendar.DATE, cal.get(Calendar.DAY_OF_MONTH));
-		cal.set(Calendar.DAY_OF_MONTH, credentials.getSelectedDate().get(Calendar.DAY_OF_MONTH) - 1);
+		cal.set(Calendar.DAY_OF_MONTH, credentials.getSelectedDate().get(Calendar.DAY_OF_MONTH) );
 		
 		cal.set(Calendar.HOUR, Integer.parseInt(hourMinute[0]));
 		cal.set(Calendar.MINUTE, Integer.parseInt(hourMinute[1]));
