@@ -107,7 +107,7 @@ function submitForm()
 											<td style="background-color:#f3f1f2;width: 800px" >						
 												<h3 style="display: inline"> Välj plats</h3>
 												<h:form id="helpForm" style="display: inline; text-align: right;" >
-													<div class="image_block" style="display: inline;text-align: right;padding-left: 35em;"> <img src="../VGRImages/help.gif" />  
+													<div class="image_block" style="display: inline;text-align: right;padding-left: 36.9em;"><a href="help"  target="_new"> <img src="../VGRImages/help.gif" /> </a> 
 													</div>
         										</h:form>   
 	        								</td>
@@ -163,7 +163,7 @@ function submitForm()
 										<td style="background-color:#f3f1f2;width: 800px" >		
 											<h3 style="display: inline"> Välj datum</h3>
 											<h:form id="helpForm" style="display: inline; text-align: right;" >
-												<div class="image_block" style="display: inline;text-align: right;padding-left: 35em;"> <img src="../VGRImages/help.gif" />  
+												<div class="image_block" style="display: inline;text-align: right;padding-left: 36em;"><a href="help"  target="_new"> <img src="../VGRImages/help.gif" /> </a>   
 												</div>
        										</h:form>   
         								</td>
@@ -189,7 +189,7 @@ function submitForm()
 							<table>
 								<tr>
     								<td style="display: inline; text-align: right;" >
-										<h:form id="displayDateForm" style="display: inline; text-align: right;padding-left: 37.5em;" >
+										<h:form id="displayDateForm" style="display: inline; text-align: right;padding-left: 36em;" >
 											<sf:commandButton id="displayButton" onclick="javascript: toggle('placediv_date')" value="Visa tider" processIds="*" action="display" style="width: 100px;" />
 <!--											<ui:fragment id="calendarFragment">-->
 									<div class="placediv_date">
@@ -471,7 +471,7 @@ function submitForm()
 										<td style="background-color:#f3f1f2;width: 800px" >		
 											<h3 style="display: inline"> Välj tid</h3>
 											<h:form id="helpForm" style="display: inline; text-align: right;" >
-												<div class="image_block" style="display: inline;text-align: right;padding-left: 35em;"> <img src="../VGRImages/help.gif" />  
+												<div class="image_block" style="display: inline;text-align: right;padding-left: 36.8em;"> <a href="help"  target="_new"> <img src="../VGRImages/help.gif" /> </a> 
 												</div>
        										</h:form>   
         								</td>
@@ -496,16 +496,33 @@ function submitForm()
 								
 								
 								<h:form id="timeTable" style="display: inline; text-align: right;" >
-									<h:dataTable id="timeTable" value="#{timeListLocal}" var="btl" rendered="#{timeListLocal.rowCount > 0}">
 									
-										<h:column>
-										<f:facet name="header">Tid</f:facet>
-											#{btl.time}
-										</h:column>
-										<h:column>
-											<sf:commandButton id="timeButton" value="Välj" action="selecttime" processIds="*" />
-										</h:column>
+									<h:dataTable id="timeTable" value="#{timeListLocal}" var="btl" rendered="#{timeListLocal.rowCount > 0}" >
+										<f:facet name="header">
+											<h:panelGrid columns="2" border="0" style="width:100px">
+                                				<h:outputLabel style="width: 50px; text-align: left;" value="Tid" />
+                                				<h:outputLabel style="width: 50px; text-align: right;" value="" />
+                        					</h:panelGrid>
+										</f:facet>
+										
+										
+											<h:column style="width: 50px; text-align: left;">
+											
+                                				<h:outputText value="#{btl.time}" />
+                        					
+											</h:column>
+										
+										
+											<h:column style="width: 50px; text-align: right;">
+										
+											
+												<sf:commandButton id="timeButton" value="Välj" action="selecttime" processIds="*" />
+											</h:column>
+										
+										
+										
 									</h:dataTable>
+									
 								</h:form>
 							</div>   <!-- boxleft3inside -->
 
