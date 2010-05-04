@@ -62,7 +62,6 @@
             <param-value>true</param-value>
         </init-param>
     </filter>
-    
     <filter-mapping>
         <filter-name>charEncodingFilter</filter-name>
         <url-pattern>/*</url-pattern>

@@ -88,8 +88,8 @@ public class SendEmailHandler implements Serializable {
 	         //String server = "smtp.knowit.se";
 			String server = "smtp.gmail.com";
 			String from= "DoNotReply@knowit.se";
-			String userName="";
-			String password=""; //add TODO: password for smtpserver
+			String userName="test01";
+			String password="Dsa12345"; //add TODO: password for smtpserver
 	         
 	         String subject="Tiden är avbokad"; 
 	         String messageBody="Tiden är avbokad"; 
