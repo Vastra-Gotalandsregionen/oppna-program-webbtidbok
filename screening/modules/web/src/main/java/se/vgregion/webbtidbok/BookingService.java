@@ -449,12 +449,13 @@ public class BookingService
 			}
 			else{
 				this.setIsUpdated(true);
+				System.out.println("CentraltidBokiD: " + response.getCentralTidbokID());
+				System.out.println("DATUM: " + response.getBokadTid().toString());
+				System.out.println("PNR: " + response.getPnr().getValue());
+				System.out.println("ToString: " + response.toString());
 			}
 			
-			System.out.println("CentraltidBokiD: " + response.getCentralTidbokID());
-			System.out.println("DATUM: " + response.getBokadTid().toString());
-			System.out.println("PNR: " + response.getPnr().getValue());
-			System.out.println("ToString: " + response.toString());
+	
 			
 			
 		}

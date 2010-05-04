@@ -321,6 +321,7 @@ public class WSTester {
 		WebServiceHelper wsh = new WebServiceHelper();
 		ArrayOfBookingTime bookingTimeArr = wsh.getQueryWSRequestTime(request);
 		List<BookingTime> bookingTimeList = bookingTimeArr.getBookingTime();
+		
 		XMLGregorianCalendar XMLcal;
 		System.out.println("\n*** getBookingTime: ");
 		System.out.println("Bokningsbara tider för CTID: " + ctid + ", i datumintervallet: " + fromDat + " - " + toDat);
@@ -419,20 +420,20 @@ public class WSTester {
 //		key/CID: 1 value/PLACE: IC-Sjukhuset
 //		key/CID: 2 value/PLACE: Surf-Sjukhuset
 //		key/CID: 3 value/PLACE: Elvis-Sjukhuset
-		String fromDat = "2010-07-07";
-		String toDat = "2010-08-30";
+		String fromDat = "2010-05-12";
+		String toDat = "2010-05-12";
 
-		getBookingTime(fromDat, toDat, 1);
-		getBookingTime(fromDat, toDat, 2);
+//		getBookingTime(fromDat, toDat, 1);
+//		getBookingTime(fromDat, toDat, 2);
 		getBookingTime(fromDat, toDat, 3);
 //		getBookingTime(fromDat, toDat, 4); //null - contains NO booking times
 
 		
-		String fromDat2 = "2010-07-07";
-		String toDat2 = "2010-08-30";
-		getPlaceCalendarThruCTID(fromDat2, toDat2, 1);
-		getPlaceCalendarThruCTID(fromDat2, toDat2, 2);
-		getPlaceCalendarThruCTID(fromDat2, toDat2, 3);
+		String fromDat2 = "2010-07-01";
+		String toDat2 = "2010-07-31";
+//		getPlaceCalendarThruCTID(fromDat2, toDat2, 1);
+//		getPlaceCalendarThruCTID(fromDat2, toDat2, 2);
+//		getPlaceCalendarThruCTID(fromDat2, toDat2, 3);
 //		getPlaceCalendarThruCTID(fromDat2, toDat2, 4); //null - contains NO booking dates
 		
 	}
