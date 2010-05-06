@@ -39,8 +39,8 @@ public class DateHandler {
 		
 		String pattern = "yyyy-MM-dd";
 	    SimpleDateFormat format = new SimpleDateFormat(pattern);
-	    String toBeFormatted = format.format(selectedCalendar.getTime());
-	    return toBeFormatted;
+	    String formattedDate = format.format(selectedCalendar.getTime());
+	    return formattedDate;
 	}
 	
 	public static Calendar setCalendarFromGregorianCalendar(XMLGregorianCalendar c){
