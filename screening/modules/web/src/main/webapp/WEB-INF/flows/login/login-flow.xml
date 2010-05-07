@@ -122,37 +122,28 @@
 		 </evaluate>	  
 		 <evaluate expression="bookingService.getSelectedPlace(placesHandler, state)" result="flowScope.selectedPlace"  >
 		 </evaluate>		 
-<!--		 <evaluate expression="calendarService.setSelectedDay(requestParameters.selectedDay)" >-->
-<!--		 </evaluate>-->
-<evaluate expression="calendarService.getTimeForChosenDate(state)" />
-<!-- something seems a bit fishy here	 		-->
+		 <evaluate expression="calendarService.getTimeForChosenDate(state)" />
 		 <evaluate expression="bookingService.getBookingTime(state)" result="flowScope.timeListLocal" result-type="dataModel" /> 	 
-<!-- end something seems a bit fishy here	 		-->
-
 		 <evaluate expression="bookingService.getIsTimeListEmpty()" />	 
-		 	<transition on="yes" to="updateNoTimeTable">
-		 	</transition>
-			<transition on="no" to="update">
-			</transition>				
+	 	<transition on="yes" to="updateNoTimeTable">
+	 	</transition>
+		<transition on="no" to="update">
+		</transition>				
 	</action-state>
 	
-		<view-state id="updateNoTimeTable">	
+	<view-state id="updateNoTimeTable">	
 		<on-render>		
 			<evaluate expression="bookingService.setSelectedItem(placesHandler, state)"   >
 			</evaluate>		
 			<evaluate expression="placesHandler.getPlacesId()"  result="viewScope.placesId">
 			</evaluate>
-			
-<!--			<set name="calendarService.selectedDay" value="requestParameters.selectedDay" />	-->
-<!--			<evaluate expression="calendarService.setSelectedDay(calendarService.selectedDay)" >-->
-<!--			</evaluate>-->
 			<evaluate expression="calendarService.setSelectedDay(requestParameters.selectedDay)" />
 			<evaluate expression="calendarService.getCalendar(state)" />
-<evaluate expression="calendarService.getTimeForChosenDate(state)" />
+			<evaluate expression="calendarService.getTimeForChosenDate(state)" />
 		</on-render>		
 		<transition on="logout" to="loggedout" history="invalidate"/>
 		<transition on="cancel" to="loggedin">
-<!--			<evaluate expression="calendarService.setSelectedDay('')" />-->
+			<evaluate expression="calendarService.setSelectedDay('')" />
 			<evaluate expression="bookingService.setFirstPlacesBoolean(true)" />
 		</transition>
 		
@@ -171,6 +162,7 @@
 	<view-state id="updateNoCalendar" view="updateNoCalendar.xhtml">	
 		<transition on="logout" to="loggedout" history="invalidate"/>
 		<transition on="cancel" to="loggedin">
+			<evaluate expression="calendarService.setSelectedDay('')" />
 			<evaluate expression="bookingService.setFirstPlacesBoolean(true)" />
 		</transition>
 		<transition on="displaytimes" to="isEmptyCalendar">		
@@ -193,23 +185,16 @@
 <!--	only want to do getTimeForChosenDate first time around AND when a NEW date is selected, now it's also done when click on < or >		  -->
 <!--		why is this needed???	  <evaluate expression="bookingService.getSelectedPlace(placesHandler, state)" result="flowScope.selectedPlace"  >-->
 <!--			  </evaluate>-->
-			   <evaluate expression="calendarService.getTimeForChosenDate(state)" />
-<!--			  <evaluate expression="calendarService.getCalendar(state)"  /> 		  	-->
+			  <evaluate expression="calendarService.getTimeForChosenDate(state)" />
 			  <evaluate expression="bookingService.getBookingTime(state)" result="flowScope.timeListLocal" result-type="dataModel" /> 
+<!--			  <evaluate expression="calendarService.setSelectedDay(requestParameters.selectedDay)" />-->
 		</on-render>	
-		
-		
 		<transition on="showTimeCalendar" to="istimelistempty">
-<!--			<set name="calendarService.selectedDay" value="requestParameters.selectedDay" />-->
 			<evaluate expression="calendarService.setSelectedDay(requestParameters.selectedDay)" />
 		</transition>		
-		
-		
-<!--		<transition on="showTimeCalendar" to="update">-->
-<!--			<set name="calendarService.selectedDay" value="requestParameters.selectedDay" />-->
-<!--		</transition>-->
 		<transition on="logout" to="loggedout" history="invalidate"/>
 		<transition on="cancel" to="loggedin">
+			<evaluate expression="calendarService.setSelectedDay('')" />
 			<evaluate expression="bookingService.setFirstPlacesBoolean(true)" />
 		</transition>	
 		<transition on="displaytimes" to="isEmptyCalendar">
@@ -218,6 +203,9 @@
 			<evaluate expression="placesHandler.getPlacesId()"  result="viewScope.placesId">
 			</evaluate>					
 		</transition>		
+		<transition on="test" to="istimelistempty">
+		<evaluate expression="calendarService.test()" />
+		</transition>
 		<transition on="selecttime" to="confirmupdate"> 
 			<evaluate expression="calendarService.setSelectedDay(calendarService.selectedDay)" >
 			</evaluate>			
@@ -272,6 +260,7 @@
 <!--		</transition>-->
 		<transition on="logout" to="loggedout" history="invalidate"/>
 		<transition on="cancel" to="loggedin">
+			<evaluate expression="calendarService.setSelectedDay('')" />
 			<evaluate expression="bookingService.setFirstPlacesBoolean(true)" />
 		</transition>
 		<transition on="displaytimes" to="isEmptyCalendar">
