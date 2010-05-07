@@ -38,17 +38,27 @@ import javax.xml.datatype.*;
 
 public class BookingService
 {
-	
+	int testIndex;
 	BookingResponse response;
 	BookingRequest request;
 	WebServiceHelper helper = new WebServiceHelper();
 	private ObjectFactory objectFactory = new ObjectFactory();
 	
 	public boolean isFirstPlaces = true;
+	private boolean isTimeListEmpty = true;
 	public boolean isUpdated = false;
 	
 	//private String orderDate;
 	 
+	public boolean getIsTimeListEmpty() {
+		return isTimeListEmpty;
+	}
+
+
+	public void setTimeListEmpty(boolean isTimeListEmpty) {
+		this.isTimeListEmpty = isTimeListEmpty;
+	}
+	
 	//constructor
 	public BookingService(){}
 	
@@ -181,8 +191,8 @@ public class BookingService
 			String fromDate = DateHandler.setCalendarDateFormat(selectedDate);
 			JAXBElement<String> fromDat = objectFactory.createBookingRequestFromDat(fromDate);
 //			
-//			System.out.println("fromDate: " + fromDate);
-//			System.out.println("JAXB-FROMDATE: " + fromDat.getValue());
+			System.out.println("fromDate: " + fromDate);
+			System.out.println("JAXB-FROMDATE: " + fromDat.getValue());
 //			
 //			System.out.println("CentralTidBokID: " + loginCredentials.getCentralTidbokID());
 			
@@ -195,7 +205,18 @@ public class BookingService
 			List<BookingTime> timeList;
 			try {
 				timeList = times.getBookingTime();
+				if(timeList.isEmpty()){
+					isTimeListEmpty = true;
+					
+					System.out.println("iiiiiiif    timeList is empty + testIndex " + testIndex++);
+				}
+				else {
+					isTimeListEmpty = false;
+					System.out.println("tryyyyy   isTimeListEmpty(false): " + isTimeListEmpty  + ", testIndex " + testIndex++);
+				}
 			} catch (Exception e) {
+				isTimeListEmpty = true;
+				System.out.println("catchhh   isTimeListEmpty(true): " + isTimeListEmpty   + ", testIndex " + testIndex++);
 				return null;
 			}
 			
