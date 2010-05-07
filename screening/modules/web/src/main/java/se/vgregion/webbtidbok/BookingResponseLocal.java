@@ -17,25 +17,14 @@
  */
 package se.vgregion.webbtidbok;
 
-import java.io.*;
-import java.util.*;
-import java.lang.*;
-import java.text.*;
-import org.apache.commons.logging.impl.Log4JLogger;
-import org.springframework.stereotype.Service;
+import java.io.Serializable;
+import java.util.Date;
 
 import se.vgregion.webbtidbok.lang.DateHandler;
 import se.vgregion.webbtidbok.lang.StringHandler;
-import se.vgregion.webbtidbok.ws.BookingRequest;
 import se.vgregion.webbtidbok.ws.BookingResponse;
-import se.vgregion.webbtidbok.ws.CentralBookingWS;
-import se.vgregion.webbtidbok.ws.GetBooking;
-import se.vgregion.webbtidbok.ws.ICentralBookingWS;
-import se.vgregion.webbtidbok.ws.ICentralBookingWSGetBookingICFaultFaultFaultMessage;
-import se.vgregion.webbtidbok.ws.ObjectFactory;
 
-
-public class BookingResponseLocal implements Serializable{
+public class BookingResponseLocal implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	/*
@@ -51,9 +40,6 @@ public class BookingResponseLocal implements Serializable{
 	AntalOmbok	int	Antal gjorda ombokningar
 	MaxAntalOmbok	int	Max antal till�tna ombokningar
 	Place	BookingPlace	
-
-	
-	
 	*/
 	private String pnr;
 	private String name;
@@ -69,9 +55,7 @@ public class BookingResponseLocal implements Serializable{
 	private int maxNbrBookings = 2;
 	private String displayName;
 	private int centralTimeBookingId = 0;
-	
-	
-	
+		
 	public BookingResponseLocal() {
 		// TODO  Auto-generated constructor stub
 	}
@@ -84,18 +68,13 @@ public class BookingResponseLocal implements Serializable{
 		setDisplayName(response.getNamn().getValue());
 		setLocalDoctor(response.getVardgivare().getValue());
 		setAddress(response.getAddress().getValue()); 
-		
-		
 		setTeam(response.getExternalID().getValue());
-		
 		setMainSector(response.getMottagning().getValue());
 		setMobilePhone(response.getMobilTel().getValue());
 		setEmail(response.getEpost().getValue());
 		this.setNumberOfBookings(response.getAntalOmbok());
 		this.setMaxNbrBookings(response.getMaxAntalOmbok());
-		//response.getCentralTidbokID()
 		this.setCentralTimeBookId(response.getCentralTidbokID());
-		
 		
 		//Set time booking
 		timeBooking = new Date();
@@ -106,28 +85,20 @@ public class BookingResponseLocal implements Serializable{
 		timeBooking.setMonth(response.getBokadTid().getMonth() - 1);
 		timeBooking.setYear(response.getBokadTid().getYear() - 1900);
 		timeBooking.setDate(response.getBokadTid().getDay());
-		
-		
 		setTimeBookingString(DateHandler.setLocaleString(timeBooking));
-		setTimeBookingString(StringHandler.toFirstLetterToUpperCase(getTimeBookingString()));
-		
+		setTimeBookingString(StringHandler.toFirstLetterToUpperCase(getTimeBookingString()));		
 	}
 	
-	
-
 	public void setCentralTimeBookId(int id){
 		centralTimeBookingId = id;
 	}
 	
 	public int getCentralTimeBookId(){
-		
-	 return centralTimeBookingId;
-		
+		return centralTimeBookingId;
 	}
 	
 	public void setDisplayName(String name) {
 		String n[] = name.toLowerCase().split(", ");
-		
 		n[0] = StringHandler.toFirstLetterToUpperCase(n[0]);
 		n[1] = StringHandler.toFirstLetterToUpperCase(n[1]);
 		displayName = n[1] + " " + n[0];
@@ -164,7 +135,6 @@ public class BookingResponseLocal implements Serializable{
 	}
 	
 	public void setMainSector(String sector){
-		
 		this.mainSector = sector;
 	}
 	
@@ -183,10 +153,7 @@ public class BookingResponseLocal implements Serializable{
 	public void setMaxNbrBookings(int maxBookings){
 		this.maxNbrBookings = maxBookings;
 	}
-	
-	
-	
-	
+
 	public String getPnr(){
 		return pnr;
 	}
@@ -239,25 +206,21 @@ public class BookingResponseLocal implements Serializable{
 		return this.maxNbrBookings;
 	}
 	
-	
-	
-	
-	
-	
-	
-	public String toString(){
-		
-		return  "pnr " + pnr +
-		" name " + name +
-		" doctor " + localDoctor +
-		" address " + address +
-		" booking " + timeBooking +
-		" team " + vTeam +
-		" main sector " + mainSector +
-		" mobilephone " + mobilePhone +
-		" email " + email +
-		" numberBookings " + numberBookings +
-		" maxNbrBookings " + maxNbrBookings;
+	public boolean getIsDisabled() {
+		return numberBookings == maxNbrBookings;
 	}
 	
+	public String toString(){
+		return  "pnr " + pnr +
+			" name " + name +
+			" doctor " + localDoctor +
+			" address " + address +
+			" booking " + timeBooking +
+			" team " + vTeam +
+			" main sector " + mainSector +
+			" mobilephone " + mobilePhone +
+			" email " + email +
+			" numberBookings " + numberBookings +
+			" maxNbrBookings " + maxNbrBookings;
+	}
 }
