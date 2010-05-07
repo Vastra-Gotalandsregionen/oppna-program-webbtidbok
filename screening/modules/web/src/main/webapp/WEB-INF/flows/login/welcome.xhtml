@@ -66,16 +66,17 @@
 								</td>
 								<td style="display: inline">
 									<h:form id="updateForm" style="display: inline; text-align: right;padding-left: 10em;" >
-										
-											<sf:commandButton id="updateButton" value="Omboka tid" processIds="*" action="update" disabled="#{booking.isDisabled}" style="width: 100px;"  />
-										
-									</h:form> 
+										<sf:commandButton id="updateButton" value="Omboka tid" processIds="*" action="update" disabled="#{booking.isDisabled}" style="width: 100px;"  />
+									</h:form>
 								</td>
 							</tr>
 							<tr>
 								<td></td>
 								<td style="padding-left: 2em">
 									<a href="">Visa mer information om mottagningen</a>
+								</td>
+								<td>
+									<h:outputText rendered="#{booking.isDisabled}"><p style="text-align: right;color:red; font-style: italic">Du kan inte omboka<br/>mer än två gånger.</p></h:outputText>
 								</td>
 							</tr>
 							<p></p>
