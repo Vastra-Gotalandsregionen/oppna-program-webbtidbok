@@ -32,14 +32,12 @@ import java.security.spec.InvalidKeySpecException;
 
 import javax.crypto.Cipher;
 import javax.crypto.NoSuchPaddingException;
-import javax.mail.MessagingException;
 
+import org.apache.commons.codec.binary.Base64;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.Resource;
-
-import com.sun.mail.util.BASE64DecoderStream;
 
 public class StringEncrypterTest {
 
@@ -78,17 +76,10 @@ public class StringEncrypterTest {
     }
 
     @Test
-    public void testBase64Encoding() throws MessagingException, IOException {
-        byte[] result = stringEncrypter.encode("Test".getBytes());
-        // ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(result);
-        // InputStream decodedBase64Str = MimeUtility.decode(byteArrayInputStream, "base64");
-        //
-        // byte[] theBytes = new byte[decodedBase64Str.available()];
-        // decodedBase64Str.read(theBytes);
-
-        byte[] theBytes = BASE64DecoderStream.decode(result);
-        assertEquals("Test", new String(theBytes, "utf-8"));
-
+    public void testBase64Encoding() {
+        String result = stringEncrypter.encode("Test".getBytes());
+        byte[] decodeBase64 = Base64.decodeBase64(result);
+        assertEquals("Test", new String(decodeBase64));
     }
 
     private KeyStore getKeyStore() throws NoSuchAlgorithmException, KeyStoreException, CertificateException,
