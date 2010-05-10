@@ -98,10 +98,7 @@ public class BookingResponseLocal implements Serializable {
 	}
 	
 	public void setDisplayName(String name) {
-		String n[] = name.toLowerCase().split(", ");
-		n[0] = StringHandler.toFirstLetterToUpperCase(n[0]);
-		n[1] = StringHandler.toFirstLetterToUpperCase(n[1]);
-		displayName = n[1] + " " + n[0];
+		displayName = StringHandler.capitalizeName(name);
 
 		System.out.println("displayname: " + displayName);
 	}

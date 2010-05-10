@@ -17,19 +17,36 @@
  */
 package se.vgregion.webbtidbok.lang;
 
-
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class StringHandler {
 
-	
-	public static String toFirstLetterToUpperCase(String s){
-		
+	private final static String NAMES_REGEX = "(?i)[a-zåäöÅÄÖ]+";
+
+	public static String toFirstLetterToUpperCase(String s) {
+
 		String firstLetter = s.substring(0, 1);
 		firstLetter = firstLetter.toUpperCase();
-		
+
 		String subString = s.substring(1, s.length());
-		
+
 		String returnString = firstLetter + subString;
 		return returnString;
+	}
+
+	public static String capitalizeName(final String name) {
+		Pattern thePattern = Pattern.compile(NAMES_REGEX);
+		Matcher theMatcher = thePattern.matcher(name);
+		StringBuffer theResult = new StringBuffer();
+		while (theMatcher.find()) {
+			String theMatch = theMatcher.group().toLowerCase();
+			theMatch = theMatch.substring(0, 1).toUpperCase()
+					+ theMatch.substring(1, theMatch.length());
+			theMatcher.appendReplacement(theResult, theMatch);
+		}
+		theMatcher.appendTail(theResult);
+		
+		return theResult.toString();
 	}
 }
