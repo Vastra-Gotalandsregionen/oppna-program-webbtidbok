@@ -29,13 +29,11 @@ import java.security.cert.CertificateException;
 
 import javax.crypto.Cipher;
 import javax.crypto.NoSuchPaddingException;
-import javax.mail.MessagingException;
 
+import org.apache.commons.codec.binary.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
-
-import com.sun.mail.util.BASE64EncoderStream;
 
 /**
  * 
@@ -154,21 +152,15 @@ public class StringEncrypter {
     }
 
     /**
+     * Encode byte array to base64 encoded String
      * 
      * @param byteArray
-     *            to encode to base64
-     * @return byte[] array
-     * @throws MessagingException
-     * @throws IOException
+     *            to encode
+     * @return Base64 Stringxs
      */
-    public byte[] encode(byte[] byteArray) throws MessagingException, IOException {
-        byte[] encode = BASE64EncoderStream.encode(byteArray);
-        return encode;
-        // ByteArrayOutputStream baos = new ByteArrayOutputStream(byteArray.length);
-        // OutputStream b64os = MimeUtility.encode(baos, "base64");
-        // b64os.write(byteArray);
-        // b64os.close();
-        // return baos.toByteArray();
-    }
 
+    public String encode(byte[] byteArray) {
+        String encodeBase64String = Base64.encodeBase64String(byteArray);
+        return encodeBase64String;
+    }
 }
