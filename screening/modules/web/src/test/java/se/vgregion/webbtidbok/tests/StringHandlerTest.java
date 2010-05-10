@@ -47,6 +47,81 @@ public class StringHandlerTest {
 		}
 		
 	}
+	
+	@Test
+	public void testCapitalizeEmptyString()
+	{
+		String toBeVerified = "";
+		String processedName = null;
+		try {
+			processedName = StringHandler.capitalizeName(toBeVerified);
+		}
+		catch(Exception e) {
+			System.out.println(e.getMessage());
+			Assert.assertTrue(false);
+		}
+		Assert.assertEquals("", processedName);
+	}
+	
+	@Test
+	public void testCapitalizeNameWithSpaces()
+	{
+		String toBeVerified = "nils hansson lake";
+		String processedName = null;
+		try {
+			processedName = StringHandler.capitalizeName(toBeVerified);
+		}
+		catch(Exception e) {
+			System.out.println(e.getMessage());
+			Assert.assertTrue(false);
+		}
+		Assert.assertEquals("Nils Hansson Lake", processedName);
+	}
+	
+	@Test
+	public void testCapitalizeNameWithMinus()
+	{
+		String toBeVerified = "nils hansson-lake";
+		String processedName = null;
+		try {
+			processedName = StringHandler.capitalizeName(toBeVerified);
+		}
+		catch(Exception e) {
+			System.out.println(e.getMessage());
+			Assert.assertTrue(false);
+		}
+		Assert.assertEquals("Nils Hansson-Lake", processedName);
+	}
+	
+	@Test
+	public void testCapitalizeNameWithComma()
+	{
+		String toBeVerified = "hansson,nils";
+		String processedName = null;
+		try {
+			processedName = StringHandler.capitalizeName(toBeVerified);
+		}
+		catch(Exception e) {
+			System.out.println(e.getMessage());
+			Assert.assertTrue(false);
+		}
+		Assert.assertEquals("Hansson,Nils", processedName);
+	}
+	
+	@Test
+	public void testNameWithSwedishCharacters()
+	{
+		String toBeVerified = "GRÖNEFALK,öSTEN";
+		String processedName = null;
+		try {
+			processedName = StringHandler.capitalizeName(toBeVerified);
+		}
+		catch(Exception e) {
+			System.out.println(e.getMessage());
+			Assert.assertTrue(false);
+		}
+		Assert.assertEquals("Grönefalk,Östen", processedName);
+	}
  
 	
 	
@@ -70,7 +145,6 @@ public class StringHandlerTest {
 			Assert.assertTrue(true);
 		}
 	}
-	
 	
 	@Test
 	public void testThatNullStringReturnsNOk(){
