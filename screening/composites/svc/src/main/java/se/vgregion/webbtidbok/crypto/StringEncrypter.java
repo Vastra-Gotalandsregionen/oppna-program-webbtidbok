@@ -24,6 +24,9 @@ import java.security.Key;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
+import java.security.Signature;
+import java.security.SignatureException;
 import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
 
@@ -118,7 +121,6 @@ public class StringEncrypter {
             try {
                 keyStore = KeyStore.getInstance(keyStoreType);
                 keyStore.load(keyStoreFile.getInputStream(), keyPassWord.toCharArray());
-
             } catch (KeyStoreException e) {
                 logger.error(e.getMessage(), e);
             } catch (NoSuchAlgorithmException e) {
@@ -151,6 +153,38 @@ public class StringEncrypter {
 
     }
 
+    public byte[] signString(String value) {
+        byte[] sig = null;
+        try {
+            Signature dsa = Signature.getInstance("SHA1withRSA");
+
+            // key, then sign a byte array called data.
+            /* Initializing the object with a private key */
+            // TODO: remove and use direct keyStore.
+            getCipher();
+            Key key = keyStore.getKey(keyAlias, "asd".toCharArray());
+            PrivateKey privateKey = (PrivateKey) key;
+
+            dsa.initSign(privateKey);
+
+            /* Update and sign the data */
+            dsa.update(value.getBytes());
+            sig = dsa.sign();
+        } catch (UnrecoverableKeyException e) {
+            logger.error(e.getMessage(), e);
+        } catch (InvalidKeyException e) {
+            logger.error(e.getMessage(), e);
+        } catch (NoSuchAlgorithmException e) {
+            logger.error(e.getMessage(), e);
+        } catch (KeyStoreException e) {
+            logger.error(e.getMessage(), e);
+        } catch (SignatureException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return sig;
+
+    }
+
     /**
      * Encode byte array to base64 encoded String
      * 
@@ -159,8 +193,8 @@ public class StringEncrypter {
      * @return Base64 Stringxs
      */
 
-    public String encode(byte[] byteArray) {
-        String encodeBase64String = Base64.encodeBase64String(byteArray);
-        return encodeBase64String;
+    public String encodeToBase64(byte[] byteArray) {
+        byte[] encodeBase64String = Base64.encodeBase64(byteArray);
+        return new String(encodeBase64String);
     }
 }
