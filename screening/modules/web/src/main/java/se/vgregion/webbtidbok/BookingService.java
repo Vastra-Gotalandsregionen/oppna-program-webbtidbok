@@ -37,7 +37,7 @@ import se.vgregion.webbtidbok.ws.BookingResponse;
 import se.vgregion.webbtidbok.ws.BookingTime;
 import se.vgregion.webbtidbok.ws.ObjectFactory;
 
-public class BookingService {
+public class BookingService implements BookingServiceInterface {
   int testIndex;
   BookingResponse response;
   BookingRequest request;
@@ -174,8 +174,9 @@ public class BookingService {
     // loginCredentials.setPasswd(psw);
     // loginCredentials.setLoggedIn(true);
     List<BookingTimeLocal> timeListLocal = new ArrayList<BookingTimeLocal>();
+    boolean theInThePastFlag = loginCredentials.getSelectedDate().before(Calendar.getInstance());
 
-    if (loginCredentials.isLoggedIn()) {
+    if (loginCredentials.isLoggedIn() && !theInThePastFlag) {
       Calendar selectedDate = loginCredentials.getSelectedDate();
 
       // if(selectedDate == null){
@@ -211,37 +212,33 @@ public class BookingService {
           isTimeListEmpty = false;
           System.out.println("tryyyyy   isTimeListEmpty(false): " + isTimeListEmpty + ", testIndex " + testIndex++);
         }
+
+        int id = 1;
+        for (BookingTime b : timeList) {
+
+          Calendar dateCal = Calendar.getInstance();
+          dateCal.set(Calendar.YEAR, b.getDatum().getYear());
+          dateCal.set(Calendar.MONTH, b.getDatum().getMonth() - 1);
+          dateCal.set(Calendar.DATE, b.getDatum().getDay());
+
+          String day = DateHandler.setCalendarDateFormat(dateCal);
+
+          // String hourTime = DateHandler.setCalendarTimeFormat(dateCal);
+
+          BookingTimeLocal pl = new BookingTimeLocal();
+          pl.setNumbers(b.getAntal());
+          pl.setDay(day);
+          pl.setTime(b.getKlocka().getValue());
+          pl.setBookingTimeId(id);
+          timeListLocal.add(pl);
+
+          System.out.println(pl.toString());
+
+          id++;
+        }
       } catch (Exception e) {
         isTimeListEmpty = true;
-        System.out.println("catchhh   isTimeListEmpty(true): " + isTimeListEmpty + ", testIndex " + testIndex++);
-        return null;
       }
-
-      int id = 1;
-      for (BookingTime b : timeList) {
-
-        Calendar dateCal = Calendar.getInstance();
-        dateCal.set(Calendar.YEAR, b.getDatum().getYear());
-        dateCal.set(Calendar.MONTH, b.getDatum().getMonth() - 1);
-        dateCal.set(Calendar.DATE, b.getDatum().getDay());
-
-        String day = DateHandler.setCalendarDateFormat(dateCal);
-
-        // String hourTime = DateHandler.setCalendarTimeFormat(dateCal);
-
-        BookingTimeLocal pl = new BookingTimeLocal();
-        pl.setNumbers(b.getAntal());
-        pl.setDay(day);
-        pl.setTime(b.getKlocka().getValue());
-        pl.setBookingTimeId(id);
-        timeListLocal.add(pl);
-
-        System.out.println(pl.toString());
-
-        id++;
-      }
-
-      System.out.println("size: " + timeListLocal.size());
 
       return timeListLocal;
     }
