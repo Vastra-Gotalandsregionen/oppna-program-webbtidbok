@@ -17,339 +17,300 @@
  */
 package se.vgregion.webbtidbok;
 
+import java.util.List;
 
 import javax.xml.bind.JAXBElement;
 
-import org.apache.commons.logging.impl.Log4JLogger;
-import org.springframework.stereotype.Service;
-
-
-import se.vgregion.webbtidbok.ws.*;
-
+import se.vgregion.webbtidbok.crypto.StringEncrypter;
 import se.vgregion.webbtidbok.ws.ArrayOfBookingPlace;
-import se.vgregion.webbtidbok.ws.BookingPlace;
+import se.vgregion.webbtidbok.ws.ArrayOfBookingTime;
+import se.vgregion.webbtidbok.ws.ArrayOfCalendar;
 import se.vgregion.webbtidbok.ws.BookingRequest;
 import se.vgregion.webbtidbok.ws.BookingResponse;
+import se.vgregion.webbtidbok.ws.BookingTime;
 import se.vgregion.webbtidbok.ws.CentralBookingWS;
-import se.vgregion.webbtidbok.ws.GetBooking;
 import se.vgregion.webbtidbok.ws.ICentralBookingWS;
+import se.vgregion.webbtidbok.ws.ICentralBookingWSCancelBookingICFaultFaultFaultMessage;
+import se.vgregion.webbtidbok.ws.ICentralBookingWSConfirmBookingICFaultFaultFaultMessage;
 import se.vgregion.webbtidbok.ws.ICentralBookingWSGetBookingICFaultFaultFaultMessage;
 import se.vgregion.webbtidbok.ws.ICentralBookingWSGetBookingPlaceICFaultFaultFaultMessage;
+import se.vgregion.webbtidbok.ws.ICentralBookingWSGetBookingTimeICFaultFaultFaultMessage;
+import se.vgregion.webbtidbok.ws.ICentralBookingWSGetCalandarICFaultFaultFaultMessage;
 import se.vgregion.webbtidbok.ws.ObjectFactory;
 
-
-import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-
-
 public class WebServiceHelper {
-	
-	private ObjectFactory objectFactory = new ObjectFactory();
-	
-	//make web service call
-	CentralBookingWS centralBookingWS = new CentralBookingWS();
-	ICentralBookingWS ws = centralBookingWS.getBasicHttpBindingICentralBookingWS();
-	
-	//used to send whatever request, response depends on what ws-method was called
-	public BookingRequest getQueryWSRequest(State loginCredentials){
-		//"parameters"
-		JAXBElement<String> pnr = objectFactory.createBookingRequestPnr(loginCredentials.getPnr());
-		JAXBElement<String> pin = objectFactory.createBookingRequestPin(loginCredentials.getPasswd());
-		
-		//Zs12JzIW 19 121212-1212
-		//JAXBElement<String> pnr = objectFactory.createBookingRequestPnr("19121212-1212");
-		//JAXBElement<String> pin = objectFactory.createBookingRequestPin("Zs12JzIW");
 
-		
-		JAXBElement<String> key = objectFactory.createBookingRequestKey("asd");
-		JAXBElement<String> cryptedKey =objectFactory.createBookingRequestCryptedKey("asd");
-		JAXBElement<String> cert = objectFactory.createBookingRequestCert("NO");
-		
-		//create request object
-		BookingRequest request = objectFactory.createBookingRequest();
-		
-		
-		
-		
-		//setup request object
-		request.setPnr(pnr);
-		request.setPin(pin);
-		request.setKey(key);
-		request.setCryptedKey(cryptedKey);
-		request.setCert(cert);
+  private final ObjectFactory objectFactory = new ObjectFactory();
+  private StringEncrypter encrypter;
 
-		
-		return request;
-		
-	}
-	
-	public BookingRequest getQueryWSRequest(State loginCredentials, int centralTimeBookingId, String fromDatString, String toDatString){
-		//"parameters"
-		JAXBElement<String> pnr = objectFactory.createBookingRequestPnr(loginCredentials.getPnr());
-		JAXBElement<String> pin = objectFactory.createBookingRequestPin(loginCredentials.getPasswd());
-		
-		//Zs12JzIW 19 121212-1212
-		//JAXBElement<String> pnr = objectFactory.createBookingRequestPnr("19121212-1212");
-		//JAXBElement<String> pin = objectFactory.createBookingRequestPin("Zs12JzIW");
+  public void setEncrypter(StringEncrypter encrypter) {
+    this.encrypter = encrypter;
+  }
 
-		
-		JAXBElement<String> key = objectFactory.createBookingRequestKey("asd");
-		JAXBElement<String> cryptedKey =objectFactory.createBookingRequestCryptedKey("asd");
-		JAXBElement<String> cert = objectFactory.createBookingRequestCert("NO");
-		
-		JAXBElement<String> fromDat = objectFactory.createBookingRequestFromDat(fromDatString);
-		JAXBElement<String> toDat = objectFactory.createBookingRequestToDat(toDatString);
-		
-		
-		//create request object
-		BookingRequest request = objectFactory.createBookingRequest();
-		
-		
-		
-		
-		//setup request object
-		request.setPnr(pnr);
-		request.setPin(pin);
-		request.setKey(key);
-		request.setCryptedKey(cryptedKey);
-		request.setCert(cert);
-		//set values for getting calendars
-		request.setFromDat(fromDat);
-		request.setToDat(toDat);
-		request.setCentralTidbokID(centralTimeBookingId);
-		
-		return request;
-		
-	}
-	
-	
-	
-	public ArrayOfBookingTime getQueryWSRequestBookingTime(BookingRequest request){
-		
-		CentralBookingWS centralBookingWS = new CentralBookingWS();
-		ICentralBookingWS ws = centralBookingWS.getBasicHttpBindingICentralBookingWS();
-		
-		try{
-			
-			return ws.getBookingTime(request);
-			//loginCredentials.setBookingResponse(response);
-			
-		}
-		catch(ICentralBookingWSGetBookingTimeICFaultFaultFaultMessage ex){
-			ex.printStackTrace();
-			System.out.println(ex.getMessage());
-			return null;
-			
-		}
-		
-		
-	}
-	
-	public ArrayOfBookingPlace getQueryWSRequestPlaces(BookingRequest request){
-		//"parameters"
-		//JAXBElement<String> pnr = objectFactory.createBookingRequestPnr(loginCredentials.getPnr());
-		//JAXBElement<String> pin = objectFactory.createBookingRequestPin(loginCredentials.getPasswd());
-		
-		//Zs12JzIW 19 121212-1212
-		//JAXBElement<String> pnr = objectFactory.createBookingRequestPnr("19121212-1212");
-		//JAXBElement<String> pin = objectFactory.createBookingRequestPin("Zs12JzIW");
+  // make web service call
+  CentralBookingWS centralBookingWS = new CentralBookingWS();
+  ICentralBookingWS ws = centralBookingWS.getBasicHttpBindingICentralBookingWS();
 
-		
-		//JAXBElement<String> key = objectFactory.createBookingRequestKey("asd");
-		//JAXBElement<String> cryptedKey =objectFactory.createBookingRequestCryptedKey("asd");
-		//JAXBElement<String> cert = objectFactory.createBookingRequestCert("NO");
-		
-		//make web service call
-		CentralBookingWS centralBookingWS = new CentralBookingWS();
-		ICentralBookingWS ws = centralBookingWS.getBasicHttpBindingICentralBookingWS();
-		
-		try{
-			
-			return ws.getBookingPlace(request);
-			//loginCredentials.setBookingResponse(response);
-			
-		}
-		catch(ICentralBookingWSGetBookingPlaceICFaultFaultFaultMessage ex){
-			ex.printStackTrace();
-			System.out.println(ex.getMessage());
-			return null;
-			
-		}
-		
-		
-	}
-	
-	public ArrayOfCalendar getQueryWSRequestCalendar(BookingRequest request){
-		//"parameters"
-		//JAXBElement<String> pnr = objectFactory.createBookingRequestPnr(loginCredentials.getPnr());
-		//JAXBElement<String> pin = objectFactory.createBookingRequestPin(loginCredentials.getPasswd());
-		
-		//Zs12JzIW 19 121212-1212
-		//JAXBElement<String> pnr = objectFactory.createBookingRequestPnr("19121212-1212");
-		//JAXBElement<String> pin = objectFactory.createBookingRequestPin("Zs12JzIW");
+  // used to send whatever request, response depends on what ws-method was called
+  public BookingRequest getQueryWSRequest(State loginCredentials) {
+    // "parameters"
+    JAXBElement<String> pnr = objectFactory.createBookingRequestPnr(loginCredentials.getPnr());
+    JAXBElement<String> pin = objectFactory.createBookingRequestPin(loginCredentials.getPasswd());
 
-		
-		//JAXBElement<String> key = objectFactory.createBookingRequestKey("asd");
-		//JAXBElement<String> cryptedKey =objectFactory.createBookingRequestCryptedKey("asd");
-		//JAXBElement<String> cert = objectFactory.createBookingRequestCert("NO");
-		
-		//make web service call
-		CentralBookingWS centralBookingWS = new CentralBookingWS();
-		ICentralBookingWS ws = centralBookingWS.getBasicHttpBindingICentralBookingWS();
-		
-		try{
-			
-			return ws.getCalandar(request);
-			//loginCredentials.setBookingResponse(response);
-			
-		}
-		catch(ICentralBookingWSGetCalandarICFaultFaultFaultMessage ex){
-			ex.printStackTrace();
-			System.out.println(ex.getMessage());
-			return null;
-			
-		}
-		
-		
-	}
-	
-	
-	public ArrayOfBookingTime getQueryWSRequestTime(BookingRequest request){
-		//"parameters"
-		//JAXBElement<String> pnr = objectFactory.createBookingRequestPnr(loginCredentials.getPnr());
-		//JAXBElement<String> pin = objectFactory.createBookingRequestPin(loginCredentials.getPasswd());
-		
-		//Zs12JzIW 19 121212-1212
-		//JAXBElement<String> pnr = objectFactory.createBookingRequestPnr("19121212-1212");
-		//JAXBElement<String> pin = objectFactory.createBookingRequestPin("Zs12JzIW");
+    // Zs12JzIW 19 121212-1212
+    // JAXBElement<String> pnr = objectFactory.createBookingRequestPnr("19121212-1212");
+    // JAXBElement<String> pin = objectFactory.createBookingRequestPin("Zs12JzIW");
 
-		
-		//JAXBElement<String> key = objectFactory.createBookingRequestKey("asd");
-		//JAXBElement<String> cryptedKey =objectFactory.createBookingRequestCryptedKey("asd");
-		//JAXBElement<String> cert = objectFactory.createBookingRequestCert("NO");
-		
-		//make web service call
-		CentralBookingWS centralBookingWS = new CentralBookingWS();
-		ICentralBookingWS ws = centralBookingWS.getBasicHttpBindingICentralBookingWS();
-		
-		try{
-			
-			ArrayOfBookingTime arrays = ws.getBookingTime(request);
-			//loginCredentials.setBookingResponse(response);
-			List<BookingTime> list = arrays.getBookingTime();
-			for(BookingTime bt: list){
-				
-				System.out.println("BookingTime Month: " + bt.getDatum().getMonth());
-				
-			}
-			
-			return arrays;
-			
-		}
-		catch(ICentralBookingWSGetBookingTimeICFaultFaultFaultMessage ex){
-			ex.printStackTrace();
-			System.out.println(ex.getMessage());
-			return null;
-			
-		}
-		
-		
-	}
-	
-	
-	
-	
-	
-	//This to get the place of the visit for Screening, ie: Example-hospital AB
-	public ArrayOfBookingPlace getBookingPlaceFromWS(BookingRequest request){
-		ArrayOfBookingPlace bookingArr = new ArrayOfBookingPlace();
-		try {
-			bookingArr = ws.getBookingPlace(request);
-			return bookingArr;
-		} catch (ICentralBookingWSGetBookingPlaceICFaultFaultFaultMessage e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			System.out.println(e.getMessage());
-			return null;
-		}
-	}
-	
-	//Info concerning the booking, time, place, location, pnr, name etc
-	public BookingResponse getQueryWS(BookingRequest request){	
+    JAXBElement<String> key = objectFactory.createBookingRequestKey("asd");
+    JAXBElement<String> cryptedKey = objectFactory.createBookingRequestCryptedKey("asd");
+    JAXBElement<String> cert = objectFactory.createBookingRequestCert("YES");
 
-		
-		try{
-			
-			return ws.getBooking(request);
-			//loginCredentials.setBookingResponse(response);
-			
-		}
-		catch(ICentralBookingWSGetBookingICFaultFaultFaultMessage ex){
-			ex.printStackTrace();
-			System.out.println(ex.getMessage());
-			return null;
-			
-		}
-	}
-	
-	
-	
-	//Info concerning the booking, time, place, location, pnr, name etc
-	/***
-	 * method update booking
-	 * 
-	 */
-	public BookingResponse setBookingUpdate(BookingRequest request){	
+    // create request object
+    BookingRequest request = objectFactory.createBookingRequest();
 
-		
-		try{
-			System.out.println("---------XXXXXXXXXXXXXX-----------");
-			
-			System.out.println(request.getBokadTid().getDay() + " " + request.getBokadTid().getMonth() + " " + request.getBokadTid().getYear()  + " " + request.getBokadTid().getHour() + request.getBokadTid().getMinute()  );
-			System.out.println(request.getCentralTidbokID());
-			System.out.println(request.getPin());
-			System.out.println(request.getPnr());
-			//System.out.println(request.getFromDat().getValue());
-			//System.out.println(request.getToDat().getValue());
-			
-			
-			
-			return ws.confirmBooking(request);
-			//loginCredentials.setBookingResponse(response);
-			
-		}
-		catch(ICentralBookingWSConfirmBookingICFaultFaultFaultMessage ex){
-			ex.printStackTrace();
-			System.out.println(ex.getMessage());
-			return null;
-			
-		}
-	}
-	
-	
-	/*
-	 * method cancel booking 
-	 * 
-	 * @input parameter request
-	 */
-	public boolean getQueryWSCancelBooking(BookingRequest request){	
+    // setup request object
+    request.setPnr(pnr);
+    request.setPin(pin);
+    request.setKey(key);
+    request.setCryptedKey(cryptedKey);
+    request.setCert(cert);
 
-		
-		try{
-			
-			//return ws.getBooking(request);
-			//loginCredentials.setBookingResponse(response);
-			return ws.cancelBooking(request);
-			
-		}
-		catch(ICentralBookingWSCancelBookingICFaultFaultFaultMessage ex){
-			ex.printStackTrace();
-			System.out.println(ex.getMessage());
-			return false;
-			
-		}
-	}
-	
+    return request;
+
+  }
+
+  public BookingRequest getQueryWSRequest(State loginCredentials, int centralTimeBookingId, String fromDatString, String toDatString) {
+    // "parameters"
+    JAXBElement<String> pnr = objectFactory.createBookingRequestPnr(loginCredentials.getPnr());
+    JAXBElement<String> pin = objectFactory.createBookingRequestPin(loginCredentials.getPasswd());
+
+    // Zs12JzIW 19 121212-1212
+    // JAXBElement<String> pnr = objectFactory.createBookingRequestPnr("19121212-1212");
+    // JAXBElement<String> pin = objectFactory.createBookingRequestPin("Zs12JzIW");
+
+    JAXBElement<String> key = objectFactory.createBookingRequestKey("asd");
+    JAXBElement<String> cryptedKey = objectFactory.createBookingRequestCryptedKey("asd");
+    JAXBElement<String> cert = objectFactory.createBookingRequestCert("YES");
+
+    JAXBElement<String> fromDat = objectFactory.createBookingRequestFromDat(fromDatString);
+    JAXBElement<String> toDat = objectFactory.createBookingRequestToDat(toDatString);
+
+    // create request object
+    BookingRequest request = objectFactory.createBookingRequest();
+
+    // setup request object
+    request.setPnr(pnr);
+    request.setPin(pin);
+    request.setKey(key);
+    request.setCryptedKey(cryptedKey);
+    request.setCert(cert);
+    // set values for getting calendars
+    request.setFromDat(fromDat);
+    request.setToDat(toDat);
+    request.setCentralTidbokID(centralTimeBookingId);
+
+    return request;
+
+  }
+
+  public ArrayOfBookingTime getQueryWSRequestBookingTime(BookingRequest request) {
+
+    CentralBookingWS centralBookingWS = new CentralBookingWS();
+    ICentralBookingWS ws = centralBookingWS.getBasicHttpBindingICentralBookingWS();
+
+    try {
+
+      return ws.getBookingTime(request);
+      // loginCredentials.setBookingResponse(response);
+
+    } catch (ICentralBookingWSGetBookingTimeICFaultFaultFaultMessage ex) {
+      ex.printStackTrace();
+      System.out.println(ex.getMessage());
+      return null;
+
+    }
+
+  }
+
+  public ArrayOfBookingPlace getQueryWSRequestPlaces(BookingRequest request) {
+    // "parameters"
+    // JAXBElement<String> pnr = objectFactory.createBookingRequestPnr(loginCredentials.getPnr());
+    // JAXBElement<String> pin = objectFactory.createBookingRequestPin(loginCredentials.getPasswd());
+
+    // Zs12JzIW 19 121212-1212
+    // JAXBElement<String> pnr = objectFactory.createBookingRequestPnr("19121212-1212");
+    // JAXBElement<String> pin = objectFactory.createBookingRequestPin("Zs12JzIW");
+
+    // JAXBElement<String> key = objectFactory.createBookingRequestKey("asd");
+    // JAXBElement<String> cryptedKey =objectFactory.createBookingRequestCryptedKey("asd");
+    // JAXBElement<String> cert = objectFactory.createBookingRequestCert("NO");
+
+    // make web service call
+    CentralBookingWS centralBookingWS = new CentralBookingWS();
+    ICentralBookingWS ws = centralBookingWS.getBasicHttpBindingICentralBookingWS();
+
+    try {
+
+      return ws.getBookingPlace(request);
+      // loginCredentials.setBookingResponse(response);
+
+    } catch (ICentralBookingWSGetBookingPlaceICFaultFaultFaultMessage ex) {
+      ex.printStackTrace();
+      System.out.println(ex.getMessage());
+      return null;
+
+    }
+
+  }
+
+  public ArrayOfCalendar getQueryWSRequestCalendar(BookingRequest request) {
+    // "parameters"
+    // JAXBElement<String> pnr = objectFactory.createBookingRequestPnr(loginCredentials.getPnr());
+    // JAXBElement<String> pin = objectFactory.createBookingRequestPin(loginCredentials.getPasswd());
+
+    // Zs12JzIW 19 121212-1212
+    // JAXBElement<String> pnr = objectFactory.createBookingRequestPnr("19121212-1212");
+    // JAXBElement<String> pin = objectFactory.createBookingRequestPin("Zs12JzIW");
+
+    // JAXBElement<String> key = objectFactory.createBookingRequestKey("asd");
+    // JAXBElement<String> cryptedKey =objectFactory.createBookingRequestCryptedKey("asd");
+    // JAXBElement<String> cert = objectFactory.createBookingRequestCert("NO");
+
+    // make web service call
+    CentralBookingWS centralBookingWS = new CentralBookingWS();
+    ICentralBookingWS ws = centralBookingWS.getBasicHttpBindingICentralBookingWS();
+
+    try {
+
+      return ws.getCalandar(request);
+      // loginCredentials.setBookingResponse(response);
+
+    } catch (ICentralBookingWSGetCalandarICFaultFaultFaultMessage ex) {
+      ex.printStackTrace();
+      System.out.println(ex.getMessage());
+      return null;
+
+    }
+
+  }
+
+  public ArrayOfBookingTime getQueryWSRequestTime(BookingRequest request) {
+    // "parameters"
+    // JAXBElement<String> pnr = objectFactory.createBookingRequestPnr(loginCredentials.getPnr());
+    // JAXBElement<String> pin = objectFactory.createBookingRequestPin(loginCredentials.getPasswd());
+
+    // Zs12JzIW 19 121212-1212
+    // JAXBElement<String> pnr = objectFactory.createBookingRequestPnr("19121212-1212");
+    // JAXBElement<String> pin = objectFactory.createBookingRequestPin("Zs12JzIW");
+
+    // JAXBElement<String> key = objectFactory.createBookingRequestKey("asd");
+    // JAXBElement<String> cryptedKey =objectFactory.createBookingRequestCryptedKey("asd");
+    // JAXBElement<String> cert = objectFactory.createBookingRequestCert("NO");
+
+    // make web service call
+    CentralBookingWS centralBookingWS = new CentralBookingWS();
+    ICentralBookingWS ws = centralBookingWS.getBasicHttpBindingICentralBookingWS();
+
+    try {
+
+      ArrayOfBookingTime arrays = ws.getBookingTime(request);
+      // loginCredentials.setBookingResponse(response);
+      List<BookingTime> list = arrays.getBookingTime();
+      for (BookingTime bt : list) {
+
+        System.out.println("BookingTime Month: " + bt.getDatum().getMonth());
+
+      }
+
+      return arrays;
+
+    } catch (ICentralBookingWSGetBookingTimeICFaultFaultFaultMessage ex) {
+      ex.printStackTrace();
+      System.out.println(ex.getMessage());
+      return null;
+
+    }
+
+  }
+
+  // This to get the place of the visit for Screening, ie: Example-hospital AB
+  public ArrayOfBookingPlace getBookingPlaceFromWS(BookingRequest request) {
+    ArrayOfBookingPlace bookingArr = new ArrayOfBookingPlace();
+    try {
+      bookingArr = ws.getBookingPlace(request);
+      return bookingArr;
+    } catch (ICentralBookingWSGetBookingPlaceICFaultFaultFaultMessage e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+      System.out.println(e.getMessage());
+      return null;
+    }
+  }
+
+  // Info concerning the booking, time, place, location, pnr, name etc
+  public BookingResponse getQueryWS(BookingRequest request) {
+
+    try {
+
+      return ws.getBooking(request);
+      // loginCredentials.setBookingResponse(response);
+
+    } catch (ICentralBookingWSGetBookingICFaultFaultFaultMessage ex) {
+      ex.printStackTrace();
+      System.out.println(ex.getMessage());
+      return null;
+
+    }
+  }
+
+  // Info concerning the booking, time, place, location, pnr, name etc
+  /***
+   * method update booking
+   * 
+   */
+  public BookingResponse setBookingUpdate(BookingRequest request) {
+
+    try {
+      System.out.println("---------XXXXXXXXXXXXXX-----------");
+
+      System.out.println(request.getBokadTid().getDay() + " " + request.getBokadTid().getMonth() + " " + request.getBokadTid().getYear() + " " + request.getBokadTid().getHour()
+          + request.getBokadTid().getMinute());
+      System.out.println(request.getCentralTidbokID());
+      System.out.println(request.getPin());
+      System.out.println(request.getPnr());
+      // System.out.println(request.getFromDat().getValue());
+      // System.out.println(request.getToDat().getValue());
+
+      return ws.confirmBooking(request);
+      // loginCredentials.setBookingResponse(response);
+
+    } catch (ICentralBookingWSConfirmBookingICFaultFaultFaultMessage ex) {
+      ex.printStackTrace();
+      System.out.println(ex.getMessage());
+      return null;
+
+    }
+  }
+
+  /*
+   * method cancel booking
+   * 
+   * @input parameter request
+   */
+  public boolean getQueryWSCancelBooking(BookingRequest request) {
+
+    try {
+
+      // return ws.getBooking(request);
+      // loginCredentials.setBookingResponse(response);
+      return ws.cancelBooking(request);
+
+    } catch (ICentralBookingWSCancelBookingICFaultFaultFaultMessage ex) {
+      ex.printStackTrace();
+      System.out.println(ex.getMessage());
+      return false;
+
+    }
+  }
 
 }
