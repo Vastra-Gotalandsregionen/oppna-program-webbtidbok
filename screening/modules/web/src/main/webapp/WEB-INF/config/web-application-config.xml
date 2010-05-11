@@ -30,12 +30,25 @@
 	<!-- Scans for application @Components to deploy -->
 	<context:component-scan base-package="org.springframework.webflow.samples.booking" />
 	<bean id="loginService" class="se.vgregion.webbtidbok.Login">
+		<property name="webServiceHelper" ref="helper"/>
+		<property name="encrypter" ref="stringEncrypter"/>
 	</bean>
 	<bean id="bookingService" class="se.vgregion.webbtidbok.BookingService">
+		<property name="helper" ref="helper" />
+	</bean>
+	<bean id="helper" class="se.vgregion.webbtidbok.WebServiceHelper">
+		<property name="encrypter" ref="stringEncrypter" />
+	</bean>
+	<bean id="stringEncrypter" class="se.vgregion.webbtidbok.crypto.StringEncrypter">
+		<property name="keyStoreFile" value="classpath:asd.pfx" />
+		<property name="keyAlias"
+			value="a6c21dcdd9534d742aa1bd4afae16210_956e2a3a-b426-49f4-a107-72c603d2f58c" />
+		<property name="keyPassWord" value="asd" />
 	</bean>
 	<bean id="validationService" class="se.vgregion.webbtidbok.ValidationLogin">
 	</bean>
 	<bean id="calendarService" class="se.vgregion.webbtidbok.CalendarUtil">
+			<property name="helper" ref="helper" />
 	</bean>
 	
 	<bean id="sendMailService" class="se.vgregion.webbtidbok.mail.SendEmailHandler">
