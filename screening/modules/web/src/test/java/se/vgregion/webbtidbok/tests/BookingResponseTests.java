@@ -27,6 +27,7 @@ import org.junit.Test;
 import org.*;
 
 import se.vgregion.webbtidbok.BookingService;
+import se.vgregion.webbtidbok.BookingServiceInterface;
 import se.vgregion.webbtidbok.State;
 import se.vgregion.webbtidbok.WebServiceHelper;
 import se.vgregion.webbtidbok.ws.*;
@@ -92,7 +93,7 @@ public class BookingResponseTests {
 		
 		
 		
-		BookingService service = new BookingService();
+		BookingServiceInterface service = new BookingService();
 		
 		State credentials = new State();
 		//credentials.setPasswd("Zs12JzIW");

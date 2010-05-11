@@ -78,7 +78,7 @@ public class BookingTimeTests {
 		
 		System.out.println(tCal.getTime().toString());
 		
-		BookingService service = new BookingService();
+		BookingServiceInterface service = new BookingService();
 		
 		State credentials = new State();
 		//credentials.setPasswd("Zs12JzIW");
@@ -190,7 +190,7 @@ public class BookingTimeTests {
 		
 		System.out.println(tCal.getTime().toString());
 		
-		BookingService service = new BookingService();
+		BookingServiceInterface service = new BookingService();
 		
 		State credentials = new State();
 		//credentials.setPasswd("Zs12JzIW");
@@ -254,7 +254,7 @@ public class BookingTimeTests {
 		
 		System.out.println(tCal.getTime().toString());
 		
-		BookingService service = new BookingService();
+		BookingServiceInterface service = new BookingService();
 		
 		State credentials = new State();
 		//credentials.setPasswd("Zs12JzIW");

@@ -29,7 +29,7 @@ import se.vgregion.webbtidbok.ws.ArrayOfCalendar;
 import se.vgregion.webbtidbok.ws.BookingRequest;
 import se.vgregion.webbtidbok.ws.ObjectFactory;
 
-public class CalendarUtil {
+public class CalendarUtil implements CalendarUtilInterface {
   static int PREVIOUS = -1;
   static int NEXT = 1;
   // Empty first element to start actual days on index 1
@@ -342,17 +342,10 @@ public class CalendarUtil {
 
     ArrayOfCalendar calArr = helper.getQueryWSRequestCalendar(request);
     List<se.vgregion.webbtidbok.ws.Calendar> calList = new ArrayList<se.vgregion.webbtidbok.ws.Calendar>();
-    try {
+    if (calArr != null && calArr.getCalendar() != null && !calArr.getCalendar().isEmpty()) {
       calList = calArr.getCalendar();
-
-      if (calList.isEmpty()) {
-        this.setEmptyCalendar(true);
-      } else {
-        this.setEmptyCalendar(false);
-      }
-    } catch (NullPointerException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
+      this.setEmptyCalendar(false);
+    } else {
       this.setEmptyCalendar(true);
     }
     List<Calendar> returnCal = new ArrayList<Calendar>();
@@ -389,15 +382,13 @@ public class CalendarUtil {
           isLink.add(false);
 
           this.setColor("#fff");
-        } // if day from row is before today, do not render it in calendar, thus days.add("<empty string>")
-        else if (dayToEvaluate.intValue() < today && masterCalendar.get(Calendar.MONTH) == currentMonth) {
+        } else if (dayToEvaluate.intValue() < today && masterCalendar.get(Calendar.MONTH) == currentMonth) {
+          // if day from row is before today, do not render it in calendar, thus days.add("<empty string>")
           days.add("" + dayToEvaluate);
           isLink.add(false);
 
           this.setColor("#e6e6e6");
-        }
-
-        else if ((dayToEvaluate.intValue() >= today && masterCalendar.get(Calendar.MONTH) == currentMonth) || (masterCalendar.get(Calendar.MONTH) > currentMonth)) {
+        } else if ((dayToEvaluate.intValue() >= today && masterCalendar.get(Calendar.MONTH) == currentMonth) || (masterCalendar.get(Calendar.MONTH) > currentMonth)) {
           if (availableDates.size() > 0) {
             boolean dayToEvaluateIsFound = false;
             for (int index = 0; index < availableDates.size(); index++) {
@@ -421,6 +412,11 @@ public class CalendarUtil {
             isLink.add(false);
             setColor("#e6e6e6");
           }
+        } else if (masterCalendar.get(Calendar.MONTH) < currentMonth) {
+          days.add("" + dayToEvaluate);
+          isLink.add(false);
+
+          this.setColor("#e6e6e6");
         }
       }
     }

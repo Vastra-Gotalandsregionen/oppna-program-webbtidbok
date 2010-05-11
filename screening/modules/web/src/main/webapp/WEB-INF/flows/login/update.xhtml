@@ -483,35 +483,34 @@
 						</td>
 					</tr>
 					<p />
-					
-					<h:form id="timeTable" style="display: inline; text-align: right;" >
-						<table border="0">
-							
-							<th style="text-align: center; background: #e6e6e6"><h3 style="display: inline"><h:outputText value="#{calendarService.currentDayMonthAndYear}" /></h3></th>
-	
-						</table>
-					</h:form>
-					<tr>
-						<td>	
-							<div id="placediv_time" style="display:inline;background-color:#f3f1f2;" >
+						<h:form id="timeTable" style="display: inline; text-align: right;">
+							<table border="0">
 								
-								
-								<h:form id="timeTable" style="display: inline; text-align: right;" >
-									<h:dataTable id="timeTable" value="#{timeListLocal}" var="btl" rendered="#{timeListLocal.rowCount > 0}">
+								<th style="text-align: center; background: #e6e6e6"><h3 style="display: inline"><h:outputText value="#{calendarService.currentDayMonthAndYear}" /></h3></th>
+		
+							</table>
+						</h:form>
+						<tr>
+							<td>	
+								<div id="placediv_time" style="display:inline;background-color:#f3f1f2;" >
 									
-										<h:column>
-										<f:facet name="header">Tid</f:facet>
-											#{btl.time}
-										</h:column>
-										<h:column>
-											<h:commandButton id="timeButton" value="Välj" action="selecttime" processIds="*" />
-										</h:column>
-									</h:dataTable>
-								</h:form>
-							</div>   <!-- boxleft3inside -->
-
-						</td>
-					</tr>
+									<h:form id="timeTable" style="display: inline; text-align: right;" >
+										<h:dataTable id="timeTable" value="#{timeListLocal}" var="btl" rendered="#{timeListLocal.rowCount > 0}">
+										
+											<h:column>
+											<f:facet name="header">Tid</f:facet>
+												#{btl.time}
+											</h:column>
+											<h:column>
+												<h:commandButton id="timeButton" value="Välj" action="selecttime" processIds="*" />
+											</h:column>
+										</h:dataTable>
+									</h:form>
+								</div>   <!-- boxleft3inside -->
+	
+							</td>
+						</tr>
+					<h:outputText value="Det finns tyvärr inga lediga tider för undersökning på den mottagning du valt." rendered="#{timeListLocal.rowCount &lt; 1}"/>
 					<tr>
 						<td style="display: inline; text-align: right;" >
 							<h:form id="cancelForm" style="display: inline; text-align: right;padding-left: 37.5em;" >
