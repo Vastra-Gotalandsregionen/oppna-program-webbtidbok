@@ -41,17 +41,20 @@ import org.springframework.core.io.Resource;
 
 public class StringEncrypterTest {
 
+    private static final String alias = "a6c21dcdd9534d742aa1bd4afae16210_956e2a3a-b426-49f4-a107-72c603d2f58c";
+
     private static final String MESSAGE_TO_ENCRYPT = "Message to encrypt";
     private StringEncrypter stringEncrypter;
     private DefaultResourceLoader defaultResourceLoader;
+    private Resource resource;
 
     @Before
     public void setUp() throws Exception {
         stringEncrypter = new StringEncrypter();
-        stringEncrypter.setKeyAlias("a6c21dcdd9534d742aa1bd4afae16210_956e2a3a-b426-49f4-a107-72c603d2f58c");
+        stringEncrypter.setKeyAlias(alias);
         stringEncrypter.setKeyPassWord("asd");
         defaultResourceLoader = new DefaultResourceLoader();
-        Resource resource = defaultResourceLoader.getResource("classpath:asd.pfx");
+        resource = defaultResourceLoader.getResource("classpath:asd.pfx");
         stringEncrypter.setKeyStoreFile(resource);
     }
 
@@ -59,6 +62,14 @@ public class StringEncrypterTest {
     public void testEncrypt() throws Exception {
         byte[] encryptedStr = stringEncrypter.encrypt(MESSAGE_TO_ENCRYPT);
         assertNotNull(encryptedStr);
+    }
+
+    @Test
+    public void testSignString() throws Exception {
+        String signValueResult = "X50NI38KYMCBna3+cW/w6FFkQPZpN5/BvI8LbLM0+rbc2MrvKRtSp+e8dyO8dHBnLIiWSSfMzlcudyyfKUoK4r0PlAxZVG3rbGHCpdlYBUofJWNbdaLKkorMuedu5REcLzx0yxsOcjxULz3Zi4aAZtrc6i0082NAhvVTrzz6YFE=";
+        byte[] signString = stringEncrypter.signString("knowit");
+        String result = stringEncrypter.encodeToBase64(signString);
+        assertEquals(signValueResult, result);
     }
 
     @Test
@@ -77,7 +88,7 @@ public class StringEncrypterTest {
 
     @Test
     public void testBase64Encoding() {
-        String result = stringEncrypter.encode("Test".getBytes());
+        String result = stringEncrypter.encodeToBase64("Test".getBytes());
         byte[] decodeBase64 = Base64.decodeBase64(result);
         assertEquals("Test", new String(decodeBase64));
     }
@@ -122,4 +133,5 @@ public class StringEncrypterTest {
 
         return cipher;
     }
+
 }
