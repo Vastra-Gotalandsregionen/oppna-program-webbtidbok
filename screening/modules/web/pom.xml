@@ -30,7 +30,6 @@
 	<name>${project.artifactId}</name>
 
 	<build>
-		<finalName>${project.artifactId}</finalName>
 		<plugins>
 			<plugin>
 				<!--
