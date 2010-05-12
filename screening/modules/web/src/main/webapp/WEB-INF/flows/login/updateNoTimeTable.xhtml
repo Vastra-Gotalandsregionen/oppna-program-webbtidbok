@@ -26,7 +26,7 @@
 	    		xmlns:ui="http://java.sun.com/jsf/facelets"
 	  			xmlns:h="http://java.sun.com/jsf/html"
 	  			xmlns:f="http://java.sun.com/jsf/core"
-	  			xmlns:sf="http://www.springframework.org/tags/faces"		
+	  			xmlns:sf="http://www.springframework.org/tags/faces"
 				template="/WEB-INF/layouts/standard.xhtml">
 
 
@@ -178,7 +178,7 @@
 												<div style="text-align: left; width: 14em;">
 													<!--		HEADER		-->
 													<!--	 <   April  >	 	-->
-													<table border="2" style="margin-left: auto; margin-right: auto; ">
+													<table border="0" style="margin-left: auto; margin-right: auto; ">
 														<th style="width: 2em; text-align: left; background: #e6e6e6"><h:commandLink id="prev" value="&lt;" action="prev"/></th>
 														<th style="width: 10em; text-align: center; background: #e6e6e6"><h3 style="display: inline"><h:outputText value="#{calendarService.currentMonthAndYear}" /></h3></th>
 														<th style="width: 2em; text-align: right; background: #e6e6e6"><h:commandLink id="next" value="&gt;" action="next"/></th>
@@ -455,7 +455,7 @@
 								<table>
 									<td>
 										<tr>
-											<p>Det finns tyvärr inga lediga tider för undersökning på den mottagning du valt. </p>
+											<h:outputText value="Det finns tyvärr inga lediga tider för undersökning på den mottagning du valt."/>
 										</tr>
 									</td>
 								</table>
