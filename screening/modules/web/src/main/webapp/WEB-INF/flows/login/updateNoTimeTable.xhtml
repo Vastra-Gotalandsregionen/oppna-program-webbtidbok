@@ -185,7 +185,7 @@
 													</table>
 													<!--		HEADER		-->
 													<!--	Må Ti On To Fr Lö Sö	-->
-													<table border="1" style="text-align: right; width: 14em;">
+													<table border="0" style="text-align: right; width: 14em;">
 														<th style="width: 2em;">Må</th><th style="width: 2em;">Ti</th><th style="width: 2em;">On</th>
 														<th style="width: 2em;">To</th><th style="width: 2em;">Fr</th><th style="width: 2em;">Lö</th><th style="width: 2em;">Sö</th>
 														<!-- week 1 -->
@@ -440,38 +440,64 @@
 					<!-- This should be dynamic! only visable after clicking on the "Visa tid" button -->					
 					
 					<!-- This should be dynamic! only visable after clicking on the a date in the calendar -->		
-					<tr>
-						<td>
-							<div id="placediv_time" style="display:inline;background-color:#f3f1f2;" >
-		
-								<table>
-									<tr>
-										<td style="">
-											#{selectedPlace.clinic}, #{selectedPlace.address}												
-										</td>
-									</tr>
-								</table>
-								<p />
-								<table>
-									<td>
-										<tr>
-											<h:outputText value="Det finns tyvärr inga lediga tider för undersökning på den mottagning du valt."/>
-										</tr>
-									</td>
-								</table>
-							</div>   <!-- boxleft3inside -->
-						</td>
-					</tr>
-					<tr>
-						<td style="display: inline; text-align: right;" >
-							<h:form id="cancelForm" style="display: inline; text-align: right;padding-left: 37.5em;" >
-								<sf:commandButton id="cancelButton" value="Avbryt" processIds="*" action="cancel" style="width: 100px;" />
-							</h:form>
-						</td>
-    				</tr>					
-				</table>				
-		</div>	<!-- boxmiddle -->
-		</div> <!-- boxcontainer -->
+
+					
+				</table>
+				
+				
+                <table>
+
+                    <tr>
+
+                        <td>
+                            <div id="placediv_time" style="display:inline;background-color:#f3f1f2;" >
+                                <table>
+                                    <tr>
+                                        <td style="background-color:#f3f1f2;width: 800px" >     
+                                            <h3 style="display: inline"> Välj tid</h3>
+                                            <h:form id="helpForm" style="display: inline; text-align: right;" >
+                                            <div class="image_block" style="display: inline;text-align: right;padding-left: 36em;"><a href="help" target="_new"><img src="../VGRImages/help.gif" /></a>
+                                                </div>
+                                            </h:form>   
+                                        </td>
+                                        
+                                    </tr>
+                                </table> 
+                            </div>   <!-- boxleft3inside -->
+                            
+                            
+                        </td>
+                    </tr>
+                </table>
+                <table>
+                    <tr>
+                        <td>
+                        #{selectedPlace.clinic} , #{selectedPlace.address}
+
+                        </td>
+                    </tr>
+                    <p />
+                        <h:form id="timeTable" style="display: inline; text-align: right;">
+                            <table border="0">
+                                
+                                <th style="text-align: center; background: #e6e6e6"><h3 style="display: inline"><h:outputText value="#{calendarService.currentDayMonthAndYear}" /></h3></th>
+        
+                            </table>
+                        </h:form>
+                       
+                    <h:outputText value="Det finns tyvärr inga lediga tider för undersökning på den mottagning du valt." rendered="#{timeListLocal.rowCount &lt; 1}"/>
+                    <tr>
+                        <td style="display: inline; text-align: right;" >
+                            <h:form id="cancelForm" style="display: inline; text-align: right;padding-left: 37.5em;" >
+                                <sf:commandButton id="cancelButton" value="Avbryt" processIds="*" action="cancel" style="width: 100px;" />
+                            </h:form>
+                        </td>
+
+                    </tr>
+                </table>
+                
+        </div>  <!-- boxmiddle -->
+        </div> <!-- boxcontainer -->
 			
 </ui:define>
 
