@@ -63,17 +63,18 @@ public class Login {
 
   public boolean login(State loginCredentials) throws Exception {
 
-    byte[] encrypt = encrypter.encrypt(loginCredentials.getPasswd());
-    String encode = encrypter.encode(encrypt);
+    BookingRequest request = objectFactory.createBookingRequest();
+
+    byte[] encrypted = encrypter.signString(loginCredentials.getPasswd());
+    String encoded = encrypter.encodeToBase64(encrypted);
     // "parameters"
     JAXBElement<String> pnr = objectFactory.createBookingRequestPnr(loginCredentials.getPnr());
     JAXBElement<String> pin = objectFactory.createBookingRequestPin(loginCredentials.getPasswd());
-    JAXBElement<String> key = objectFactory.createBookingRequestKey("asd");
-    JAXBElement<String> cryptedKey = objectFactory.createBookingRequestCryptedKey(encode);
+    JAXBElement<String> key = objectFactory.createBookingRequestKey(loginCredentials.getPasswd());
+    JAXBElement<String> cryptedKey = objectFactory.createBookingRequestCryptedKey(encoded);
+
     JAXBElement<String> cert = objectFactory.createBookingRequestCert("YES");
 
-    // create request object
-    BookingRequest request = objectFactory.createBookingRequest();
     // setup request object
     request.setPnr(pnr);
     request.setPin(pin);

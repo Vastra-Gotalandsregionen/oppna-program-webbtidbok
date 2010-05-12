@@ -51,18 +51,23 @@ public class WebServiceHelper {
   CentralBookingWS centralBookingWS = new CentralBookingWS();
   ICentralBookingWS ws = centralBookingWS.getBasicHttpBindingICentralBookingWS();
 
+  public byte[] pinSigner(String passwd) {
+    byte[] signedPasswd = encrypter.signString(passwd);
+    return signedPasswd;
+  }
+
+  public String encoder(byte[] signedPasswd) {
+    String encoded = encrypter.encodeToBase64(signedPasswd);
+    return encoded;
+  }
+
   // used to send whatever request, response depends on what ws-method was called
   public BookingRequest getQueryWSRequest(State loginCredentials) {
-    // "parameters"
+
     JAXBElement<String> pnr = objectFactory.createBookingRequestPnr(loginCredentials.getPnr());
     JAXBElement<String> pin = objectFactory.createBookingRequestPin(loginCredentials.getPasswd());
-
-    // Zs12JzIW 19 121212-1212
-    // JAXBElement<String> pnr = objectFactory.createBookingRequestPnr("19121212-1212");
-    // JAXBElement<String> pin = objectFactory.createBookingRequestPin("Zs12JzIW");
-
-    JAXBElement<String> key = objectFactory.createBookingRequestKey("asd");
-    JAXBElement<String> cryptedKey = objectFactory.createBookingRequestCryptedKey("asd");
+    JAXBElement<String> key = objectFactory.createBookingRequestKey(loginCredentials.getPasswd());
+    JAXBElement<String> cryptedKey = objectFactory.createBookingRequestCryptedKey(encoder(pinSigner(loginCredentials.getPasswd())));
     JAXBElement<String> cert = objectFactory.createBookingRequestCert("YES");
 
     // create request object
@@ -80,18 +85,12 @@ public class WebServiceHelper {
   }
 
   public BookingRequest getQueryWSRequest(State loginCredentials, int centralTimeBookingId, String fromDatString, String toDatString) {
-    // "parameters"
+
     JAXBElement<String> pnr = objectFactory.createBookingRequestPnr(loginCredentials.getPnr());
     JAXBElement<String> pin = objectFactory.createBookingRequestPin(loginCredentials.getPasswd());
-
-    // Zs12JzIW 19 121212-1212
-    // JAXBElement<String> pnr = objectFactory.createBookingRequestPnr("19121212-1212");
-    // JAXBElement<String> pin = objectFactory.createBookingRequestPin("Zs12JzIW");
-
-    JAXBElement<String> key = objectFactory.createBookingRequestKey("asd");
-    JAXBElement<String> cryptedKey = objectFactory.createBookingRequestCryptedKey("asd");
+    JAXBElement<String> key = objectFactory.createBookingRequestKey(loginCredentials.getPasswd());
+    JAXBElement<String> cryptedKey = objectFactory.createBookingRequestCryptedKey(encoder(pinSigner(loginCredentials.getPasswd())));
     JAXBElement<String> cert = objectFactory.createBookingRequestCert("YES");
-
     JAXBElement<String> fromDat = objectFactory.createBookingRequestFromDat(fromDatString);
     JAXBElement<String> toDat = objectFactory.createBookingRequestToDat(toDatString);
 
@@ -121,29 +120,15 @@ public class WebServiceHelper {
     try {
 
       return ws.getBookingTime(request);
-      // loginCredentials.setBookingResponse(response);
 
     } catch (ICentralBookingWSGetBookingTimeICFaultFaultFaultMessage ex) {
       ex.printStackTrace();
       System.out.println(ex.getMessage());
       return null;
-
     }
-
   }
 
   public ArrayOfBookingPlace getQueryWSRequestPlaces(BookingRequest request) {
-    // "parameters"
-    // JAXBElement<String> pnr = objectFactory.createBookingRequestPnr(loginCredentials.getPnr());
-    // JAXBElement<String> pin = objectFactory.createBookingRequestPin(loginCredentials.getPasswd());
-
-    // Zs12JzIW 19 121212-1212
-    // JAXBElement<String> pnr = objectFactory.createBookingRequestPnr("19121212-1212");
-    // JAXBElement<String> pin = objectFactory.createBookingRequestPin("Zs12JzIW");
-
-    // JAXBElement<String> key = objectFactory.createBookingRequestKey("asd");
-    // JAXBElement<String> cryptedKey =objectFactory.createBookingRequestCryptedKey("asd");
-    // JAXBElement<String> cert = objectFactory.createBookingRequestCert("NO");
 
     // make web service call
     CentralBookingWS centralBookingWS = new CentralBookingWS();
@@ -152,7 +137,6 @@ public class WebServiceHelper {
     try {
 
       return ws.getBookingPlace(request);
-      // loginCredentials.setBookingResponse(response);
 
     } catch (ICentralBookingWSGetBookingPlaceICFaultFaultFaultMessage ex) {
       ex.printStackTrace();
@@ -164,17 +148,6 @@ public class WebServiceHelper {
   }
 
   public ArrayOfCalendar getQueryWSRequestCalendar(BookingRequest request) {
-    // "parameters"
-    // JAXBElement<String> pnr = objectFactory.createBookingRequestPnr(loginCredentials.getPnr());
-    // JAXBElement<String> pin = objectFactory.createBookingRequestPin(loginCredentials.getPasswd());
-
-    // Zs12JzIW 19 121212-1212
-    // JAXBElement<String> pnr = objectFactory.createBookingRequestPnr("19121212-1212");
-    // JAXBElement<String> pin = objectFactory.createBookingRequestPin("Zs12JzIW");
-
-    // JAXBElement<String> key = objectFactory.createBookingRequestKey("asd");
-    // JAXBElement<String> cryptedKey =objectFactory.createBookingRequestCryptedKey("asd");
-    // JAXBElement<String> cert = objectFactory.createBookingRequestCert("NO");
 
     // make web service call
     CentralBookingWS centralBookingWS = new CentralBookingWS();
@@ -183,29 +156,17 @@ public class WebServiceHelper {
     try {
 
       return ws.getCalandar(request);
-      // loginCredentials.setBookingResponse(response);
 
     } catch (ICentralBookingWSGetCalandarICFaultFaultFaultMessage ex) {
       ex.printStackTrace();
       System.out.println(ex.getMessage());
+
       return null;
 
     }
-
   }
 
   public ArrayOfBookingTime getQueryWSRequestTime(BookingRequest request) {
-    // "parameters"
-    // JAXBElement<String> pnr = objectFactory.createBookingRequestPnr(loginCredentials.getPnr());
-    // JAXBElement<String> pin = objectFactory.createBookingRequestPin(loginCredentials.getPasswd());
-
-    // Zs12JzIW 19 121212-1212
-    // JAXBElement<String> pnr = objectFactory.createBookingRequestPnr("19121212-1212");
-    // JAXBElement<String> pin = objectFactory.createBookingRequestPin("Zs12JzIW");
-
-    // JAXBElement<String> key = objectFactory.createBookingRequestKey("asd");
-    // JAXBElement<String> cryptedKey =objectFactory.createBookingRequestCryptedKey("asd");
-    // JAXBElement<String> cert = objectFactory.createBookingRequestCert("NO");
 
     // make web service call
     CentralBookingWS centralBookingWS = new CentralBookingWS();
@@ -227,10 +188,10 @@ public class WebServiceHelper {
     } catch (ICentralBookingWSGetBookingTimeICFaultFaultFaultMessage ex) {
       ex.printStackTrace();
       System.out.println(ex.getMessage());
+
       return null;
 
     }
-
   }
 
   // This to get the place of the visit for Screening, ie: Example-hospital AB
