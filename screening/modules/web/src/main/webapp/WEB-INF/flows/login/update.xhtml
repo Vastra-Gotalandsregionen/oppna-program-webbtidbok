@@ -49,7 +49,7 @@
 				<p>Du kan också omboka eller avboka tiden per telefon. Ring då till
 				Kontaktpunkten på telefonnummer 031-342 69 55 tisdag, onsdag eller torsdag mellan
 				klockan 09:00 - 15:00, alternativt 031-342 24 00.<br/>
-				<a href="http://www.kontaktpunkten.sahlgrenska.se/sv/SU/Kontakt/Kontaktpunkten">Läs mer om Kontaktpunkten</a></p>	
+				<a href="http://www.kontaktpunkten.sahlgrenska.se/sv/SU/Kontakt/Kontaktpunkten" target="_blank">Läs mer om Kontaktpunkten</a></p>	
 				<table>
 					<tr>
 						<td>			
@@ -492,7 +492,7 @@
 							<td>	
 								<div id="placediv_time" style="display:inline;background-color:#f3f1f2;" >
 									
-									<h:form id="timeTable" style="display: inline; text-align: right;" >
+									<h:form style="display: inline; text-align: right;" >
 										<h:dataTable id="timeTable" value="#{timeListLocal}" var="btl" rendered="#{timeListLocal.rowCount > 0}">
 										
 											<h:column>
@@ -500,9 +500,10 @@
 												#{btl.time}
 											</h:column>
 											<h:column>
-												<h:commandButton id="timeButton" value="Välj" action="selecttime" processIds="*" />
+												<h:commandButton id="timeButton" value="Välj" action="selecttime" processIds="*" immediate="true"/>
 											</h:column>
 										</h:dataTable>
+										<h:commandButton id="timeButton2" value="Välj" action="selecttime" processIds="*" />
 									</h:form>
 								</div>   <!-- boxleft3inside -->
 	
