@@ -82,17 +82,8 @@ public class Login {
     request.setCryptedKey(cryptedKey);
     request.setCert(cert);
 
-    // make web service call
-    // CentralBookingWS centralBookingWS = new CentralBookingWS();
-    // ICentralBookingWS ws = centralBookingWS.getBasicHttpBindingICentralBookingWS();
-
     response = webServiceHelper.getQueryWS(request);
-    // response = ws.getBooking(request);
-    System.out.println("*********Login.login(State loginCredentials): ************");
-    System.out.println("Login.login(State loginCredentials): " + " response.ltidbokid: " + response.getCentralTidbokID());
-    System.out.println("*********Login.login(State loginCredentials): ************");
 
-    // loginCredentials.setBookingResponse(response);
     loginCredentials.setBookingResponse(response);
 
     if (response != null) {
