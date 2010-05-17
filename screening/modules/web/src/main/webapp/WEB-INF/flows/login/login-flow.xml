@@ -123,7 +123,7 @@
 		 <evaluate expression="bookingService.getSelectedPlace(placesHandler, state)" result="flowScope.selectedPlace"  >
 		 </evaluate>		 
 		 <evaluate expression="calendarService.getTimeForChosenDate(state)" />
-		 <evaluate expression="bookingService.getBookingTime(state)" result="flashScope.timeListLocal" result-type="dataModel" /> 	 
+		 <evaluate expression="bookingService.getBookingTime(state)" result="flowScope.timeListLocal" result-type="dataModel" /> 	 
 		 <evaluate expression="bookingService.getIsTimeListEmpty()" />	 
 	 	<transition on="yes" to="updateNoTimeTable">
 	 	</transition>
@@ -194,7 +194,7 @@
 <!--		why is this needed???	  <evaluate expression="bookingService.getSelectedPlace(placesHandler, state)" result="flowScope.selectedPlace"  >-->
 <!--			  </evaluate>-->
 			  <evaluate expression="calendarService.getTimeForChosenDate(state)" />
-			  <evaluate expression="bookingService.getBookingTime(state)" result="flashScope.timeListLocal" result-type="dataModel" /> 
+			  <evaluate expression="bookingService.getBookingTime(state)" result="flowScope.timeListLocal" result-type="dataModel" /> 
 <!--			  <evaluate expression="calendarService.setSelectedDay(requestParameters.selectedDay)" />-->
 		</on-render>	
 		<transition on="showTimeCalendar" to="istimelistempty">
@@ -259,7 +259,7 @@
 			  </evaluate>		  		  
 			  <evaluate expression="calendarService.getCalendar(state)"  />
 			  <evaluate expression="calendarService.getTimeForChosenDate(state)" />
-			  <evaluate expression="bookingService.getBookingTime(state)" result="flashScope.timeListLocal" result-type="dataModel" />		  
+			  <evaluate expression="bookingService.getBookingTime(state)" result="flowScope.timeListLocal" result-type="dataModel" />		  
 		</on-render>	
 	
 		<transition on="showTimeCalendar" to="istimelistempty">
