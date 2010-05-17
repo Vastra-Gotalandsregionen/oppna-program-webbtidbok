@@ -19,7 +19,7 @@ package se.vgregion.webbtidbok;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.faces.model.SelectItem;
@@ -184,15 +184,15 @@ public class BookingService implements BookingServiceInterface {
       // return null;
       // }
 
-      System.out.println("SELECTED DATE YEAR: " + selectedDate.get(Calendar.YEAR));
-      System.out.println("SELECTED DATE MONTH: " + selectedDate.get(Calendar.MONTH));
-      System.out.println("SELECTED DATE DAY: " + selectedDate.get(Calendar.DAY_OF_MONTH));
+      // System.out.println("SELECTED DATE YEAR: " + selectedDate.get(Calendar.YEAR));
+      // System.out.println("SELECTED DATE MONTH: " + selectedDate.get(Calendar.MONTH));
+      // System.out.println("SELECTED DATE DAY: " + selectedDate.get(Calendar.DAY_OF_MONTH));
       String fromDate = DateHandler.setCalendarDateFormat(selectedDate);
       JAXBElement<String> fromDat = objectFactory.createBookingRequestFromDat(fromDate);
-      //			
+      //      
       System.out.println("fromDate: " + fromDate);
       System.out.println("JAXB-FROMDATE: " + fromDat.getValue());
-      //			
+      //      
       // System.out.println("CentralTidBokID: " + loginCredentials.getCentralTidbokID());
 
       request = helper.getQueryWSRequest(loginCredentials);
@@ -370,46 +370,17 @@ public class BookingService implements BookingServiceInterface {
    * @param l
    */
   public void setBookingTime(BookingTimeLocal bookingTime, State credentials) {
-    System.out.println("-----------set BookingTime------------");
-    System.out.println("-----------------------");
-    System.out.println("-----------------------");
-    System.out.println("-----------------------");
-    System.out.println("-----------------------");
-
-    System.out.println("--date, selectedday" + credentials.getSelectedDate().getTime().toString());
-    System.out.println("-----------------------");
-    System.out.println("-----------------------");
-    System.out.println("-----------------------");
-    System.out.println("-----------------------");
-    System.out.println("-----------------------");
-
-    int id = bookingTime.getBookingTimeId();
-    String day = bookingTime.getDay();
     String hour = bookingTime.getTime();
-    int numbers = bookingTime.getNumbers();
     String[] hourMinute = hour.split(":");
 
-    Date time = DateHandler.setCalendarTimeFormat(hour);
-    Calendar cal = Calendar.getInstance();
-    // credentials.getSelectedDate();
-    cal.set(Calendar.YEAR, credentials.getSelectedDate().get(Calendar.YEAR));
-    cal.set(Calendar.MONTH, credentials.getSelectedDate().get(Calendar.MONTH));
-    // tempCal.set(Calendar.DATE, cal.get(Calendar.DAY_OF_MONTH));
-    cal.set(Calendar.DAY_OF_MONTH, credentials.getSelectedDate().get(Calendar.DAY_OF_MONTH) - 1);
+    GregorianCalendar cal = new GregorianCalendar();
+    cal.setTimeInMillis(credentials.getSelectedDate().getTime().getTime());
 
-    cal.set(Calendar.HOUR, Integer.parseInt(hourMinute[0]));
+    cal.set(Calendar.HOUR_OF_DAY, Integer.parseInt(hourMinute[0]));
     cal.set(Calendar.MINUTE, Integer.parseInt(hourMinute[1]));
     cal.set(Calendar.SECOND, 0);
 
-    System.out.println("Calendar.Date: " + cal.getTime().toString());
-    System.out.println("Calendar.Date: " + hourMinute[0]);
-    System.out.println("Calendar.Date: " + hourMinute[1]);
-
-    System.out.println("Calendar.Date: " + cal.get(Calendar.HOUR));
-    System.out.println("Calendar.Date: " + cal.get(Calendar.MINUTE));
-
     // update booking
-
     if (credentials.isLoggedIn()) {
 
       request = helper.getQueryWSRequest(credentials);
@@ -417,20 +388,7 @@ public class BookingService implements BookingServiceInterface {
       XMLGregorianCalendar xmlCal;
       try {
 
-        xmlCal = DatatypeFactory.newInstance().newXMLGregorianCalendar();
-
-        // XMLGregorianCalendar xmlCal = credentials.getBookingResponse().getBokadTid();
-        xmlCal.setDay(cal.get(Calendar.DATE));
-        xmlCal.setMonth(cal.get(Calendar.MONTH) + 1);
-        xmlCal.setYear(cal.get(Calendar.YEAR));
-
-        // set time
-        xmlCal.setHour(Integer.parseInt(hourMinute[0]));
-        xmlCal.setMinute(cal.get(Calendar.MINUTE));
-        xmlCal.setSecond(cal.get(Calendar.SECOND));
-
-        System.out.println("XMLCalendar.Date: " + xmlCal.toString());
-
+        xmlCal = DatatypeFactory.newInstance().newXMLGregorianCalendar(cal);
         request.setBokadTid(xmlCal);
       } catch (Exception e) {
         e.printStackTrace();
@@ -444,10 +402,6 @@ public class BookingService implements BookingServiceInterface {
         this.setIsUpdated(false);
       } else {
         this.setIsUpdated(true);
-        System.out.println("CentraltidBokiD: " + response.getCentralTidbokID());
-        System.out.println("DATUM: " + response.getBokadTid().toString());
-        System.out.println("PNR: " + response.getPnr().getValue());
-        System.out.println("ToString: " + response.toString());
       }
 
     }
