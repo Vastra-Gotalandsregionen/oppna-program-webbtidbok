@@ -164,7 +164,7 @@
 							<table>
 								<tr>
 										<td style="">
-											#{selectedPlace.clinic} , #{selectedPlace.address}
+											#{selectedPlace.clinic}, #{selectedPlace.address}
 										 			
 									
 										</td>
@@ -478,14 +478,13 @@
 				<table>
 					<tr>
 						<td>
-						#{selectedPlace.clinic} , #{selectedPlace.address}
+						#{selectedPlace.clinic}, #{selectedPlace.address}
 
 						</td>
 					</tr>
 					<p />
 						<h:form id="timeTable" style="display: inline; text-align: right;">
-							<table border="0">
-								
+							<table border="0">								
 								<th style="text-align: center; background: #e6e6e6"><h3 style="display: inline"><h:outputText value="#{calendarService.currentDayMonthAndYear}" /></h3></th>
 		
 							</table>
@@ -510,7 +509,8 @@
 	
 							</td>
 						</tr>
-					<h:outputText value="Det finns tyvärr inga lediga tider för undersökning på den mottagning du valt." rendered="#{timeListLocal.rowCount &lt; 1}"/>
+					<h:outputText value="Det finns tyvärr inga lediga tider för undersökning på den mottagning du valt. Om du behöver omboka din tid, ta kontakt med 
+					Kontaktpunkten på telefonnummer 031-342 69 55 tisdag, onsdag eller torsdag mellan klockan 09:00-15:00, alternativt skicka e-post till: kontaktpunkten.su@vgregion.se" rendered="#{timeListLocal.rowCount &lt; 1}"/>
 					<tr>
 						<td style="display: inline; text-align: right;" >
 							<h:form id="cancelForm" style="display: inline; text-align: right;padding-left: 37.5em;" >

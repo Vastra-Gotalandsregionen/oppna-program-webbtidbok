@@ -50,7 +50,7 @@
 				<p>Du kan också omboka eller avboka tiden per telefon. Ring då till
 				Kontaktpunkten på telefonnummer 031-342 69 55 tisdag, onsdag eller torsdag mellan
 				klockan 09:00 - 15:00, alternativt 031-342 24 00.<br/>
-				<a href="http://www.kontaktpunkten.sahlgrenska.se/sv/SU/Kontakt/Kontaktpunkten" target="_blank">Läs mer om Kontaktpunkten</a></p>	
+				<a href="http://www.kontaktpunkten.sahlgrenska.se/sv/SU/Kontakt/Kontaktpunkten" target="_new">Läs mer om Kontaktpunkten</a></p>	
 				<table>
 					<tr>
 						<td>			
@@ -95,7 +95,7 @@
 											<td style="background-color:#f3f1f2;width: 800px" >						
 												<h3 style="display: inline"> Välj plats</h3>
 												<h:form id="helpForm" style="display: inline; text-align: right;" >
-													<div class="image_block" style="display: inline;text-align: right;padding-left: 35.9em;"><a href="help"><img src="../VGRImages/help.gif" /></a>  
+													<div class="image_block" style="display: inline;text-align: right;padding-left: 35.9em;"><a href="help" target="_new"><img src="../VGRImages/help.gif" /></a>  
 													</div>
         										</h:form>   
 	        								</td>
@@ -151,7 +151,7 @@
 										<td style="background-color:#f3f1f2;width: 800px" >		
 											<h3 style="display: inline"> Välj datum</h3>
 											<h:form id="helpForm" style="display: inline; text-align: right;" >
-												<div class="image_block" style="display: inline;text-align: right;padding-left: 35em;"><a href="help"><img src="../VGRImages/help.gif" /></a>  
+												<div class="image_block" style="display: inline;text-align: right;padding-left: 35em;"><a href="help" target="_new"><img src="../VGRImages/help.gif" /></a>  
 												</div>
        										</h:form>   
         								</td>
@@ -474,7 +474,7 @@
                 <table>
                     <tr>
                         <td>
-                        #{selectedPlace.clinic} , #{selectedPlace.address}
+                        #{selectedPlace.clinic}, #{selectedPlace.address}
 
                         </td>
                     </tr>
@@ -487,7 +487,8 @@
                             </table>
                         </h:form>
                        
-                    <h:outputText value="Det finns tyvärr inga lediga tider för undersökning på den mottagning du valt." rendered="#{timeListLocal.rowCount &lt; 1}"/>
+                    <h:outputText value="Det finns tyvärr inga lediga tider för undersökning på den mottagning du valt.
+                    Om du behöver omboka din tid, ta kontakt med Kontaktpunkten på telefonnummer 031-342 69 55 tisdag, onsdag eller torsdag mellan klockan 09:00-15:00, alternativt skicka e-post till: kontaktpunkten.su@vgregion.se" rendered="#{timeListLocal.rowCount &lt; 1}"/>
                     <tr>
                         <td style="display: inline; text-align: right;" >
                             <h:form id="cancelForm" style="display: inline; text-align: right;padding-left: 37.5em;" >
