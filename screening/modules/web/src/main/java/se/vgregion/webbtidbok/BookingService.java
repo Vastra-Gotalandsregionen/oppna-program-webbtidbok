@@ -184,9 +184,9 @@ public class BookingService implements BookingServiceInterface {
       // return null;
       // }
 
-      // System.out.println("SELECTED DATE YEAR: " + selectedDate.get(Calendar.YEAR));
-      // System.out.println("SELECTED DATE MONTH: " + selectedDate.get(Calendar.MONTH));
-      // System.out.println("SELECTED DATE DAY: " + selectedDate.get(Calendar.DAY_OF_MONTH));
+      System.out.println("SELECTED DATE YEAR: " + selectedDate.get(Calendar.YEAR));
+      System.out.println("SELECTED DATE MONTH: " + selectedDate.get(Calendar.MONTH));
+      System.out.println("SELECTED DATE DAY: " + selectedDate.get(Calendar.DAY_OF_MONTH));
       String fromDate = DateHandler.setCalendarDateFormat(selectedDate);
       JAXBElement<String> fromDat = objectFactory.createBookingRequestFromDat(fromDate);
       //			
@@ -395,7 +395,7 @@ public class BookingService implements BookingServiceInterface {
     cal.set(Calendar.YEAR, credentials.getSelectedDate().get(Calendar.YEAR));
     cal.set(Calendar.MONTH, credentials.getSelectedDate().get(Calendar.MONTH));
     // tempCal.set(Calendar.DATE, cal.get(Calendar.DAY_OF_MONTH));
-    cal.set(Calendar.DAY_OF_MONTH, credentials.getSelectedDate().get(Calendar.DAY_OF_MONTH));
+    cal.set(Calendar.DAY_OF_MONTH, credentials.getSelectedDate().get(Calendar.DAY_OF_MONTH) - 1);
 
     cal.set(Calendar.HOUR, Integer.parseInt(hourMinute[0]));
     cal.set(Calendar.MINUTE, Integer.parseInt(hourMinute[1]));
