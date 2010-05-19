@@ -300,13 +300,16 @@
 		</transition>		
 	</view-state>
 	
-	<view-state id="loggedout">
-		<on-render>
-			<evaluate expression="loginService.logout(state)" />
-			<evaluate expression="bookingService.setFirstPlacesBoolean(true)" />			
-		</on-render>
-	</view-state>
-	
+	<end-state id="loggedout" view="loggedout.xhtml">
+		<on-entry>
+            <evaluate expression="loginService.logout(state)" />
+            <evaluate expression="bookingService.setFirstPlacesBoolean(true)" />            
+        </on-entry>
+	</end-state>
+    
 	<end-state id="finish" />
 	
+    <global-transitions>
+        <transition on-exception="java.lang.Error" history="invalidate" to="loggedout"/>
+    </global-transitions>
 </flow>

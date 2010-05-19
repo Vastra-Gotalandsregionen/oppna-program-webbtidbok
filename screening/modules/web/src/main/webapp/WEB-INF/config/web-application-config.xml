@@ -68,6 +68,10 @@
     
 	<bean id="sendMailService" class="se.vgregion.webbtidbok.mail.SendEmailHandler">
 	</bean>
+    
+    <!-- Flow handler handling exceptions for the 'login' flow. -->
+    <bean name="login" class="se.vgregion.webbtidbok.errorhandling.ExceptionFlowHandler">
+    </bean>
 	
 	<!-- Imports the configurations of the different infrastructure systems of the application -->
 	<import resource="webmvc-config.xml" />
