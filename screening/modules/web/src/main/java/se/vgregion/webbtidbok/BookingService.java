@@ -27,6 +27,8 @@ import javax.xml.bind.JAXBElement;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
+import org.apache.log4j.Logger;
+
 import se.vgregion.webbtidbok.gui.SelectItemConverter;
 import se.vgregion.webbtidbok.lang.DateHandler;
 import se.vgregion.webbtidbok.ws.ArrayOfBookingPlace;
@@ -38,6 +40,8 @@ import se.vgregion.webbtidbok.ws.BookingTime;
 import se.vgregion.webbtidbok.ws.ObjectFactory;
 
 public class BookingService implements BookingServiceInterface {
+  private static final Logger sLogger = Logger.getLogger("se.vgregion.webbtidbok.logging");
+
   int testIndex;
   BookingResponse response;
   BookingRequest request;
@@ -323,6 +327,12 @@ public class BookingService implements BookingServiceInterface {
       }
     }
 
+    if (place != null) {
+      sLogger.debug("Selected place clinic: " + place.getClinic());
+      sLogger.debug("Selected place address: " + place.getAddress());
+      sLogger.debug("Selected place id: " + place.getPlacesId());
+      sLogger.debug("Selected place representation place: " + place.getRepresentationPlace());
+    }
     return place;
   }
 
