@@ -512,12 +512,17 @@
 					<h:outputText value="Det finns tyvärr inga lediga tider för undersökning på den mottagning du valt. Om du behöver omboka din tid, ta kontakt med 
 					Kontaktpunkten på telefonnummer 031-342 69 55 tisdag, onsdag eller torsdag mellan klockan 09:00-15:00, alternativt skicka e-post till: kontaktpunkten.su@vgregion.se" rendered="#{timeListLocal.rowCount &lt; 1}"/>
 					<tr>
-						<td style="display: inline; text-align: right;" >
-							<h:form id="cancelForm" style="display: inline; text-align: right;padding-left: 37.5em;" >
-								<sf:commandButton id="cancelButton" value="Avbryt" processIds="*" action="cancel" style="width: 100px;" />
-							</h:form>
-						</td>
-
+                        <td>
+                            <table>
+                                <tr>
+            						<td style="display: inline; text-align: right;" >
+            							<h:form id="cancelForm" style="display: inline;  align: right; text-align: right;padding-left: 37.5em;" >
+            								<sf:commandButton id="cancelButton" value="Avbryt" processIds="*" action="cancel" style="width: 100px;" />
+            							</h:form>
+            						</td>
+                                 </tr>
+                            </table>
+                        </td>
 					</tr>
 				</table>
 				
