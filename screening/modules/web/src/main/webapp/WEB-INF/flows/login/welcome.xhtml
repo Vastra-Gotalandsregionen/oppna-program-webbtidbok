@@ -58,16 +58,16 @@
 						<p style="padding-left: 2em">Du har fått en kallelse till undersökning av stora kroppspulsådern:<br/>
 						<a href="http://vard.vgregion.se/sv/Sjukdomar-och-besvar/Regionala-texter/Satsning-pa-att-hitta-pulsaderbrack" target="_new">Läs mer om undersökning av stora kroppspulsådern</a><br/>
 						<a href="http://vard.vgregion.se/sv/Undersokningar--behandlingar/Undersokningar/Sjukvardsradgivningen/?CatId=26983&amp;ChapId=27903" target="_new">Läs om ultraljudsundersökning</a></p>
-						<h:outputLabel for="cancelmessage"><p style="color:red; font-style: italic"> #{cancelbookingMessages.cancelBookingMessage}</p></h:outputLabel>
+						<h:outputLabel for="deleteButton"><p style="color:red; font-style: italic"> #{cancelbookingMessages.cancelBookingMessage}</p></h:outputLabel>
 						<table>
 							<tr>
 								<td style="padding-left: 2em" valign="top" >
 									Var:
 								</td>
-								<td style="padding-left: 2em">  #{booking.mainSector}, #{booking.address}
+								<td style="padding-left: 2em" width="100%">  #{booking.mainSector}, #{booking.address}
 								</td>
-								<td style="display: inline">
-									<h:form id="updateForm" style="display: inline; text-align: right;padding-left: 10em;" >
+								<td style="text-align: right; padding-right: 1em;">
+									<h:form id="updateForm" >
 										<sf:commandButton id="updateButton" value="Omboka tid" processIds="*" action="update" style="width: 100px;"  />
 									</h:form>
 								</td>
@@ -79,14 +79,14 @@
 									<h:outputText rendered="#{booking.isDisabled}"><p style="text-align: right;color:red; font-style: italic">Du kan inte omboka<br/>mer än två gånger.</p></h:outputText>
 								</td>
 							</tr>
-							<p></p>
+							
 							<tr>
 								<td style="padding-left: 2em" valign="top">
 									När:
 								</td>
 								<td style="padding-left: 2em"> #{booking.timeBookingString}.
 								</td>
-								<td style="display: inline">
+								<td style="text-align: right; padding-right: 1em;">
 									<h:form id="deleteForm" style="display: inline; text-align: right;padding-left: 10em;" >
 										
 											<sf:commandButton id="deleteButton" value="Avboka tid" processIds="*" action="delete" size="40" style="width: 100px;"  />
