@@ -49,7 +49,7 @@ function submitForm()
 		<div id="boxmiddle">
 		<p/>
 		<br/>
-		<h1>Ändra tid/plats för undersökning av stora kroppspulsådern</h1>
+		<h1 style="display: inline">Ändra tid/plats för undersökning av stora kroppspulsådern</h1>
 		<h:form id="mainForm" style="display: inline; text-align: right; padding-left: 19em;" >
 			<div align="right">
                 <sf:commandButton id="logout" value="Logga ut" processIds="*" action="logout" />
@@ -104,15 +104,26 @@ function submitForm()
 								<div id="placediv_place" style="display: inline;background-color:#f3f1f2;" >
 									<table>
 										<tr>
-											<td style="background-color:#f3f1f2;width: 800px" >						
-												<h3 style="display: inline"> Välj plats</h3>
-												<h:form id="helpForm" style="display: inline; text-align: right;" >
-													<div class="image_block" style="display: inline;text-align: right;padding-left: 35.9em;"><a href="help" target="_new"><img src="../VGRImages/help.gif" /></a>
-													</div>
-        										</h:form>   
+											<td style="background-color:#f3f1f2;width: 800px" >	
+                                                <table>
+                                                    <tr>					
+                                                        <td style="width: 650px">
+                                                            <h3 style="display: inline"> Välj plats</h3>
+                                                                <h:form id="helpForm" style="display: inline; text-align: right;" >
+                                                                    <div class="image_block" style="display: inline;text-align: right;">
+                                                                    </div>
+                                                                </h:form> 
+                                                        </td>
+                                                        <td>
+                                                            <a href="help" target="_new">
+                                                                <img src="../VGRImages/help.gif" />
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                </table>
 	        								</td>
 										</tr>
-									</table>       
+									</table>     
 								</div>  <!-- boxleft3inside -->
 							<br/>
 		                </td>
@@ -162,13 +173,24 @@ function submitForm()
 							<div id="placediv_date" style="display:inline;inline;background-color:#f3f1f2;" >
 								<table>
 									<tr>
-										<td style="background-color:#f3f1f2;width: 800px" >		
-											<h3 style="display: inline"> Välj datum</h3>
-											<h:form id="helpForm" style="display: inline; text-align: right;" >
-												<div class="image_block" style="display: inline;text-align: right;padding-left: 35em;"><a href="help" target="_new"><img src="../VGRImages/help.gif" /></a>
-												</div>
-       										</h:form>   
-        								</td>
+										<td style="background-color:#f3f1f2;width: 800px" >   
+                                            <table>
+                                                <tr>                    
+                                                    <td style="width: 650px">
+                                                        <h3 style="display: inline"> Välj datum</h3>
+                                                            <h:form id="helpForm" style="display: inline; text-align: right;" >
+                                                                <div class="image_block" style="display: inline;text-align: right;">
+                                                                </div>
+                                                            </h:form> 
+                                                    </td>
+                                                    <td>
+                                                        <a href="help" target="_new">
+                                                            <img src="../VGRImages/help.gif" />
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
 									</tr>
 									
 								</table>       
@@ -199,34 +221,7 @@ function submitForm()
 							</table>
 						</td>
 					</tr>	
-					<tr>
-                        <td>
-                            <div id="placediv_time" style="display:inline;background-color:#f3f1f2;" >
-                                <table>
-                                    <tr>
-                                        <td style="background-color:#f3f1f2;width: 800px" >   
-                                            <table>
-                                                <tr>                    
-                                                    <td style="width: 650px">
-                                                        <h3 style="display: inline"> Välj tid</h3>
-                                                            <h:form id="helpForm" style="display: inline; text-align: right;" >
-                                                                <div class="image_block" style="display: inline;text-align: right;">
-                                                                </div>
-                                                            </h:form> 
-                                                    </td>
-                                                    <td>
-                                                        <a href="help" target="_new">
-                                                            <img src="../VGRImages/help.gif" />
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                    </tr>
-                                </table> 
-                            </div>   <!-- boxleft3inside -->
-                        </td>
-                    </tr>				
+							
 				</table>				
 		</div>	<!-- boxmiddle -->
 		</div> <!-- boxcontainer -->
