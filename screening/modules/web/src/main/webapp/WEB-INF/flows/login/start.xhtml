@@ -39,11 +39,11 @@
 		    <p>Undersökningen görs med avsikt att tidigt hitta förändringar som kan utvecklas till svår sjukdom.</p>
 		    <p><a href="help" target="_new">Här kan du läsa mer om hur du gör</a></p>
 			
-			<div id="boxleft1" style="width: 90%;">
-			
-			<h:form id="mainForm" class="centerContent">
+			<div id="header-input-field-container" style="width: 100%;">
+			<div id="forms-container">
+				<h:form id="mainForm" class="centerContent">
 				<h2>Logga in</h2>
-				<fieldset style="border-width: 0;">
+				
 				<p>Lösenordet hittar du i den kallelse du fått hemskickad</p>
 				<h:outputLabel for="pnr">Personnummer (ÅÅÅÅMMDD-XXXX)<br/><p style="color: red; font-style: italic"> #{loginmessages.logMessagePnr}</p></h:outputLabel>
 				<div class="input"><sf:clientTextValidator
@@ -62,8 +62,9 @@
 
 				<div class="button"><sf:commandButton id="login"
 					value="Logga in" processIds="*" action="login" /></div>
-				</fieldset>
+				
 			</h:form>
+			</div>
 			</div>
 			</div>			  
 		</div>
