@@ -43,21 +43,22 @@
 			<div id="forms-container">
 				<h:form id="mainForm" class="centerContent">
 				<h2>Logga in</h2>
-				
+				<br />
 				<p>Lösenordet hittar du i den kallelse du fått hemskickad</p>
-				<h:outputLabel for="pnr">Personnummer (ÅÅÅÅMMDD-XXXX)<br/><p style="color: red; font-style: italic"> #{loginmessages.logMessagePnr}</p></h:outputLabel>
+				<h:outputLabel for="pnr"><p>Personnummer (ÅÅÅÅMMDD-XXXX)</p><p style="color: red; font-style: italic"> #{loginmessages.logMessagePnr}</p></h:outputLabel>
 				<div class="input">
                     <h:inputText id="pnr" value="#{state.pnr}"/>
                 </div>
 				<p></p>
 				<div class="label">
-                    <h:outputLabel for="passwd">Lösenord <br/><p style="color:red; font-style: italic"> #{loginmessages.logMessagePassword}</p></h:outputLabel>
+                    <h:outputLabel for="passwd"><p>Lösenord</p><p style="color:red; font-style: italic"> #{loginmessages.logMessagePassword}</p></h:outputLabel>
 				</div>
 				<div class="input">
 			         <h:inputSecret id="passwd" value="#{state.passwd}" />
                 </div>
 				<div class="button">
-                <sf:commandButton id="login" value="Logga in" processIds="*" action="login" /></div>
+                	<sf:commandButton id="login" value="Logga in" processIds="*" action="login" />
+                </div>
 				
 			</h:form>
 			</div>
