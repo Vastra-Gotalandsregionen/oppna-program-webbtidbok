@@ -29,17 +29,6 @@
 	  			xmlns:sf="http://www.springframework.org/tags/faces"
 				template="/WEB-INF/layouts/standard.xhtml">
 
-
-
-<script type="text/javascript">
-function submitForm()
-{
- 	alert('submitForm');
-    document.selectForm.submit();
- 
-}
-</script>
-
 <ui:define name="content">
 
 <ui:fragment id="loginFragment">
@@ -70,16 +59,27 @@ function submitForm()
 								<table>
 									<tr>
 										<td>
-											#{booking.displayName}</td><td style="padding-left: 2em">#{booking.pnr}
+											<p>
+												#{booking.displayName}
+											</p>	
+										</td>
+										<td style="padding-left: 2em">
+											<p>	
+												#{booking.pnr}
+											</p>
 										</td>			
 									</tr>
 									<p />
 									<tr>
 										<td align="top">
-											Ursprunglig tid:
+											<p>
+												Ursprunglig tid:
+											</p>
 										</td>
 										<td style="padding-left: 2em">
-											#{booking.mainSector}, #{booking.address} 			
+											<p>
+												#{booking.mainSector}, #{booking.address}
+											</p> 			
 										</td>
 									</tr>
 									<tr>
@@ -87,7 +87,9 @@ function submitForm()
 											&nbsp;
 										</td>
 										<td style="padding-left: 2em">
-											#{booking.timeBookingString}.
+											<p>
+												#{booking.timeBookingString}.
+											</p>
 										</td>
 									</tr>				
 									<tr>
@@ -207,7 +209,7 @@ function submitForm()
 								<tr>
 									<td>
 										<p>
-                                            <h:panelGroup rendered="#{timeListLocal.rowCount &lt; 1}" layout="block">
+                                            <h:panelGroup layout="block">
                                                 Det finns tyvärr inga lediga tider för det datum och mottagning du valt. Prova med annat datum. Du kan också ringa till
                                                 Kontaktpunkten på telefonnummer 031-342 69 55 tisdag, onsdag eller torsdag mellan klockan 09:00-15:00, alternativt skicka e-post till:
                                                  <a href="mailto:kontaktpunkten.su@vgregion.se">kontaktpunkten.su@vgregion.se</a>

@@ -57,26 +57,39 @@
 						<td>			
 							<div id="boxleft1" style="width: 100%">				
 								<table>
-									<tr>
+									<tr>										
 										<td>
-											#{booking.displayName}</td><td style="padding-left: 2em">#{booking.pnr}
-										</td>			
+											<p>
+												#{booking.displayName}
+											</p>
+										</td>
+										<td style="padding-left: 2em">
+											<p>
+												#{booking.pnr}
+											</p>
+										</td>												
 									</tr>
 									<p />
 									<tr>
 										<td align="top">
-											Ursprunglig tid:
+											<p>
+												Ursprunglig tid:
+											</p>
 										</td>
 										<td style="padding-left: 2em">
-											#{booking.mainSector}, #{booking.address} 			
-										</td>
+											<p>
+												#{booking.mainSector}, #{booking.address} 
+											</p>			
+										</td>									
 									</tr>
 									<tr>
 										<td>
 											&nbsp;
 										</td>
 										<td style="padding-left: 2em">
-											#{booking.timeBookingString}.
+											<p>
+												#{booking.timeBookingString}.
+											</p>
 										</td>
 									</tr>				
 									<tr>
@@ -180,12 +193,11 @@
 							</div>   <!-- boxleft3inside -->
 							<table>
 								<tr>
-										<td style="">
-                                        <p>
+									<td style="">
+	                                    <p>
 											#{selectedPlace.clinic}, #{selectedPlace.address}
-									    </p>		
-									
-										</td>
+									    </p>
+									</td>
 								</tr>
 							</table>
 							
