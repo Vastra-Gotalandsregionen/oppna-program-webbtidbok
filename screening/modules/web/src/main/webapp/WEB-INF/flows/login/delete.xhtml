@@ -68,7 +68,7 @@
                             <tr>
                                 <td width="40%"><p>#{booking.displayName}</p></td>
                                 <td style="padding-left: 2em"><p>#{booking.pnr}</p></td>
-                                <td style="display: inline;padding-left:5em">
+                                <td style="text-align: right; padding-right: 1em;" valign="top">
                                     <h:form id="confirmDeleteForm" style="display: inline; text-align: right;" >
                                         <sf:commandButton id="confirmDeleteButton" value="Avboka tid" processIds="*" style="width: 100px;" action="confirmdelete" />
                                     </h:form>
@@ -76,19 +76,19 @@
                             </tr>
                             <p />
                             <tr>
-                                <td align="top"><p>Ursprunglig tid:</p></td>
+                                <td valign="top"><p>Ursprunglig tid:</p></td>
                                 <td style="padding-left: 2em"><p>#{booking.mainSector}, #{booking.address}</p></td>
+                                <td style="text-align: right; padding-right: 1em;" valign="top">
+                                    <h:form id="cancelForm" style="display: inline; text-align: right;" >
+                                        <sf:commandButton id="cancelButton" value="Avbryt" processIds="*" style="width: 100px;" action="cancel" />
+                                    </h:form>
+                                </td>
                             </tr>
                             <tr>
                                 <td>
                                     &nbsp;
                                 </td>
                                 <td style="padding-left: 2em"><p>#{booking.timeBookingString}.</p></td>
-                                <td style="display: inline;padding-left:5em">
-                                    <h:form id="cancelForm" style="display: inline; text-align: right;" >
-                                        <sf:commandButton id="cancelButton" value="Avbryt" processIds="*" style="width: 100px;" action="cancel" />
-                                    </h:form>
-                                </td>
                             </tr> 
                             <tr>
                                 <td></td>
