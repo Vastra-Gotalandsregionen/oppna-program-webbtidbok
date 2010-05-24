@@ -57,53 +57,44 @@
 				Du kan också skicka e-post till: <a href="mailto:kontaktpunkten.su@vgregion.se">kontaktpunkten.su@vgregion.se</a>.<br/>
 				<a href="http://www.kontaktpunkten.sahlgrenska.se/sv/SU/Kontakt/Kontaktpunkten" target="_new">Läs mer om Kontaktpunkten</a>
 				</p>
-				<br/>
-				<a href="http://vard.vgregion.se/sv/Sjukdomar-och-besvar/Regionala-texter/Satsning-pa-att-hitta-pulsaderbrack" target="_new">Läs mer om undersökning av stora kroppspulsådern</a><br/>
-				<a href="http://vard.vgregion.se/sv/Undersokningar--behandlingar/Undersokningar/Sjukvardsradgivningen/?CatId=26983&amp;ChapId=27903" target="_new">Läs om ultraljudsundersökning</a>
-				<br/>			
+				
 				<p/>	
-					<div id="boxleft1" style="width: 100%">					
-						<table>
-							<tr>
-								<td style="padding-left: 2em">
-									#{booking.displayName}
-								</td>
-								<td style="padding-left: 2em">
-										#{booking.pnr}
-								</td>
-								<td style="display: inline;padding-left:10em">
-									<h:form id="confirmDeleteForm" style="display: inline; text-align: right;" >
-										<sf:commandButton id="confirmDeleteButton" value="Avboka tid" processIds="*" style="width: 100px;" action="confirmdelete" />
-									</h:form>
-								</td>			
-							</tr>							
-								<tr>
-									<td align="top">
-										&nbsp;
-									</td>
-									<td style="padding-left: 2em">
-										#{booking.mainSector}, #{booking.address} 			
-									</td>
-									<td style="display: inline;padding-left:10em">
-										<h:form id="cancelForm" style="display: inline; text-align: right;" >
-											<sf:commandButton id="cancelButton" value="Avbryt" processIds="*" style="width: 100px;" action="cancel" />
-										</h:form>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										&nbsp;
-									</td>
-									<td style="padding-left: 2em">
-										#{booking.timeBookingString}.
-									</td>
-								</tr>				
-								<tr>
-									<td></td>
-									<td style="padding-left: 2em">
-									</td>
-								</tr>			
-							</table>		
+					<div id="boxleft1" style="width: 100%">
+                        <p style="padding-left: 2em">
+                          <a href="http://vard.vgregion.se/sv/Sjukdomar-och-besvar/Regionala-texter/Satsning-pa-att-hitta-pulsaderbrack" target="_new">Läs mer om undersökning av stora kroppspulsådern</a><br/>
+                          <a href="http://vard.vgregion.se/sv/Undersokningar--behandlingar/Undersokningar/Sjukvardsradgivningen/?CatId=26983&amp;ChapId=27903" target="_new">Läs om ultraljudsundersökning</a>
+                        </p>
+                        <table>
+                            <tr>
+                                <td width="40%"><p>#{booking.displayName}</p></td>
+                                <td style="padding-left: 2em"><p>#{booking.pnr}</p></td>
+                                <td style="display: inline;padding-left:5em">
+                                    <h:form id="confirmDeleteForm" style="display: inline; text-align: right;" >
+                                        <sf:commandButton id="confirmDeleteButton" value="Avboka tid" processIds="*" style="width: 100px;" action="confirmdelete" />
+                                    </h:form>
+                                </td>
+                            </tr>
+                            <p />
+                            <tr>
+                                <td align="top"><p>Ursprunglig tid:</p></td>
+                                <td style="padding-left: 2em"><p>#{booking.mainSector}, #{booking.address}</p></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    &nbsp;
+                                </td>
+                                <td style="padding-left: 2em"><p>#{booking.timeBookingString}.</p></td>
+                                <td style="display: inline;padding-left:5em">
+                                    <h:form id="cancelForm" style="display: inline; text-align: right;" >
+                                        <sf:commandButton id="cancelButton" value="Avbryt" processIds="*" style="width: 100px;" action="cancel" />
+                                    </h:form>
+                                </td>
+                            </tr> 
+                            <tr>
+                                <td></td>
+                                <td style="padding-left: 2em"></td>
+                            </tr>           
+                        </table>				
 					</div>	
 	
 		</div>	
