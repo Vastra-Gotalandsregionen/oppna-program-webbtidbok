@@ -35,67 +35,69 @@
 			<p/>
 			<br/>
 			<h1 style="display: inline">Avboka tid till undersökning av stora kroppspulsådern</h1>
-				<h:form id="mainForm" style="display: inline; text-align: right; padding-left: 19em;" >
-					<div align="right">
-		                <sf:commandButton id="logout" value="Logga ut" processIds="*" action="logout" />
-		            </div>
-				</h:form>
-				<p/>
-				<br/>
-				<p><b>Observera</b> att om du avbokar din tid
-				</p>
-				<ul>
-					<li>får du ingen ny kallelse</li>
-					<li>kan du inte logga in igen</li>
-					<li>genom att avboka din tid tackar du nej till att delta i hälsoundersökningen</li>
-				</ul>
-				<p/>
-				<p>
-				Du kan också avboka eller omboka din tid samt ställa frågor på telefon.<br/> 
-				Ring då till Kontaktpunkten på telefonnummer 031-342 69 55 tisdag, onsdag eller torsdag mellan
-				klockan 09:00 - 15:00, alternativt 031-342 24 00. 
-				Du kan också skicka e-post till: <a href="mailto:kontaktpunkten.su@vgregion.se">kontaktpunkten.su@vgregion.se</a>.<br/>
-				<a href="http://www.kontaktpunkten.sahlgrenska.se/sv/SU/Kontakt/Kontaktpunkten" target="_new">Läs mer om Kontaktpunkten</a>
-				</p>
-				
-				<p/>	
-					<div id="boxleft1" style="width: 100%">
-                        <p>
-                          <a href="http://vard.vgregion.se/sv/Sjukdomar-och-besvar/Regionala-texter/Satsning-pa-att-hitta-pulsaderbrack" target="_new">Läs mer om undersökning av stora kroppspulsådern</a><br/>
-                          <a href="http://vard.vgregion.se/sv/Undersokningar--behandlingar/Undersokningar/Sjukvardsradgivningen/?CatId=26983&amp;ChapId=27903" target="_new">Läs om ultraljudsundersökning</a>
-                        </p>
-                        <table>
-                            <tr>
-                                <td width="40%"><p>#{booking.displayName}</p></td>
-                                <td style="padding-left: 2em"><p>#{booking.pnr}</p></td>
-                                <td style="text-align: right; padding-right: 1em;" valign="top">
-                                    <h:form id="confirmDeleteForm" style="display: inline; text-align: right;" >
-                                        <sf:commandButton id="confirmDeleteButton" value="Avboka tid" processIds="*" style="width: 100px;" action="confirmdelete" />
-                                    </h:form>
-                                </td>
-                            </tr>
-                            <p />
-                            <tr>
-                                <td valign="top"><p>Ursprunglig tid:</p></td>
-                                <td style="padding-left: 2em"><p>#{booking.mainSector}, #{booking.address}</p></td>
-                                <td style="text-align: right; padding-right: 1em;" valign="top">
-                                    <h:form id="cancelForm" style="display: inline; text-align: right;" >
-                                        <sf:commandButton id="cancelButton" value="Avbryt" processIds="*" style="width: 100px;" action="cancel" />
-                                    </h:form>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    &nbsp;
-                                </td>
-                                <td style="padding-left: 2em"><p>#{booking.timeBookingString}.</p></td>
-                            </tr> 
-                            <tr>
-                                <td></td>
-                                <td style="padding-left: 2em"></td>
-                            </tr>           
-                        </table>				
-					</div>	
+			<h:form id="mainForm" style="display: inline; text-align: right; padding-left: 19em;" >
+				<div align="right">
+	                <sf:commandButton id="logout" value="Logga ut" processIds="*" action="logout" />
+	            </div>
+			</h:form>
+			<p/>
+			<br/>
+			<p><b>Observera</b> att om du avbokar din tid
+			</p>
+            <div id="centercontent">
+    			<ul>
+    				<li>får du ingen ny kallelse</li>
+    				<li>kan du inte logga in igen</li>
+    				<li>genom att avboka din tid tackar du nej till att delta i hälsoundersökningen</li>
+    			</ul>
+            </div>
+			<p/>
+			<p>
+			Du kan också avboka eller omboka din tid samt ställa frågor på telefon.<br/> 
+			Ring då till Kontaktpunkten på telefonnummer 031-342 69 55 tisdag, onsdag eller torsdag mellan
+			klockan 09:00 - 15:00, alternativt 031-342 24 00. 
+			Du kan också skicka e-post till: <a href="mailto:kontaktpunkten.su@vgregion.se">kontaktpunkten.su@vgregion.se</a>.<br/>
+			<a href="http://www.kontaktpunkten.sahlgrenska.se/sv/SU/Kontakt/Kontaktpunkten" target="_new">Läs mer om Kontaktpunkten</a>
+			</p>
+			
+			<p/>	
+				<div id="boxleft1" style="width: 100%">
+                    <p>
+                      <a href="http://vard.vgregion.se/sv/Sjukdomar-och-besvar/Regionala-texter/Satsning-pa-att-hitta-pulsaderbrack" target="_new">Läs mer om undersökning av stora kroppspulsådern</a><br/>
+                      <a href="http://vard.vgregion.se/sv/Undersokningar--behandlingar/Undersokningar/Sjukvardsradgivningen/?CatId=26983&amp;ChapId=27903" target="_new">Läs om ultraljudsundersökning</a>
+                    </p>
+                    <table>
+                        <tr>
+                            <td width="40%"><p>#{booking.displayName}</p></td>
+                            <td style="padding-left: 2em"><p>#{booking.pnr}</p></td>
+                            <td style="text-align: right; padding-right: 1em;" valign="top">
+                                <h:form id="confirmDeleteForm" style="display: inline; text-align: right;" >
+                                    <sf:commandButton id="confirmDeleteButton" value="Avboka tid" processIds="*" style="width: 100px;" action="confirmdelete" />
+                                </h:form>
+                            </td>
+                        </tr>
+                        <p />
+                        <tr>
+                            <td valign="top"><p>Ursprunglig tid:</p></td>
+                            <td style="padding-left: 2em"><p>#{booking.mainSector}, #{booking.address}</p></td>
+                            <td style="text-align: right; padding-right: 1em;" valign="top">
+                                <h:form id="cancelForm" style="display: inline; text-align: right;" >
+                                    <sf:commandButton id="cancelButton" value="Avbryt" processIds="*" style="width: 100px;" action="cancel" />
+                                </h:form>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                &nbsp;
+                            </td>
+                            <td style="padding-left: 2em"><p>#{booking.timeBookingString}.</p></td>
+                        </tr> 
+                        <tr>
+                            <td></td>
+                            <td style="padding-left: 2em"></td>
+                        </tr>           
+                    </table>				
+				</div>	
 	
 		</div>	
 		</div>				
