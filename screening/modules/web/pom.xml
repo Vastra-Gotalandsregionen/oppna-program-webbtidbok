@@ -62,8 +62,13 @@
 						</goals>
 						<configuration>
 							<wsdlUrls>
+								
+								<!-- REAL WS, for PRODUCTION USE ONL! -->
+<!--								http://elviswebb.vgregion.se/CentralBooking/CentralBookingWS.svc-->
+								
 								<!-- encrypted WS -->
 								<wsdlUrl>http://demo.insieme.se/IC/CentralBooking/CentralBookingWS/CentralBookingWS.svc?wsdl</wsdlUrl>
+							
 								<!-- NON encrypted WS -->
 <!--								<wsdlUrl>http://demo.insieme.se/CentralBookingWSSetup/CentralBookingWS.svc?wsdl</wsdlUrl>-->
 							</wsdlUrls>
