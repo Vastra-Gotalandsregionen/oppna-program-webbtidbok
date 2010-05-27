@@ -36,7 +36,7 @@
 		<property name="webServiceHelper" ref="helper"/>
 		<property name="encrypter" ref="stringEncrypter"/>
 	</bean>
-	<bean id="bookingService" class="se.vgregion.webbtidbok.BookingService">
+	<bean id="bookingService" class="se.vgregion.webbtidbok.booking.BookingService">
 		<property name="helper" ref="helper" />
 	</bean>
 	<bean id="helper" class="se.vgregion.webbtidbok.WebServiceHelper">
@@ -50,7 +50,7 @@
 	</bean>
 	<bean id="validationService" class="se.vgregion.webbtidbok.ValidationLogin">
 	</bean>
-	<bean id="calendarService" class="se.vgregion.webbtidbok.CalendarUtil">
+	<bean id="calendarService" class="se.vgregion.webbtidbok.calendar.CalendarUtil">
 			<property name="helper" ref="helper" />
 	</bean>
 	
@@ -59,8 +59,8 @@
     <aop:config>
         <aop:aspect ref="loggingAdvice">
             <aop:pointcut id="loggingBookingServ"
-                expression="execution(* se.vgregion.webbtidbok.BookingService.*(..))" />
-            <aop:pointcut expression="execution(* se.vgregion.webbtidbok.CalendarUtil.*(..))" id="loggingCalUtil"/>
+                expression="execution(* se.vgregion.webbtidbok.booking.BookingService.*(..))" />
+            <aop:pointcut expression="execution(* se.vgregion.webbtidbok.calendar.CalendarUtil.*(..))" id="loggingCalUtil"/>
             <aop:around method="around" pointcut-ref="loggingBookingServ" />
             <aop:around method="around" pointcut-ref="loggingCalUtil"/>
         </aop:aspect>

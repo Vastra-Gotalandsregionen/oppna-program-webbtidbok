@@ -111,7 +111,7 @@
 			 </evaluate>
 			 <evaluate expression="calendarService.getCalendar(state)"  /> 
 			 <evaluate expression="calendarService.isEmptyCalendar()" />
-			 <transition on="yes" to="updateNoCalendar"></transition>
+			 <transition on="yes" to="updateNoTimeTable"></transition>
 			 <transition on="no" to="istimelistempty"/>			
 	</action-state>
 		
@@ -167,20 +167,6 @@
         </transition>	
 	</view-state>
 	
-	<view-state id="updateNoCalendar" view="updateNoCalendar.xhtml">	
-		<transition on="logout" to="loggedout" history="invalidate"/>
-		<transition on="cancel" to="loggedin">
-			<evaluate expression="calendarService.setSelectedDay('')" />
-			<evaluate expression="bookingService.setFirstPlacesBoolean(true)" />
-		</transition>
-		<transition on="displaytimes" to="isEmptyCalendar">		
-			<evaluate expression="bookingService.setSelectedItem(placesHandler, state)"   >
-			</evaluate>	
-			<evaluate expression="placesHandler.getPlacesId()"  result="viewScope.placesId">
-			</evaluate>				
-		</transition>
-	</view-state>
-
 	<view-state id="update" view="update.xhtml">
 		<on-render >			  
 			  <evaluate expression="bookingService.getBookingPlaceSelectItems(state)"  result="flowScope.bookingplaces"  >

@@ -18,7 +18,7 @@
 /**
  * 
  */
-package se.vgregion.webbtidbok;
+package se.vgregion.webbtidbok.booking;
 
 
 import java.io.*;

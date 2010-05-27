@@ -27,11 +27,11 @@ import javax.mail.*;
 import javax.mail.*; 
 import javax.mail.internet.*; 
 import java.io.*; 
-import java.util.Properties;
 import java.util.*;
 import java.io.Serializable;
 import javax.mail.Address;
 import se.vgregion.webbtidbok.*;
+import se.vgregion.webbtidbok.booking.BookingResponseLocal;
 
 
 
