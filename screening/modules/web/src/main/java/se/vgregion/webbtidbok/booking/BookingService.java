@@ -15,7 +15,7 @@
  *   Free Software Foundation, Inc., 59 Temple Place, Suite 330,
  *   Boston, MA 02111-1307  USA
  */
-package se.vgregion.webbtidbok;
+package se.vgregion.webbtidbok.booking;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -29,6 +29,9 @@ import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.apache.log4j.Logger;
 
+import se.vgregion.webbtidbok.Places;
+import se.vgregion.webbtidbok.State;
+import se.vgregion.webbtidbok.WebServiceHelper;
 import se.vgregion.webbtidbok.gui.SelectItemConverter;
 import se.vgregion.webbtidbok.lang.DateHandler;
 import se.vgregion.webbtidbok.ws.ArrayOfBookingPlace;
