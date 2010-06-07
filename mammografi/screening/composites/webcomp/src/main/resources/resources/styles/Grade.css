@@ -1,0 +1,236 @@
+/**
+ * Copyright 2009 Vastra Gotalandsregionen
+ *
+ *   This library is free software; you can redistribute it and/or modify
+ *   it under the terms of version 2.1 of the GNU Lesser General Public
+ *   License as published by the Free Software Foundation.
+ *
+ *   This library is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU Lesser General Public License for more details.
+ *
+ *   You should have received a copy of the GNU Lesser General Public
+ *   License along with this library; if not, write to the
+ *   Free Software Foundation, Inc., 59 Temple Place, Suite 330,
+ *   Boston, MA 02111-1307  USA
+ */
+﻿.selectedGridRow {
+	background-color:Red;
+	font-weight:bold;
+	color:#fff;
+	text-align:center;
+	width:200px;
+}
+.textSelected a {
+	color:#fff;
+}
+.numberSelected a {
+	color:#fff;
+}
+table {
+	text-align:left;
+	/*font-family:Verdana, Arial, Helvetica, sans-serif;*/
+	border:none;
+	/*font-size:12px;*/
+	border-collapse:collapse;
+}
+.AverageStar {    
+    display: block;
+    float:right;
+    color: #333;
+    font-family: Verdana,Arial,Helvetica,sans-serif;   
+    font-size: 1.1em;
+    
+}
+
+.AverageStar span {
+    margin-top: 0.3em;
+}
+
+th.test {
+    text-align: right;
+}
+
+.gradeComments {
+    margin-top: 50px;  
+}
+
+.commentRows tr, .commentRows td{
+    border: 0;
+}
+
+.gwBoundFieldCreatedOn {
+width: 350px;
+text-align: right;
+}
+
+.text {
+	text-align:left;
+	width:75px;
+}
+
+.textHeader {
+	width: 90px;
+	font-weight: bold;
+	float: left;	
+}
+
+.textContent {
+	
+	float: left;	
+}
+
+.textSelected {
+	background-color:Red;
+	color:#fff;
+	text-align:left;
+	width:200px;
+}
+
+.reqFieldTxt {
+    font-family:Verdana,Arial,Helvetica,sans-serif;
+    font-size:12px;
+}
+                        
+.number {
+	text-align:right;
+	width:75px;
+}
+.numberSelected {
+	background-color:Red;
+	color:#fff;
+	text-align:right;
+	width:75px;
+}
+.tdCommentHeader {
+	
+	color:#fff;
+	font-size:12px;
+	text-align:left;
+	width:200px;
+}
+.tdCommentText {
+	font-size:12px;
+}
+.thText, .thNumber {
+	background-color:Gray;
+	color:#fff;
+	font-size:14px;
+	text-align:left;
+	width:200px;
+}
+.thNumber {
+	text-align:right;
+	width:75px;
+}
+ 
+
+.lightblue {
+	background:#d5e6eb;
+}
+.nobgcolor tr:hover, .lightblue tr:hover{
+	background:#7f9da6;
+	color:#fff;
+}
+
+
+#VotingDiv,#ToggleDiv,.ToggleDiv {
+	background-color:#f3f1f2;
+	width:370px;
+	padding:4px 8px;
+	color: #333;
+	border:solid 1px #91adb4;
+
+}
+.votetextarea {
+	width:340px;
+	float:left;
+	margin-bottom:1px;	
+}
+
+.CanVote
+{
+    display:block;
+    margin-top: 20px;
+    font-size: 1.1em;
+    font-family:Verdana, Arial, Helvetica, sans-serif;
+    color: #9C132F; 
+}
+
+.pnlVoting {
+    height: 0px;
+    overflow: hidden;
+}
+
+#VotingDiv #RadioGrades table
+{
+ width:250px !important;
+ margin-bottom:10px !important;	
+}
+
+#VotingDiv td {
+	margin-left:10px;
+	margin-right:10px;
+	padding-left:10px;
+	padding-right:10px;
+	
+ 
+}
+#VotingDiv td ul {
+	margin-left:15px;
+	margin-top:5px;
+	margin-bottom:20px;
+	padding:0;
+}
+#VotingDiv td li {
+	list-style:disc;
+}
+#VotingDiv img {
+	border:none;
+}
+#VotingDiv td label {
+	
+}
+.commentstars {
+	width:250px;
+	margin-top:10px;
+	
+}
+
+#commentstars td {
+    margin-right: 200px;
+}
+
+.commentstars td, #RadioGrades td
+{
+	text-align:center;
+}
+.closecomment {
+	background:#e4e4e4;
+	border-top:solid 1px #91adb4;
+	height:18px;
+}
+.closecomment div {
+	display:block;
+	margin-bottom:4px;
+}
+.closecomment a {
+	color:#9c1b30;
+	text-decoration:none;
+}
+
+.ValidationErrorMessage {   
+    margin-left: 2px;
+}
+
+.toggleText {   
+    color: #333;
+    font-family: Arial;
+    font-weight: bold;
+    font-size: 1.25em;     
+}
+
+#tblCommentStars td {
+    padding-right: 5px;
+}

@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--
+
+    Copyright 2009 Vastra Gotalandsregionen
+
+      This library is free software; you can redistribute it and/or modify
+      it under the terms of version 2.1 of the GNU Lesser General Public
+      License as published by the Free Software Foundation.
+
+      This library is distributed in the hope that it will be useful,
+      but WITHOUT ANY WARRANTY; without even the implied warranty of
+      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+      GNU Lesser General Public License for more details.
+
+      You should have received a copy of the GNU Lesser General Public
+      License along with this library; if not, write to the
+      Free Software Foundation, Inc., 59 Temple Place, Suite 330,
+      Boston, MA 02111-1307  USA
+
+-->
+
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:sf="http://www.springframework.org/tags/faces"
+	contentType="text/html" encoding="UTF-8">
+	<html lang="sv-SE" xml:lang="sv-SE" xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<style  type="text/css">
+				.col1 {background-color: red;}
+				.col2 {background-color: #f3f1f2;}
+			</style>
+			<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+			<title>Webbtidbok</title>
+			<sf:resource path="/styles/stilmall.css" />
+			<sf:resource path="/styles/style.css" />
+			<link rel="stylesheet" type="text/css"
+				href="https://ajax.googleapis.com/ajax/libs/yui/2.7.0/build/autocomplete/assets/skins/sam/autocomplete.css" />
+			<script type="text/javascript"
+				src="https://ajax.googleapis.com/ajax/libs/yui/2.7.0/build/yahoo-dom-event/yahoo-dom-event.js"></script>
+			<script type="text/javascript"
+				src="https://ajax.googleapis.com/ajax/libs/yui/2.7.0/build/datasource/datasource-min.js"></script>
+			<script type="text/javascript"
+				src="https://ajax.googleapis.com/ajax/libs/yui/2.7.0/build/autocomplete/autocomplete-min.js"></script>
+			<ui:insert name="headIncludes" />
+		</head>
+		<body>
+		<div id="wrapper">
+ 		<div id="pageHeader">
+			<form action="http://vard.vgregion.se/sv/Sok1/" method="get">
+				<div id="pageHeaderSearch">
+					<div class="headerlinks">
+						<ul>
+							<li><a href="http://vard.vgregion.se/sv/Other-languages/">Other languages</a>&nbsp; | &nbsp;</li>
+							<li><a href="http://vard.vgregion.se/sv/Teckenspraksfilmer/">Teckenspråk</a></li>
+							<li>  |  <a href="http://spoxy4.insipio.com/generator/se/hittavard.vgregion.se/hriv/HRIV.Search.searchunit-flow.flow?startpage=1" title="Lyssna" class="lyssnaIkon">Lyssna</a>
+							</li>					
+						</ul>
+						<input name="quicksearchquery" id="SearchText" accesskey="4" title="Snabbsökning" class="topSearch" type="text" />
+						<input name="Search" value="Sök" id="Search" class="standardButton marginTopFive" type="submit" />
+					</div>
+				</div>
+			</form>
+		</div>
+	<div id="header">
+		<div class="headimageholder"><a accesskey="S" href="http://vard.vgregion.se/sv/#body-content"></a><a accesskey="1" href="http://vard.vgregion.se/"> <img alt="V&aring;rden i V&auml;stra G&ouml;taland" src="#{facesContext.externalContext.requestContextPath}/resources/VGRImages/head-img.gif" /> </a></div>
+	<h1>V&aring;rden i V&auml;stra G&ouml;taland</h1>
+	</div>
+	<div id="menucontainer">
+		<ul>
+			<li><a class="first" href="http://vard.vgregion.se/sv/Startsidan/"> Startsidan</a></li>
+			<li><a href="http://vard.vgregion.se/sv/Sjukdomar-och-besvar/">Sjukdomar och besvär</a></li>
+			<li><a href="http://vard.vgregion.se/sv/Undersokningar--behandlingar/">Undersökningar och behandlingar</a></li>
+			<li><a href="http://hittavard.vgregion.se/hriv">Hitta rätt i vården</a></li>
+			<li><a href="http://vard.vgregion.se/sv/Regler-och-rattigheter/">Regler och rättigheter</a></li>
+			<li><a href="http://vard.vgregion.se/sv/Mina-tjanster/">Mina tjänster</a></li>
+		</ul>
+	</div>
+
+		<ui:insert name="content" />
+	
+	
+	<ui:include src="footerContent.xhtml" />
+	</div>
+	</body>
+	</html>
+</f:view>
+
+
+
+
