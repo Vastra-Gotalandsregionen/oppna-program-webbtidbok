@@ -28,7 +28,6 @@
 	<artifactId>webbtidbok-screening-module-web</artifactId>
 	<packaging>war</packaging>
 	<name>${project.artifactId}</name>
-
 	<build>
 		<plugins>
 			<plugin>
@@ -64,10 +63,10 @@
 							<wsdlUrls>
 								
 								<!-- REAL WS, for PRODUCTION USE ONL! -->
-<!--								http://elviswebb.vgregion.se/CentralBooking/CentralBookingWS.svc-->
+								<wsdlUrl>http://elviswebb.vgregion.se/CentralBooking/CentralBookingWS.svc?wsdl</wsdlUrl>
 								
 								<!-- encrypted WS -->
-								<wsdlUrl>http://demo.insieme.se/IC/CentralBooking/CentralBookingWS/CentralBookingWS.svc?wsdl</wsdlUrl>
+<!--								<wsdlUrl>http://demo.insieme.se/IC/CentralBooking/CentralBookingWS/CentralBookingWS.svc?wsdl</wsdlUrl>-->
 							
 								<!-- NON encrypted WS -->
 <!--								<wsdlUrl>http://demo.insieme.se/CentralBookingWSSetup/CentralBookingWS.svc?wsdl</wsdlUrl>-->
