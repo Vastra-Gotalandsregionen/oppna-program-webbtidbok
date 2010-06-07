@@ -68,12 +68,12 @@
 										Var:
 									</p>
 								</td>
-								<td width="100%">  
+								<td width="100%" valign="top">  
 									<p>
 										#{booking.mainSector}, #{booking.address}
 									</p>
 								</td>
-								<td style="text-align: right; padding-right: 1em;">
+								<td style="text-align: right; padding-right: 1em;" valign="top">
 									<h:form id="updateForm" >
 										<sf:commandButton id="updateButton" value="Omboka tid" processIds="*" action="update" disabled="#{booking.isDisabled}" style="width: 100px;"  />
 									</h:form>
@@ -93,12 +93,12 @@
 										När:
 									</p>
 								</td>
-								<td> 
+								<td valign="top"> 
 									<p>
 										#{booking.timeBookingString}.
 									</p>
 								</td>
-								<td style="text-align: right; padding-right: 1em;">
+								<td style="text-align: right; padding-right: 1em;" valign="top">
 									<h:form id="deleteForm" >
 										
 											<sf:commandButton id="deleteButton" value="Avboka tid" processIds="*" action="delete" style="width: 100px;"  />
