@@ -63,10 +63,10 @@
 							<wsdlUrls>
 								
 								<!-- REAL WS, for PRODUCTION USE ONL! -->
-								<wsdlUrl>http://elviswebb.vgregion.se/CentralBooking/CentralBookingWS.svc?wsdl</wsdlUrl>
+<!--								<wsdlUrl>http://elviswebb.vgregion.se/CentralBooking/CentralBookingWS.svc?wsdl</wsdlUrl>-->
 								
 								<!-- encrypted WS -->
-<!--								<wsdlUrl>http://demo.insieme.se/IC/CentralBooking/CentralBookingWS/CentralBookingWS.svc?wsdl</wsdlUrl>-->
+								<wsdlUrl>http://demo.insieme.se/IC/CentralBooking/CentralBookingWS/CentralBookingWS.svc?wsdl</wsdlUrl>
 							
 								<!-- NON encrypted WS -->
 <!--								<wsdlUrl>http://demo.insieme.se/CentralBookingWSSetup/CentralBookingWS.svc?wsdl</wsdlUrl>-->
