@@ -25,11 +25,21 @@
 <faces-config>
 	<application>
 		<!-- Enables Facelets -->
-		<view-handler>com.sun.facelets.FaceletViewHandler</view-handler>  
+		<view-handler>com.sun.facelets.FaceletViewHandler</view-handler>
 	</application>
-	<managed-bean>
+	<managed-bean id="PlacesMBean">
     	<managed-bean-name>Places</managed-bean-name>
-   	 	<managed-bean-class>se.vgregion.webbtidbok</managed-bean-class>
+   	 	<managed-bean-class>se.vgregion.webbtidbok.Places</managed-bean-class>
     	<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean id="TestClassMBean">
+    	<managed-bean-name>TestClass</managed-bean-name>
+   	 	<managed-bean-class>se.vgregion.webbtidbok.TestClass</managed-bean-class>
+    	<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean id="MessageBeanMBean">
+		<managed-bean-name>MessageBean</managed-bean-name>
+		<managed-bean-class>se.vgregion.webbtidbok.MessageBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
 </faces-config>

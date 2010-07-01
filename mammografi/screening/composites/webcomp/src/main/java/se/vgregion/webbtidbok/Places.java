@@ -19,7 +19,6 @@ package se.vgregion.webbtidbok;
 
 import java.io.*;
 import javax.faces.model.*;
-import javax.faces.component.html.*;
 
 public class Places implements Serializable {
 	private static final long serialVersionUID = 1L;

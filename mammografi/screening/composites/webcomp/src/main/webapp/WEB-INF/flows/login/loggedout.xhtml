@@ -33,17 +33,21 @@
 		<div id="boxcontainer" style="padding-bottom: 1em;">
 		<div id="boxleft" />
 		<div id="boxmiddle">
+			
 			<p/>
-		    <h1>Du är utloggad</h1>
-		    <p>Du är utloggad från ändra eller avboka tid till undersökning av stora
-		    kroppspulsådern.</p>
-		    <p>Om du vill kontrollera din bokning eller omboka din tid kan du logga in
-		    igen för att göra detta.</p>
-		    <p>Observera att om du avbokat din tid kan du inte logga in igen.</p>
-		    <p>Om du har frågor kan du ringa till Kontaktpunkten på telefon 031-342 24 00.
-		    Kontaktpunkten är öppen måndag - fredag 07:30 - 17:00.<br/>
-		    Du kan också skicka e-post till: <a href="mailto:kontaktpunkten.su@vgregion.se">kontaktpunkten.su@vgregion.se</a>.<br/>
-		    <a href="http://www.kontaktpunkten.sahlgrenska.se/sv/SU/Kontakt/Kontaktpunkten" target="_new">Läs mer om Kontaktpunkten</a></p>	
+				state.messageBundle: #{state.messageBundle}
+			<br/>
+
+			<f:loadBundle basename="se.vgregion.webbtidbok.#{state.messageBundle}" var="bundle"/>
+			
+			<p/>
+		    <h1>#{bundle.loggedout_page_header_value}</h1>
+		    <p>#{bundle.loggedout_page_body_value_1}</p>
+		    <p>#{bundle.loggedout_page_body_value_2}</p>
+		    <p>#{bundle.loggedout_page_body_value_3}</p>
+		    <p>#{bundle.loggedout_page_body_value_4}<br/>
+		   	#{bundle.loggedout_page_body_value_5}<a href="#{bundle.loggedout_page_body_email_value}">#{bundle.loggedout_page_body_email_value}</a>.<br/>
+		    <a href="#{bundle.loggedout_page_body_link_1}" target="_new">#{bundle.loggedout_page_body_1_text}</a></p>	
 		    
 		</div>			  
 		</div>

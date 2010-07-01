@@ -22,52 +22,61 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:util="http://www.springframework.org/schema/util"
 	xsi:schemaLocation="
 	   http://www.springframework.org/schema/aop
 	   http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
 		http://www.springframework.org/schema/beans
 		http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
 		http://www.springframework.org/schema/context
-		http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+		http://www.springframework.org/schema/context/spring-context-2.5.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd">
+		
 
 	<!-- Scans for application @Components to deploy -->
 	<context:component-scan base-package="org.springframework.webflow.samples.booking" />
+
+	<util:properties id="test" location="classpath:MessageBundle_EN.properties"/>
+	<bean id="messageBean" class="se.vgregion.webbtidbok.MessageBean">
+		<property name="properties" ref="test"/>
+	</bean>
 	<bean id="loginService" class="se.vgregion.webbtidbok.Login">
 		<property name="webServiceHelper" ref="helper"/>
 		<property name="encrypter" ref="stringEncrypter"/>
 	</bean>
+	
 	<bean id="bookingService" class="se.vgregion.webbtidbok.booking.BookingService">
 		<property name="helper" ref="helper" />
 	</bean>
+	
 	<bean id="helper" class="se.vgregion.webbtidbok.WebServiceHelper">
 		<property name="encrypter" ref="stringEncrypter" />
 	</bean>
+	
 	<bean id="stringEncrypter" class="se.vgregion.webbtidbok.crypto.StringEncrypter">
 		<property name="keyStoreFile" value="classpath:asd.pfx" />
 		<property name="keyAlias"
 			value="a6c21dcdd9534d742aa1bd4afae16210_956e2a3a-b426-49f4-a107-72c603d2f58c" />
 		<property name="keyPassWord" value="asd" />
 	</bean>
+	
 	<bean id="validationService" class="se.vgregion.webbtidbok.ValidationLogin">
 	</bean>
+	
 	<bean id="calendarService" class="se.vgregion.webbtidbok.calendar.CalendarUtil">
-			<property name="helper" ref="helper" />
+		<property name="helper" ref="helper" />
 	</bean>
 	
 	<bean id="loggingAdvice" class="se.vgregion.webbtidbok.logging.LoggingAdvice" />
-
-    <aop:config>
-        <aop:aspect ref="loggingAdvice">
-            <aop:pointcut id="loggingBookingServ"
-                expression="execution(* se.vgregion.webbtidbok.booking.BookingService.*(..))" />
-            <aop:pointcut expression="execution(* se.vgregion.webbtidbok.calendar.CalendarUtil.*(..))" id="loggingCalUtil"/>
-            <aop:around method="around" pointcut-ref="loggingBookingServ" />
-            <aop:around method="around" pointcut-ref="loggingCalUtil"/>
-        </aop:aspect>
-    </aop:config>
-    
-	<bean id="sendMailService" class="se.vgregion.webbtidbok.mail.SendEmailHandler">
-	</bean>
+	    <aop:config>
+	        <aop:aspect ref="loggingAdvice">
+	            <aop:pointcut id="loggingBookingServ"
+	                expression="execution(* se.vgregion.webbtidbok.booking.BookingService.*(..))" />
+	            <aop:pointcut expression="execution(* se.vgregion.webbtidbok.calendar.CalendarUtil.*(..))" id="loggingCalUtil"/>
+	            <aop:around method="around" pointcut-ref="loggingBookingServ" />
+	            <aop:around method="around" pointcut-ref="loggingCalUtil"/>
+	        </aop:aspect>
+	    </aop:config>
     
     <!-- Flow handler handling exceptions for the 'login' flow. -->
     <bean name="login" class="se.vgregion.webbtidbok.errorhandling.ExceptionFlowHandler">

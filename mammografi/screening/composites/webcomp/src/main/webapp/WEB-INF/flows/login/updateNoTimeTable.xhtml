@@ -35,22 +35,26 @@
 		<div id="boxcontainer" style="padding-bottom: 1em;">
 		<div id="boxleft" />
 		<div id="boxmiddle">
+			
+			<p/>
+				updateNoTimeTable: state.messageBundle: #{state.messageBundle}
+			<br/>
+
+			<f:loadBundle basename="se.vgregion.webbtidbok.#{state.messageBundle}" var="bundle"/>
+			
 		<p/>
 		<br/>
-		<h1>Ändra tid/plats för undersökning av stora kroppspulsådern</h1>
+		<h1>#{bundle.update_page_header_value}</h1>
 		<h:form id="mainForm" style="display: inline; text-align: right; padding-left: 19em;" >
 			<div align="right">
                 <sf:commandButton id="logout" value="Logga ut" processIds="*" action="logout" />
             </div>
 		</h:form>
 		<p/>
-				<br/><p>Här kan du omboka eller avboka din tid till undersökning av stora kroppspulsådern.
-				Om du behöver omboka eller avboka tiden måste du göra det senast dagen innan du ska undersökas.
+				<br/><p>#{bundle.update_page_body_value_1}
 				</p>
-				<p>Du kan också omboka eller avboka tiden per telefon. Ring då till
-				Kontaktpunkten på telefonnummer 031-342 69 55 tisdag, onsdag eller torsdag mellan
-				klockan 09:00 - 15:00, alternativt 031-342 24 00.<br/>
-				<a href="http://www.kontaktpunkten.sahlgrenska.se/sv/SU/Kontakt/Kontaktpunkten" target="_new">Läs mer om Kontaktpunkten</a></p>	
+				<p>#{bundle.update_page_body_value_2} #{bundle.update_page_body_telephone_value_1} #{bundle.update_page_body_value_3} #{bundle.update_page_body_telephone_value_2}#{bundle.update_page_body_value_4}<br/>
+				<a href="#{bundle.update_page_body_link_1}" target="_blank">#{bundle.update_page_body_1_text}</a></p>	
 				<table>
 					<tr>
 						<td>			
@@ -72,7 +76,7 @@
 									<tr>
 										<td align="top">
 											<p>
-												Ursprunglig tid:
+												#{bundle.update_page_body_box_value_1}
 											</p>	
 										</td>
 										<td style="padding-left: 2em">
@@ -109,7 +113,7 @@
                                                 <table>
                                                     <tr>					
                                                         <td style="width: 650px">
-                                                            <h3 style="display: inline"> Välj plats</h3>
+                                                            <h3 style="display: inline">#{bundle.update_page_body_value_5}</h3>
                                                                 <h:form id="helpForm" style="display: inline; text-align: right;" >
                                                                     <div class="image_block" style="display: inline;text-align: right;">
                                                                     </div>
@@ -171,7 +175,7 @@
                                             <table>
                                                 <tr>                    
                                                     <td style="width: 650px">
-                                                        <h3 style="display: inline"> Välj datum</h3>
+                                                        <h3 style="display: inline">#{bundle.update_page_body_value_6}</h3>
                                                             <h:form id="helpForm" style="display: inline; text-align: right;" >
                                                                 <div class="image_block" style="display: inline;text-align: right;">
                                                                 </div>
@@ -481,7 +485,7 @@
                                             <table>
                                                 <tr>                    
                                                     <td style="width: 650px">
-                                                        <h3 style="display: inline"> Välj tid</h3>
+                                                     	<h3 style="display: inline">#{bundle.update_page_body_value_7}</h3>
                                                             <h:form id="helpForm" style="display: inline; text-align: right;" >
                                                                 <div class="image_block" style="display: inline;text-align: right;">
                                                                 </div>
@@ -523,9 +527,8 @@
                      <p />
                     <p>
                         <h:panelGroup rendered="#{timeListLocal.rowCount &lt; 1}" layout="block">
-                            Det finns tyvärr inga lediga tider för det datum och mottagning du valt. Prova med annat datum. Du kan också ringa till
-                            Kontaktpunkten på telefonnummer 031-342 69 55 tisdag, onsdag eller torsdag mellan klockan 09:00-15:00, alternativt skicka e-post till:
-                             <a href="mailto:kontaktpunkten.su@vgregion.se">kontaktpunkten.su@vgregion.se</a>
+                           		#{bundle.update_page_body_no_avail_time_text_value}
+                             <a href="mailto:#{bundle.update_page_body_email_value}">#{bundle.update_page_body_email_value}</a>
                         </h:panelGroup>
                     </p>
                     <tr>
