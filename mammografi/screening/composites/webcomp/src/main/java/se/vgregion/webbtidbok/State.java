@@ -28,8 +28,8 @@ import se.vgregion.webbtidbok.ws.*;
  */
 
 public class State implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+	
+	private static final long serialVersionUID = 1L;
 
     private String pnr = "";
     private String passwd = "";
@@ -39,6 +39,13 @@ public class State implements Serializable {
     private boolean isDefaultDate = true;
     private static boolean loggedIn = false;
     private boolean isFirst = true;
+    private String messageBundle ="";
+    
+    public State() {
+		super();
+		System.out.println("*** in State constructor!");
+	}
+     
     
     public String getPnr() {
     	return pnr;
@@ -108,4 +115,14 @@ public class State implements Serializable {
 	public String toString() {
     	return "[User Credentials: Personnummer = " + pnr + ", Password = " + passwd + "]";
     }
+
+	public void setMessageBundle(String messageBundle) {
+		this.messageBundle = messageBundle;
+		System.out.println("*** state.setMessageBundle(String messageBundle). this.messageBundle: " + this.messageBundle);
+	}
+
+	public String getMessageBundle() {
+		System.out.println("*** state.getMessageBundle(). messageBundle: " + messageBundle);
+		return messageBundle;
+	}
 }

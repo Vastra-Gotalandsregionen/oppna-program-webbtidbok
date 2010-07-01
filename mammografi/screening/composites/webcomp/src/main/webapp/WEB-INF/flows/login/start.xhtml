@@ -39,14 +39,27 @@
 		    <p>Här kan du logga in för att omboka eller avboka den besökstid du fått i kallelsen.</p>
 		    <p>Undersökningen görs med avsikt att tidigt hitta förändringar som kan utvecklas till svår sjukdom.</p>
 		    <p><a href="help" target="_new">Här kan du läsa mer om hur du gör</a></p>
+		    
+			
+			ajkdnskjfvbnk: <h:outputText value="#{messageBean.welcome}"/>:cdnjkn <br /> 
+		
+			Thru SpringBean: <h:outputText value="#{messageBean.language}"/> <br />
+			Thru ManagedBean: <h:outputText value="#{MessageBean.language}"/> <br />
+			
 			
 			<div id="header-input-field-container" style="width: 100%;">
 			<div id="forms-container">
 				<h:form id="mainForm" class="centerContent">
+				<div id="radioBtn">
+					<h:selectOneRadio id="langRadioBtn" required="true" value="#{state.messageBundle}" >
+						<f:selectItem itemLabel="Swedish" itemValue="#{MessageBean.langSW}"/>
+						<f:selectItem itemLabel="English" itemValue="#{MessageBean.langEN}"/>
+					</h:selectOneRadio>
+				</div>						
 				<h2>Logga in</h2>
 				<br />
 				<p>Lösenordet hittar du i den kallelse du fått hemskickad</p>
-				<h:outputLabel for="pnr"><p>Personnummer (ÅÅÅÅMMDD-XXXX)</p><p style="color: red; font-style: italic"> #{loginmessages.logMessagePnr}</p></h:outputLabel>
+				<h:outputLabel for="pnr"><p>Personnummer ÅÅÅÅMMDD-XXXX)</p><p style="color: red; font-style: italic"> #{loginmessages.logMessagePnr}</p></h:outputLabel>
 				<div class="input">
                     <h:inputText id="pnr" value="#{state.pnr}"/>
                 </div>

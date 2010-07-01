@@ -32,9 +32,16 @@
 		<div id="boxcontainer" style="padding-bottom: 1em;">
 		<div id="boxleft" />
 		<div id="boxmiddle">
+		
+			<p/>
+				state.messageBundle: #{state.messageBundle}
+			<br/>
+
+			<f:loadBundle basename="se.vgregion.webbtidbok.#{state.messageBundle}" var="bundle"/>
+		
 			<p/>
 			<br/>
-			<h1 style="display: inline">Avboka tid till undersökning av stora kroppspulsådern</h1>
+			<h1 style="display: inline">#{bundle.delete_page_header_value}</h1>
 			<h:form id="mainForm" style="display: inline; text-align: right; padding-left: 19em;" >
 				<div align="right">
 	                <sf:commandButton id="logout" value="Logga ut" processIds="*" action="logout" />
@@ -42,29 +49,28 @@
 			</h:form>
 			<p/>
 			<br/>
-			<p><b>Observera</b> att om du avbokar din tid
+			<p>
+			<b>#{bundle.delete_page_body_value_1}</b>#{bundle.delete_page_body_value_2}
 			</p>
             <div id="centercontent">
     			<ul>
-                    <li>genom att avboka din tid tackar du nej till att delta i hälsoundersökningen</li>
-    				<li>får du ingen ny kallelse</li>
-    				<li>kan du inte logga in igen</li>
+                    <li>#{bundle.delete_page_bullet_list_value_1}</li>
+    				<li>#{bundle.delete_page_bullet_list_value_2}</li>
+    				<li>#{bundle.delete_page_bullet_list_value_3}</li>
     			</ul>
             </div>
 			<p/>
 			<p>
-			Du kan också avboka eller omboka din tid samt ställa frågor på telefon.<br/> 
-			Ring då till Kontaktpunkten på telefonnummer 031-342 69 55 tisdag, onsdag eller torsdag mellan
-			klockan 09:00 - 15:00, alternativt 031-342 24 00. 
-			Du kan också skicka e-post till: <a href="mailto:kontaktpunkten.su@vgregion.se">kontaktpunkten.su@vgregion.se</a>.<br/>
-			<a href="http://www.kontaktpunkten.sahlgrenska.se/sv/SU/Kontakt/Kontaktpunkten" target="_new">Läs mer om Kontaktpunkten</a>
+			#{bundle.delete_page_body_value_3}<a href="mailto:#{bundle.delete_page_body_email_value}">#{bundle.delete_page_body_email_value}</a>.<br/>
+			<a href="#{bundle.delete_page_body_link_1}" target="_new">#{bundle.delete_page_body_1_text}</a>
 			</p>
 			
 			<p/>	
 				<div id="boxleft1" style="width: 100%">
                     <p>
-                      <a href="http://vard.vgregion.se/sv/Sjukdomar-och-besvar/Regionala-texter/Satsning-pa-att-hitta-pulsaderbrack" target="_new">Läs mer om undersökning av stora kroppspulsådern</a><br/>
-                      <a href="http://vard.vgregion.se/sv/Undersokningar--behandlingar/Undersokningar/Sjukvardsradgivningen/?CatId=26983&amp;ChapId=27903" target="_new">Läs om ultraljudsundersökning</a>
+                    
+                      <a href="#{bundle.delete_page_body_box_link_1}" target="_new">#{bundle.delete_page_body_box_link_1_text}</a><br/>
+                      <a href="#{bundle.delete_page_body_box_link_2}" target="_new">#{bundle.delete_page_body_box_link_2_text}</a>
                     </p>
                     <table>
                         <tr>
@@ -78,7 +84,7 @@
                         </tr>
                         <p />
                         <tr>
-                            <td valign="top"><p>Ursprunglig tid:</p></td>
+                            <td valign="top"><p>#{bundle.delete_page_body_box_value_1}</p></td>
                             <td style="padding-left: 2em"><p>#{booking.mainSector}, #{booking.address}</p></td>
                             <td style="text-align: right; padding-right: 1em;" valign="top">
                                 <h:form id="cancelForm" style="display: inline; text-align: right;" >

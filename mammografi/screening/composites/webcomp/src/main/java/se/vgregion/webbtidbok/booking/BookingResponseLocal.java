@@ -194,7 +194,7 @@ public class BookingResponseLocal implements Serializable {
   }
 
   public boolean getIsDisabled() {
-    return numberBookings >= maxNbrBookings;
+    return numberBookings <= maxNbrBookings;
   }
 
   public String toString() {
