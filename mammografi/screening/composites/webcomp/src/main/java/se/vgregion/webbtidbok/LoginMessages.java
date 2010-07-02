@@ -38,8 +38,8 @@ public class LoginMessages implements Serializable{
 	-2001		Invalid paramter 
 	*/
 	
-	public static int exceptionMessage = -1;
-	public static String exceptionMessageString = "Allmänt fel, ej specificerat";
+	public int exceptionMessage = -1;
+	public String exceptionMessageString = "Allmänt fel, ej specificerat";
 
 	
 	public String getLogMessagePnr(){
