@@ -30,30 +30,20 @@
            http://www.springframework.org/schema/faces
            http://www.springframework.org/schema/faces/spring-faces-2.0.xsd">
 
-	<!-- Executes flows: the central entry point into the Spring Web Flow system -->
-       <!-- Executes flows: the central entry point into the Spring Web Flow system -->
-        <webflow:flow-executor id="flowExecutor">
-                <webflow:flow-execution-attributes>
-                        <webflow:always-redirect-on-pause value="true"/>
-                </webflow:flow-execution-attributes>
-<!--		<webflow:flow-execution-listeners>-->
-<!--			<webflow:listener ref="jpaFlowExecutionListener" />-->
-<!--		</webflow:flow-execution-listeners>-->
-        </webflow:flow-executor>
-        
-	
+    <!-- Executes flows: the central entry point into the Spring Web Flow system -->
+    <webflow:flow-executor id="flowExecutor">
+        <webflow:flow-execution-attributes>
+            <webflow:always-redirect-on-pause value="true"/>
+        </webflow:flow-execution-attributes>
+    </webflow:flow-executor>
+
+
 	<!-- The registry of executable flow definitions -->
-<!--	<webflow:flow-registry id="flowRegistry" flow-builder-services="facesFlowBuilderServices" base-path="classpath*:/flows/">-->
-		<webflow:flow-registry id="flowRegistry" flow-builder-services="facesFlowBuilderServices" base-path="WEB-INF/flows/">
-		<webflow:flow-location-pattern value="/**/*-flow.xml" />
-	</webflow:flow-registry>
-	
-	<!-- Configures the Spring Web Flow JSF integration -->
-	<faces:flow-builder-services id="facesFlowBuilderServices" development="true" />
-	
-	<!-- Installs a listener that manages JPA persistence contexts for flows that require them -->
-<!--	<bean id="jpaFlowExecutionListener" class="org.springframework.webflow.persistence.JpaFlowExecutionListener">-->
-<!--		<constructor-arg ref="entityManagerFactory" />-->
-<!--		<constructor-arg ref="transactionManager" />-->
-<!--	</bean>-->
+    <webflow:flow-registry id="flowRegistry" flow-builder-services="facesFlowBuilderServices" base-path="classpath*:/flows/">
+        <webflow:flow-location-pattern value="**/*-flow.xml" />
+    </webflow:flow-registry>
+
+    <!-- Configures the Spring Web Flow JSF integration -->
+    <faces:flow-builder-services id="facesFlowBuilderServices" development="true" />
+
 </beans>

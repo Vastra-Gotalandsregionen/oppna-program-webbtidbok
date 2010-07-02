@@ -36,10 +36,10 @@
 	<!-- Scans for application @Components to deploy -->
 	<context:component-scan base-package="org.springframework.webflow.samples.booking" />
 
-	<util:properties id="test" location="classpath:MessageBundle_EN.properties"/>
-	<bean id="messageBean" class="se.vgregion.webbtidbok.MessageBean">
+	<!-->util:properties id="test" location="classpath:BaseMessages.properties"/-->
+	<!-->bean id="messageBean" class="se.vgregion.webbtidbok.MessageBean">
 		<property name="properties" ref="test"/>
-	</bean>
+	</bean-->
 	<bean id="loginService" class="se.vgregion.webbtidbok.Login">
 		<property name="webServiceHelper" ref="helper"/>
 		<property name="encrypter" ref="stringEncrypter"/>
@@ -83,6 +83,6 @@
     </bean>
 	
 	<!-- Imports the configurations of the different infrastructure systems of the application -->
-	<import resource="webmvc-config.xml" />
 	<import resource="webflow-config.xml" />
+	<import resource="webmvc-config.xml" />
 </beans>
