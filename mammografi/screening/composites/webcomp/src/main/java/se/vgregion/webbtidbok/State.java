@@ -20,6 +20,7 @@ package se.vgregion.webbtidbok;
 import java.io.Serializable;
 import java.util.Calendar;
 
+import se.vgregion.webbtidbok.servicedef.ServiceDefinition;
 import se.vgregion.webbtidbok.ws.*;
 
 
@@ -40,6 +41,7 @@ public class State implements Serializable {
     private static boolean loggedIn = false;
     private boolean isFirst = true;
     private String messageBundle ="";
+    private ServiceDefinition service;
     
     public State() {
 		super();
@@ -69,6 +71,14 @@ public class State implements Serializable {
     
     public boolean isFirst(){
     	return isFirst;
+    }
+    
+    public ServiceDefinition getService() {
+        return service;
+    }
+    
+    public void setServiceDefinition(ServiceDefinition def) {
+        service = def;
     }
     
     public void setLoggedIn(boolean loggedIn){
