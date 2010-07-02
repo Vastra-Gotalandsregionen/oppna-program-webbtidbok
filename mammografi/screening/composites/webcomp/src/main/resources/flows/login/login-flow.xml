@@ -27,8 +27,6 @@
 -->
 	<var name="state" class="se.vgregion.webbtidbok.State" />
 	<var name="loginmessages" class="se.vgregion.webbtidbok.LoginMessages" />
-	<var name="cancelbookingMessages" class="se.vgregion.webbtidbok.CancelBookingMessages" />
-	<var name="placesHandler" class="se.vgregion.webbtidbok.Places"  />
 
 <!--	declaring flow input attributes	and assigning them values thru expressions
 -->
@@ -68,258 +66,24 @@
     		</transition>
 	</action-state>
 
-<!--	<view-state id="loggedin" view="welcome.xhtml" model="booking">-->
-<!--		<on-render>-->
-<!--			<evaluate expression="bookingService.getBooking(state)" result="flowScope.booking" />-->
-<!-- 		</on-render>-->
-<!--		<transition on="logout" to="loggedout" history="invalidate"/> -->
-<!--		<transition on="update" to="update" />-->
-<!--		<transition on="delete" to="delete" />-->
-<!--	</view-state>-->
+    <subflow-state id="loggedin" subflow="display">
+        <input name="state" value="state" />
+        <transition on="logout" to="loggedout" /> 
+    </subflow-state>
 
-	<view-state id="loggedin" view="welcome2.xhtml">
-		<on-render>
-			<evaluate expression="bookingService.getBooking(state)" result="flowScope.booking" />
- 		</on-render>
-		<transition on="logout" to="loggedout" history="invalidate"/> 
-		<transition on="update" to="update" />
-		<transition on="delete" to="delete" />
-	</view-state>
-		
-	<view-state id="delete" view="delete.xhtml">	  
-		<on-render>
-			<evaluate expression="bookingService.getBooking(state)" result="flowScope.booking" />			
-		</on-render>		
-		<transition on="logout" to="loggedout" history="invalidate"/>
-		<transition on="cancel" to="loggedin" />
-		<transition on="confirmdelete" to="confirmdeletebooking">			
-		</transition>
-	</view-state>
-	
-	<action-state id="confirmdeletebooking">
-			<evaluate expression="bookingService.cancelBooking(state)"  />            
-			<transition on="yes" to="confirmdelete" />
-    		<transition on="no" to="loggedin">
-    			<evaluate expression="cancelbookingMessages.setCancelBookingMessage()" />   	
-    		</transition>
-	</action-state>
-	
-	<view-state id="confirmdelete" view="confirmdelete.xhtml">		
-		<transition on="logout" to="loggedout" history="invalidate"/>
-<!--		<transition on="send">-->
-<!--			<evaluate expression="sendMailService.sendMail(emailStringHandler)" />-->
-<!--		</transition>	-->
-	</view-state>
-	
-<!--	<action-state id="sendemail">-->
-<!--		<evaluate expression="sendMailService.sendMail(emailStringHandler)" />        -->
-<!--	</action-state>-->
-
-	<view-state id="login_error">
-	</view-state>
-		
-	<view-state id="debug">
-		<!--  if we have not defined the correct transition yet, transit to this state.
--->
-	</view-state>
-	
-	<view-state id="badlogin">
-	</view-state>
-	
-	<action-state id="isEmptyCalendar">
-			 <evaluate expression="bookingService.getBookingPlaceSelectItems(state)"  result="flowScope.bookingplaces"  >
-			 </evaluate>		  
-			 <evaluate expression="placesHandler.setPlacesId(bookingService.getSelectedDefaultItem(state))" >
-			 </evaluate>		  
-			 <evaluate expression="bookingService.getSelectedPlace(placesHandler, state)" result="flowScope.selectedPlace"  >
-			 </evaluate>
-			 <evaluate expression="calendarService.getCalendar(state)"  /> 
-			 <evaluate expression="calendarService.isEmptyCalendar()" />
-			 <transition on="yes" to="updateNoTimeTable"></transition>
-			 <transition on="no" to="istimelistempty"/>			
-	</action-state>
-		
-	<action-state id="istimelistempty">
-		 <evaluate expression="bookingService.getBookingPlaceSelectItems(state)"  result="flowScope.bookingplaces"  >
-		 </evaluate>		  
-		 <evaluate expression="placesHandler.setPlacesId(bookingService.getSelectedDefaultItem(state))" >
-		 </evaluate>	  
-		 <evaluate expression="bookingService.getSelectedPlace(placesHandler, state)" result="flowScope.selectedPlace"  >
-		 </evaluate>		 
-		 <evaluate expression="calendarService.getTimeForChosenDate(state)" />
-		 <evaluate expression="bookingService.getBookingTime(state)" result="flowScope.timeListLocal" result-type="dataModel" /> 	 
-		 <evaluate expression="bookingService.getIsTimeListEmpty()" />	 
-	 	<transition on="yes" to="updateNoTimeTable">
-	 	</transition>
-		<transition on="no" to="update">
-		</transition>				
-	</action-state>
-	
-	<view-state id="updateNoTimeTable" view="updateNoTimeTable.xhtml">	
-		<on-render>		
-			<evaluate expression="bookingService.setSelectedItem(placesHandler, state)"   >
-			</evaluate>		
-			<evaluate expression="placesHandler.getPlacesId()"  result="viewScope.placesId">
-			</evaluate>
-			<evaluate expression="calendarService.setSelectedDay(requestParameters.selectedDay)" />
-			<evaluate expression="calendarService.getCalendar(state)" />
-			<evaluate expression="calendarService.getTimeForChosenDate(state)" />
-		</on-render>		
-		<transition on="logout" to="loggedout" history="invalidate"/>
-		<transition on="cancel" to="loggedin">
-			<evaluate expression="calendarService.setSelectedDay('')" />
-			<evaluate expression="bookingService.setFirstPlacesBoolean(true)" />
-		</transition>
-		
-		<transition on="showTimeCalendar" to="istimelistempty">
-			<evaluate expression="calendarService.setSelectedDay(requestParameters.selectedDay)" />
-		</transition>	
-		
-		<transition on="displaytimes" to="isEmptyCalendar">
-			<evaluate expression="bookingService.setSelectedItem(placesHandler, state)"   >
-			</evaluate>			
-			<evaluate expression="placesHandler.getPlacesId()"  result="viewScope.placesId">
-			</evaluate>					
-		</transition>
-		<transition on="prev" to="update2">
-            <evaluate expression="calendarService.setCalendarMonth(state, -1)" />
-            <render fragments="displayTimeForm:calendarFragment" />
-        </transition>   
-        <transition on="next" to="update2">
-            <evaluate expression="calendarService.setCalendarMonth(state, 1)" />
-            <render fragments="displayTimeForm:calendarFragment" />
-        </transition>	
-	</view-state>
-	
-	<view-state id="update" view="update.xhtml">
-		<on-render >			  
-			  <evaluate expression="bookingService.getBookingPlaceSelectItems(state)"  result="flowScope.bookingplaces"  >
-			  </evaluate>
-			  <evaluate expression="placesHandler.setPlacesId(bookingService.getSelectedDefaultItem(state))" >
-			  </evaluate>
-			  <evaluate expression="bookingService.getSelectedPlace(placesHandler, state)" result="flowScope.selectedPlace"  >
-			  </evaluate>
-			  <evaluate expression="calendarService.getCalendar(state)"  /> 
-<!--	only want to do getTimeForChosenDate first time around AND when a NEW date is selected, now it's also done when click on < or >		  -->
-<!--		why is this needed???	  <evaluate expression="bookingService.getSelectedPlace(placesHandler, state)" result="flowScope.selectedPlace"  >-->
-<!--			  </evaluate>-->
-			  <evaluate expression="calendarService.getTimeForChosenDate(state)" />
-			  <evaluate expression="bookingService.getBookingTime(state)" result="flowScope.timeListLocal" result-type="dataModel" /> 
-<!--			  <evaluate expression="calendarService.setSelectedDay(requestParameters.selectedDay)" />-->
-		</on-render>	
-		<transition on="showTimeCalendar" to="istimelistempty">
-			<evaluate expression="calendarService.setSelectedDay(requestParameters.selectedDay)" />
-		</transition>		
-		<transition on="logout" to="loggedout" history="invalidate"/>
-		<transition on="cancel" to="loggedin">
-			<evaluate expression="calendarService.setSelectedDay('')" />
-			<evaluate expression="bookingService.setFirstPlacesBoolean(true)" />
-		</transition>	
-		<transition on="displaytimes" to="isEmptyCalendar">
-			<evaluate expression="bookingService.setSelectedItem(placesHandler, state)"   >
-			</evaluate>			
-			<evaluate expression="placesHandler.getPlacesId()"  result="viewScope.placesId">
-			</evaluate>					
-		</transition>		
-		<transition on="test" to="istimelistempty">
-		<evaluate expression="calendarService.test()" />
-		</transition>
-		<transition on="selecttime" to="confirmupdate"> 
-			<evaluate expression="calendarService.setSelectedDay(calendarService.selectedDay)" >
-			</evaluate>			
-			<set name="conversationScope.timeTable" value="timeListLocal.selectedRow"  />		 
-			<evaluate expression="bookingService.setBookingTime(conversationScope.timeTable, state)" >
-			</evaluate>		
-		</transition>
-		<transition on="prev" to="update2">
-			<evaluate expression="calendarService.setCalendarMonth(state, -1)" />
-			<render fragments="displayTimeForm:calendarFragment" />
-		</transition>	
-		<transition on="next" to="update2">
-			<evaluate expression="calendarService.setCalendarMonth(state, 1)" />
-			<render fragments="displayTimeForm:calendarFragment" />
-		</transition>	
-	</view-state>
-	
-	<action-state id="confirmupdateaction">
-		<evaluate expression="bookingService.isUpdated()" />
-		<transition on="yes" to="confirmupdate"></transition>
-		<transition on="no" to="loggedin"/>		
-	</action-state>
-
-	<view-state id="confirmupdate" view="confirmUpdate.xhtml">   
-		<on-render >
-			<evaluate expression="bookingService.getBooking(state)" result="flowScope.booking" /> 
-		</on-render>	
-		<transition on="logout" to="loggedout" history="invalidate"/>		
-<!--		<transition on="send">  	-->
-<!--		<evaluate expression="sendMailService.sendMailTotalRecallBooking(emailStringHandler, bookingService.getBooking(state))" />-->
-<!--		</transition>-->
-	</view-state>
-		
-	<!-- 	update2 is the same as update except there's no call to getBookingTime(state) AND getTimeForChosenDate(state)	 -->
-	<!--	this so that the time will not be provided as defualt before you've actually clicked on a specific date
--->
-	<view-state id="update2" view="update.xhtml">
-		<on-render >			  
-			  <evaluate expression="bookingService.getBookingPlaceSelectItems(state)"  result="flowScope.bookingplaces"  >
-			  </evaluate>			  
-			  <evaluate expression="placesHandler.setPlacesId(bookingService.getSelectedDefaultItem(state))" >
-			  </evaluate>		  
-			  <evaluate expression="bookingService.getSelectedPlace(placesHandler, state)" result="flowScope.selectedPlace"  >
-			  </evaluate>		  		  
-			  <evaluate expression="calendarService.getCalendar(state)"  />
-			  <evaluate expression="calendarService.getTimeForChosenDate(state)" />
-			  <evaluate expression="bookingService.getBookingTime(state)" result="flowScope.timeListLocal" result-type="dataModel" />		  
-		</on-render>	
-	
-		<transition on="showTimeCalendar" to="istimelistempty">
-			<set name="calendarService.selectedDay" value="requestParameters.selectedDay" />
-		</transition>				
-<!--		<transition on="showTimeCalendar" to="update">-->
-<!--			<set name="calendarService.selectedDay" value="requestParameters.selectedDay" />-->
-<!--		</transition>-->
-		<transition on="logout" to="loggedout" history="invalidate"/>
-		<transition on="cancel" to="loggedin">
-			<evaluate expression="calendarService.setSelectedDay('')" />
-			<evaluate expression="bookingService.setFirstPlacesBoolean(true)" />
-		</transition>
-		<transition on="displaytimes" to="isEmptyCalendar">
-			<evaluate expression="bookingService.setSelectedItem(placesHandler, state)"   >
-			</evaluate>		
-			<evaluate expression="placesHandler.getPlacesId()"  result="viewScope.placesId">
-			</evaluate>				
-		</transition>	
-		<transition on="selecttime" to="confirmupdate">		
-			<evaluate expression="calendarService.setSelectedDay(calendarService.selectedDay)" >
-			</evaluate>		
-			<set name="conversationScope.timeTable" value="timeListLocal.selectedRow"  />		
-			<evaluate expression="bookingService.setBookingTime(conversationScope.timeTable, state)" >
-			</evaluate>	
-		</transition>	
-		<transition on="prev" to="update">
-			<evaluate expression="calendarService.setCalendarMonth(state, -1)" />
-			<evaluate expression="calendarService.getCalendar(state)" />
-		</transition>		
-		<transition on="prev" to="update2">
-			<evaluate expression="calendarService.setCalendarMonth(state, -1)" />
-			<render fragments="displayTimeForm:calendarFragment" />
-		</transition>	
-		<transition on="next" to="update2">
-			<evaluate expression="calendarService.setCalendarMonth(state, 1)" />
-			<render fragments="displayTimeForm:calendarFragment" />
-		</transition>		
-	</view-state>
-	
-	<end-state id="loggedout" view="loggedout.xhtml">
+	<end-state id="loggedout" view="/flows/login/loggedout.xhtml">
 		<on-entry>
             <evaluate expression="loginService.logout(state)" />
             <evaluate expression="bookingService.setFirstPlacesBoolean(true)" />            
         </on-entry>
 	</end-state>
-    
-	<end-state id="finish" />
-	
+
+
+	<view-state id="debug" view="/flows/login/debug.xhtml">
+		<!--  if we have not defined the correct transition yet, transit to this state. -->
+	</view-state>
+		
+
     <global-transitions>
         <transition on-exception="java.lang.Error" history="invalidate" to="loggedout"/>
     </global-transitions>
