@@ -48,7 +48,7 @@
 
 
 <!--for debugging you have to replace to="validate" with to="loggedin"-->
-	<view-state id="start">
+	<view-state id="start" view="/flows/login/start.xhtml">
 		<transition on="login" to="validate" />
 	</view-state>
 	

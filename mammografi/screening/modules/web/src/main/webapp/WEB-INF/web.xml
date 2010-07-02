@@ -23,12 +23,24 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
 	version="2.4">
 
+	<!-- resolving .xhmtl files for Facelets -->
+	<context-param>
+		<param-name>facelets.RESOURCE_RESOLVER</param-name>
+		<param-value>
+			se.vgr.javg.util.webcomponent.support.FaceletsClasspathResourceResolver 
+		</param-value>
+	</context-param>
+
 	<!-- The master configuration file for this Spring web application -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>
-			/WEB-INF/config/web-application-config.xml
-		</param-value>
+		<param-value>classpath*:web-application-config.xml</param-value>
+	</context-param>
+
+	<!-- jboss el expressions allow method params -->
+	<context-param>
+		<param-name>com.sun.faces.expressionFactory</param-name>
+		<param-value>org.jboss.el.ExpressionFactoryImpl</param-value>
 	</context-param>
 	
 	<!-- Use JSF view templates saved as *.xhtml, for use with Facelets -->
@@ -48,7 +60,7 @@
   		<param-name>facelets.REFRESH_PERIOD</param-name>
   		<param-value>1</param-value>
   	</context-param>
-    
+  	
     <!-- Enforce UTF-8 Character Encoding -->
     <filter>
         <filter-name>charEncodingFilter</filter-name>
@@ -74,16 +86,19 @@
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
   	
-  	<!-- Serves static resource content from .jar files such as spring-faces.jar -->
 	<servlet>
-		<servlet-name>Resources Servlet</servlet-name>
-		<servlet-class>org.springframework.js.resource.ResourceServlet</servlet-class>
-		<load-on-startup>0</load-on-startup>
+		<servlet-name>JAVG Classpath Servlet</servlet-name>
+		<servlet-class>
+			se.vgr.javg.util.webcomponent.support.ClasspathResourceLoadingServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
 	</servlet>
-			
-	<!-- Map all /resources requests to the Resource Servlet for handling -->
+	<!--
+		Map all url:s beginning with "resource" to /resources/* for loading
+		from web composite jars on the classpath rather than the web-inf
+		directory
+	-->
 	<servlet-mapping>
-		<servlet-name>Resources Servlet</servlet-name>
+		<servlet-name>JAVG Classpath Servlet</servlet-name>
 		<url-pattern>/resources/*</url-pattern>
 	</servlet-mapping>
 	
@@ -118,7 +133,7 @@
 	</servlet-mapping>
 	
 	<welcome-file-list>
-		<welcome-file>index.html</welcome-file>
+		<welcome-file>spring/login</welcome-file>
 	</welcome-file-list>
 	
 	
