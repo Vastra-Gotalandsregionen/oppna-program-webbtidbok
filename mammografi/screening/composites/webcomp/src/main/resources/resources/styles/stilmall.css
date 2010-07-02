@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Copyright 2009 Vastra Gotalandsregionen
  *
  *   This library is free software; you can redistribute it and/or modify
@@ -291,7 +291,7 @@ div.headimageholder img {
 	}
 #pageHeaderSearch {
 	float:right;
-	width:428px;
+	width:570px;
 	}
 .headerlinks ul {
 	list-style:none;
@@ -299,7 +299,7 @@ div.headimageholder img {
 	padding:0;
 	float:left;
 	margin-top:1em;
-	width:238px;
+	width:350px;
 	}
 .headerlinks ul li {
 	float:left; 
