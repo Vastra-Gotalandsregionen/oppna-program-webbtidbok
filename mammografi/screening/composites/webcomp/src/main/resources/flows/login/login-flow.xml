@@ -45,19 +45,24 @@
 <!-- often the parameters are the variables declared above. -->
 
 
-<!--for debugging you have to replace to="validate" with to="loggedin"-->
-	<view-state id="start" view="/flows/login/start.xhtml">
-		<transition on="login" to="validate" />
-	</view-state>
-	
-	<action-state id="validate">
-			<evaluate expression="validationService.validateLogin(state, loginmessages)" />
-<!--			<evaluate expression="messageBean.setLanguage(language)" />-->
-<!--			<evaluate expression="state.setMessageBundle(language)" />-->
-			<transition on="yes" to="doLogin" />
-			<transition on="no" to="start"/>		
-	</action-state>
-	
+    <!-- for debugging you have to replace to="validate" with to="loggedin"-->
+    <view-state id="start" view="/flows/login/start.xhtml">
+        <transition on="login" to="validate" />
+    </view-state>
+
+    <!-- Validate inputs to make sure id and password are well formed -->    
+    <action-state id="validate">
+        <evaluate expression="validationService.validateLogin(state, loginmessages)" />
+        <transition on="yes" to="lookupService" />
+        <transition on="no" to="start"/>		
+    </action-state>
+
+    <action-state id="lookupService">
+        <evaluate expression="lookupService.lookup(state)"></evaluate>
+        <transition on="yes" to="doLogin"/>
+        <transition on="no" to="start"/>
+    </action-state>
+
 	<action-state id="doLogin">
 		<evaluate expression="loginService.login(state)" />
     		<transition on="yes" to="loggedin" />

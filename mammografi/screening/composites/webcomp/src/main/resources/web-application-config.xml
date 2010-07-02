@@ -40,11 +40,28 @@
 	<!-->bean id="messageBean" class="se.vgregion.webbtidbok.MessageBean">
 		<property name="properties" ref="test"/>
 	</bean-->
+    
+    <!-- Login services. -->
+    
 	<bean id="loginService" class="se.vgregion.webbtidbok.Login">
 		<property name="webServiceHelper" ref="helper"/>
 		<property name="encrypter" ref="stringEncrypter"/>
 	</bean>
-	
+
+    <bean id="validationService" class="se.vgregion.webbtidbok.ValidationLogin">
+    </bean>
+    
+    <!-- Our lookup service. Currently a dummy. -->
+    <bean id="lookupService" class="se.vgregion.webbtidbok.servicedef.DummyLookup">
+        <property name="serviceDefinition" ref="serviceDefinitionMammografi" />
+    </bean>
+
+    <!-- Service definitions should be moved later, but for now this will do. -->
+    <bean id="serviceDefinitionMammografi"
+        class="se.vgregion.webbtidbok.servicedef.ServiceDefinition" />
+
+
+
 	<bean id="bookingService" class="se.vgregion.webbtidbok.booking.BookingService">
 		<property name="helper" ref="helper" />
 	</bean>
@@ -58,9 +75,6 @@
 		<property name="keyAlias"
 			value="a6c21dcdd9534d742aa1bd4afae16210_956e2a3a-b426-49f4-a107-72c603d2f58c" />
 		<property name="keyPassWord" value="asd" />
-	</bean>
-	
-	<bean id="validationService" class="se.vgregion.webbtidbok.ValidationLogin">
 	</bean>
 	
 	<bean id="calendarService" class="se.vgregion.webbtidbok.calendar.CalendarUtil">
