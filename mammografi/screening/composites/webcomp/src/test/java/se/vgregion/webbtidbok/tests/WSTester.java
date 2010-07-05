@@ -33,7 +33,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import se.vgregion.webbtidbok.State;
-import se.vgregion.webbtidbok.WebServiceHelper;
+import se.vgregion.webbtidbok.booking.elvis.WebServiceHelper;
 import se.vgregion.webbtidbok.ws.ArrayOfBookingPlace;
 import se.vgregion.webbtidbok.ws.ArrayOfBookingTime;
 import se.vgregion.webbtidbok.ws.ArrayOfCalendar;

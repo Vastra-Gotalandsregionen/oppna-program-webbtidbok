@@ -19,6 +19,7 @@ package se.vgregion.webbtidbok;
 
 import org.springframework.stereotype.Service;
 
+import se.vgregion.webbtidbok.booking.elvis.WebServiceHelper;
 import se.vgregion.webbtidbok.ws.BookingRequest;
 import se.vgregion.webbtidbok.ws.BookingResponse;
 

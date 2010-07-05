@@ -31,7 +31,6 @@ import org.apache.log4j.Logger;
 
 import se.vgregion.webbtidbok.Places;
 import se.vgregion.webbtidbok.State;
-import se.vgregion.webbtidbok.WebServiceHelper;
 import se.vgregion.webbtidbok.gui.SelectItemConverter;
 import se.vgregion.webbtidbok.lang.DateHandler;
 import se.vgregion.webbtidbok.ws.ArrayOfBookingPlace;
