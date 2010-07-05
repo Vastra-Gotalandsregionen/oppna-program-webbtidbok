@@ -45,7 +45,6 @@
     
 	<bean id="loginService" class="se.vgregion.webbtidbok.Login">
 		<property name="webServiceHelper" ref="helper"/>
-		<property name="encrypter" ref="stringEncrypter"/>
 	</bean>
 
     <bean id="validationService" class="se.vgregion.webbtidbok.ValidationLogin">

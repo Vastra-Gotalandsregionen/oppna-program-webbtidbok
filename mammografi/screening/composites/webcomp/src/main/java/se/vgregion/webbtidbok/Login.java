@@ -17,19 +17,13 @@
  */
 package se.vgregion.webbtidbok;
 
-import javax.xml.bind.JAXBElement;
-
-import org.apache.commons.logging.impl.Log4JLogger;
 import org.springframework.stereotype.Service;
 
-import se.vgregion.webbtidbok.crypto.StringEncrypter;
 import se.vgregion.webbtidbok.ws.BookingRequest;
 import se.vgregion.webbtidbok.ws.BookingResponse;
-import se.vgregion.webbtidbok.ws.ObjectFactory;
 
 @Service
 public class Login {
-  private final ObjectFactory objectFactory = new ObjectFactory();
   private WebServiceHelper webServiceHelper;
   BookingResponse bookingRequest;
   BookingRequest b;
@@ -41,11 +35,6 @@ public class Login {
   }
 
   public String message = "";
-  private StringEncrypter encrypter;
-
-  public void setEncrypter(StringEncrypter encrypter) {
-    this.encrypter = encrypter;
-  }
 
   public String getPnr() {
     return response.getPnr().toString();
@@ -63,25 +52,7 @@ public class Login {
 
   public boolean login(State loginCredentials) throws Exception {
 
-    BookingRequest request = objectFactory.createBookingRequest();
-
-    byte[] encrypted = encrypter.signString(loginCredentials.getPasswd());
-    String encoded = encrypter.encodeToBase64(encrypted);
-    // "parameters"
-    JAXBElement<String> pnr = objectFactory.createBookingRequestPnr(loginCredentials.getPnr());
-    JAXBElement<String> pin = objectFactory.createBookingRequestPin(loginCredentials.getPasswd());
-    JAXBElement<String> key = objectFactory.createBookingRequestKey(loginCredentials.getPasswd());
-    JAXBElement<String> cryptedKey = objectFactory.createBookingRequestCryptedKey(encoded);
-
-    JAXBElement<String> cert = objectFactory.createBookingRequestCert("YES");
-
-    // setup request object
-    request.setPnr(pnr);
-    request.setPin(pin);
-    request.setKey(key);
-    request.setCryptedKey(cryptedKey);
-    request.setCert(cert);
-
+    BookingRequest request = webServiceHelper.getQueryWSRequest(loginCredentials);
     response = webServiceHelper.getQueryWS(request);
 
     loginCredentials.setBookingResponse(response);
@@ -93,11 +64,5 @@ public class Login {
       loginCredentials.setLoggedIn(false);
       return false;
     }
-  }
-
-  private void debug(BookingRequest r) {
-    Log4JLogger log = new Log4JLogger();
-
-    log.debug(r.toString());
   }
 }
