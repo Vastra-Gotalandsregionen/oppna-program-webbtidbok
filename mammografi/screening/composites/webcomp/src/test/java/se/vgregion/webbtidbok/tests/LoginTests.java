@@ -61,14 +61,7 @@ public class LoginTests {
     System.out.println(credentials.toString());
 
     Login screen = new Login();
-    boolean loggedIn = screen.login(credentials);
-
-    if (loggedIn == true) {
-      Assert.assertFalse(true);
-    } else {
-      Assert.assertTrue(true);
-    }
-
+    Assert.assertFalse(screen.login(credentials));
   }
 
   /*
@@ -83,14 +76,7 @@ public class LoginTests {
     System.out.println(credentials.toString());
 
     Login screen = new Login();
-    boolean loggedIn = screen.login(credentials);
-
-    if (loggedIn == true) {
-      Assert.assertFalse(true);
-    } else {
-      Assert.assertTrue(true);
-    }
-
+    Assert.assertFalse(screen.login(credentials));
   }
 
   /*
@@ -105,14 +91,7 @@ public class LoginTests {
     System.out.println(credentials.toString());
 
     Login screen = new Login();
-    boolean loggedIn = screen.login(credentials);
-
-    if (loggedIn == true) {
-      Assert.assertFalse(true);
-    } else {
-      Assert.assertTrue(true);
-    }
-
+    Assert.assertFalse(screen.login(credentials));
   }
 
   /*
@@ -127,14 +106,7 @@ public class LoginTests {
     System.out.println(credentials.toString());
 
     Login screen = new Login();
-    boolean loggedIn = screen.login(credentials);
-
-    if (loggedIn == true) {
-      Assert.assertFalse(true);
-    } else {
-      Assert.assertTrue(true);
-    }
-
+    Assert.assertFalse(screen.login(credentials));
   }
 
   /*
@@ -149,14 +121,7 @@ public class LoginTests {
     System.out.println(credentials.toString());
 
     Login screen = new Login();
-    boolean loggedIn = screen.login(credentials);
-
-    if (loggedIn == true) {
-      Assert.assertFalse(true);
-    } else {
-      Assert.assertTrue(true);
-    }
-
+    Assert.assertFalse(screen.login(credentials));
   }
 
   /*
@@ -171,14 +136,7 @@ public class LoginTests {
     System.out.println(credentials.toString());
 
     Login screen = new Login();
-    boolean loggedIn = screen.login(credentials);
-
-    if (loggedIn == true) {
-      Assert.assertFalse(true);
-    } else {
-      Assert.assertTrue(true);
-    }
-
+    Assert.assertFalse(screen.login(credentials));
   }
 
   /*
@@ -193,14 +151,7 @@ public class LoginTests {
     System.out.println(credentials.toString());
 
     Login screen = new Login();
-    boolean loggedIn = screen.login(credentials);
-
-    if (loggedIn == true) {
-      Assert.assertFalse(true);
-    } else {
-      Assert.assertTrue(true);
-    }
-
+    Assert.assertFalse(screen.login(credentials));
   }
 
   /*
@@ -218,14 +169,7 @@ public class LoginTests {
     System.out.println(credentials.toString());
 
     Login screen = new Login();
-    boolean loggedIn = screen.login(credentials);
-
-    if (loggedIn == true) {
-      Assert.assertTrue(true);
-    } else {
-      Assert.assertFalse(true);
-    }
-
+    Assert.assertTrue(screen.login(credentials));
   }
 
   /*
@@ -242,14 +186,7 @@ public class LoginTests {
     System.out.println(credentials.toString());
 
     Login screen = new Login();
-    boolean loggedIn = screen.login(credentials);
-
-    if (loggedIn == true) {
-      Assert.assertTrue(false);
-    } else {
-      Assert.assertTrue(true);
-    }
-
+    Assert.assertFalse(screen.login(credentials));
   }
 
   /*
@@ -266,14 +203,7 @@ public class LoginTests {
     System.out.println(credentials.toString());
 
     Login screen = new Login();
-    boolean loggedIn = screen.login(credentials);
-
-    if (loggedIn == true) {
-      Assert.assertTrue(false);
-    } else {
-      Assert.assertTrue(true);
-    }
-
+    Assert.assertFalse(screen.login(credentials));
   }
 
   /*
@@ -291,14 +221,7 @@ public class LoginTests {
     System.out.println(credentials.toString());
 
     Login screen = new Login();
-    boolean loggedIn = screen.login(credentials);
-
-    if (loggedIn == true) {
-      Assert.assertTrue(false);
-    } else {
-      Assert.assertTrue(true);
-    }
-
+    Assert.assertFalse(screen.login(credentials));
   }
 
   /*
@@ -316,14 +239,7 @@ public class LoginTests {
     System.out.println(credentials.toString());
 
     Login screen = new Login();
-    boolean loggedIn = screen.login(credentials);
-
-    if (loggedIn == true) {
-      Assert.assertTrue(false);
-    } else {
-      Assert.assertTrue(true);
-    }
-
+    Assert.assertFalse(screen.login(credentials));
   }
 
 }
