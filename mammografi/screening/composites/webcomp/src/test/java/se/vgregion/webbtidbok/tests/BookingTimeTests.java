@@ -33,10 +33,10 @@ import org.junit.Test;
 
 import se.vgregion.webbtidbok.State;
 import se.vgregion.webbtidbok.WebServiceHelper;
-import se.vgregion.webbtidbok.booking.BookingResponseLocal;
-import se.vgregion.webbtidbok.booking.BookingService;
-import se.vgregion.webbtidbok.booking.BookingServiceInterface;
-import se.vgregion.webbtidbok.booking.BookingTimeLocal;
+import se.vgregion.webbtidbok.booking.elvis.BookingResponseLocal;
+import se.vgregion.webbtidbok.booking.elvis.BookingService;
+import se.vgregion.webbtidbok.booking.elvis.BookingServiceInterface;
+import se.vgregion.webbtidbok.booking.elvis.BookingTimeLocal;
 import se.vgregion.webbtidbok.lang.DateHandler;
 import se.vgregion.webbtidbok.ws.ArrayOfBookingTime;
 import se.vgregion.webbtidbok.ws.BookingRequest;

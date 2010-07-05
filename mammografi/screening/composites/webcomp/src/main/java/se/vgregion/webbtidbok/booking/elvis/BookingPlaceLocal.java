@@ -15,7 +15,7 @@
  *   Free Software Foundation, Inc., 59 Temple Place, Suite 330,
  *   Boston, MA 02111-1307  USA
  */
-package se.vgregion.webbtidbok.booking;
+package se.vgregion.webbtidbok.booking.elvis;
 import java.io.*;
 import java.util.*;
 import java.lang.*;

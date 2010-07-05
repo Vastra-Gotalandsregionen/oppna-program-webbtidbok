@@ -26,7 +26,7 @@ import java.lang.*;
 import java.io.*;
 
 import se.vgregion.webbtidbok.*;
-import se.vgregion.webbtidbok.booking.BookingPlaceLocal;
+import se.vgregion.webbtidbok.booking.elvis.BookingPlaceLocal;
 import se.vgregion.webbtidbok.ws.BookingPlace;
 
 public class SelectItemConverter {
