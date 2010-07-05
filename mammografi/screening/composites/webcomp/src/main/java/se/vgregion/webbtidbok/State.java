@@ -73,7 +73,7 @@ public class State implements Serializable {
     	return isFirst;
     }
     
-    public ServiceDefinition getService() {
+    public ServiceDefinition getServiceDefinition() {
         return service;
     }
     
