@@ -41,7 +41,7 @@ public class State implements Serializable {
     private static boolean loggedIn = false;
     private boolean isFirst = true;
     private String messageBundle ="";
-    private ServiceDefinition service;
+    private ServiceDefinition service = null;
     
     public State() {
 		super();
