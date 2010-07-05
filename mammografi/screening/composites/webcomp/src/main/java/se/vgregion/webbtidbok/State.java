@@ -38,7 +38,7 @@ public class State implements Serializable {
     transient BookingResponse bookingResponse = null;
     private Calendar selectedDate;
     private boolean isDefaultDate = true;
-    private static boolean loggedIn = false;
+    private boolean loggedIn = false;
     private boolean isFirst = true;
     private String messageBundle ="";
     private ServiceDefinition service = null;
