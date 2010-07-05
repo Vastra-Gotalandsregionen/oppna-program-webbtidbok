@@ -31,7 +31,7 @@ import java.util.*;
 import java.io.Serializable;
 import javax.mail.Address;
 import se.vgregion.webbtidbok.*;
-import se.vgregion.webbtidbok.booking.BookingResponseLocal;
+import se.vgregion.webbtidbok.booking.elvis.BookingResponseLocal;
 
 
 

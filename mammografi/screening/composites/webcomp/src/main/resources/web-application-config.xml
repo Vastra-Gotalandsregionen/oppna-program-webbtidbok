@@ -62,7 +62,7 @@
 
 
 
-	<bean id="bookingService" class="se.vgregion.webbtidbok.booking.BookingService">
+	<bean id="bookingService" class="se.vgregion.webbtidbok.booking.elvis.BookingService">
 		<property name="helper" ref="helper" />
 	</bean>
 	
@@ -85,7 +85,7 @@
 	    <aop:config>
 	        <aop:aspect ref="loggingAdvice">
 	            <aop:pointcut id="loggingBookingServ"
-	                expression="execution(* se.vgregion.webbtidbok.booking.BookingService.*(..))" />
+	                expression="execution(* se.vgregion.webbtidbok.booking.elvis.BookingService.*(..))" />
 	            <aop:pointcut expression="execution(* se.vgregion.webbtidbok.calendar.CalendarUtil.*(..))" id="loggingCalUtil"/>
 	            <aop:around method="around" pointcut-ref="loggingBookingServ" />
 	            <aop:around method="around" pointcut-ref="loggingCalUtil"/>
