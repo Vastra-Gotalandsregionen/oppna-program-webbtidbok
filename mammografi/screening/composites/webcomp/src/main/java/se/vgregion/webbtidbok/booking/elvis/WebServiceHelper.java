@@ -15,12 +15,13 @@
  *   Free Software Foundation, Inc., 59 Temple Place, Suite 330,
  *   Boston, MA 02111-1307  USA
  */
-package se.vgregion.webbtidbok;
+package se.vgregion.webbtidbok.booking.elvis;
 
 import java.util.List;
 
 import javax.xml.bind.JAXBElement;
 
+import se.vgregion.webbtidbok.State;
 import se.vgregion.webbtidbok.crypto.StringEncrypter;
 import se.vgregion.webbtidbok.ws.ArrayOfBookingPlace;
 import se.vgregion.webbtidbok.ws.ArrayOfBookingTime;

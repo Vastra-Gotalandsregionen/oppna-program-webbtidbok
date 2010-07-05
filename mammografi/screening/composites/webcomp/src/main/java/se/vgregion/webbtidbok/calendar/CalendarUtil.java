@@ -26,7 +26,7 @@ import javax.xml.bind.JAXBElement;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 import se.vgregion.webbtidbok.State;
-import se.vgregion.webbtidbok.WebServiceHelper;
+import se.vgregion.webbtidbok.booking.elvis.WebServiceHelper;
 import se.vgregion.webbtidbok.ws.ArrayOfCalendar;
 import se.vgregion.webbtidbok.ws.BookingRequest;
 import se.vgregion.webbtidbok.ws.ObjectFactory;

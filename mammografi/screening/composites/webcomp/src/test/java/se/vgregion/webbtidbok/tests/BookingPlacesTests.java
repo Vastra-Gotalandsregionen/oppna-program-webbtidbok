@@ -27,7 +27,7 @@ import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.Resource;
 
 import se.vgregion.webbtidbok.State;
-import se.vgregion.webbtidbok.WebServiceHelper;
+import se.vgregion.webbtidbok.booking.elvis.WebServiceHelper;
 import se.vgregion.webbtidbok.crypto.StringEncrypter;
 import se.vgregion.webbtidbok.ws.ArrayOfBookingPlace;
 import se.vgregion.webbtidbok.ws.BookingPlace;
@@ -49,7 +49,7 @@ public class BookingPlacesTests {
   public void testBookingPlaces() {
 
     State credentials = new State();
-    credentials.setPasswd("fje5rnXG");
+    credentials.setPasswd("6wHRDtKa"); // Old pw: "fje5rnXG"
     credentials.setPnr("19910104-2399");
 
     BookingRequest request = ws.getQueryWSRequest(credentials);

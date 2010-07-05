@@ -35,7 +35,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import se.vgregion.webbtidbok.State;
-import se.vgregion.webbtidbok.WebServiceHelper;
+import se.vgregion.webbtidbok.booking.elvis.WebServiceHelper;
 import se.vgregion.webbtidbok.lang.DateHandler;
 import se.vgregion.webbtidbok.ws.ArrayOfCalendar;
 import se.vgregion.webbtidbok.ws.BookingRequest;

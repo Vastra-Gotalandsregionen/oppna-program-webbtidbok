@@ -65,7 +65,7 @@
 		<property name="helper" ref="helper" />
 	</bean>
 	
-	<bean id="helper" class="se.vgregion.webbtidbok.WebServiceHelper">
+	<bean id="helper" class="se.vgregion.webbtidbok.booking.elvis.WebServiceHelper">
 		<property name="encrypter" ref="stringEncrypter" />
 	</bean>
 	

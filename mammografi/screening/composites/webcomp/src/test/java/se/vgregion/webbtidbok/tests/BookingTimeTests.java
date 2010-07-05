@@ -32,11 +32,11 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import se.vgregion.webbtidbok.State;
-import se.vgregion.webbtidbok.WebServiceHelper;
 import se.vgregion.webbtidbok.booking.elvis.BookingResponseLocal;
 import se.vgregion.webbtidbok.booking.elvis.BookingService;
 import se.vgregion.webbtidbok.booking.elvis.BookingServiceInterface;
 import se.vgregion.webbtidbok.booking.elvis.BookingTimeLocal;
+import se.vgregion.webbtidbok.booking.elvis.WebServiceHelper;
 import se.vgregion.webbtidbok.lang.DateHandler;
 import se.vgregion.webbtidbok.ws.ArrayOfBookingTime;
 import se.vgregion.webbtidbok.ws.BookingRequest;
@@ -292,7 +292,7 @@ public class BookingTimeTests {
     State credentials = new State();
     // credentials.setPasswd("Zs12JzIW");
     // credentials.setPnr("19121212-1212");
-    credentials.setPasswd("fje5rnXG");
+    credentials.setPasswd("6wHRDtKa");
     credentials.setPnr("19910104-2399");
 
     JAXBElement<String> fromDat = objectFactory.createBookingRequestFromDat("2010-05-14");
