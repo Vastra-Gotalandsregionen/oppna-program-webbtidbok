@@ -22,7 +22,9 @@ import java.io.Serializable;
 public class CancelBookingMessages implements Serializable
 {
 	
-	private String cancelBookingMessage = "";
+    private static final long serialVersionUID = 1L;
+
+    private String cancelBookingMessage = "";
 	
 	public void setCancelBookingMessage(String s){
 		cancelBookingMessage= s;
