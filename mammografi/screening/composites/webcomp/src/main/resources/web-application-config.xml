@@ -36,11 +36,7 @@
 	<!-- Scans for application @Components to deploy -->
 	<context:component-scan base-package="org.springframework.webflow.samples.booking" />
 
-	<!-->util:properties id="test" location="classpath:BaseMessages.properties"/-->
-	<!-->bean id="messageBean" class="se.vgregion.webbtidbok.MessageBean">
-		<property name="properties" ref="test"/>
-	</bean-->
-    
+
     <bean id="bookingFactory" class="se.vgregion.webbtidbok.booking.BookingFactory">
       <property name="serviceDefinitions">
         <list>
