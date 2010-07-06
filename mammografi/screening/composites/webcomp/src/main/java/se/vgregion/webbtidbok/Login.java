@@ -24,7 +24,7 @@ import se.vgregion.webbtidbok.booking.BookingFactory;
 
 @Service
 public class Login {
-  BookingFactory bookingFactory;
+  private BookingFactory bookingFactory;
 
   public void setBookingFactory(BookingFactory bookingFactory) {
     this.bookingFactory = bookingFactory;
