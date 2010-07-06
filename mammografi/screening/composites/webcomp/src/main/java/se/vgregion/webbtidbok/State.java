@@ -20,8 +20,7 @@ package se.vgregion.webbtidbok;
 import java.io.Serializable;
 import java.util.Calendar;
 
-import se.vgregion.webbtidbok.servicedef.ServiceDefinition;
-import se.vgregion.webbtidbok.ws.*;
+import se.vgregion.webbtidbok.ws.BookingResponse;
 
 
 /**
@@ -41,7 +40,7 @@ public class State implements Serializable {
     private boolean loggedIn = false;
     private boolean isFirst = true;
     private String messageBundle ="";
-    private ServiceDefinition service = null;
+    private String service = null;
     
     public State() {
 		super();
@@ -73,11 +72,11 @@ public class State implements Serializable {
     	return isFirst;
     }
     
-    public ServiceDefinition getServiceDefinition() {
+    public String getService() {
         return service;
     }
     
-    public void setServiceDefinition(ServiceDefinition def) {
+    public void setService(String def) {
         service = def;
     }
     

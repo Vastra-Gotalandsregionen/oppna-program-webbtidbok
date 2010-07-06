@@ -15,31 +15,29 @@
  *   Free Software Foundation, Inc., 59 Temple Place, Suite 330,
  *   Boston, MA 02111-1307  USA
  */
-package se.vgregion.webbtidbok.servicedef;
-
-
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+package se.vgregion.webbtidbok.booking.elvis;
 
 import se.vgregion.webbtidbok.State;
+import se.vgregion.webbtidbok.booking.BookingFacade;
+import se.vgregion.webbtidbok.ws.BookingRequest;
+import se.vgregion.webbtidbok.ws.BookingResponse;
 
-public class DummyLookupTest {
+public class ElvisBookingFacadeImpl implements BookingFacade {
 
-    @Before
-    public void setUp() throws Exception {
+    private WebServiceHelper helper;
+
+    public void setHelper(WebServiceHelper webServiceHelper) {
+        this.helper = webServiceHelper;
     }
 
-    @Test
-    public void testSettingServiceDefinition() {
-        State state = new State();
-        ServiceDefinition sd = new ServiceDefinition();
-        sd.setServiceID("test");
-        DummyLookup dummy = new DummyLookup();
+    @Override
+    public boolean login(State state) {
+        BookingRequest request = helper.getQueryWSRequest(state);
+        BookingResponse response = helper.getQueryWS(request);
 
-        Assert.assertNull(state.getService());
-        dummy.setServiceDefinition(sd);
-        dummy.lookup(state);
-        Assert.assertEquals(sd.getServiceID(), state.getService());
+        state.setBookingResponse(response);
+
+        return response != null;
     }
+
 }

@@ -17,10 +17,36 @@
  */
 package se.vgregion.webbtidbok.servicedef;
 
-import java.io.Serializable;
+import se.vgregion.webbtidbok.booking.BookingFacade;
 
-public class ServiceDefinition implements Serializable {
+public class ServiceDefinition {
 
-    private static final long serialVersionUID = 1L;
+    private String serviceID;
+    private String messageBundleBase;
+    private BookingFacade bookingService;
+
+    public String getServiceID() {
+        return serviceID;
+    }
+
+    public void setServiceID(String serviceID) {
+        this.serviceID = serviceID;
+    }
+
+    public String getMessageBundleBase() {
+        return messageBundleBase;
+    }
+
+    public void setMessageBundleBase(String messageBundleBase) {
+        this.messageBundleBase = messageBundleBase;
+    }
+
+    public BookingFacade getBookingService() {
+        return bookingService;
+    }
+
+    public void setBookingService(BookingFacade bookingService) {
+        this.bookingService = bookingService;
+    }
 
 }

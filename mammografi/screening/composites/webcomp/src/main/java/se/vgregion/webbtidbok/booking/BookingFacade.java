@@ -15,31 +15,17 @@
  *   Free Software Foundation, Inc., 59 Temple Place, Suite 330,
  *   Boston, MA 02111-1307  USA
  */
-package se.vgregion.webbtidbok.servicedef;
-
-
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+package se.vgregion.webbtidbok.booking;
 
 import se.vgregion.webbtidbok.State;
 
-public class DummyLookupTest {
+public interface BookingFacade {
 
-    @Before
-    public void setUp() throws Exception {
-    }
-
-    @Test
-    public void testSettingServiceDefinition() {
-        State state = new State();
-        ServiceDefinition sd = new ServiceDefinition();
-        sd.setServiceID("test");
-        DummyLookup dummy = new DummyLookup();
-
-        Assert.assertNull(state.getService());
-        dummy.setServiceDefinition(sd);
-        dummy.lookup(state);
-        Assert.assertEquals(sd.getServiceID(), state.getService());
-    }
+    /**
+     * Login to the booking system.
+     * 
+     * @param state The session state used to store the login credentials.
+     * @return true if login succeeded.
+     */
+    public boolean login(State state);
 }
