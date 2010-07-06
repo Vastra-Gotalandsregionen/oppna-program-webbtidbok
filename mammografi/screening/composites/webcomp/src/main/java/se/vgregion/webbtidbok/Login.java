@@ -21,30 +21,13 @@ import org.springframework.stereotype.Service;
 
 import se.vgregion.webbtidbok.booking.BookingFacade;
 import se.vgregion.webbtidbok.booking.BookingFactory;
-import se.vgregion.webbtidbok.ws.BookingRequest;
-import se.vgregion.webbtidbok.ws.BookingResponse;
 
 @Service
 public class Login {
   BookingFactory bookingFactory;
 
-  BookingResponse bookingRequest;
-  BookingRequest b;
-  BookingResponse debugResponse = new BookingResponse();
-  BookingResponse response;
-
-  public String message = "";
-  
   public void setBookingFactory(BookingFactory bookingFactory) {
     this.bookingFactory = bookingFactory;
-  }
-
-  public String getPnr() {
-    return response.getPnr().toString();
-  }
-
-  public String getBesDat() {
-    return response.getBokadTid().toString();
   }
 
   public void logout(State loginCredentials) {
