@@ -18,8 +18,9 @@
 package se.vgregion.webbtidbok.servicedef;
 
 import se.vgregion.webbtidbok.State;
+import se.vgregion.webbtidbok.booking.BookingFacade;
 
-public class DummyLookup implements LookupService {
+public class LoginLookupService implements LookupService {
 
     private ServiceDefinition serviceDefinition = null;
 
@@ -29,7 +30,17 @@ public class DummyLookup implements LookupService {
     
     @Override
     public ServiceDefinition lookup(State state) {
-        return serviceDefinition;
+        BookingFacade booking = serviceDefinition.getBookingService();
+        State tmpState = copyStateLoginProps(state);
+        
+        return booking.login(tmpState) ? serviceDefinition : null;
     }
 
+    private State copyStateLoginProps(State state) {
+        State newState = new State();
+        newState.setPnr(state.getPnr());
+        newState.setPasswd(state.getPasswd());
+        
+        return newState;
+    }
 }

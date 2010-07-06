@@ -17,19 +17,26 @@
  */
 package se.vgregion.webbtidbok.servicedef;
 
+import java.util.regex.Pattern;
+
 import se.vgregion.webbtidbok.State;
 
-public class DummyLookup implements LookupService {
+public class PasswordMatchLookupService implements LookupService {
 
-    private ServiceDefinition serviceDefinition = null;
-
-    public void setServiceDefinition(ServiceDefinition def) {
-        serviceDefinition = def;
-    }
+    private Pattern regexp;
+    private ServiceDefinition serviceDefinition;
     
+    public void setRegexp(String regexpString) {
+        this.regexp = Pattern.compile(regexpString);
+    }
+
+    public void setServiceDefinition(ServiceDefinition serviceDefinition) {
+        this.serviceDefinition = serviceDefinition;
+    }
+
     @Override
     public ServiceDefinition lookup(State state) {
-        return serviceDefinition;
+        return regexp.matcher(state.getPasswd()).matches() ? serviceDefinition : null;
     }
 
 }

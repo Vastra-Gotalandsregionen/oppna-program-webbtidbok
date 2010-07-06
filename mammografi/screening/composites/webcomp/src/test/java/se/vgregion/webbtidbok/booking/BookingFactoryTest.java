@@ -29,13 +29,6 @@ import se.vgregion.webbtidbok.servicedef.ServiceDefinition;
 
 public class BookingFactoryTest {
 
-    private class BookingFacadeDummy implements BookingFacade {
-
-        public boolean login(State state) {
-            return false;
-        }
-    }
-    
     @Test
     public void testSettingServiceDefinition() {
         BookingFactory factory = new BookingFactory();

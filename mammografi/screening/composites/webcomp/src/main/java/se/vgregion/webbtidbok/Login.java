@@ -21,13 +21,21 @@ import org.springframework.stereotype.Service;
 
 import se.vgregion.webbtidbok.booking.BookingFacade;
 import se.vgregion.webbtidbok.booking.BookingFactory;
+import se.vgregion.webbtidbok.servicedef.LookupService;
+import se.vgregion.webbtidbok.servicedef.ServiceDefinition;
 
 @Service
 public class Login {
   private BookingFactory bookingFactory;
+  private LookupService lookupService;
+
 
   public void setBookingFactory(BookingFactory bookingFactory) {
     this.bookingFactory = bookingFactory;
+  }
+  
+  public void setLookupService(LookupService lookupService) {
+      this.lookupService = lookupService;
   }
 
   public void logout(State loginCredentials) {
@@ -46,4 +54,15 @@ public class Login {
       return false;
     }
   }
+
+  public boolean lookup(State state) {
+      ServiceDefinition sd = lookupService.lookup(state);
+      if (sd != null) {
+          state.setService(sd.getServiceID());
+          return true;
+      } else {
+          return false;
+      }
+  }
+
 }

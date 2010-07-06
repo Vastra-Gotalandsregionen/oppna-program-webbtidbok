@@ -39,7 +39,6 @@ public class DummyLookupTest {
 
         Assert.assertNull(state.getService());
         dummy.setServiceDefinition(sd);
-        dummy.lookup(state);
-        Assert.assertEquals(sd.getServiceID(), state.getService());
+        Assert.assertEquals(sd, dummy.lookup(state));
     }
 }

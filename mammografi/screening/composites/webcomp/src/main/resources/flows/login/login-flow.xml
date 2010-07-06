@@ -58,7 +58,7 @@
     </action-state>
 
     <action-state id="lookupService">
-        <evaluate expression="lookupService.lookup(state)"></evaluate>
+        <evaluate expression="loginService.lookup(state)"></evaluate>
         <transition on="yes" to="doLogin"/>
         <transition on="no" to="start"/>
     </action-state>

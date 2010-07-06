@@ -17,19 +17,32 @@
  */
 package se.vgregion.webbtidbok.servicedef;
 
+import java.util.List;
+
 import se.vgregion.webbtidbok.State;
 
-public class DummyLookup implements LookupService {
+/**
+ * This class chains several lookup services, returning the first one matching.
+ * 
+ * @author anders.henriksson@knowit.se
+ */
+public class ChainLookupService implements LookupService {
 
-    private ServiceDefinition serviceDefinition = null;
-
-    public void setServiceDefinition(ServiceDefinition def) {
-        serviceDefinition = def;
-    }
+    private List<LookupService> lookupChain;
     
+    public void setLookupChain(List<LookupService> lookupChain) {
+        this.lookupChain = lookupChain;
+    }
+
     @Override
     public ServiceDefinition lookup(State state) {
-        return serviceDefinition;
+        for (LookupService ls : lookupChain) {
+            ServiceDefinition sd = ls.lookup(state);
+            if (sd != null) {
+                return sd;
+            }
+        }
+        return null;
     }
 
 }
