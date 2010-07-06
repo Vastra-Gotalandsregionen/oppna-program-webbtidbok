@@ -59,6 +59,7 @@ public class Login {
       ServiceDefinition sd = lookupService.lookup(state);
       if (sd != null) {
           state.setService(sd.getServiceID());
+          state.setMessageBundle(sd.getMessageBundleBase());
           return true;
       } else {
           return false;

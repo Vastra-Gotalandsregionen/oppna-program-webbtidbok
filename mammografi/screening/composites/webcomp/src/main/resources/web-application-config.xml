@@ -50,14 +50,14 @@
     <bean id="serviceDefinitionMammografiSU"
         class="se.vgregion.webbtidbok.servicedef.ServiceDefinition">
         <property name="serviceID" value="MAMMO_SU"/>
-        <property name="messageBundleBase" value="mammo"/>
+        <property name="messageBundleBase" value="messages/mammografi/MammografiMessages"/>
         <property name="bookingService" ref="elvisBookingService"/>
     </bean>
 
     <bean id="serviceDefinitionMammografiNU"
         class="se.vgregion.webbtidbok.servicedef.ServiceDefinition">
         <property name="serviceID" value="MAMMO_NU"/>
-        <property name="messageBundleBase" value="mammo"/>
+        <property name="messageBundleBase" value="messages/mammografi/MammografiMessages"/>
         <property name="bookingService" ref="elvisBookingService"/>
     </bean>
     
@@ -65,7 +65,7 @@
     <bean id="serviceDefinitionBukAorta"
         class="se.vgregion.webbtidbok.servicedef.ServiceDefinition">
         <property name="serviceID" value="BUKAORTA"/>
-        <property name="messageBundleBase" value="bukaorta"/>
+        <property name="messageBundleBase" value="messages/bukaorta/BukAortaMessages"/>
         <property name="bookingService" ref="elvisBookingService"/>
     </bean>
 

@@ -34,7 +34,9 @@
 		<div id="boxmiddle">
 			<p/>
 			<br/>
-			<h1 style="display: inline">Välkommen #{booking.displayName}</h1>
+			<h1 style="display: inline"><h:outputFormat value="#{sectionMsg.welcomepageWelcomeNN}">
+                <f:param value="#{booking.displayName}" /></h:outputFormat>
+            </h1>
 				<h:form id="mainForm" style="display: inline; text-align: right; padding-left: 5em;" >
 				    <div align="right">
 					   <sf:commandButton id="logout" value="Logga ut" processIds="*" action="logout"/>
@@ -42,9 +44,7 @@
 				</h:form>
 				<p/>
 				<br/>
-				<p>Här kan du omboka eller avboka den tid du fått till undersökning av stora kroppspulsådern.
-				Om du behöver omboka eller avboka tiden måste du göra det senast dagen innan du ska undersökas.
-				Du kan omboka tiden maximalt två gånger. Spara ditt lösenord om du behöver logga in igen.<br/>
+				<p><h:outputText value="#{sectionMsg.welcomepageIntroductionMain}"/><br/>
 				</p>
 				<p>Du kan också omboka eller avboka tiden per telefon. Ring då till
 				Kontaktpunkten på telefonnummer 031-342 69 55 tisdag, onsdag eller torsdag mellan
