@@ -41,10 +41,36 @@
 		<property name="properties" ref="test"/>
 	</bean-->
     
+    <bean id="bookingFactory" class="se.vgregion.webbtidbok.booking.BookingFactory">
+      <property name="serviceDefinitions">
+        <list>
+          <ref bean="serviceDefinitionMammografiSU" />
+          <ref bean="serviceDefinitionBukAorta" />
+        </list>
+      </property>
+    </bean>
+
+    <!-- Service definitions should be moved later, but for now this will do. -->
+    <bean id="serviceDefinitionMammografiSU"
+        class="se.vgregion.webbtidbok.servicedef.ServiceDefinition">
+        <property name="serviceID" value="MAMMO_SU"/>
+        <property name="messageBundleBase" value="mammo"/>
+        <property name="bookingService" ref="elvisBookingService"/>
+    </bean>
+    
+    <!-- A service definition for bukaorta, using Elvis. -->
+    <bean id="serviceDefinitionBukAorta"
+        class="se.vgregion.webbtidbok.servicedef.ServiceDefinition">
+        <property name="serviceID" value="BUKAORTA"/>
+        <property name="messageBundleBase" value="bukaorta"/>
+        <property name="bookingService" ref="elvisBookingService"/>
+    </bean>
+
+    
     <!-- Login services. -->
     
 	<bean id="loginService" class="se.vgregion.webbtidbok.Login">
-		<property name="webServiceHelper" ref="helper"/>
+		<property name="bookingFactory" ref="bookingFactory" />
 	</bean>
 
     <bean id="validationService" class="se.vgregion.webbtidbok.ValidationLogin">
@@ -52,13 +78,14 @@
     
     <!-- Our lookup service. Currently a dummy. -->
     <bean id="lookupService" class="se.vgregion.webbtidbok.servicedef.DummyLookup">
-        <property name="serviceDefinition" ref="serviceDefinitionMammografi" />
+        <property name="serviceDefinition" ref="serviceDefinitionMammografiSU" />
     </bean>
 
-    <!-- Service definitions should be moved later, but for now this will do. -->
-    <bean id="serviceDefinitionMammografi"
-        class="se.vgregion.webbtidbok.servicedef.ServiceDefinition" />
 
+    <!-- New style booking facade implementation for Elvis. -->
+    <bean id="elvisBookingService" class="se.vgregion.webbtidbok.booking.elvis.ElvisBookingFacadeImpl">
+        <property name="helper" ref="helper" />
+    </bean>
 
 
 	<bean id="bookingService" class="se.vgregion.webbtidbok.booking.elvis.BookingService">

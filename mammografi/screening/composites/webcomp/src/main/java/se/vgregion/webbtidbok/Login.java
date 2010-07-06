@@ -19,23 +19,25 @@ package se.vgregion.webbtidbok;
 
 import org.springframework.stereotype.Service;
 
-import se.vgregion.webbtidbok.booking.elvis.WebServiceHelper;
+import se.vgregion.webbtidbok.booking.BookingFacade;
+import se.vgregion.webbtidbok.booking.BookingFactory;
 import se.vgregion.webbtidbok.ws.BookingRequest;
 import se.vgregion.webbtidbok.ws.BookingResponse;
 
 @Service
 public class Login {
-  private WebServiceHelper webServiceHelper;
+  BookingFactory bookingFactory;
+
   BookingResponse bookingRequest;
   BookingRequest b;
   BookingResponse debugResponse = new BookingResponse();
   BookingResponse response;
 
-  public void setWebServiceHelper(WebServiceHelper webServiceHelper) {
-    this.webServiceHelper = webServiceHelper;
-  }
-
   public String message = "";
+  
+  public void setBookingFactory(BookingFactory bookingFactory) {
+    this.bookingFactory = bookingFactory;
+  }
 
   public String getPnr() {
     return response.getPnr().toString();
@@ -52,13 +54,8 @@ public class Login {
   }
 
   public boolean login(State loginCredentials) throws Exception {
-
-    BookingRequest request = webServiceHelper.getQueryWSRequest(loginCredentials);
-    response = webServiceHelper.getQueryWS(request);
-
-    loginCredentials.setBookingResponse(response);
-
-    if (response != null) {
+    BookingFacade bookingService = bookingFactory.getService(loginCredentials);
+    if (bookingService.login(loginCredentials)) {
       loginCredentials.setLoggedIn(true);
       return true;
     } else {

@@ -33,7 +33,7 @@ public class DummyLookup implements LookupService {
     
     @Override
     public boolean lookup(State state) {
-        state.setServiceDefinition(serviceDefinition);
+        state.setService(serviceDefinition.getServiceID());
         return true;
     }
 
