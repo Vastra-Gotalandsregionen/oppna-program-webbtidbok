@@ -53,6 +53,13 @@
         <property name="messageBundleBase" value="mammo"/>
         <property name="bookingService" ref="elvisBookingService"/>
     </bean>
+
+    <bean id="serviceDefinitionMammografiNU"
+        class="se.vgregion.webbtidbok.servicedef.ServiceDefinition">
+        <property name="serviceID" value="MAMMO_NU"/>
+        <property name="messageBundleBase" value="mammo"/>
+        <property name="bookingService" ref="elvisBookingService"/>
+    </bean>
     
     <!-- A service definition for bukaorta, using Elvis. -->
     <bean id="serviceDefinitionBukAorta"
@@ -67,16 +74,37 @@
     
 	<bean id="loginService" class="se.vgregion.webbtidbok.Login">
 		<property name="bookingFactory" ref="bookingFactory" />
+        <property name="lookupService" ref="lookupService"/>
 	</bean>
 
     <bean id="validationService" class="se.vgregion.webbtidbok.ValidationLogin">
     </bean>
     
-    <!-- Our lookup service. Currently a dummy. -->
-    <bean id="lookupService" class="se.vgregion.webbtidbok.servicedef.DummyLookup">
-        <property name="serviceDefinition" ref="serviceDefinitionMammografiSU" />
+    <!-- Our lookup service. Lookups are performed in the order listed - trial logins
+         (such as Elvis) should be at the bottom of the list. -->
+    <bean id="lookupService" class="se.vgregion.webbtidbok.servicedef.ChainLookupService">
+        <property name="lookupChain">
+            <list>
+                <ref bean="lookupServiceSU" />
+                <ref bean="lookupServiceNU" />
+                <ref bean="elvisLookupService" />
+            </list>
+        </property>
     </bean>
 
+    <bean id="lookupServiceSU" class="se.vgregion.webbtidbok.servicedef.PasswordMatchLookupService">
+        <property name="serviceDefinition" ref="serviceDefinitionMammografiSU" />
+        <property name="regexp" value="^......SU..$"/>
+    </bean>
+
+    <bean id="lookupServiceNU" class="se.vgregion.webbtidbok.servicedef.PasswordMatchLookupService">
+        <property name="serviceDefinition" ref="serviceDefinitionMammografiNU" />
+        <property name="regexp" value="^......NU..$"/>
+    </bean>
+
+    <bean id="elvisLookupService" class="se.vgregion.webbtidbok.servicedef.LoginLookupService">
+        <property name="serviceDefinition" ref="serviceDefinitionBukAorta" />
+    </bean>
 
     <!-- New style booking facade implementation for Elvis. -->
     <bean id="elvisBookingService" class="se.vgregion.webbtidbok.booking.elvis.ElvisBookingFacadeImpl">

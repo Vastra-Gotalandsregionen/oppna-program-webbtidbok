@@ -22,12 +22,11 @@ import se.vgregion.webbtidbok.State;
 public interface LookupService {
 
     /**
-     * Lookup which unit the patient is going to visit, and add that information
-     * to the state.
+     * Lookup which unit the patient is going to visit.
      * 
      * @param state The state of the webapp, used to look up ids etc.
-     * @return true if a service has been identified and added to the state.
+     * @return The service definition matching the user credentials. Otherwise null. 
      */
-    public boolean lookup(State state);
+    public ServiceDefinition lookup(State state);
 
 }
