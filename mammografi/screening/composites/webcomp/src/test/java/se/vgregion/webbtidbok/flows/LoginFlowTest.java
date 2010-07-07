@@ -102,16 +102,12 @@ public class LoginFlowTest extends AbstractXmlFlowExecutionTests{
     }
 
     private Flow createMockDisplaySubflow() {
-        Flow mockBookingFlow = new Flow("display");
-        mockBookingFlow.setInputMapper(new Mapper() {
+        return FlowTestHelper.createMockSubflow("display", "logout", new Mapper() {
             public MappingResults map(Object source, Object target) {
                 Assert.assertTrue( (((AttributeMap) source).get("state")) instanceof State );
                 return null;
             }
         });
-        // immediately return the logout state, ending the subflow
-        new EndState(mockBookingFlow, "logout");
-        return mockBookingFlow;
     }
 
     private void startFlowWithState(String startState, String event) {
