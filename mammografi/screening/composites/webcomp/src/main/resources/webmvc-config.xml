@@ -31,6 +31,11 @@
 			<!-- If no flow match, map path to a view to render; e.g. the "/intro" path would map to the view named "intro" -->	
 			<bean class="org.springframework.web.servlet.mvc.UrlFilenameViewController" />
 		</property>
+        <property name="interceptors">
+            <list>
+                <ref bean="localeChangeInterceptor"/>
+            </list>
+        </property>
 	</bean>
 
 	<!-- Maps logical view names to Facelet templates in /WEB-INF (e.g. 'search' to '/WEB-INF/search.xhtml' -->
@@ -47,5 +52,13 @@
 	<bean class="org.springframework.webflow.mvc.servlet.FlowHandlerAdapter">
 		<property name="flowExecutor" ref="flowExecutor" />
 	</bean>
-				
+	
+    <bean id="localeChangeInterceptor"
+      class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+        <property name="paramName" value="lang"/>
+    </bean>
+
+    <bean id="localeResolver"
+      class="org.springframework.web.servlet.i18n.CookieLocaleResolver"/>
+    
 </beans>
