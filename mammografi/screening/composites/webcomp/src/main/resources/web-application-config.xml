@@ -51,7 +51,7 @@
         class="se.vgregion.webbtidbok.servicedef.ServiceDefinition">
         <property name="serviceID" value="MAMMO_SU"/>
         <property name="messageBundleBase" value="messages/mammografi/MammografiMessages"/>
-        <property name="bookingService" ref="elvisBookingService"/>
+        <property name="bookingService" ref="sectraBookingService"/>
     </bean>
 
     <bean id="serviceDefinitionMammografiNU"
@@ -70,14 +70,15 @@
     </bean>
 
     
-    <!-- Login services. -->
-    
+    <!-- Login services. -->    
 	<bean id="loginService" class="se.vgregion.webbtidbok.Login">
 		<property name="bookingFactory" ref="bookingFactory" />
         <property name="lookupService" ref="lookupService"/>
 	</bean>
-
+	
+	<!-- validates login accordingly and also sets service matching to provided password into state -->
     <bean id="validationService" class="se.vgregion.webbtidbok.ValidationLogin">
+
     </bean>
     
     <!-- Our lookup service. Lookups are performed in the order listed - trial logins
@@ -94,7 +95,8 @@
 
     <bean id="lookupServiceSU" class="se.vgregion.webbtidbok.servicedef.PasswordMatchLookupService">
         <property name="serviceDefinition" ref="serviceDefinitionMammografiSU" />
-        <property name="regexp" value="^......SU..$"/>
+<!--        <property name="regexp" value="^......SU..$"/>-->
+		<property name="regexp" value="^SEMSUS....$"/>
     </bean>
 
     <bean id="lookupServiceNU" class="se.vgregion.webbtidbok.servicedef.PasswordMatchLookupService">
@@ -106,11 +108,10 @@
         <property name="serviceDefinition" ref="serviceDefinitionBukAorta" />
     </bean>
 
-    <!-- New style booking facade implementation for Elvis. -->
+<!-- New style booking facade implementation for Elvis. -->
     <bean id="elvisBookingService" class="se.vgregion.webbtidbok.booking.elvis.ElvisBookingFacadeImpl">
         <property name="helper" ref="helper" />
     </bean>
-
 
 	<bean id="bookingService" class="se.vgregion.webbtidbok.booking.elvis.BookingService">
 		<property name="helper" ref="helper" />
@@ -118,6 +119,25 @@
 	
 	<bean id="helper" class="se.vgregion.webbtidbok.booking.elvis.WebServiceHelper">
 		<property name="encrypter" ref="stringEncrypter" />
+	</bean>
+<!-- END Elvis facade -->
+	
+<!-- New style booking facade for Sectra -->
+	<bean id="sectraBookingService" class="se.vgregion.webbtidbok.booking.sectra.SectraBookingFacadeImpl">
+        <property name="helper" ref="sectraWShelper" />
+    </bean>
+
+	<bean id="bookingServiceSectra" class="se.vgregion.webbtidbok.booking.sectra.SectraBookingServiceImpl">
+        <property name="helper" ref="sectraWShelper" />
+    </bean>
+	
+	<bean id="sectraWShelper" class="se.vgregion.webbtidbok.booking.sectra.SectraWebServiceHelperImpl">
+		
+	</bean>
+<!-- END sectra facade -->
+	
+	<bean id="bookingWrapper" class="se.vgregion.webbtidbok.booking.BookingWrapper" >
+
 	</bean>
 	
 	<bean id="stringEncrypter" class="se.vgregion.webbtidbok.crypto.StringEncrypter">
