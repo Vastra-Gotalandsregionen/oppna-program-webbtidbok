@@ -49,7 +49,7 @@ public class ChainLookupServiceTest {
         
         PasswordMatchLookupService lookup2 = new PasswordMatchLookupService();
         lookup2.setServiceDefinition(sd2);
-        lookup2.setRegexp("^......SU..$");
+        lookup2.setRegexp("^SEMSUS....$");
         lookupChain.add(lookup2);
 
         lookupService.setLookupChain(lookupChain);
@@ -65,7 +65,7 @@ public class ChainLookupServiceTest {
     @Test
     public void testSUPassword() {
         State state = new State();
-        state.setPasswd("abcdefSUgh");
+        state.setPasswd("SEMSUSpugh");
         Assert.assertEquals(sd2, lookupService.lookup(state));
     }
 

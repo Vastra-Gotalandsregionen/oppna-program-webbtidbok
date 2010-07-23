@@ -32,4 +32,10 @@ public class BookingFacadeDummy implements BookingFacade {
         return false;
     }
 
+	@Override
+	public BookingWrapper getBookingInfo(State state) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

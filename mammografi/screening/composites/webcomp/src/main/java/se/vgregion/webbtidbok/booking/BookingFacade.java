@@ -18,6 +18,7 @@
 package se.vgregion.webbtidbok.booking;
 
 import se.vgregion.webbtidbok.State;
+import se.vgregion.webbtidbok.booking.sectra.BookingInfoLocal;
 
 public interface BookingFacade {
 
@@ -28,4 +29,10 @@ public interface BookingFacade {
      * @return true if login succeeded.
      */
     public boolean login(State state);
+    
+//    public BookingInfoLocal getBooking(State state);
+//    
+//    public BookingResponseLocal getBooking(State state);
+    
+    public BookingWrapper getBookingInfo(State state);
 }

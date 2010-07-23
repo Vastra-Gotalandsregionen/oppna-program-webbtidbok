@@ -57,12 +57,14 @@
         <transition on="no" to="start"/>		
     </action-state>
 
+	<!-- after password is validated as well formed, parse it and see what serviceID to set, that is lookup what WS to use -->
     <action-state id="lookupService">
         <evaluate expression="loginService.lookup(state)"></evaluate>
         <transition on="yes" to="doLogin"/>
         <transition on="no" to="start"/>
     </action-state>
-
+	
+	<!-- set loggedIn bool in state -->
 	<action-state id="doLogin">
 		<evaluate expression="loginService.login(state)" />
     		<transition on="yes" to="loggedin" />
