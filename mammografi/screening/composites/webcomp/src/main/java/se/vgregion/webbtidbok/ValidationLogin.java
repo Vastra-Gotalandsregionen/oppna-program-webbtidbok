@@ -46,6 +46,8 @@ public class ValidationLogin {
 		if(pnr.length() == 0 || password.length() == 0){
 			return false;
 		}
+		System.out.println(" ### in validate login, state pnr is: " + st.getPnr() + ", state passw is: " + st.getPasswd());
+		setServiceDefinitionFromPassword(st);
 		
 		return true;
 	}
@@ -91,5 +93,18 @@ public class ValidationLogin {
 		
 	}
 	
+	public void setServiceDefinitionFromPassword(State st){
+		String password = st.getPasswd();
+		System.out.println("### ValidationLogin.setServiceDefinition()");
+		if(password.startsWith("SEMSUS")){
+			System.out.println("password starts with SEMSUS: " + password);
+			st.setService("MAMMO_SU");
+		}
+		if(password.startsWith("SEMUDD")){
+			st.setService("MAMMO_NU");
+		} else {
+			st.setService("BUKAORTA");
+		}
+	}
 	
 }

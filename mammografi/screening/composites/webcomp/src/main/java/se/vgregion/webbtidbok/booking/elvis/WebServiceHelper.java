@@ -19,6 +19,7 @@ package se.vgregion.webbtidbok.booking.elvis;
 
 import java.util.List;
 
+import javax.jws.WebService;
 import javax.xml.bind.JAXBElement;
 
 import se.vgregion.webbtidbok.State;
@@ -38,6 +39,7 @@ import se.vgregion.webbtidbok.ws.ICentralBookingWSGetBookingPlaceICFaultFaultFau
 import se.vgregion.webbtidbok.ws.ICentralBookingWSGetBookingTimeICFaultFaultFaultMessage;
 import se.vgregion.webbtidbok.ws.ICentralBookingWSGetCalandarICFaultFaultFaultMessage;
 import se.vgregion.webbtidbok.ws.ObjectFactory;
+
 
 public class WebServiceHelper {
 
@@ -202,7 +204,6 @@ public class WebServiceHelper {
       bookingArr = ws.getBookingPlace(request);
       return bookingArr;
     } catch (ICentralBookingWSGetBookingPlaceICFaultFaultFaultMessage e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
       System.out.println(e.getMessage());
       return null;

@@ -19,6 +19,7 @@ package se.vgregion.webbtidbok.booking.elvis;
 
 import se.vgregion.webbtidbok.State;
 import se.vgregion.webbtidbok.booking.BookingFacade;
+import se.vgregion.webbtidbok.booking.BookingWrapper;
 import se.vgregion.webbtidbok.ws.BookingRequest;
 import se.vgregion.webbtidbok.ws.BookingResponse;
 
@@ -32,12 +33,22 @@ public class ElvisBookingFacadeImpl implements BookingFacade {
 
     @Override
     public boolean login(State state) {
-        BookingRequest request = helper.getQueryWSRequest(state);
+    
+    	BookingRequest request = helper.getQueryWSRequest(state);
         BookingResponse response = helper.getQueryWS(request);
-
         state.setBookingResponse(response);
 
         return response != null;
     }
+    
+    public BookingWrapper getBookingInfo(State state){
+    	
+    	BookingRequest request =  helper.getQueryWSRequest(state);
+    	BookingResponse response = helper.getQueryWS(request);
+    	BookingWrapper bw = new BookingWrapper(response);
+
+    	return bw;
+    }
+
 
 }
