@@ -19,8 +19,8 @@ package se.vgregion.webbtidbok.booking.sectra;
 
 import java.io.Serializable;
 
-import se.vgregion.webbtidbok.generated.sectra.BookingInfo;
-import se.vgregion.webbtidbok.generated.sectra.TimeBlock;
+import se.vgregion.webbtidbok.ws.sectra.BookingInfo;
+import se.vgregion.webbtidbok.ws.sectra.TimeBlock;
 
 
 /*
@@ -42,13 +42,13 @@ public class BookingInfoLocal implements Serializable {
 	private TimeBlockLocal bookedTime;
 	
 	public BookingInfoLocal (BookingInfo bi){
-		setPatientName(bi.getPatientName());
-		setPatientId(bi.getPatientId());
-		setExamTypeCode(bi.getExamTypeCode());
-		setExamType(bi.getExamType());
-		setLaterality(bi.getLaterality());
-		setExaminationNr(bi.getExamNo());
-		this.bookedTime = getBookedTimeLocal(bi.getBookedTime());
+		setPatientName(bi.getPatientName().getValue());
+		setPatientId(bi.getPatientId().getValue());
+		setExamTypeCode(bi.getExamTypeCode().getValue());
+		setExamType(bi.getExamType().getValue());
+		setLaterality(bi.getLaterality().getValue());
+		setExaminationNr(bi.getExamNo().getValue());
+		this.bookedTime = getBookedTimeLocal(bi.getBookedTime().getValue());
 	}
 	
 	public BookingInfoLocal() {
@@ -88,7 +88,7 @@ public class BookingInfoLocal implements Serializable {
 	}
 
 	public void setExamTypeCode(String examTypeCode) {
-		this.examType = examTypeCode;
+		this.examTypeCode = examTypeCode;
 	}
 
 //	public String getExamNo() {
@@ -121,7 +121,7 @@ public class BookingInfoLocal implements Serializable {
 
 	public void setBookedTime(TimeBlock bookedTime) {
 		System.out.println("### bookedTime.getId(): " + bookedTime.getId());
-		String cracker = bookedTime.getId();
+		String cracker = bookedTime.getId().getValue();
 		this.bookedTime.setId(cracker);
 //		this.bookedTime.setLength(bookedTime.getLength());
 //		this.bookedTime.setSection(bookedTime.getSection());

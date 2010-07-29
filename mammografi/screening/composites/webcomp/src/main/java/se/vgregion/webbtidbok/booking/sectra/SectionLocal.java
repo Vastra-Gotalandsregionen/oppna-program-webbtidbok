@@ -19,7 +19,9 @@ package se.vgregion.webbtidbok.booking.sectra;
 
 import java.io.Serializable;
 
-import se.vgregion.webbtidbok.generated.sectra.Section;
+import javax.xml.bind.JAXBElement;
+
+import se.vgregion.webbtidbok.ws.sectra.Section;
 
 public class SectionLocal implements Serializable {
 	
@@ -34,14 +36,18 @@ public class SectionLocal implements Serializable {
 	private String secPhone;
 	private String secMail;
 	
-	
 	public SectionLocal(Section sec){
-		this.secId = sec.getId();
-		this.secName = sec.getName();
-		this.secDescription = sec.getDescription();
-		this.secAddress = sec.getAddress();
-		this.secPhone = sec.getPhone();
-		this.secMail = sec.getMail();
+		this.secId = getValueOrNull(sec.getId());
+		this.secName = getValueOrNull(sec.getName());
+		this.secDescription = getValueOrNull(sec.getDescription());
+		this.secAddress = getValueOrNull(sec.getAddress());
+		this.secPhone = getValueOrNull(sec.getPhone());
+		this.secMail = getValueOrNull(sec.getMail());
+	}
+	
+	// TODO: This should be an utility method
+	private <T> T getValueOrNull(JAXBElement<T> elem) {
+	    return elem != null ? elem.getValue() : null; 
 	}
 	
 	
