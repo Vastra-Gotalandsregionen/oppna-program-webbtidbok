@@ -18,13 +18,14 @@
 package se.vgregion.webbtidbok.booking.sectra;
 
 import javax.xml.datatype.XMLGregorianCalendar;
-import se.vgregion.webbtidbok.generated.sectra.BookingInfo;
-import se.vgregion.webbtidbok.generated.sectra.IRisReschedule;
-import se.vgregion.webbtidbok.generated.sectra.IRisRescheduleGetBookingInfoErrorInfoFaultFaultMessage;
-import se.vgregion.webbtidbok.generated.sectra.IRisRescheduleImplService;
-import se.vgregion.webbtidbok.generated.sectra.IRisRescheduleListSectionsErrorInfoFaultFaultMessage;
-import se.vgregion.webbtidbok.generated.sectra.IRisRescheduleRescheduleErrorInfoFaultFaultMessage;
-import se.vgregion.webbtidbok.generated.sectra.TimeBlock;
+
+import se.vgregion.webbtidbok.ws.sectra.BookingInfo;
+import se.vgregion.webbtidbok.ws.sectra.IRisReschedule;
+import se.vgregion.webbtidbok.ws.sectra.IRisRescheduleGetBookingInfoErrorInfoFaultFaultMessage;
+import se.vgregion.webbtidbok.ws.sectra.IRisRescheduleListSectionsErrorInfoFaultFaultMessage;
+import se.vgregion.webbtidbok.ws.sectra.IRisRescheduleRescheduleErrorInfoFaultFaultMessage;
+import se.vgregion.webbtidbok.ws.sectra.RISReschedule;
+import se.vgregion.webbtidbok.ws.sectra.TimeBlock;
 
 /*
  * This class was supposed to build request using an objectfactory, seemsl ike it ain't needed though?
@@ -33,26 +34,29 @@ import se.vgregion.webbtidbok.generated.sectra.TimeBlock;
  */
 public class SectraWebServiceHelperImpl implements SectraWebServiceHelperInterface{
 
-	IRisRescheduleImplService theService = new IRisRescheduleImplService();
-    IRisReschedule thePort = theService.getIRisReschedulePort();
+	RISReschedule theService = new RISReschedule();
+    IRisReschedule thePort = theService.getReschedule();
     
 	public BookingInfoLocal getBookingInfo(String patientId, String examinationNr)
 			throws IRisRescheduleGetBookingInfoErrorInfoFaultFaultMessage {
 
 		BookingInfoLocal biL;
 		BookingInfo bi = thePort.getBookingInfo(patientId, examinationNr);
-		TimeBlock tb = bi.getBookedTime();
+		TimeBlock tb = bi.getBookedTime().getValue();
 		System.out.println("###.... tb." + tb.getStartTime().toString());
-		biL = new BookingInfoLocal(thePort.getBookingInfo(patientId, examinationNr));
+		biL = new BookingInfoLocal(bi);
 
 		return biL;
 	}
 //TODO fix some crap here to simulate login call
 	public boolean login(String patientId, String password){
 		
-		Boolean isLoggedIn = thePort.login(patientId, password);
-		System.out.println("SectraWebServiceHelperImpl.isLoggedIn: " + isLoggedIn);
-		return isLoggedIn;
+		try {
+		    thePort.getBookingInfo(patientId, password);
+		    return true;
+		} catch (IRisRescheduleGetBookingInfoErrorInfoFaultFaultMessage e) {
+            return false;
+        }
 	}
 //	public ArrayOfdateTime listFreeDays(XMLGregorianCalendar startDate,
 //			XMLGregorianCalendar endDate, String examinationNr, String sectionId)

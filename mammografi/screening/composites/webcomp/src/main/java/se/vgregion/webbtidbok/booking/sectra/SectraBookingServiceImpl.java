@@ -21,10 +21,10 @@ import javax.xml.datatype.XMLGregorianCalendar;
 
 import se.vgregion.webbtidbok.State;
 
-import se.vgregion.webbtidbok.generated.sectra.BookingInfo;
-import se.vgregion.webbtidbok.generated.sectra.IRisRescheduleGetBookingInfoErrorInfoFaultFaultMessage;
-import se.vgregion.webbtidbok.generated.sectra.IRisRescheduleListSectionsErrorInfoFaultFaultMessage;
-import se.vgregion.webbtidbok.generated.sectra.IRisRescheduleRescheduleErrorInfoFaultFaultMessage;
+import se.vgregion.webbtidbok.ws.sectra.BookingInfo;
+import se.vgregion.webbtidbok.ws.sectra.IRisRescheduleGetBookingInfoErrorInfoFaultFaultMessage;
+import se.vgregion.webbtidbok.ws.sectra.IRisRescheduleListSectionsErrorInfoFaultFaultMessage;
+import se.vgregion.webbtidbok.ws.sectra.IRisRescheduleRescheduleErrorInfoFaultFaultMessage;
 
 public class SectraBookingServiceImpl implements SectraBookingServiceInterface{
 

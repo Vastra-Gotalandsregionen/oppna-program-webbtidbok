@@ -23,8 +23,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import se.vgregion.webbtidbok.generated.sectra.ArrayOfSection;
-import se.vgregion.webbtidbok.generated.sectra.Section;
+import se.vgregion.webbtidbok.ws.sectra.ArrayOfSection;
+import se.vgregion.webbtidbok.ws.sectra.Section;
 
 public class ArrayOfSectionLocal implements Serializable {
 	

@@ -28,7 +28,7 @@ import se.vgregion.webbtidbok.booking.sectra.BookingInfoLocal;
 import se.vgregion.webbtidbok.booking.sectra.SectionLocal;
 import se.vgregion.webbtidbok.booking.sectra.SectraBookingFacadeImpl;
 import se.vgregion.webbtidbok.booking.sectra.TimeBlockLocal;
-import se.vgregion.webbtidbok.generated.sectra.TimeBlock;
+import se.vgregion.webbtidbok.ws.sectra.TimeBlock;
 import se.vgregion.webbtidbok.ws.BookingResponse;
 
 
@@ -72,6 +72,9 @@ public class BookingWrapper implements BookingFacade, Serializable{
 		System.out.println("### BookingWrapper() constructor");
 	}
 
+	// TODO: This class should be backend agnostic. The backends should create instances
+	//       of this class filled with the proper content.
+	
 	//Sectra specific values
 	public BookingWrapper(BookingInfoLocal bl){
 		System.out.println("### BookingWrapper(BookingInfoLocal) constructor");

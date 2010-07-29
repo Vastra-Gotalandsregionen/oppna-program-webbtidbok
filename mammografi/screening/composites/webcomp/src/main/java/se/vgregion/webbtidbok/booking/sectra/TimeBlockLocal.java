@@ -21,8 +21,8 @@ import java.io.Serializable;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 
-import se.vgregion.webbtidbok.generated.sectra.Section;
-import se.vgregion.webbtidbok.generated.sectra.TimeBlock;
+import se.vgregion.webbtidbok.ws.sectra.Section;
+import se.vgregion.webbtidbok.ws.sectra.TimeBlock;
 
 public class TimeBlockLocal implements Serializable {
 	
@@ -39,10 +39,10 @@ public class TimeBlockLocal implements Serializable {
 	
 	public TimeBlockLocal(TimeBlock tb) {
 		super();
-		this.id = tb.getId();
+		this.id = tb.getId().getValue();
 		this.startTime = tb.getStartTime(); 
 		this.length = tb.getLength();
-		setSection(section); 
+		setSection(tb.getSection().getValue()); 
 	}
 	
 	
@@ -72,12 +72,7 @@ public class TimeBlockLocal implements Serializable {
 	}
 	//extracting Section into SectionLocal
 	public void setSection(Section section) {
-		this.section.setSecAddress(section.getAddress());
-		this.section.setSecDescription(section.getDescription());
-		this.section.setSecId(section.getId());
-		this.section.setSecMail(section.getMail());
-		this.section.setSecName(section.getName());
-		this.section.setSecPhone(section.getPhone());
+	    this.section = new SectionLocal(section);
 	}
 
 }

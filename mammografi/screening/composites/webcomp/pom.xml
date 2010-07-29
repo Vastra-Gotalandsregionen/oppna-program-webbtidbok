@@ -67,7 +67,7 @@ Generation time : 2010-03-10 17:15:23 CET
 				<executions>
 					<!--  Signicat -->
 					<execution>
-						<id>2</id>
+						<id>elviswsgen</id>
 						<goals>
 							<goal>wsimport</goal>
 						</goals>
@@ -89,6 +89,25 @@ Generation time : 2010-03-10 17:15:23 CET
 							<staleFile>${project.build.directory}/generated-sources/jaxws/stale/.staleFlagSignicat</staleFile>
 						</configuration>
 					</execution>
+
+                    <!--  Generate Sectra classes -->
+                    <execution>
+                        <id>sectrawsgen</id>
+                        <goals>
+                            <goal>wsimport</goal>
+                        </goals>
+                        <configuration>
+                            <packageName>se.vgregion.webbtidbok.ws.sectra</packageName>
+                            <sourceDestDir>${project.build.directory}/generated-sources/jaxws</sourceDestDir>
+                            <staleFile>${project.build.directory}/generated-sources/jaxws/stale/.staleFlagSectra</staleFile>
+                        
+                            <wsdlDirectory>${basedir}/src/main/wsdl</wsdlDirectory>
+                            <wsdlFiles>
+                                <wsdlFile>SectraBookingService.wsdl</wsdlFile>
+                            </wsdlFiles>
+                        </configuration>
+                    </execution>
+
 				</executions>
 			</plugin>
 		</plugins>
