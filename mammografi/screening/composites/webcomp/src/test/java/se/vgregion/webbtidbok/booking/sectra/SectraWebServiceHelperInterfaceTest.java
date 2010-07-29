@@ -17,17 +17,16 @@
  */
 package se.vgregion.webbtidbok.booking.sectra;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 
 import java.util.List;
 
 import org.junit.Test;
 
-import se.vgregion.webbtidbok.generated.sectra.ArrayOfSection;
-import se.vgregion.webbtidbok.generated.sectra.BookingInfo;
-import se.vgregion.webbtidbok.generated.sectra.IRisRescheduleGetBookingInfoErrorInfoFaultFaultMessage;
-import se.vgregion.webbtidbok.generated.sectra.IRisRescheduleListSectionsErrorInfoFaultFaultMessage;
-import se.vgregion.webbtidbok.generated.sectra.Section;
+import se.vgregion.webbtidbok.ws.sectra.IRisRescheduleGetBookingInfoErrorInfoFaultFaultMessage;
+import se.vgregion.webbtidbok.ws.sectra.IRisRescheduleListSectionsErrorInfoFaultFaultMessage;
 
 public class SectraWebServiceHelperInterfaceTest {
 
@@ -39,20 +38,15 @@ public class SectraWebServiceHelperInterfaceTest {
 		BookingInfoLocal bi = null;
 		bi = helper.getBookingInfo(patientId, examinationNr);
 		
-		if(bi == null){
-			assertFalse(true);
-		}
+		assertNotNull(bi);
+
 		String pId = bi.getPatientId();
 		String exNo = bi.getExaminationNr();
 		System.out.println("### pId: " + pId);
 		System.out.println("### exNo: " + exNo);
-		if(bi.getPatientId().equals(patientId) && bi.getExaminationNr().equals(examinationNr)){
-			assertTrue(true);
-		} else {
-			System.out.println(bi.getPatientId() + " != " + patientId );
-			System.out.println(bi.getExaminationNr() + " != " + examinationNr);
-			assertFalse(true);
-		}
+
+		assertEquals(patientId, bi.getPatientId());
+		assertEquals(examinationNr, bi.getExaminationNr());
 	}
 
 	@Test
@@ -65,10 +59,6 @@ public class SectraWebServiceHelperInterfaceTest {
 		List<SectionLocal> sectionList = null;
 		sectionList = sectionArray.getSectionLocalList();
 		
-		if(sectionList.isEmpty()){
-			assertFalse(true);
-		} else {
-			assertTrue(true);
-		}
+		assertFalse(sectionList.isEmpty());
 	}
 }
