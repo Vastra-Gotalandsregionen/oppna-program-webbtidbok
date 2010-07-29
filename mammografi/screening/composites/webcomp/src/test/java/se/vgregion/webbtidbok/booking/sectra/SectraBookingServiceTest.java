@@ -17,152 +17,71 @@
  */
 package se.vgregion.webbtidbok.booking.sectra;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Iterator;
 import java.util.List;
 
 import org.junit.Test;
 
-import se.vgregion.webbtidbok.generated.sectra.ArrayOfSection;
-import se.vgregion.webbtidbok.generated.sectra.BookingInfo;
-import se.vgregion.webbtidbok.generated.sectra.IRisRescheduleGetBookingInfoErrorInfoFaultFaultMessage;
-import se.vgregion.webbtidbok.generated.sectra.IRisRescheduleListSectionsErrorInfoFaultFaultMessage;
-import se.vgregion.webbtidbok.generated.sectra.Section;
-import se.vgregion.webbtidbok.generated.sectra.TimeBlock;
+import se.vgregion.webbtidbok.ws.sectra.IRisRescheduleGetBookingInfoErrorInfoFaultFaultMessage;
+import se.vgregion.webbtidbok.ws.sectra.IRisRescheduleListSectionsErrorInfoFaultFaultMessage;
 
 public class SectraBookingServiceTest{
 
-	static SectraWebServiceHelperImpl helper = new SectraWebServiceHelperImpl();
-	static String patientId = "1912121212";
-	static String examinationNr = "SERTEST00012345";
-	@Test
-	public void testGetBookingInfo() throws IRisRescheduleGetBookingInfoErrorInfoFaultFaultMessage {
-		
-		
-		BookingInfoLocal bi = helper.getBookingInfo(patientId, examinationNr);
-		TimeBlockLocal bt = bi.getBookedTime();
-		SectionLocal section = bt.getSection();
-		
-	
-		
-		if (bi == null) {
-			assertFalse(true);
-		}
-		
-		if (bi.getExaminationNr() == examinationNr){
-			assertTrue(true);
-		}
-		if (bi.getExamType() == "exam type mammografi"){
-			assertTrue(true);
-		}
-		if (bi.getExamTypeCode() == "exam type code 123"){
-			assertTrue(true);
-		}
-		
-		if (bt.getId() == "timeBlockId_1"){
-			assertTrue(true);
-		}
-		if (bt.getLength() == 10){
-			assertTrue(true);
-		}
-		if (bt.getSection() == null){
-			assertTrue(true);
-		}
-		if (bt.getStartTime() == null){
-			assertTrue(true);
-		}
-		
-		if (bi.getLaterality() == "S"){
-			assertTrue(true);
-		}
-		if (bi.getPatientId() == patientId){
-			System.out.println(bi.getPatientId() + " == " + patientId);
-			assertTrue(true);
-		}
-		if (bi.getPatientName() == "Kerberos"){
-			assertTrue(true);
-		}
-	}
+    static SectraWebServiceHelperImpl helper = new SectraWebServiceHelperImpl();
+    static String patientId = "1912121212";
+    static String examinationNr = "SERTEST00012345";
+    @Test
+    public void testGetBookingInfo() throws IRisRescheduleGetBookingInfoErrorInfoFaultFaultMessage {
+        
+        
+        BookingInfoLocal bi = helper.getBookingInfo(patientId, examinationNr);
+        assertNotNull(bi);
 
-	@Test
-	public void testListSections() throws IRisRescheduleListSectionsErrorInfoFaultFaultMessage {
-		
-		ArrayOfSectionLocal sectionArray = helper.listSections(examinationNr);
-		List<SectionLocal> sectionList = sectionArray.getSectionLocalList();
-		
-		if(sectionArray == null){
-			assertFalse(true);
-		} else {
-			assertFalse(false);
-		}
-		
-		if(sectionArray.getSectionLocalList() == null){
-			assertFalse(true);
-		} else {
-			assertFalse(false);
-		}
-		
-		if(sectionList.size() < 1){
-			System.out.println("sectionList.size(): " + sectionList.size() + ", should be no less than 2" );
-			assertFalse(true);
-		}
-		
-		if(sectionList.isEmpty()){
-			assertFalse(true);
-		}
+        assertEquals(examinationNr, bi.getExaminationNr());
+        assertEquals("exam type mammografi", bi.getExamType());
+        assertEquals("exam type code 123", bi.getExamTypeCode());
+        assertEquals("S", bi.getLaterality());
+        assertEquals(patientId, bi.getPatientId());
+        assertEquals("Kerberos", bi.getPatientName());
 
-		if(!sectionList.isEmpty()){
-			
-			SectionLocal section;
-			Iterator<SectionLocal> iter = sectionList.iterator();
-	
-			for(int i = 1; iter.hasNext(); i++){
+        TimeBlockLocal bt = bi.getBookedTime();
+        assertNotNull(bt);
+    
+        assertEquals("timeBlockId_1", bt.getId());
+        assertEquals(10, bt.getLength());
+        assertNotNull(bt.getSection());
+        assertNotNull(bt.getStartTime());
+    }
 
-				section = iter.next();
+    @Test
+    public void testListSections() throws IRisRescheduleListSectionsErrorInfoFaultFaultMessage {
+        
+        ArrayOfSectionLocal sectionArray = helper.listSections(examinationNr);
+        List<SectionLocal> sectionList = sectionArray.getSectionLocalList();
+        
+        assertNotNull(sectionArray);
+        assertNotNull(sectionArray.getSectionLocalList());
+        assertFalse(sectionList.isEmpty());
+        assertTrue(sectionList.size() >= 2);
 
-				if(section.getSecId().equals("secId " + i)){
-					assertTrue(true);
-				} else {
-					System.out.println("section.getId(): " + section.getSecId() + " != secId " + i);
-					assertFalse(true);
-				}
-				
-//				if(section.getSecAddress().equals("Vägen " + i)){
-//					assertTrue(true);
-//				} else {
-//					System.out.println(section.getSecAddress() + " != " + "Vägen " + i);	
-//					assertFalse(true);
-//				}
-				
-				if(section.getSecDescription().equals("Section description " + i)){
-					assertTrue(true);
-				} else {
-					System.out.println("else description: " + section.getSecDescription() + " != " + "Section description " + i);
-					assertFalse(true);
-				}
-				
-				if(section.getSecMail().equals("mottagningen" + i + "@test.se")){
-					assertTrue(true);
-				} else {
-					System.out.println("section.getMail(): " + section.getSecMail() + " != mottagningen" + i + "@test.se");
-					assertFalse(true);
-				}
-				
-				if(section.getSecName().equals("Mottagningen " + i)){
-					assertTrue(true);
-				} else {
-					System.out.println("section.getName(): " + section.getSecName() + " != " + "Mottagningen " + i);
-					assertFalse(true);
-				}
-				
-				if(section.getSecPhone().equals(Integer.toString(i))){
-					assertTrue(true);
-				} else {
-					System.out.println("section.getPhone(): " + section.getSecPhone() + " != " + i);
-					assertFalse(true);
-				}
-			}			
-		}		
-	}
+        SectionLocal section;
+        Iterator<SectionLocal> iter = sectionList.iterator();
+    
+        for(int i = 1; iter.hasNext(); i++){
+            section = iter.next();
+
+            assertEquals("secId " + i, section.getSecId());
+//            assertEquals("Vägen " + i, section.getSecAddress());
+            assertEquals("Section description " + i, section.getSecDescription());
+            assertEquals("mottagningen" + i + "@test.se", section.getSecMail());;
+            assertEquals("Mottagningen " + i, section.getSecName());
+            assertEquals(Integer.toString(i), section.getSecPhone());
+        }           
+    }
 }
