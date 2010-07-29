@@ -101,7 +101,7 @@ Generation time : 2010-03-10 17:15:23 CET
                             <sourceDestDir>${project.build.directory}/generated-sources/jaxws</sourceDestDir>
                             <staleFile>${project.build.directory}/generated-sources/jaxws/stale/.staleFlagSectra</staleFile>
                         
-                            <wsdlDirectory>${basedir}/src/main/wsdl</wsdlDirectory>
+                            <wsdlDirectory>${basedir}/src/main/resources/wsdl</wsdlDirectory>
                             <wsdlFiles>
                                 <wsdlFile>SectraBookingService.wsdl</wsdlFile>
                             </wsdlFiles>
