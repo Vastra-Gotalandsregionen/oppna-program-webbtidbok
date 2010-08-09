@@ -23,182 +23,182 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
-import se.vgregion.webbtidbok.mock.sectraws.jaxws.*;
+//import se.vgregion.webbtidbok.mock.sectraws.jaxws.*;
 
 
-@WebService(name = "IRisReschedulePortType",
-            serviceName = "RisReschedule",
-            targetNamespace = "http://tempuri.org/",
-            endpointInterface="se.vgregion.webbtidbok.mock.sectraws.jaxws.IRisReschedulePortType")
-public class IRisRescheduleImpl implements IRisReschedulePortType {
+//@WebService(name = "IRisReschedule",
+//            serviceName = "RisReschedule",
+//            targetNamespace = "http://tempuri.org/",
+//            endpointInterface="se.vgregion.webbtidbok.mock.sectraws.jaxws.IRisReschedule")
+public class IRisRescheduleImpl /* implements IRisReschedule */ {
 
-	private final ObjectFactory objectFactory = new ObjectFactory();
-	
-	
-	
-	protected XMLGregorianCalendar setXMLGregorianCalendar(XMLGregorianCalendar inXmlGregCal){
-		
-		DatatypeFactory dtf = null;
-		XMLGregorianCalendar xmlGregCal = inXmlGregCal;
-		
-		//This is the default value when mocking a back end BookingInfo object: 20101010T10:10:10
-		//on reschedule(....) startTime should change to 20111111T11:11:11
-		//TODO create BookingInfo class like BookingTime
-		if (inXmlGregCal == null) {		
-			
-			try {
-				
-				dtf = DatatypeFactory.newInstance();
-				
-			} catch (DatatypeConfigurationException e) {
-				e.printStackTrace();
-			} 
-			xmlGregCal = dtf.newXMLGregorianCalendar();
-			
-			xmlGregCal.setYear(2010);
-			xmlGregCal.setMonth(10);		
-			xmlGregCal.setDay(10);
-			xmlGregCal.setHour(10);
-			xmlGregCal.setMinute(10);
-			xmlGregCal.setSecond(10);
-		} 
-		
-		return xmlGregCal;
-	}
-	
-	protected Section getSection(){
-		
-		Section section = objectFactory.createSection();
-		
-		section.setId(objectFactory.createSectionId("secId 123"));
-		section.setAddress(objectFactory.createSectionAddress("Vägen 1"));
-		section.setDescription(objectFactory.createSectionDescription("Section description xyz"));
-		section.setMail(objectFactory.createSectionMail("mottagningen_1@1234_.se"));
-		section.setName(objectFactory.createSectionName("Mottagningen 1"));
-		
-		return section;
-	}
-	
-	protected TimeBlock setTimeBlock(XMLGregorianCalendar xmlGregCal){
-		
-		TimeBlock timeBlock = objectFactory.createTimeBlock();
-		
-		JAXBElement<String> timeBlockId = objectFactory.createTimeBlockId("timeBlockId_1");
-		
-		timeBlock.setId(timeBlockId);
-		timeBlock.setLength(10);
-		timeBlock.setSection(objectFactory.createSection(getSection()));	
-		timeBlock.setStartTime(setXMLGregorianCalendar(xmlGregCal));
-	
-		return timeBlock;
-	}
-	
-	
-/*
- * 
- * start IRisSchedule interface implementations (mocking)
- * 
- */
-	@Override
-	public BookingInfo getBookingInfo(String patientId, String examinationNr)
-			throws IRisRescheduleGetBookingInfoErrorInfoFaultFaultMessage {
-		IRisRescheduleValidators validator = new IRisRescheduleValidators();
-		XMLGregorianCalendar xmlGregCal = null;
-		BookingInfo bi = new BookingInfo();	
-		
-		if(validator.validateGetBookingInfoCall(patientId, examinationNr)){
-	
-			//booking info stuff
-			JAXBElement<String> patientName1 = objectFactory.createBookingInfoPatientName("Kerberos");
-			JAXBElement<String> patientId1 = objectFactory.createBookingInfoPatientId("1912121212");
-			JAXBElement<String> examType1 = objectFactory.createBookingInfoExamType("exam type mammografi");
-			JAXBElement<String> examCode1 = objectFactory.createBookingInfoExamTypeCode("exam type code 123");
-			JAXBElement<String> laterality1 = objectFactory.createBookingInfoLaterality("S");		
-			JAXBElement<TimeBlock> timeBlock1 = objectFactory.createBookingInfoBookedTime(setTimeBlock(xmlGregCal));
-			JAXBElement<String> examinationNr1 = objectFactory.createBookingInfoExamNo("SERTEST00012345");
-			
-			//package booking info stuff into a BookingInfo object
-			bi.setPatientName(patientName1);
-			bi.setPatientId(patientId1);	
-			bi.setExamType(examType1);
-			bi.setExamTypeCode(examCode1);
-			bi.setLaterality(laterality1);
-			bi.setBookedTime(timeBlock1);	
-			bi.setExamNo(examinationNr1);
-		}
-		
-		return bi;
-	}
-
-	@Override
-	public ArrayOfBookingInfo getBookings(String patientId)
-			throws IRisRescheduleGetBookingsErrorInfoFaultFaultMessage {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ArrayOfdateTime listFreeDays(XMLGregorianCalendar startDate,
-			XMLGregorianCalendar endDate, String examinationNr, String sectionId)
-			throws IRisRescheduleListFreeDaysErrorInfoFaultFaultMessage {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ArrayOfTimeBlock listFreeTimes(XMLGregorianCalendar startDate,
-			XMLGregorianCalendar endDate, String examinationNr, String sectionId)
-			throws IRisRescheduleListFreeTimesErrorInfoFaultFaultMessage {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	/**
-	 *input parameter String examinationNr doesn't really seem to do anything.
-	 */
-	public ArrayOfSection listSections(String examinationNr)
-			throws IRisRescheduleListSectionsErrorInfoFaultFaultMessage {
-		IRisRescheduleValidators validator = new IRisRescheduleValidators();
-		ArrayOfSection sectionArray = objectFactory.createArrayOfSection();
-		
-		if(validator.validateListSectionsCall(examinationNr)){
-			Section section1 = objectFactory.createSection();
-			section1.setId(objectFactory.createSectionId("secId 1"));
-			section1.setAddress(objectFactory.createSectionAddress("Vägen 1"));
-			section1.setDescription(objectFactory.createSectionDescription("Section description 1"));
-			section1.setMail(objectFactory.createSectionMail("mottagningen1@test.se"));
-			section1.setName(objectFactory.createSectionName("Mottagningen 1"));
-			section1.setPhone(objectFactory.createSectionPhone("1"));
-			sectionArray.getSection().add(section1);
-			
-			Section section2 = objectFactory.createSection();
-			section2.setId(objectFactory.createSectionId("secId 2"));
-			section2.setAddress(objectFactory.createSectionAddress("Vägen 2"));
-			section2.setDescription(objectFactory.createSectionDescription("Section description 2"));
-			section2.setMail(objectFactory.createSectionMail("mottagningen2@test.se"));
-			section2.setName(objectFactory.createSectionName("Mottagningen 2"));
-			section2.setPhone(objectFactory.createSectionPhone("2"));
-			sectionArray.getSection().add(section2);
-		}
-		return sectionArray;
-	}
-
-	@Override
-	public BookingInfo reschedule(String examinationNr, String newTimeId,
-			XMLGregorianCalendar startTime, Boolean printNewNotice,
-			String rescheduleComment)
-			throws IRisRescheduleRescheduleErrorInfoFaultFaultMessage {
-		
-		BookingInfo bi = objectFactory.createBookingInfo();
-//		set all new input params in the BookingInfo object bi and return
-		//start with creating a new TimeBlock and set it into the BI
-		JAXBElement<TimeBlock> newTime = objectFactory.createBookingInfoBookedTime(setTimeBlock(startTime));
-		
-		bi.setBookedTime(newTime);
-		
-		return bi;
-	}
+//	private final ObjectFactory objectFactory = new ObjectFactory();
+//	
+//	
+//	
+//	protected XMLGregorianCalendar setXMLGregorianCalendar(XMLGregorianCalendar inXmlGregCal){
+//		
+//		DatatypeFactory dtf = null;
+//		XMLGregorianCalendar xmlGregCal = inXmlGregCal;
+//		
+//		//This is the default value when mocking a back end BookingInfo object: 20101010T10:10:10
+//		//on reschedule(....) startTime should change to 20111111T11:11:11
+//		//TODO create BookingInfo class like BookingTime
+//		if (inXmlGregCal == null) {		
+//			
+//			try {
+//				
+//				dtf = DatatypeFactory.newInstance();
+//				
+//			} catch (DatatypeConfigurationException e) {
+//				e.printStackTrace();
+//			} 
+//			xmlGregCal = dtf.newXMLGregorianCalendar();
+//			
+//			xmlGregCal.setYear(2010);
+//			xmlGregCal.setMonth(10);		
+//			xmlGregCal.setDay(10);
+//			xmlGregCal.setHour(10);
+//			xmlGregCal.setMinute(10);
+//			xmlGregCal.setSecond(10);
+//		} 
+//		
+//		return xmlGregCal;
+//	}
+//	
+//	protected Section getSection(){
+//		
+//		Section section = objectFactory.createSection();
+//		
+//		section.setId(objectFactory.createSectionId("secId 123"));
+//		section.setAddress(objectFactory.createSectionAddress("Vägen 1"));
+//		section.setDescription(objectFactory.createSectionDescription("Section description xyz"));
+//		section.setMail(objectFactory.createSectionMail("mottagningen_1@1234_.se"));
+//		section.setName(objectFactory.createSectionName("Mottagningen 1"));
+//		
+//		return section;
+//	}
+//	
+//	protected TimeBlock setTimeBlock(XMLGregorianCalendar xmlGregCal){
+//		
+//		TimeBlock timeBlock = objectFactory.createTimeBlock();
+//		
+//		JAXBElement<String> timeBlockId = objectFactory.createTimeBlockId("timeBlockId_1");
+//		
+//		timeBlock.setId(timeBlockId);
+//		timeBlock.setLength(10);
+//		timeBlock.setSection(objectFactory.createSection(getSection()));	
+//		timeBlock.setStartTime(setXMLGregorianCalendar(xmlGregCal));
+//	
+//		return timeBlock;
+//	}
+//	
+//	
+///*
+// * 
+// * start IRisSchedule interface implementations (mocking)
+// * 
+// */
+//	@Override
+//	public BookingInfo getBookingInfo(String patientId, String examinationNr)
+//			throws IRisRescheduleGetBookingInfoErrorInfoFaultFaultMessage {
+//		IRisRescheduleValidators validator = new IRisRescheduleValidators();
+//		XMLGregorianCalendar xmlGregCal = null;
+//		BookingInfo bi = new BookingInfo();	
+//		
+//		if(validator.validateGetBookingInfoCall(patientId, examinationNr)){
+//	
+//			//booking info stuff
+//			JAXBElement<String> patientName1 = objectFactory.createBookingInfoPatientName("Kerberos");
+//			JAXBElement<String> patientId1 = objectFactory.createBookingInfoPatientId("1912121212");
+//			JAXBElement<String> examType1 = objectFactory.createBookingInfoExamType("exam type mammografi");
+//			JAXBElement<String> examCode1 = objectFactory.createBookingInfoExamTypeCode("exam type code 123");
+//			JAXBElement<String> laterality1 = objectFactory.createBookingInfoLaterality("S");		
+//			JAXBElement<TimeBlock> timeBlock1 = objectFactory.createBookingInfoBookedTime(setTimeBlock(xmlGregCal));
+//			JAXBElement<String> examinationNr1 = objectFactory.createBookingInfoExamNo("SERTEST00012345");
+//			
+//			//package booking info stuff into a BookingInfo object
+//			bi.setPatientName(patientName1);
+//			bi.setPatientId(patientId1);	
+//			bi.setExamType(examType1);
+//			bi.setExamTypeCode(examCode1);
+//			bi.setLaterality(laterality1);
+//			bi.setBookedTime(timeBlock1);	
+//			bi.setExamNo(examinationNr1);
+//		}
+//		
+//		return bi;
+//	}
+//
+//	@Override
+//	public ArrayOfBookingInfo getBookings(String patientId)
+//			throws IRisRescheduleGetBookingsErrorInfoFaultFaultMessage {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
+//
+//	@Override
+//	public ArrayOfdateTime listFreeDays(XMLGregorianCalendar startDate,
+//			XMLGregorianCalendar endDate, String examinationNr, String sectionId)
+//			throws IRisRescheduleListFreeDaysErrorInfoFaultFaultMessage {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
+//
+//	@Override
+//	public ArrayOfTimeBlock listFreeTimes(XMLGregorianCalendar startDate,
+//			XMLGregorianCalendar endDate, String examinationNr, String sectionId)
+//			throws IRisRescheduleListFreeTimesErrorInfoFaultFaultMessage {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
+//
+//	@Override
+//	/**
+//	 *input parameter String examinationNr doesn't really seem to do anything.
+//	 */
+//	public ArrayOfSection listSections(String examinationNr)
+//			throws IRisRescheduleListSectionsErrorInfoFaultFaultMessage {
+//		IRisRescheduleValidators validator = new IRisRescheduleValidators();
+//		ArrayOfSection sectionArray = objectFactory.createArrayOfSection();
+//		
+//		if(validator.validateListSectionsCall(examinationNr)){
+//			Section section1 = objectFactory.createSection();
+//			section1.setId(objectFactory.createSectionId("secId 1"));
+//			section1.setAddress(objectFactory.createSectionAddress("Vägen 1"));
+//			section1.setDescription(objectFactory.createSectionDescription("Section description 1"));
+//			section1.setMail(objectFactory.createSectionMail("mottagningen1@test.se"));
+//			section1.setName(objectFactory.createSectionName("Mottagningen 1"));
+//			section1.setPhone(objectFactory.createSectionPhone("1"));
+//			sectionArray.getSection().add(section1);
+//			
+//			Section section2 = objectFactory.createSection();
+//			section2.setId(objectFactory.createSectionId("secId 2"));
+//			section2.setAddress(objectFactory.createSectionAddress("Vägen 2"));
+//			section2.setDescription(objectFactory.createSectionDescription("Section description 2"));
+//			section2.setMail(objectFactory.createSectionMail("mottagningen2@test.se"));
+//			section2.setName(objectFactory.createSectionName("Mottagningen 2"));
+//			section2.setPhone(objectFactory.createSectionPhone("2"));
+//			sectionArray.getSection().add(section2);
+//		}
+//		return sectionArray;
+//	}
+//
+//	@Override
+//	public BookingInfo reschedule(String examinationNr, String newTimeId,
+//			XMLGregorianCalendar startTime, Boolean printNewNotice,
+//			String rescheduleComment)
+//			throws IRisRescheduleRescheduleErrorInfoFaultFaultMessage {
+//		
+//		BookingInfo bi = objectFactory.createBookingInfo();
+////		set all new input params in the BookingInfo object bi and return
+//		//start with creating a new TimeBlock and set it into the BI
+//		JAXBElement<TimeBlock> newTime = objectFactory.createBookingInfoBookedTime(setTimeBlock(startTime));
+//		
+//		bi.setBookedTime(newTime);
+//		
+//		return bi;
+//	}
 
 	//@Override
 	//there is no method supporting a log in call so I just made one up here
