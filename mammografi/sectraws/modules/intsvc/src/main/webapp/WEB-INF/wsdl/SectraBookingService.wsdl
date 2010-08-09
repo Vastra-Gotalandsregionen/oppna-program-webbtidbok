@@ -14,7 +14,8 @@
 	<wsdl:message name="IRisReschedule_GetBookingInfo_OutputMessage">
 		<wsdl:part name="parameters" element="tns:GetBookingInfoResponse" />
 	</wsdl:message>
-	<wsdl:message name="IRisReschedule_GetBookingInfo_ErrorInfoFault_FaultMessage">
+	<wsdl:message
+        name="IRisReschedule_GetBookingInfo_ErrorInfoFault_FaultMessage">
 		<wsdl:part name="detail" element="tns:ErrorInfo" />
 	</wsdl:message>
 	<wsdl:message name="IRisReschedule_GetBookings_InputMessage">
@@ -41,7 +42,8 @@
 	<wsdl:message name="IRisReschedule_ListFreeTimes_OutputMessage">
 		<wsdl:part name="parameters" element="tns:ListFreeTimesResponse" />
 	</wsdl:message>
-	<wsdl:message name="IRisReschedule_ListFreeTimes_ErrorInfoFault_FaultMessage">
+	<wsdl:message
+        name="IRisReschedule_ListFreeTimes_ErrorInfoFault_FaultMessage">
 		<wsdl:part name="detail" element="tns:ErrorInfo" />
 	</wsdl:message>
 	<wsdl:message name="IRisReschedule_ListFreeDays_InputMessage">
@@ -62,7 +64,7 @@
 	<wsdl:message name="IRisReschedule_Reschedule_ErrorInfoFault_FaultMessage">
 		<wsdl:part name="detail" element="tns:ErrorInfo" />
 	</wsdl:message>
-	<wsdl:portType name="IRisReschedulePortType">
+	<wsdl:portType name="IRisReschedule">
 		<wsdl:operation name="GetBookingInfo">
 			<wsdl:input wsaw:Action="http://tempuri.org/IRisReschedule/GetBookingInfo"
 				message="tns:IRisReschedule_GetBookingInfo_InputMessage" />
@@ -120,7 +122,7 @@
 				name="ErrorInfoFault" message="tns:IRisReschedule_Reschedule_ErrorInfoFault_FaultMessage" />
 		</wsdl:operation>
 	</wsdl:portType>
-	<wsdl:binding name="RescheduleBinding" type="tns:IRisReschedulePortType">
+	<wsdl:binding name="Test" type="tns:IRisReschedule">
 		<soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
 		<wsdl:operation name="GetBookingInfo">
 			<soap:operation soapAction="http://tempuri.org/IRisReschedule/GetBookingInfo"
@@ -201,9 +203,10 @@
 			</wsdl:fault>
 		</wsdl:operation>
 	</wsdl:binding>
-	<wsdl:service name="RisReschedule">
-		<wsdl:port name="Reschedule" binding="tns:RescheduleBinding">
-			<soap:address location="http://localhost:8085/webbtidbok-sectraws-module-intsvc/booking" />
+	<wsdl:service name="RISReschedule">
+		<wsdl:port name="Test" binding="tns:Test">
+			<soap:address
+                location="http://localhost:8085/webbtidbok-sectraws-module-intsvc/ws/booking/" />
 		</wsdl:port>
 	</wsdl:service>
 </wsdl:definitions>

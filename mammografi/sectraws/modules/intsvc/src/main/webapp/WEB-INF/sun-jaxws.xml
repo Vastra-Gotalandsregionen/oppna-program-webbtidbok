@@ -20,10 +20,10 @@
 <endpoints xmlns="http://java.sun.com/xml/ns/jax-ws/ri/runtime" version="2.0">
     <endpoint
         name="IRisReschedule"
-        interface="se.vgregion.webbtidbok.mock.sectraws.jaxws.IRisReschedulePortType"
+        interface="se.vgregion.webbtidbok.mock.sectraws.jaxws.IRisReschedule"
         implementation="se.vgregion.webbtidbok.mock.sectraws.IRisRescheduleImpl"
         wsdl="WEB-INF/wsdl/SectraBookingService.wsdl"
         service="{http://tempuri.org/}RisReschedule"
-        port="{http://tempuri.org/}Reschedule"
+        port="{http://tempuri.org/}Test"
         url-pattern="/booking"/>
 </endpoints>
