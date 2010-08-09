@@ -1,28 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
+	<!--
 
-    Copyright 2009 Vastra Gotalandsregionen
-
-      This library is free software; you can redistribute it and/or modify
-      it under the terms of version 2.1 of the GNU Lesser General Public
-      License as published by the Free Software Foundation.
-
-      This library is distributed in the hope that it will be useful,
-      but WITHOUT ANY WARRANTY; without even the implied warranty of
-      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-      GNU Lesser General Public License for more details.
-
-      You should have received a copy of the GNU Lesser General Public
-      License along with this library; if not, write to the
-      Free Software Foundation, Inc., 59 Temple Place, Suite 330,
-      Boston, MA 02111-1307  USA
-
--->
+		Copyright 2009 Vastra Gotalandsregionen This library is free software;
+		you can redistribute it and/or modify it under the terms of version
+		2.1 of the GNU Lesser General Public License as published by the Free
+		Software Foundation. This library is distributed in the hope that it
+		will be useful, but WITHOUT ANY WARRANTY; without even the implied
+		warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See
+		the GNU Lesser General Public License for more details. You should
+		have received a copy of the GNU Lesser General Public License along
+		with this library; if not, write to the Free Software Foundation,
+		Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+	-->
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:aop="http://www.springframework.org/schema/aop"
-	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:util="http://www.springframework.org/schema/util"
 	xsi:schemaLocation="
 	   http://www.springframework.org/schema/aop
 	   http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
@@ -31,142 +23,180 @@
 		http://www.springframework.org/schema/context
 		http://www.springframework.org/schema/context/spring-context-2.5.xsd
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd">
-		
 
+	<import resource="testdata-su.xml" />
 	<!-- Scans for application @Components to deploy -->
 	<context:component-scan base-package="org.springframework.webflow.samples.booking" />
 
 
-    <bean id="bookingFactory" class="se.vgregion.webbtidbok.booking.BookingFactory">
-      <property name="serviceDefinitions">
-        <list>
-          <ref bean="serviceDefinitionMammografiSU" />
-          <ref bean="serviceDefinitionBukAorta" />
-        </list>
-      </property>
-    </bean>
+	<bean id="bookingFactory" class="se.vgregion.webbtidbok.booking.BookingFactory">
+		<property name="serviceDefinitions">
+			<list>
+				<ref bean="serviceDefinitionMammografiSU" />
+				<ref bean="serviceDefinitionBukAorta" />
+			</list>
+		</property>
+	</bean>
 
-    <!-- Service definitions should be moved later, but for now this will do. -->
-    <bean id="serviceDefinitionMammografiSU"
-        class="se.vgregion.webbtidbok.servicedef.ServiceDefinition">
-        <property name="serviceID" value="MAMMO_SU"/>
-        <property name="messageBundleBase" value="messages/mammografi/MammografiMessages"/>
-        <property name="bookingService" ref="sectraBookingService"/>
-    </bean>
+	<!--
+		Service definitions should be moved later, but for now this will do.
+	-->
+	<bean id="serviceDefinitionMammografiSU" class="se.vgregion.webbtidbok.servicedef.ServiceDefinition">
+		<property name="serviceID" value="MAMMO_SU" />
+		<property name="messageBundleBase" value="messages/mammografi/MammografiMessages" />
+		<property name="bookingService" ref="sectraBookingService" />
+	</bean>
 
-    <bean id="serviceDefinitionMammografiNU"
-        class="se.vgregion.webbtidbok.servicedef.ServiceDefinition">
-        <property name="serviceID" value="MAMMO_NU"/>
-        <property name="messageBundleBase" value="messages/mammografi/MammografiMessages"/>
-        <property name="bookingService" ref="elvisBookingService"/>
-    </bean>
-    
-    <!-- A service definition for bukaorta, using Elvis. -->
-    <bean id="serviceDefinitionBukAorta"
-        class="se.vgregion.webbtidbok.servicedef.ServiceDefinition">
-        <property name="serviceID" value="BUKAORTA"/>
-        <property name="messageBundleBase" value="messages/bukaorta/BukAortaMessages"/>
-        <property name="bookingService" ref="elvisBookingService"/>
-    </bean>
+	<bean id="serviceDefinitionMammografiNU" class="se.vgregion.webbtidbok.servicedef.ServiceDefinition">
+		<property name="serviceID" value="MAMMO_NU" />
+		<property name="messageBundleBase" value="messages/mammografi/MammografiMessages" />
+		<property name="bookingService" ref="sectraBookingService" />
+	</bean>
 
-    
-    <!-- Login services. -->    
+	<!-- A service definition for bukaorta, using Elvis. -->
+	<bean id="serviceDefinitionBukAorta" class="se.vgregion.webbtidbok.servicedef.ServiceDefinition">
+		<property name="serviceID" value="BUKAORTA" />
+		<property name="messageBundleBase" value="messages/bukaorta/BukAortaMessages" />
+		<property name="bookingService" ref="elvisBookingService" />
+	</bean>
+
+
+	<!-- Login services. -->
 	<bean id="loginService" class="se.vgregion.webbtidbok.Login">
 		<property name="bookingFactory" ref="bookingFactory" />
-        <property name="lookupService" ref="lookupService"/>
+		<property name="lookupService" ref="lookupService" />
 	</bean>
-	
-	<!-- validates login accordingly and also sets service matching to provided password into state -->
-    <bean id="validationService" class="se.vgregion.webbtidbok.ValidationLogin">
 
-    </bean>
-    
-    <!-- Our lookup service. Lookups are performed in the order listed - trial logins
-         (such as Elvis) should be at the bottom of the list. -->
-    <bean id="lookupService" class="se.vgregion.webbtidbok.servicedef.ChainLookupService">
-        <property name="lookupChain">
-            <list>
-                <ref bean="lookupServiceSU" />
-                <ref bean="lookupServiceNU" />
-                <ref bean="elvisLookupService" />
-            </list>
-        </property>
-    </bean>
+	<!--
+		validates login accordingly and also sets service matching to provided
+		password into state
+	-->
+	<bean id="validationService" class="se.vgregion.webbtidbok.ValidationLogin">
 
-    <bean id="lookupServiceSU" class="se.vgregion.webbtidbok.servicedef.PasswordMatchLookupService">
-        <property name="serviceDefinition" ref="serviceDefinitionMammografiSU" />
-<!--        <property name="regexp" value="^......SU..$"/>-->
-		<property name="regexp" value="^SEMSUS.*$"/>
-    </bean>
+	</bean>
 
-    <bean id="lookupServiceNU" class="se.vgregion.webbtidbok.servicedef.PasswordMatchLookupService">
-        <property name="serviceDefinition" ref="serviceDefinitionMammografiNU" />
-        <property name="regexp" value="^SEMUDD.*$"/>
-    </bean>
+	<!--
+		Our lookup service. Lookups are performed in the order listed - trial
+		logins (such as Elvis) should be at the bottom of the list.
+	-->
+	<bean id="lookupService" class="se.vgregion.webbtidbok.servicedef.ChainLookupService">
+		<property name="lookupChain">
+			<list>
+				<ref bean="lookupServiceSU" />
+				<ref bean="lookupServiceNU" />
+				<ref bean="elvisLookupService" />
+			</list>
+		</property>
+	</bean>
 
-    <bean id="elvisLookupService" class="se.vgregion.webbtidbok.servicedef.LoginLookupService">
-        <property name="serviceDefinition" ref="serviceDefinitionBukAorta" />
-    </bean>
+	<bean id="lookupServiceSU"
+		class="se.vgregion.webbtidbok.servicedef.PasswordMatchLookupService">
+		<property name="serviceDefinition" ref="serviceDefinitionMammografiSU" />
+		<!--        <property name="regexp" value="^......SU..$"/>-->
+		<property name="regexp" value="^SEMSUS.*$" />
+	</bean>
 
-<!-- New style booking facade implementation for Elvis. -->
-    <bean id="elvisBookingService" class="se.vgregion.webbtidbok.booking.elvis.ElvisBookingFacadeImpl">
-        <property name="helper" ref="helper" />
-    </bean>
+	<bean id="lookupServiceNU"
+		class="se.vgregion.webbtidbok.servicedef.PasswordMatchLookupService">
+		<property name="serviceDefinition" ref="serviceDefinitionMammografiNU" />
+		<property name="regexp" value="^SEMUDD.*$" />
+	</bean>
+
+	<bean id="elvisLookupService" class="se.vgregion.webbtidbok.servicedef.LoginLookupService">
+		<property name="serviceDefinition" ref="serviceDefinitionBukAorta" />
+	</bean>
+
+	<!-- New style booking facade implementation for Elvis. -->
+	<bean id="elvisBookingService"
+		class="se.vgregion.webbtidbok.booking.elvis.ElvisBookingFacadeImpl">
+		<property name="helper" ref="helper" />
+	</bean>
 
 	<bean id="bookingService" class="se.vgregion.webbtidbok.booking.elvis.BookingService">
 		<property name="helper" ref="helper" />
 	</bean>
-	
+
 	<bean id="helper" class="se.vgregion.webbtidbok.booking.elvis.WebServiceHelper">
 		<property name="encrypter" ref="stringEncrypter" />
 	</bean>
-<!-- END Elvis facade -->
-	
-<!-- New style booking facade for Sectra -->
-	<bean id="sectraBookingService" class="se.vgregion.webbtidbok.booking.sectra.SectraBookingFacadeImpl">
-        <property name="helper" ref="sectraWShelper" />
-    </bean>
+	<!-- END Elvis facade -->
 
-	<bean id="bookingServiceSectra" class="se.vgregion.webbtidbok.booking.sectra.SectraBookingServiceImpl">
-        <property name="helper" ref="sectraWShelper" />
-    </bean>
-	
-	<bean id="sectraWShelper" class="se.vgregion.webbtidbok.booking.sectra.SectraWebServiceHelperImpl">
-		
+	<!-- New style booking facade for Sectra -->
+	<bean id="sectraBookingService"
+		class="se.vgregion.webbtidbok.booking.sectra.SectraBookingFacadeImpl">
+		<property name="service" ref="bookingServiceSectra" />
 	</bean>
-<!-- END sectra facade -->
-	
-	<bean id="bookingWrapper" class="se.vgregion.webbtidbok.booking.BookingWrapper" >
 
+	<bean id="bookingServiceSectra"
+		class="se.vgregion.webbtidbok.booking.sectra.SectraBookingServiceImpl">
+		<property name="helper" ref="sectraWShelper" />
 	</bean>
-	
+
+	<bean id="sectraWShelper"
+		class="se.vgregion.webbtidbok.booking.sectra.SectraWebServiceHelperImpl">
+		<property name="thePortSU" ref="sectraMockServiceSU" />
+		<property name="thePortNU" ref="sectraMockServiceNU" />
+	</bean>
+	<!-- Mock service for sectra ws	-->
+	<bean id="sectraMockServiceSU" class="se.vgregion.webbtidbok.booking.sectra.SectraWSMock">
+		<property name="businessObjectHolder">
+			<bean
+				class="se.vgregion.webbtidbok.booking.sectra.mock.BusinessObjectHolder">
+				<constructor-arg ref="SU_sections" />
+				<constructor-arg ref="SU_timeblocks" />
+				<constructor-arg ref="SU_bookings" />
+			</bean>
+		</property>
+	</bean>
+	<bean id="sectraMockServiceNU" class="se.vgregion.webbtidbok.booking.sectra.SectraWSMock">
+		<property name="businessObjectHolder">
+			<bean
+				class="se.vgregion.webbtidbok.booking.sectra.mock.BusinessObjectHolder">
+				<constructor-arg ref="SU_sections" />
+				<constructor-arg ref="SU_timeblocks" />
+				<constructor-arg ref="SU_bookings" />
+			</bean>
+		</property>
+	</bean>
+
+	<!-- END sectra facade -->
+
+	<bean id="bookingWrapper" class="se.vgregion.webbtidbok.booking.BookingWrapper">
+	<property name="facade" ref="sectraBookingService" />
+	</bean>
+
 	<bean id="stringEncrypter" class="se.vgregion.webbtidbok.crypto.StringEncrypter">
 		<property name="keyStoreFile" value="classpath:asd.pfx" />
 		<property name="keyAlias"
 			value="a6c21dcdd9534d742aa1bd4afae16210_956e2a3a-b426-49f4-a107-72c603d2f58c" />
 		<property name="keyPassWord" value="asd" />
 	</bean>
-	
 	<bean id="calendarService" class="se.vgregion.webbtidbok.calendar.CalendarUtil">
 		<property name="helper" ref="helper" />
 	</bean>
-	
+
 	<bean id="loggingAdvice" class="se.vgregion.webbtidbok.logging.LoggingAdvice" />
-	    <aop:config>
-	        <aop:aspect ref="loggingAdvice">
-	            <aop:pointcut id="loggingBookingServ"
-	                expression="execution(* se.vgregion.webbtidbok.booking.elvis.BookingService.*(..))" />
-	            <aop:pointcut expression="execution(* se.vgregion.webbtidbok.calendar.CalendarUtil.*(..))" id="loggingCalUtil"/>
-	            <aop:around method="around" pointcut-ref="loggingBookingServ" />
-	            <aop:around method="around" pointcut-ref="loggingCalUtil"/>
-	        </aop:aspect>
-	    </aop:config>
-    
-    <!-- Flow handler handling exceptions for the 'login' flow. -->
-    <bean name="login" class="se.vgregion.webbtidbok.errorhandling.ExceptionFlowHandler">
-    </bean>
-	
-	<!-- Imports the configurations of the different infrastructure systems of the application -->
+	<aop:config>
+		<aop:aspect ref="loggingAdvice">
+			<aop:pointcut id="loggingBookingServ"
+				expression="execution(* se.vgregion.webbtidbok.booking.elvis.BookingService.*(..))" />
+			<aop:pointcut
+				expression="execution(* se.vgregion.webbtidbok.calendar.CalendarUtil.*(..))"
+				id="loggingCalUtil" />
+			<aop:around method="around" pointcut-ref="loggingBookingServ" />
+			<aop:around method="around" pointcut-ref="loggingCalUtil" />
+		</aop:aspect>
+	</aop:config>
+
+	<!-- Flow handler handling exceptions for the 'login' flow. -->
+	<bean name="login"
+		class="se.vgregion.webbtidbok.errorhandling.ExceptionFlowHandler">
+	</bean>
+
+	<!--
+		Imports the configurations of the different infrastructure systems of
+		the application
+	-->
 	<import resource="webflow-config.xml" />
 	<import resource="webmvc-config.xml" />
 </beans>

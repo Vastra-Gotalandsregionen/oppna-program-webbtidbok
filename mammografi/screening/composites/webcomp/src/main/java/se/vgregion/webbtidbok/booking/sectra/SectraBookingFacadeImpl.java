@@ -26,18 +26,10 @@ import se.vgregion.webbtidbok.booking.BookingWrapper;
 
 public class SectraBookingFacadeImpl implements BookingFacade {
 	
-	private SectraWebServiceHelperImpl helper;
-	private SectraBookingServiceImpl service = new SectraBookingServiceImpl();
-
-	public SectraBookingFacadeImpl(){
-		System.out.println("SectraBookingFacadeImpl() constructor");
-	}
-	public SectraWebServiceHelperImpl getHelper() {
-		return helper;
-	}
-
-	public void setHelper(SectraWebServiceHelperImpl helper) {
-		this.helper = helper;
+	private SectraBookingServiceImpl service;
+	
+	public void setService(SectraBookingServiceImpl service) {
+		this.service = service;
 	}
 
 	@Override
@@ -45,7 +37,7 @@ public class SectraBookingFacadeImpl implements BookingFacade {
 
 		String patientId = state.getPnr();
 		String password = state.getPasswd();
-		boolean isLoggedIn = helper.login(patientId, password);
+		boolean isLoggedIn = service.login(patientId, password);
 		state.setLoggedIn(isLoggedIn);   
 		
 		return isLoggedIn;
