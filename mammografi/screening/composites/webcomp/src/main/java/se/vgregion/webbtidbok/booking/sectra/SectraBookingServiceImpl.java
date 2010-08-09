@@ -37,7 +37,7 @@ public class SectraBookingServiceImpl implements SectraBookingServiceInterface{
 		this.displayName = displayName;
 	}
 
-	private SectraWebServiceHelperImpl helper = new SectraWebServiceHelperImpl();
+	private SectraWebServiceHelperImpl helper;
 
 	public void setHelper(SectraWebServiceHelperImpl helper) {
 		this.helper = helper;

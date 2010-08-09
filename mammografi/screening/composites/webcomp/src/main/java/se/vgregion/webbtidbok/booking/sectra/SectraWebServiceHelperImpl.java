@@ -34,14 +34,22 @@ import se.vgregion.webbtidbok.ws.sectra.TimeBlock;
  */
 public class SectraWebServiceHelperImpl implements SectraWebServiceHelperInterface{
 
-	RISReschedule theService = new RISReschedule();
-    IRisReschedule thePort = theService.getTest();
+    private IRisReschedule thePortSU;
+    private IRisReschedule thePortNU;
     
+
+	public void setThePortSU(IRisReschedule thePortSU) {
+		this.thePortSU = thePortSU;
+	}
+	public void setThePortNU(IRisReschedule thePortNU) {
+		this.thePortNU = thePortNU;
+	}
+	
 	public BookingInfoLocal getBookingInfo(String patientId, String examinationNr)
 			throws IRisRescheduleGetBookingInfoErrorInfoFaultFaultMessage {
 
 		BookingInfoLocal biL;
-		BookingInfo bi = thePort.getBookingInfo(patientId, examinationNr);
+		BookingInfo bi = thePortSU.getBookingInfo(patientId, examinationNr);
 		TimeBlock tb = bi.getBookedTime().getValue();
 		System.out.println("###.... tb." + tb.getStartTime().toString());
 		biL = new BookingInfoLocal(bi);
@@ -52,7 +60,7 @@ public class SectraWebServiceHelperImpl implements SectraWebServiceHelperInterfa
 	public boolean login(String patientId, String password){
 		
 		try {
-		    thePort.getBookingInfo(patientId, password);
+		    thePortSU.getBookingInfo(patientId, password);
 		    return true;
 		} catch (IRisRescheduleGetBookingInfoErrorInfoFaultFaultMessage e) {
             return false;
@@ -76,7 +84,7 @@ public class SectraWebServiceHelperImpl implements SectraWebServiceHelperInterfa
 	public ArrayOfSectionLocal listSections(String examinationNr)
 			throws IRisRescheduleListSectionsErrorInfoFaultFaultMessage {
 		
-		ArrayOfSectionLocal sectionArrayL = new ArrayOfSectionLocal(thePort.listSections(examinationNr));
+		ArrayOfSectionLocal sectionArrayL = new ArrayOfSectionLocal(thePortSU.listSections(examinationNr));
 		
 		return sectionArrayL;
 	}
@@ -86,7 +94,7 @@ public class SectraWebServiceHelperImpl implements SectraWebServiceHelperInterfa
 			XMLGregorianCalendar startTime, Boolean printNewNotice,
 			String rescheduleComment) throws IRisRescheduleRescheduleErrorInfoFaultFaultMessage {
 		System.out.println("startTime in SectraWebServiceHelper.reeschedule(): " + startTime.toString());
-		BookingInfoLocal biL = new BookingInfoLocal(thePort.reschedule(examinationNr, newTimeId, startTime, printNewNotice, rescheduleComment));
+		BookingInfoLocal biL = new BookingInfoLocal(thePortSU.reschedule(examinationNr, newTimeId, startTime, printNewNotice, rescheduleComment));
 		TimeBlockLocal tb = biL.getBookedTime();
 		System.out.println("### startTime after thePort.reschedule() call: " + tb.getStartTime().toString());
 		return biL;
