@@ -35,7 +35,7 @@ import se.vgregion.webbtidbok.ws.sectra.TimeBlock;
 public class SectraWebServiceHelperImpl implements SectraWebServiceHelperInterface{
 
 	RISReschedule theService = new RISReschedule();
-    IRisReschedule thePort = theService.getReschedule();
+    IRisReschedule thePort = theService.getTest();
     
 	public BookingInfoLocal getBookingInfo(String patientId, String examinationNr)
 			throws IRisRescheduleGetBookingInfoErrorInfoFaultFaultMessage {

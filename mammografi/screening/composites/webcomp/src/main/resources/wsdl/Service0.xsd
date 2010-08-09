@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+    Copyright 2009 Vastra Gotalandsregionen
+
+      This library is free software; you can redistribute it and/or modify
+      it under the terms of version 2.1 of the GNU Lesser General Public
+      License as published by the Free Software Foundation.
+
+      This library is distributed in the hope that it will be useful,
+      but WITHOUT ANY WARRANTY; without even the implied warranty of
+      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+      GNU Lesser General Public License for more details.
+
+      You should have received a copy of the GNU Lesser General Public
+      License along with this library; if not, write to the
+      Free Software Foundation, Inc., 59 Temple Place, Suite 330,
+      Boston, MA 02111-1307  USA
+
+-->
+<xs:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://tempuri.org/">
+  <xs:import schemaLocation="Service2.xsd" namespace="http://schemas.datacontract.org/2004/07/"/>
+  <xs:import schemaLocation="Service3.xsd" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays"/>
+  <xs:element name="GetBookingInfo">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="patientId" nillable="true" type="xs:string"/>
+        <xs:element minOccurs="0" name="examinationNr" nillable="true" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetBookingInfoResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetBookingInfoResult" nillable="true" type="q1:BookingInfo" xmlns:q1="http://schemas.datacontract.org/2004/07/"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetBookings">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="patientId" nillable="true" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetBookingsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetBookingsResult" nillable="true" type="q2:ArrayOfBookingInfo" xmlns:q2="http://schemas.datacontract.org/2004/07/"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ListSections">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="examinationNr" nillable="true" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ListSectionsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ListSectionsResult" nillable="true" type="q3:ArrayOfSection" xmlns:q3="http://schemas.datacontract.org/2004/07/"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ListFreeTimes">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="startDate" type="xs:dateTime"/>
+        <xs:element minOccurs="0" name="endDate" type="xs:dateTime"/>
+        <xs:element minOccurs="0" name="examinationNr" nillable="true" type="xs:string"/>
+        <xs:element minOccurs="0" name="sectionId" nillable="true" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ListFreeTimesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ListFreeTimesResult" nillable="true" type="q4:ArrayOfTimeBlock" xmlns:q4="http://schemas.datacontract.org/2004/07/"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ListFreeDays">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="startDate" type="xs:dateTime"/>
+        <xs:element minOccurs="0" name="endDate" type="xs:dateTime"/>
+        <xs:element minOccurs="0" name="examinationNr" nillable="true" type="xs:string"/>
+        <xs:element minOccurs="0" name="sectionId" nillable="true" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ListFreeDaysResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ListFreeDaysResult" nillable="true" type="q5:ArrayOfdateTime" xmlns:q5="http://schemas.microsoft.com/2003/10/Serialization/Arrays"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Reschedule">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="examinationNr" nillable="true" type="xs:string"/>
+        <xs:element minOccurs="0" name="newTimeId" nillable="true" type="xs:string"/>
+        <xs:element minOccurs="0" name="startTime" type="xs:dateTime"/>
+        <xs:element minOccurs="0" name="printNewNotice" type="xs:boolean"/>
+        <xs:element minOccurs="0" name="rescheduleComment" nillable="true" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RescheduleResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="RescheduleResult" nillable="true" type="q6:BookingInfo" xmlns:q6="http://schemas.datacontract.org/2004/07/"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

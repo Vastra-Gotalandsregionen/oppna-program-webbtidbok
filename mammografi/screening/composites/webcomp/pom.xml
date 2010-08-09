@@ -63,6 +63,11 @@ Generation time : 2010-03-10 17:15:23 CET
 						<artifactId>xercesImpl</artifactId>
 						<version>2.9.1</version>
 					</dependency>
+					<dependency>
+						<groupId>com.sun.xml.ws</groupId>
+						<artifactId>jaxws-tools</artifactId>
+						<version>2.2.1</version>
+					</dependency>
 				</dependencies>
 				<executions>
 					<!--  Signicat -->
@@ -87,6 +92,7 @@ Generation time : 2010-03-10 17:15:23 CET
 							<packageName>se.vgregion.webbtidbok.ws</packageName>
 							<sourceDestDir>${project.build.directory}/generated-sources/jaxws</sourceDestDir>
 							<staleFile>${project.build.directory}/generated-sources/jaxws/stale/.staleFlagSignicat</staleFile>
+							<target>2.1</target>
 						</configuration>
 					</execution>
 
@@ -101,10 +107,12 @@ Generation time : 2010-03-10 17:15:23 CET
                             <sourceDestDir>${project.build.directory}/generated-sources/jaxws</sourceDestDir>
                             <staleFile>${project.build.directory}/generated-sources/jaxws/stale/.staleFlagSectra</staleFile>
                         
-                            <wsdlDirectory>${basedir}/src/main/resources/wsdl</wsdlDirectory>
+                            <wsdlDirectory>src/main/resources/wsdl</wsdlDirectory>
+                            <!-- wsdlLocation>WEB-INF/wsdl/Service.wsdl</wsdlLocation -->
                             <wsdlFiles>
                                 <wsdlFile>SectraBookingService.wsdl</wsdlFile>
                             </wsdlFiles>
+							<target>2.1</target>
                         </configuration>
                     </execution>
 
@@ -310,7 +318,7 @@ Generation time : 2010-03-10 17:15:23 CET
 	      <artifactId>ognl</artifactId>
 	      <version>2.6.9</version>
 	    </dependency>
-        
+
 	 </dependencies>
   
 
