@@ -204,9 +204,9 @@
 		</wsdl:operation>
 	</wsdl:binding>
 	<wsdl:service name="RISReschedule">
-		<wsdl:port name="Reschedule" binding="tns:Test">
+		<wsdl:port name="Test" binding="tns:Test">
 			<soap:address
-				location="http://localhost:8085/webbtidbok-sectraws-module-intsvc/booking" />
+				location="http://localhost:8085/webbtidbok-sectraws-module-intsvc/ws/booking/" />
 		</wsdl:port>
 	</wsdl:service>
 </wsdl:definitions>

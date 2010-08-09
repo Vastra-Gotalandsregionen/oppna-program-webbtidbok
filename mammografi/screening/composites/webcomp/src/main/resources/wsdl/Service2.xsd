@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+    Copyright 2009 Vastra Gotalandsregionen
+
+      This library is free software; you can redistribute it and/or modify
+      it under the terms of version 2.1 of the GNU Lesser General Public
+      License as published by the Free Software Foundation.
+
+      This library is distributed in the hope that it will be useful,
+      but WITHOUT ANY WARRANTY; without even the implied warranty of
+      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+      GNU Lesser General Public License for more details.
+
+      You should have received a copy of the GNU Lesser General Public
+      License along with this library; if not, write to the
+      Free Software Foundation, Inc., 59 Temple Place, Suite 330,
+      Boston, MA 02111-1307  USA
+
+-->
+<xs:schema elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://schemas.datacontract.org/2004/07/">
+  <xs:import schemaLocation="Service1.xsd" namespace="http://schemas.microsoft.com/2003/10/Serialization/"/>
+  <xs:complexType name="BookingInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BookedTime" nillable="true" type="tns:TimeBlock"/>
+      <xs:element minOccurs="0" name="ExamNo" nillable="true" type="xs:string"/>
+      <xs:element minOccurs="0" name="ExamType" nillable="true" type="xs:string"/>
+      <xs:element minOccurs="0" name="ExamTypeCode" nillable="true" type="xs:string"/>
+      <xs:element minOccurs="0" name="Laterality" nillable="true" type="xs:string"/>
+      <xs:element minOccurs="0" name="PatientId" nillable="true" type="xs:string"/>
+      <xs:element minOccurs="0" name="PatientName" nillable="true" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="BookingInfo" nillable="true" type="tns:BookingInfo"/>
+  <xs:complexType name="TimeBlock">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string"/>
+      <xs:element minOccurs="0" name="Length" type="xs:int"/>
+      <xs:element minOccurs="0" name="Section" nillable="true" type="tns:Section"/>
+      <xs:element minOccurs="0" name="StartTime" type="xs:dateTime"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="TimeBlock" nillable="true" type="tns:TimeBlock"/>
+  <xs:complexType name="Section">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Address" nillable="true" type="xs:string"/>
+      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string"/>
+      <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string"/>
+      <xs:element minOccurs="0" name="Mail" nillable="true" type="xs:string"/>
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string"/>
+      <xs:element minOccurs="0" name="Phone" nillable="true" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Section" nillable="true" type="tns:Section"/>
+  <xs:complexType name="ErrorInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ErrorNumber" type="tns:ErrorInfo.ErrorCodeEnum"/>
+      <xs:element minOccurs="0" name="ErrorNumberInt" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ErrorInfo" nillable="true" type="tns:ErrorInfo"/>
+  <xs:simpleType name="ErrorInfo.ErrorCodeEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Unknown">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1000</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="CommunicationWithRisFailed">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1010</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="NoLicense">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1020</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="IvalidPatientId">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1500</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="InvalidExaminationId">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1510</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="InvalidSectionId">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1520</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="InvalidTimeId">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1530</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="MultipleBookingsOnExam">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1540</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="TimeSpanExceded">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1550</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ExaminationLocked">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1560</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="TimeLocked">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1570</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="TimeAlreadyBooked">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1580</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="ErrorInfo.ErrorCodeEnum" nillable="true" type="tns:ErrorInfo.ErrorCodeEnum"/>
+  <xs:complexType name="ArrayOfBookingInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="BookingInfo" nillable="true" type="tns:BookingInfo"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfBookingInfo" nillable="true" type="tns:ArrayOfBookingInfo"/>
+  <xs:complexType name="ArrayOfSection">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Section" nillable="true" type="tns:Section"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSection" nillable="true" type="tns:ArrayOfSection"/>
+  <xs:complexType name="ArrayOfTimeBlock">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="TimeBlock" nillable="true" type="tns:TimeBlock"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfTimeBlock" nillable="true" type="tns:ArrayOfTimeBlock"/>
+</xs:schema>

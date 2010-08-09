@@ -96,12 +96,12 @@
     <bean id="lookupServiceSU" class="se.vgregion.webbtidbok.servicedef.PasswordMatchLookupService">
         <property name="serviceDefinition" ref="serviceDefinitionMammografiSU" />
 <!--        <property name="regexp" value="^......SU..$"/>-->
-		<property name="regexp" value="^SEMSUS....$"/>
+		<property name="regexp" value="^SEMSUS.*$"/>
     </bean>
 
     <bean id="lookupServiceNU" class="se.vgregion.webbtidbok.servicedef.PasswordMatchLookupService">
         <property name="serviceDefinition" ref="serviceDefinitionMammografiNU" />
-        <property name="regexp" value="^......NU..$"/>
+        <property name="regexp" value="^SEMUDD.*$"/>
     </bean>
 
     <bean id="elvisLookupService" class="se.vgregion.webbtidbok.servicedef.LoginLookupService">
