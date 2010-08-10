@@ -93,7 +93,7 @@ public class SectraBookingServiceTest{
             section = iter.next();
 
             assertEquals("SU_section_" + i, section.getSecId());
-            assertEquals("Gröna stråket " + i, section.getSecAddress());
+            assertEquals("Grona straket " + i, section.getSecAddress());
             assertEquals("Mammografienhet " + i, section.getSecDescription());
             assertEquals("section" + i + "@su.example.com", section.getSecMail());;
             assertEquals("SU Mammografi " + i, section.getSecName());
