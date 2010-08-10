@@ -16,35 +16,46 @@
  *   Boston, MA 02111-1307  USA
  */
 package se.vgregion.webbtidbok.booking.sectra;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 
 import java.util.List;
 
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import se.vgregion.webbtidbok.ws.sectra.IRisRescheduleGetBookingInfoErrorInfoFaultFaultMessage;
 import se.vgregion.webbtidbok.ws.sectra.IRisRescheduleListSectionsErrorInfoFaultFaultMessage;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration({"sectra-test-context.xml"})
 public class SectraWebServiceHelperInterfaceTest {
 
-	static SectraWebServiceHelperImpl helper = new SectraWebServiceHelperImpl();
-	static String patientId="1912121212";
-	static String examinationNr = "SERTEST00012345";
+    @Autowired
+    SectraWSMock wsMock;
+    
+    SectraWebServiceHelperImpl helper;
+    
+    String patientId = "19770707-0004";
+    String examinationNr = "SEMSUS000001";
+    
+    @Before
+    public void setupWebservice() {
+        helper = new SectraWebServiceHelperImpl();
+        helper.setThePortSU(wsMock);
+    }
+
 	@Test
 	public void testGetBookingInfo() throws IRisRescheduleGetBookingInfoErrorInfoFaultFaultMessage {
 		BookingInfoLocal bi = null;
 		bi = helper.getBookingInfo(patientId, examinationNr);
 		
 		assertNotNull(bi);
-
-		String pId = bi.getPatientId();
-		String exNo = bi.getExaminationNr();
-		System.out.println("### pId: " + pId);
-		System.out.println("### exNo: " + exNo);
-
 		assertEquals(patientId, bi.getPatientId());
 		assertEquals(examinationNr, bi.getExaminationNr());
 	}
