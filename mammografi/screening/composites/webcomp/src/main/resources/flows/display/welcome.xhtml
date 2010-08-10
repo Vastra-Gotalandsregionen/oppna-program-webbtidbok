@@ -35,7 +35,7 @@
 		<p/>
 		<br/>
 		<h1 style="display: inline"><h:outputFormat value="#{sectionMsg.welcomepageWelcomeNN}">
-            <f:param value="#{booking.displayName}" /></h:outputFormat>
+            <f:param value="#{booking.patientName}" /></h:outputFormat>
         </h1>
 		<h:form id="mainForm" style="display: inline; text-align: right; padding-left: 5em;" >
 		    <div align="right">
@@ -58,7 +58,7 @@
 						<p><h:outputText value="#{baseMsg.locationBoxWhere}"/>:</p>
 					</td>
 					<td width="100%" valign="top">  
-						<p><ui:remove>#{booking.mainSector}</ui:remove>, #{booking.address}</p>
+						<p>#{booking.surgeryAddress}</p>
 					</td>
 					<td style="text-align: right; padding-right: 1em;" valign="top">
 						<h:form id="updateForm" >
