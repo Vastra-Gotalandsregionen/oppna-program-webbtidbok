@@ -20,41 +20,57 @@ package se.vgregion.webbtidbok.booking.sectra;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Iterator;
 import java.util.List;
 
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import se.vgregion.webbtidbok.ws.sectra.IRisRescheduleGetBookingInfoErrorInfoFaultFaultMessage;
 import se.vgregion.webbtidbok.ws.sectra.IRisRescheduleListSectionsErrorInfoFaultFaultMessage;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration({"sectra-test-context.xml"})
 public class SectraBookingServiceTest{
 
-    static SectraWebServiceHelperImpl helper = new SectraWebServiceHelperImpl();
-    static String patientId = "1912121212";
-    static String examinationNr = "SERTEST00012345";
+    @Autowired
+    SectraWSMock wsMock;
+    
+    SectraWebServiceHelperImpl helper;
+    
+    String patientId = "19770707-0004";
+    String examinationNr = "SEMSUS000001";
+    
+    @Before
+    public void setupWebservice() {
+        helper = new SectraWebServiceHelperImpl();
+        helper.setThePortSU(wsMock);
+    }
+    
     @Test
     public void testGetBookingInfo() throws IRisRescheduleGetBookingInfoErrorInfoFaultFaultMessage {
-        
         
         BookingInfoLocal bi = helper.getBookingInfo(patientId, examinationNr);
         assertNotNull(bi);
 
         assertEquals(examinationNr, bi.getExaminationNr());
-        assertEquals("exam type mammografi", bi.getExamType());
-        assertEquals("exam type code 123", bi.getExamTypeCode());
+        assertEquals("Mammografi", bi.getExamType());
+        assertEquals("MAM", bi.getExamTypeCode());
         assertEquals("S", bi.getLaterality());
         assertEquals(patientId, bi.getPatientId());
-        assertEquals("Kerberos", bi.getPatientName());
+        assertEquals("Sara Svensson", bi.getPatientName());
 
         TimeBlockLocal bt = bi.getBookedTime();
         assertNotNull(bt);
-    
-        assertEquals("timeBlockId_1", bt.getId());
-        assertEquals(10, bt.getLength());
+        assertEquals("SU_s1_time_1", bt.getId());
+        assertEquals(15, bt.getLength());
+        
         assertNotNull(bt.getSection());
         assertNotNull(bt.getStartTime());
     }
@@ -76,12 +92,12 @@ public class SectraBookingServiceTest{
         for(int i = 1; iter.hasNext(); i++){
             section = iter.next();
 
-            assertEquals("secId " + i, section.getSecId());
-//            assertEquals("Vägen " + i, section.getSecAddress());
-            assertEquals("Section description " + i, section.getSecDescription());
-            assertEquals("mottagningen" + i + "@test.se", section.getSecMail());;
-            assertEquals("Mottagningen " + i, section.getSecName());
-            assertEquals(Integer.toString(i), section.getSecPhone());
+            assertEquals("SU_section_" + i, section.getSecId());
+            assertEquals("Gröna stråket " + i, section.getSecAddress());
+            assertEquals("Mammografienhet " + i, section.getSecDescription());
+            assertEquals("section" + i + "@su.example.com", section.getSecMail());;
+            assertEquals("SU Mammografi " + i, section.getSecName());
+            assertEquals("123000" + i, section.getSecPhone());
         }           
     }
 }
