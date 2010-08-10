@@ -25,7 +25,7 @@
 
     <input name="state" />
 
-	<view-state id="welcome" view="/flows/display/welcome_mammo-test.xhtml" model="booking">
+	<view-state id="welcome" view="/flows/display/welcome.xhtml" model="booking">
 
 		<on-render>
 <!--		 TODO: on render: check method which checks service in state and perform evaluate expressions accordingly! -->

@@ -29,97 +29,68 @@
 
 <ui:fragment id="loginFragment">
 	
-		<div id="boxcontainer" style="padding-bottom: 1em;">
-		<div id="boxleft" />
-		<div id="boxmiddle">
-			<p/>
-			<br/>
-			<h1 style="display: inline"><h:outputFormat value="#{sectionMsg.welcomepageWelcomeNN}">
-                <f:param value="#{booking.displayName}" /></h:outputFormat>
-            </h1>
-				<h:form id="mainForm" style="display: inline; text-align: right; padding-left: 5em;" >
-				    <div align="right">
-					   <sf:commandButton id="logout" value="Logga ut" processIds="*" action="logout"/>
-				    </div>
-				</h:form>
-				<p/>
-				<br/>
-				<p><h:outputText value="#{sectionMsg.welcomepageIntroductionMain}"/><br/>
-				</p>
-				<p>Du kan också omboka eller avboka tiden per telefon. Ring då till
-				Kontaktpunkten på telefonnummer 031-342 69 55 tisdag, onsdag eller torsdag mellan
-				klockan 09:00 - 15:00, alternativt 031-342 24 00.<br/>
-				Du kan också skicka e-post: <a href="mailto:kontaktpunkten.su@vgregion.se">kontaktpunkten.su@vgregion.se</a>.<br/></p>
-				<p>
-					<a href="http://www.kontaktpunkten.sahlgrenska.se/sv/SU/Kontakt/Kontaktpunkten" target="_new">Läs mer om Kontaktpunkten</a>
-                </p>
+<div id="boxcontainer" style="padding-bottom: 1em;">
+	<div id="boxleft" />
+	<div id="boxmiddle">
+		<p/>
+		<br/>
+		<h1 style="display: inline"><h:outputFormat value="#{sectionMsg.welcomepageWelcomeNN}">
+            <f:param value="#{booking.displayName}" /></h:outputFormat>
+        </h1>
+		<h:form id="mainForm" style="display: inline; text-align: right; padding-left: 5em;" >
+		    <div align="right">
+			   <sf:commandButton id="logout" value="Logga ut" processIds="*" action="logout"/>
+		    </div>
+		</h:form>
+		<p/>
+		<br/>
+		<p><h:outputText value="#{sectionMsg.welcomepageIntroductionMain}" escape="false"/><br/></p>
+		<p><h:outputText value="#{sectionMsg.welcomepageIntroductionContact}" escape="false"/></p>
+		<p><h:outputText value="#{sectionMsg.welcomepageIntroductionContact2}" escape="false"/></p>
 		
-					<div id="boxleft1" style="width: 100%">		
+		<div id="boxleft1" style="width: 100%">		
 		
-						<p>Du har fått en kallelse till undersökning av stora kroppspulsådern:<br/>
-						  <a href="http://vard.vgregion.se/sv/Sjukdomar-och-besvar/Regionala-texter/Satsning-pa-att-hitta-pulsaderbrack" target="_new">Läs mer om undersökning av stora kroppspulsådern</a><br/>
-						  <a href="http://vard.vgregion.se/sv/Undersokningar--behandlingar/Undersokningar/Sjukvardsradgivningen/?CatId=26983&amp;ChapId=27903" target="_new">Läs om ultraljudsundersökning</a>
-                        </p>
-						<h:outputLabel for="deleteButton"><p style="color:red; font-style: italic"> #{cancelbookingMessages.cancelBookingMessage}</p></h:outputLabel>
-						<table>
-							<tr>
-								<td valign="top" >
-									<p>
-										Var:
-									</p>
-								</td>
-								<td width="100%" valign="top">  
-									<p>
-										#{booking.mainSector}, #{booking.address}
-									</p>
-								</td>
-								<td style="text-align: right; padding-right: 1em;" valign="top">
-									<h:form id="updateForm" >
-										<sf:commandButton id="updateButton" value="Omboka tid" processIds="*" action="update" disabled="#{booking.isDisabled}" style="width: 100px;"  />
-									</h:form>
-								</td>
-							</tr>
-							<tr>
-								<td></td>
-								<td></td>
-								<td>
-									<h:outputText rendered="#{booking.isDisabled}"><p style="text-align: left;color:red; font-style: italic">Du kan inte omboka mer än två gånger.</p></h:outputText>
-								</td>
-							</tr>
-							
-							<tr>
-								<td valign="top">
-									<p>
-										När:
-									</p>
-								</td>
-								<td valign="top"> 
-									<p>
-										#{booking.timeBookingString}.
-									</p>
-								</td>
-								<td style="text-align: right; padding-right: 1em;" valign="top">
-									<h:form id="deleteForm" >
-										
-											<sf:commandButton id="deleteButton" value="Avboka tid" processIds="*" action="delete" style="width: 100px;"  />
-										
-									</h:form>
-								</td>
-							</tr>
-							<tr>
-								<td></td>
-								<td>
-									
-										(besöket beräknas ta maximalt 15 minuter)
-									
-								</td>
-							</tr>
-				</table>
-				
-				</div>	
-				</div>
-				</div>
-		
+			<p><h:outputText value="#{sectionMsg.welcomepageExamInformation}" escape="false"/></p>
+			<h:outputLabel for="deleteButton"><p style="color:red; font-style: italic"> #{cancelbookingMessages.cancelBookingMessage}</p></h:outputLabel>
+			<table>
+				<tr>
+					<td valign="top" >
+						<p><h:outputText value="#{baseMsg.locationBoxWhere}"/>:</p>
+					</td>
+					<td width="100%" valign="top">  
+						<p><ui:remove>#{booking.mainSector}</ui:remove>, #{booking.address}</p>
+					</td>
+					<td style="text-align: right; padding-right: 1em;" valign="top">
+						<h:form id="updateForm" >
+							<sf:commandButton id="updateButton" value="Omboka tid" processIds="*" action="update" disabled="false" style="width: 100px;"  />
+						</h:form>
+					</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+					<td>
+						<h:outputText rendered="false"><ui:remove>#{booking.isDisabled}"></ui:remove><p style="text-align: left;color:red; font-style: italic">Du kan inte omboka mer än två gånger.</p></h:outputText>
+					</td>
+				</tr>
+				<tr>
+					<td valign="top"><p><h:outputText value="#{baseMsg.locationBoxWhen}"/>:</p></td>
+			    	<td valign="top"><p><ui:remove>#{booking.timeBookingString}</ui:remove>.</p></td>
+					<td style="text-align: right; padding-right: 1em;" valign="top">
+						<h:form id="deleteForm" >
+							<sf:commandButton id="deleteButton" value="Avboka tid" processIds="*" action="delete" style="width: 100px;"  />
+						</h:form>
+					</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td colspan="2"><h:outputText value="#{sectionMsg.welcomepageExamLength}"/></td>
+				</tr>
+            </table>
+		</div>
+    </div>
+</div>
+
 </ui:fragment>
 </ui:define>
 </ui:composition>
