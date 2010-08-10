@@ -31,7 +31,7 @@
 <!--		 TODO: on render: check method which checks service in state and perform evaluate expressions accordingly! -->
 <!--	maybe pick up some variable here from a backing bean....	TALK to BookingFacade here-->
 <!--			<evaluate expression="bookingService.getBooking(state)" result="flowScope.booking" />-->
-			<evaluate expression="bookingWrapper.getBookingInfo(state)" result="flowScope.booking" />
+			<evaluate expression="bookingFacade.getBookingInfo(state)" result="flowScope.booking" />
 <!--			-->
 <!--			-->
  		</on-render>

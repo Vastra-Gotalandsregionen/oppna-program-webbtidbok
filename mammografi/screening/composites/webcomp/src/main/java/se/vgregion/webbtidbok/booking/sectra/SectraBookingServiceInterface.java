@@ -19,12 +19,16 @@ package se.vgregion.webbtidbok.booking.sectra;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 
-
+import se.vgregion.webbtidbok.domain.Booking;
 
 public interface SectraBookingServiceInterface {
-	
-	abstract public BookingInfoLocal getBookingInfo(String ptientId, String examinationNo);
+
+	abstract public Booking getBookingInfo(String ptientId, String examinationNo);
+
 	abstract public ArrayOfSectionLocal listSections(String examinationNr);
-	abstract public BookingInfoLocal reschedule(String examinationNr, String newTimeId, XMLGregorianCalendar startTime, Boolean printNewNotice, String rescheduleComment);
-	//more booking stuff here as we go
+
+	abstract public Booking reschedule(String examinationNr, String newTimeId,
+			XMLGregorianCalendar startTime, Boolean printNewNotice,
+			String rescheduleComment);
+	// more booking stuff here as we go
 }

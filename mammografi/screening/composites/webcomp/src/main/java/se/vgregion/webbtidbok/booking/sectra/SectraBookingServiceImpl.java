@@ -21,6 +21,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
 
 import se.vgregion.webbtidbok.State;
 
+import se.vgregion.webbtidbok.domain.Booking;
 import se.vgregion.webbtidbok.ws.sectra.BookingInfo;
 import se.vgregion.webbtidbok.ws.sectra.IRisRescheduleGetBookingInfoErrorInfoFaultFaultMessage;
 import se.vgregion.webbtidbok.ws.sectra.IRisRescheduleListSectionsErrorInfoFaultFaultMessage;
@@ -28,14 +29,6 @@ import se.vgregion.webbtidbok.ws.sectra.IRisRescheduleRescheduleErrorInfoFaultFa
 
 public class SectraBookingServiceImpl implements SectraBookingServiceInterface{
 
-	String displayName;
-	public String getDisplayName() {
-		return displayName;
-	}
-
-	public void setDisplayName(String displayName) {
-		this.displayName = displayName;
-	}
 
 	private SectraWebServiceHelperImpl helper;
 
@@ -46,17 +39,16 @@ public class SectraBookingServiceImpl implements SectraBookingServiceInterface{
 	public SectraWebServiceHelperImpl getHelper() {
 		return helper;
 	}
-	public BookingInfoLocal getBookingInfo(State state){
+	public Booking getBookingInfo(State state){
 		System.out.println("### BookingInfoLocal");
 		String patientId = state.getPnr();
 		String examinationNo = state.getPasswd();
 		System.out.println("### SectraBookingServiceImpl.getBookingInfo(State)");
-		BookingInfoLocal biL = null;
+		Booking biL = null;
 		
 		try {
 			System.out.println("### before bi 1 = helper.getBookingInfo()");
 			biL = helper.getBookingInfo(patientId, examinationNo);
-			setDisplayName(biL.getPatientName());
 			System.out.println("### bi shouldn't be null: biL.getPatientId() " + biL.getPatientId() + ", state.getPnr(): " + state.getPnr() + ", state.getPasswd():" + state.getPasswd() + ", biL.getPatientName(): " + biL.getPatientName());
 		} catch (IRisRescheduleGetBookingInfoErrorInfoFaultFaultMessage e) {
 			System.out.println("### something 1 went wrong in getBookingInfo(state): " + e.getMessage());
@@ -65,11 +57,10 @@ public class SectraBookingServiceImpl implements SectraBookingServiceInterface{
 		return biL;
 	}
 
-	
 	@Override
-	public BookingInfoLocal getBookingInfo(String patientId, String examinationNo){
+	public Booking getBookingInfo(String patientId, String examinationNo){
 
-		BookingInfoLocal biL = null;
+		Booking biL = null;
 		try {
 			
 			System.out.println("### before biL = helper.getBookingInfo()");
@@ -80,8 +71,6 @@ public class SectraBookingServiceImpl implements SectraBookingServiceInterface{
 			System.out.println("### Something went wrong in SectraBookingService.getBookingInfo(...)." + e.getMessage());
 			e.printStackTrace();
 		}
-		
-		
 		return biL;
 	}
 	
@@ -107,17 +96,12 @@ public class SectraBookingServiceImpl implements SectraBookingServiceInterface{
 	}
 
 	@Override
-	public BookingInfoLocal reschedule(String examinationNr, String newTimeId,
+	public Booking reschedule(String examinationNr, String newTimeId,
 			XMLGregorianCalendar startTime, Boolean printNewNotice,
 			String rescheduleComment) {
-		
-		BookingInfoLocal biL = null;
-
-		
+		Booking biL = null;
 		try {
-		
 			biL = helper.reschedule(examinationNr, newTimeId, startTime, printNewNotice, rescheduleComment);
-		
 		} catch (IRisRescheduleRescheduleErrorInfoFaultFaultMessage e) {
 			e.printStackTrace();
 		}

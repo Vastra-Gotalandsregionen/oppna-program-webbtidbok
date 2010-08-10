@@ -43,13 +43,13 @@
 	-->
 	<bean id="serviceDefinitionMammografiSU" class="se.vgregion.webbtidbok.servicedef.ServiceDefinition">
 		<property name="serviceID" value="MAMMO_SU" />
-		<property name="messageBundleBase" value="messages/mammografi/MammografiMessages" />
+		<property name="messageBundleBase" value="messages/mammografi/MammografiMessagesSU" />
 		<property name="bookingService" ref="sectraBookingService" />
 	</bean>
 
 	<bean id="serviceDefinitionMammografiNU" class="se.vgregion.webbtidbok.servicedef.ServiceDefinition">
 		<property name="serviceID" value="MAMMO_NU" />
-		<property name="messageBundleBase" value="messages/mammografi/MammografiMessages" />
+		<property name="messageBundleBase" value="messages/mammografi/MammografiMessagesNU" />
 		<property name="bookingService" ref="sectraBookingService" />
 	</bean>
 
@@ -110,6 +110,7 @@
 	<bean id="elvisBookingService"
 		class="se.vgregion.webbtidbok.booking.elvis.ElvisBookingFacadeImpl">
 		<property name="helper" ref="helper" />
+		<property name="bookingMapperElvis"><bean class="se.vgregion.webbtidbok.booking.elvis.BookingMapperElvis"/></property>
 	</bean>
 
 	<bean id="bookingService" class="se.vgregion.webbtidbok.booking.elvis.BookingService">
@@ -136,18 +137,9 @@
 		class="se.vgregion.webbtidbok.booking.sectra.SectraWebServiceHelperImpl">
 		<property name="thePortSU" ref="sectraMockServiceSU" />
 		<property name="thePortNU" ref="sectraMockServiceNU" />
+		<property name="bookingMapperSectra"><bean class="se.vgregion.webbtidbok.booking.sectra.BookingMapperSectra"/></property>
 	</bean>
-	<!-- Mock service for sectra ws	-->
-	<bean id="sectraMockServiceSU" class="se.vgregion.webbtidbok.booking.sectra.SectraWSMock">
-		<property name="businessObjectHolder">
-			<bean
-				class="se.vgregion.webbtidbok.booking.sectra.mock.BusinessObjectHolder">
-				<constructor-arg ref="SU_sections" />
-				<constructor-arg ref="SU_timeblocks" />
-				<constructor-arg ref="SU_bookings" />
-			</bean>
-		</property>
-	</bean>
+
 	<bean id="sectraMockServiceNU" class="se.vgregion.webbtidbok.booking.sectra.SectraWSMock">
 		<property name="businessObjectHolder">
 			<bean
@@ -161,7 +153,7 @@
 
 	<!-- END sectra facade -->
 
-	<bean id="bookingWrapper" class="se.vgregion.webbtidbok.booking.BookingWrapper">
+	<bean id="bookingFacade" class="se.vgregion.webbtidbok.booking.BookingFacadeSwitch">
 	<property name="facade" ref="sectraBookingService" />
 	</bean>
 

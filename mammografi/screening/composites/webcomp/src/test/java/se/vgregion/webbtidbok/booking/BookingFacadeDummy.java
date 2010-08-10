@@ -33,7 +33,7 @@ public class BookingFacadeDummy implements BookingFacade {
     }
 
 	@Override
-	public BookingWrapper getBookingInfo(State state) {
+	public se.vgregion.webbtidbok.domain.Booking getBookingInfo(State state) {
 		// TODO Auto-generated method stub
 		return null;
 	}

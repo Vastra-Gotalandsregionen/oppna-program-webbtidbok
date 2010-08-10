@@ -19,35 +19,40 @@ package se.vgregion.webbtidbok.booking.elvis;
 
 import se.vgregion.webbtidbok.State;
 import se.vgregion.webbtidbok.booking.BookingFacade;
-import se.vgregion.webbtidbok.booking.BookingWrapper;
+import se.vgregion.webbtidbok.domain.Booking;
 import se.vgregion.webbtidbok.ws.BookingRequest;
 import se.vgregion.webbtidbok.ws.BookingResponse;
 
 public class ElvisBookingFacadeImpl implements BookingFacade {
 
     private WebServiceHelper helper;
+    private BookingMapperElvis bookingMapperElvis;
+    
+    public void setBookingMapperElvis(BookingMapperElvis bookingMapperElvis) {
+		this.bookingMapperElvis = bookingMapperElvis;
+	}
 
-    public void setHelper(WebServiceHelper webServiceHelper) {
+	public void setHelper(WebServiceHelper webServiceHelper) {
         this.helper = webServiceHelper;
     }
 
     @Override
     public boolean login(State state) {
-    
     	BookingRequest request = helper.getQueryWSRequest(state);
         BookingResponse response = helper.getQueryWS(request);
         state.setBookingResponse(response);
-
         return response != null;
     }
     
-    public BookingWrapper getBookingInfo(State state){
-    	
+    @Override
+    public Booking getBookingInfo(State state) {
+    	return null;
+    }
+    
+    public Booking getBookingInfoNew(State state){
     	BookingRequest request =  helper.getQueryWSRequest(state);
     	BookingResponse response = helper.getQueryWS(request);
-    	BookingWrapper bw = new BookingWrapper(response);
-
-    	return bw;
+    	return bookingMapperElvis.bookingMapping(response);
     }
 
 

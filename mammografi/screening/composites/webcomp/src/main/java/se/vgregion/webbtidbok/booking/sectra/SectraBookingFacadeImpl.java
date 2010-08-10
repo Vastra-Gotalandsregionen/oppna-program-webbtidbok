@@ -21,7 +21,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
 
 import se.vgregion.webbtidbok.State;
 import se.vgregion.webbtidbok.booking.BookingFacade;
-import se.vgregion.webbtidbok.booking.BookingWrapper;
+import se.vgregion.webbtidbok.domain.Booking;
 
 
 public class SectraBookingFacadeImpl implements BookingFacade {
@@ -43,37 +43,21 @@ public class SectraBookingFacadeImpl implements BookingFacade {
 		return isLoggedIn;
 	}
 	
-	public BookingInfoLocal getBooking(State state){
+	@Override
+	public Booking getBookingInfo(State state){
 		
 		if(state.isLoggedIn()){
-			BookingInfoLocal biL = service.getBookingInfo(state);
+			Booking biL = service.getBookingInfo(state);
 			return biL;
 		}
 		
 		return null;
 	}
 	
-	public BookingInfoLocal reschedule(String examinationNr, String newTimeId,
+	public Booking reschedule(String examinationNr, String newTimeId,
 			XMLGregorianCalendar startTime, Boolean printNewNotice,
 			String rescheduleComment) {
 		
 		return null;
 	}
-
-	@Override
-	public BookingWrapper getBookingInfo(State state) {
-		if(state.isLoggedIn()){
-			System.out.println("### SectraBookingFacadeImpl pnr & password & isLoggedIn: " + state.getPnr() + ", " + state.getPasswd() + ", " + state.isLoggedIn());			
-			BookingInfoLocal biL = new BookingInfoLocal();
-			biL = service.getBookingInfo(state);
-			System.out.println("### SectraBookingFacadeImpl after service call, before converting biL to BookingWrapper");
-			BookingWrapper bw = new BookingWrapper(biL);
-			System.out.println("###SectraBookingFacadeImpl.getBookingInfo(State) - returning wrapper");
-			System.out.println("### bw.getNamn(): " + bw.getDisplayName());
-			return bw;
-		}
-		
-		return null;
-	}
-
 }

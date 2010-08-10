@@ -284,8 +284,7 @@ public class BookingService implements BookingServiceInterface {
 
       request = helper.getQueryWSRequest(loginCredentials);
       response = helper.getQueryWS(request);
-      BookingResponseLocal responseLocal = new BookingResponseLocal(response);
-      int centralTimeBookingId = responseLocal.getCentralTimeBookId();
+      int centralTimeBookingId = response.getCentralTidbokID();
 
       this.setFirstPlacesBoolean(false);
       return centralTimeBookingId;
