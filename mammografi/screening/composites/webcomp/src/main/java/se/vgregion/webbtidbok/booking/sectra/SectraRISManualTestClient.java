@@ -19,6 +19,7 @@ package se.vgregion.webbtidbok.booking.sectra;
 
 
 
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -26,35 +27,39 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
+import se.vgregion.webbtidbok.domain.Booking;
+import se.vgregion.webbtidbok.domain.sectra.BookingSectra;
+
+
 
 
 public class SectraRISManualTestClient {
 	
 	static SectraBookingServiceImpl service = new SectraBookingServiceImpl();
 //	static BookingInfo staticBi;
-	static BookingInfoLocal staticBiL;
+	static BookingSectra staticBiL;
 	
-	public static void printGetBookingInfoResult(BookingInfoLocal inputBiL){
+	public static void printGetBookingInfoResult(Booking inputBiL){
 	
 		if(inputBiL == null){
 			
-			staticBiL = service.getBookingInfo("1912121212", "SERTEST00012345");
-			TimeBlockLocal tb = staticBiL.getBookedTime();
-			System.out.println("TimeBlock.getId: " + tb.getId());
-			tb.getSection();
-			XMLGregorianCalendar xmlCal = tb.getStartTime();
-			System.out.println("TimeBlock.getStartTime(): " + tb.getStartTime());
-			System.out.println("TimeBlock.getLength() : " + tb.getLength());
+			staticBiL = (BookingSectra) service.getBookingInfo("1912121212", "SERTEST00012345");
+			Date tb = staticBiL.getStartTime();
+			System.out.println("TimeBlock.getId: " + tb);
+			
+			//XMLGregorianCalendar xmlCal = tb.getStartTime();
+			//System.out.println("TimeBlock.getStartTime(): " + tb.getStartTime());
+			//System.out.println("TimeBlock.getLength() : " + tb.getLength());
 			
 		} 
 		
-		System.out.println("staticBi.getBookedTime(): " + staticBiL.getBookedTime().getStartTime().toString());
+		//System.out.println("staticBi.getBookedTime(): " + staticBiL.getBookedTime().getStartTime().toString());
 
 		System.out.println("-------");
-		System.out.println("BookingInfo bi.getExaminationNr(): " + staticBiL.getExaminationNr());
+		//System.out.println("BookingInfo bi.getExaminationNr(): " + staticBiL.getExaminationNr());
 		System.out.println("BookingInfo bi.getExamType(): " + staticBiL.getExamType());
 		System.out.println("BookingInfo bi.getExamTypeCode()" + staticBiL.getExamType());
-		System.out.println("BookingInfo bi.getLaterality(): " + staticBiL.getLaterality());
+		//System.out.println("BookingInfo bi.getLaterality(): " + staticBiL.getLaterality());
 		System.out.println("BookingInfo bi.getPatientId(): " + staticBiL.getPatientId());
 		System.out.println("BookingInfo bi.getPatientName(): " + staticBiL.getPatientName());
 		System.out.println("-------");
@@ -97,11 +102,11 @@ public class SectraRISManualTestClient {
 		
 		System.out.println("xmlGregCal:" +xmlGregCal.toString());
 		//HOW are the setters for this? doesn't seem to take uh?
-		staticBiL = service.reschedule("SERTEST00012345", "newTimeId_1", xmlGregCal, printNewNotice, rescheduleComment);
-		TimeBlockLocal tb = staticBiL.getBookedTime();
+		staticBiL = (BookingSectra) service.reschedule("SERTEST00012345", "newTimeId_1", xmlGregCal, printNewNotice, rescheduleComment);
+		//TimeBlockLocal tb = staticBiL.getBookedTime();
 		//check that what goes in comes back out again
-		System.out.println("printing sttartTime after reschedule call: " + tb.getStartTime().toString());
-		printGetBookingInfoResult(staticBiL);
+		//System.out.println("printing sttartTime after reschedule call: " + tb.getStartTime());
+		//printGetBookingInfoResult(staticBiL);
 
 	}
 	
@@ -116,7 +121,7 @@ public class SectraRISManualTestClient {
 		
 		login("1912121212", "SEMSUSpugh");
 
-		printGetBookingInfoResult(staticBiL);
+		//printGetBookingInfoResult(staticBiL);
 //		
 		printListSections();
 //		
