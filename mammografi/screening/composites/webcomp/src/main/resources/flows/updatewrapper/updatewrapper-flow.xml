@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <!--
 
     Copyright 2009 Vastra Gotalandsregionen
@@ -24,38 +23,26 @@
       xsi:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
 
     <input name="state" />
-
-	<view-state id="welcome" view="/flows/display/welcome.xhtml" model="booking">
-
-		<on-render>
-<!--		 TODO: on render: check method which checks service in state and perform evaluate expressions accordingly! -->
-<!--	maybe pick up some variable here from a backing bean....	TALK to BookingFacade here-->
-<!--			<evaluate expression="bookingService.getBooking(state)" result="flowScope.booking" />-->
-			<evaluate expression="bookingFacade.getBookingInfo(state)" result="flowScope.booking" />
-<!--			-->
-<!--			-->
- 		</on-render>
- 		
- 		
-		<transition on="update" to="update" />
-		<transition on="delete" to="delete" />
-	</view-state>
-
-    <subflow-state id="update" subflow="updatewrapper">
+    
+    <subflow-state id="update" subflow="update">
         <input name="state" value="state" />
-        <transition on="cancel" to="welcome"/>
+        <transition on="cancel" to="cancel"/>
+        <transition on="ok" to="showConfirmation"/>
     </subflow-state>
 
-    <subflow-state id="delete" subflow="delete">
-        <input name="state" value="state" />
-        <transition on="cancel" to="welcome"/>
-    </subflow-state>
+    <view-state id="showConfirmation" view="/flows/updatewrapper/showUpdateConfirmation.xhtml">
+        <on-render >
+            <evaluate expression="bookingService.getBooking(state)" result="flowScope.booking" /> 
+        </on-render>    
+    </view-state>
 
-	<end-state id="logout"/>
-
+    <end-state id="cancel"/>
+    <end-state id="logout"/>
+    
     <global-transitions>
         <transition on="logout" history="invalidate" to="logout"/>
         <transition on-exception="java.lang.Error" history="invalidate" to="logout"/>
     </global-transitions>
+    
 
 </flow>
