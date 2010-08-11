@@ -25,8 +25,8 @@ public class BookingMapperElvis {
 	
 	public Booking bookingMapping(BookingResponse bookingResponse) {
 		BookingElvis booking = new BookingElvis();
-		booking.setPatientName(bookingResponse.getNamn().toString());
-		booking.setSurgeryAddress(bookingResponse.getAddress().toString());
+		booking.setPatientName(bookingResponse.getNamn().getValue());
+		booking.setSurgeryAddress(bookingResponse.getAddress().getValue());
 		return booking;
 	}
 	
