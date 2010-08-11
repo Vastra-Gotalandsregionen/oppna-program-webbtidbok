@@ -23,6 +23,8 @@ import javax.faces.model.SelectItem;
 
 import se.vgregion.webbtidbok.Places;
 import se.vgregion.webbtidbok.State;
+import se.vgregion.webbtidbok.domain.Booking;
+import se.vgregion.webbtidbok.domain.BookingPlace;
 
 public interface BookingServiceInterface {
 
@@ -38,7 +40,7 @@ public interface BookingServiceInterface {
 
   public abstract boolean isFirstPlaces();
 
-  public abstract BookingResponseLocal getBooking(State loginCredentials);
+  public abstract Booking getBooking(State loginCredentials);
 
   /**
    * Method cancelBooking returns true if deleted
@@ -48,7 +50,7 @@ public interface BookingServiceInterface {
    */
   public abstract boolean cancelBooking(State loginCredentials);
 
-  public abstract List<BookingPlaceLocal> getBookingPlace(State loginCredentials);
+  public abstract List<BookingPlace> getBookingPlace(State loginCredentials);
 
   public abstract List<BookingTimeLocal> getBookingTime(State loginCredentials);
 

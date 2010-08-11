@@ -17,15 +17,19 @@
  */
 package se.vgregion.webbtidbok.booking.elvis;
 
+import java.util.List;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 
-import org.junit.Assert;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
 import se.vgregion.webbtidbok.State;
+import se.vgregion.webbtidbok.domain.Booking;
+import se.vgregion.webbtidbok.domain.BookingPlace;
+import se.vgregion.webbtidbok.ws.ArrayOfBookingPlace;
 import se.vgregion.webbtidbok.ws.BookingRequest;
 import se.vgregion.webbtidbok.ws.BookingResponse;
 import se.vgregion.webbtidbok.ws.ObjectFactory;
@@ -34,61 +38,88 @@ public class BookingServiceTest {
 
 	private BookingService bookingService;
 	private ObjectFactory objectFactory;
-  private State state;
+	private State state;
 
 	@Before
 	public void setUp() throws Exception {
 		bookingService = new BookingService();
 		bookingService.setHelper(new WebServiceHelperMock());
+		bookingService.setMapping(new BookingMapperElvis());
 		objectFactory = new ObjectFactory();
 		objectFactory.createString("test");
 		state = new State();
 	}
-	
 
 	@Test
-	public void testGetSelectedDefaultItem(){
-		Assert.assertEquals(3, bookingService.getSelectedDefaultItem(state));
+	public void testGetSelectedDefaultItem() {
+		assertEquals(3, bookingService.getSelectedDefaultItem(state));
+	}
+
+	@Test
+	public void testGetBooking() {
+		Booking booking = bookingService.getBooking(state);
+		assertNotNull(booking);
+		state.setLoggedIn(true);
+		booking = bookingService.getBooking(state);
+
+		assertEquals(3, state.getCentralTidbokID());
+
 	}
 	
 	@Test
-	public void testGetBooking(){
-	  BookingResponseLocal booking = bookingService.getBooking(state);
-	  
+	public void testGetBookingPlace(){
+		List<BookingPlace> bookingPlace = bookingService.getBookingPlace(state);
+		assertEquals(0, bookingPlace.size());
+		state.setLoggedIn(true);
+		bookingPlace = bookingService.getBookingPlace(state);
+		assertEquals(2, bookingPlace.size());
 	}
 	
-	class WebServiceHelperMock extends WebServiceHelper{
-		
+	@Test
+	public void testGetBookingTime(){
+		List<BookingTimeLocal> bookingTime = bookingService.getBookingTime(state);
+		assertNotNull(bookingTime);
+		state.setLoggedIn(true);
+		bookingTime = bookingService.getBookingTime(state);
+	}
+
+	class WebServiceHelperMock extends WebServiceHelper {
+
 		@Override
 		public BookingRequest getQueryWSRequest(State loginCredentials) {
 			BookingRequest bookingRequest = new BookingRequest();
 			return bookingRequest;
 		}
-		
+		@Override
+		public ArrayOfBookingPlace getQueryWSRequestPlaces(
+				BookingRequest request) {
+			se.vgregion.webbtidbok.ws.BookingPlace bookingPlace = new se.vgregion.webbtidbok.ws.BookingPlace();
+			ArrayOfBookingPlace arrayOfBookingPlace = new ArrayOfBookingPlace();
+			arrayOfBookingPlace.getBookingPlace().add(bookingPlace);
+			arrayOfBookingPlace.getBookingPlace().add(bookingPlace);
+			return arrayOfBookingPlace;
+		}
+
 		@Override
 		public BookingResponse getQueryWS(BookingRequest request) {
 			BookingResponse bookingResponse = new BookingResponse();
 			bookingResponse.setPnr(objectFactory.createString("test"));
 			bookingResponse.setNamn(objectFactory.createString("test"));
-			bookingResponse.setVardgivare(objectFactory.createString("test"));
 			bookingResponse.setAddress(objectFactory.createString("test"));
-			bookingResponse.setVardgivare(objectFactory.createString("test"));
 			bookingResponse.setMottagning(objectFactory.createString("test"));
-			bookingResponse.setMobilTel(objectFactory.createString("test"));
-			bookingResponse.setEpost(objectFactory.createString("test"));
-			bookingResponse.setExternalID(objectFactory.createString("test"));
 			bookingResponse.setAntalOmbok(1);
 			bookingResponse.setMaxAntalOmbok(1);
 			bookingResponse.setCentralTidbokID(3);
-			
+
 			try {
-				bookingResponse.setBokadTid(DatatypeFactory.newInstance().newXMLGregorianCalendar());
+				bookingResponse.setBokadTid(DatatypeFactory.newInstance()
+						.newXMLGregorianCalendar());
 			} catch (DatatypeConfigurationException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			return bookingResponse;
 		}
-		
+
 	}
 }

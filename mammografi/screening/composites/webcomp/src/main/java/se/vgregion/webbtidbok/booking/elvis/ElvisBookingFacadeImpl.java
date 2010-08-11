@@ -27,8 +27,15 @@ public class ElvisBookingFacadeImpl implements BookingFacade {
 
     private WebServiceHelper helper;
     private BookingMapperElvis bookingMapperElvis;
+    private BookingServiceInterface bookingService;
     
-    public void setBookingMapperElvis(BookingMapperElvis bookingMapperElvis) {
+    
+    
+    public void setBookingService(BookingServiceInterface bookingService) {
+		this.bookingService = bookingService;
+	}
+
+	public void setBookingMapperElvis(BookingMapperElvis bookingMapperElvis) {
 		this.bookingMapperElvis = bookingMapperElvis;
 	}
 
@@ -46,7 +53,7 @@ public class ElvisBookingFacadeImpl implements BookingFacade {
     
     @Override
     public Booking getBookingInfo(State state) {
-    	return null;
+    	return bookingService.getBooking(state);
     }
     
     public Booking getBookingInfoNew(State state){

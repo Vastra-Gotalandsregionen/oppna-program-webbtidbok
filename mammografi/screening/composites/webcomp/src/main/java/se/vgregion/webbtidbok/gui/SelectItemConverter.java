@@ -20,14 +20,10 @@ package se.vgregion.webbtidbok.gui;
 
 
 
-import javax.faces.model.*;
-import java.util.*;
-import java.lang.*;
-import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
-import se.vgregion.webbtidbok.*;
-import se.vgregion.webbtidbok.booking.elvis.BookingPlaceLocal;
-import se.vgregion.webbtidbok.ws.BookingPlace;
+import javax.faces.model.SelectItem;
 
 public class SelectItemConverter {
 	
@@ -47,9 +43,9 @@ public class SelectItemConverter {
 	 * Constructor
 	 * 
 	 */
-	public SelectItemConverter(List<BookingPlaceLocal> lList){
+	public SelectItemConverter(List<se.vgregion.webbtidbok.domain.BookingPlace> lList){
 		items = new ArrayList<SelectItem>();
-		for(BookingPlaceLocal p : lList){
+		for(se.vgregion.webbtidbok.domain.BookingPlace p : lList){
 			SelectItem s = new SelectItem();
 			s.setLabel(p.getClinic());
 			s.setValue(p.getCentralTimeBookId());
@@ -65,10 +61,10 @@ public class SelectItemConverter {
 	 * 
 	 * @param lList
 	 */
-	public void setSelectItems(List<BookingPlaceLocal> lList){
+	public void setSelectItems(List<se.vgregion.webbtidbok.domain.BookingPlace> lList){
 		
 		items = new ArrayList<SelectItem>();
-		for(BookingPlaceLocal p : lList){
+		for(se.vgregion.webbtidbok.domain.BookingPlace p : lList){
 			SelectItem s = new SelectItem();
 			s.setLabel(p.getClinic());
 			s.setValue(p.getCentralTimeBookId());
@@ -86,13 +82,13 @@ public class SelectItemConverter {
 	 * @param lList
 	 */
 	
-	public List<SelectItem> getSelectItems(List<BookingPlaceLocal> lList){
+	public List<SelectItem> getSelectItems(List<se.vgregion.webbtidbok.domain.BookingPlace> lList){
 		
 		
 		items = new ArrayList<SelectItem>();
 		
 		
-		for(BookingPlaceLocal p : lList){
+		for(se.vgregion.webbtidbok.domain.BookingPlace p : lList){
 			SelectItem s = new SelectItem();
 			s.setLabel(p.getClinic());
 			s.setValue(p.getCentralTimeBookId());

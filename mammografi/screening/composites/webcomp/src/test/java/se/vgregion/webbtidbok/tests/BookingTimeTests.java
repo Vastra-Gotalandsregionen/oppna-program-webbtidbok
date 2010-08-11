@@ -32,11 +32,11 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import se.vgregion.webbtidbok.State;
-import se.vgregion.webbtidbok.booking.elvis.BookingResponseLocal;
 import se.vgregion.webbtidbok.booking.elvis.BookingService;
 import se.vgregion.webbtidbok.booking.elvis.BookingServiceInterface;
 import se.vgregion.webbtidbok.booking.elvis.BookingTimeLocal;
 import se.vgregion.webbtidbok.booking.elvis.WebServiceHelper;
+import se.vgregion.webbtidbok.domain.Booking;
 import se.vgregion.webbtidbok.lang.DateHandler;
 import se.vgregion.webbtidbok.ws.ArrayOfBookingTime;
 import se.vgregion.webbtidbok.ws.BookingRequest;
@@ -194,7 +194,7 @@ public class BookingTimeTests {
     // request.setFromDat(fromDat);
     // request.setCentralTidbokID(1);
 
-    BookingResponseLocal bookingResponseLocal = service.getBooking(credentials);
+    Booking bookingResponseLocal = service.getBooking(credentials);
     System.out.println("bookingResponseLocal.state.calendardate: " + DateHandler.setCalendarDateFormat(credentials.getSelectedDate()));
     System.out.println("CentralTidBokId: " + credentials.getCentralTidbokID());
     // List<BookingTime> timeList = time.getBookingTime();
@@ -254,7 +254,7 @@ public class BookingTimeTests {
     // request.setFromDat(fromDat);
     // request.setCentralTidbokID(1);
 
-    BookingResponseLocal bookingResponseLocal = service.getBooking(credentials);
+    Booking bookingResponseLocal = service.getBooking(credentials);
     System.out.println("bookingResponseLocal.state.calendardate: " + DateHandler.setCalendarDateFormat(credentials.getSelectedDate()));
     System.out.println("CentralTidBokId: " + credentials.getCentralTidbokID());
     // List<BookingTime> timeList = time.getBookingTime();

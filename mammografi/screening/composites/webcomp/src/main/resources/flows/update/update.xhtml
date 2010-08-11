@@ -52,11 +52,11 @@
 			<tr>
 				<td>			
 					<div id="boxleft1" style="width: 100%">				
-						<p><ui:remove>#{booking.displayName}</ui:remove></p>
-						<p><ui:remove>#{booking.pnr}</ui:remove></p>
+						<p><ui:remove>#{booking.patientName}</ui:remove></p>
+						<p><ui:remove>#{booking.patientId}</ui:remove></p>
 						<p><h:outputText value="#{baseMsg.updatepageOriginalTimeHeading}"/>:</p>
-						<p><ui:remove>#{booking.mainSector}, #{booking.address}</ui:remove></p>			
-						<p><ui:remove>#{booking.timeBookingString}</ui:remove>.</p>
+						<p><ui:remove>#{booking.surgeryAddress}</ui:remove></p>			
+						<p><h:outputText value="#{booking.startTime}"><f:convertDateTime type="both" pattern="EEEE dd MMMM yyyy, HH:mm" locale="sv" /></h:outputText></p>
 					</div>
 				</td>
 			</tr>
