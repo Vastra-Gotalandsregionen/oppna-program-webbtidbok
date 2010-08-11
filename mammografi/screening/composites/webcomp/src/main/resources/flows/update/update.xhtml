@@ -27,206 +27,150 @@
 	  			xmlns:h="http://java.sun.com/jsf/html"
 	  			xmlns:f="http://java.sun.com/jsf/core"
 	  			xmlns:sf="http://www.springframework.org/tags/faces"
-				template="/WEB-INF/layouts/standard.xhtml">
+				template="/layouts/loggedInTemplate.xhtml">
 
 <ui:define name="content">
 
 <ui:fragment id="loginFragment">
 	
-		<div id="boxcontainer" style="padding-bottom: 1em;">
-		<div id="boxleft" />
-		<div id="boxmiddle">
-			
-			<p/>
-				state.messageBundle: #{state.messageBundle}
-			<br/>
-
-			<f:loadBundle basename="se.vgregion.webbtidbok.#{state.messageBundle}" var="bundle"/>
-			
+<div id="boxcontainer" style="padding-bottom: 1em;">
+	<div id="boxleft" />
+	<div id="boxmiddle">
 			
 		<p/>
 		<br/>
-		<h1>#{bundle.update_page_header_value}</h1>
+		<h1>#{sectionMsg.updatepageHeader}</h1>
 		<h:form id="mainForm" style="display: inline; text-align: right; padding-left: 19em;" >
 		    <div align="right">
-			    <sf:commandButton id="logout" value="Logga ut" processIds="*" action="logout" />
+			    <sf:commandButton id="logout" value="#{baseMsg.logoutButton}" processIds="*" action="logout" />
 			</div>
 		</h:form>
 		<p/>
-				<br/><p>#{bundle.update_page_body_value_1}
-				</p>
-				<p>#{bundle.update_page_body_value_2} #{bundle.update_page_body_telephone_value_1} #{bundle.update_page_body_value_3} #{bundle.update_page_body_telephone_value_2}#{bundle.update_page_body_value_4} <br/>
-				<a href="#{bundle.update_page_body_link_1}" target="_blank">#{bundle.update_page_body_1_text}</a></p>	
-				<table>
-					<tr>
-						<td>			
-							<div id="boxleft1" style="width: 100%">				
-								<table>
-									<tr>										
-										<td>
-											<p>
-												#{booking.displayName}
-											</p>
-										</td>
-										<td style="padding-left: 2em">
-											<p>
-												#{booking.pnr}
-											</p>
-										</td>												
-									</tr>
-									<p />
-									<tr>
-										<td align="top">
-											<p>
-												#{bundle.update_page_body_box_value_1}
-											</p>
-										</td>
-										<td style="padding-left: 2em">
-											<p>
-												#{booking.mainSector}, #{booking.address} 
-											</p>			
-										</td>									
-									</tr>
-									<tr>
-										<td>
-											&nbsp;
-										</td>
-										<td style="padding-left: 2em">
-											<p>
-												#{booking.timeBookingString}.
-											</p>
-										</td>
-									</tr>				
-									<tr>
-										<td></td>
-										<td style="padding-left: 2em"></td>
-									</tr>			
-								</table>
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td>			
-							<br />	
-								<div id="placediv_place" style="display: inline;background-color:#f3f1f2;" >
+		<br/><p><h:outputText value="#{sectionMsg.updatepageIntroduction}" escape="false"/></p>
+		<p><h:outputText value="#{sectionMsg.updatepageRescheduleInfo}" escape="false"/></p>	
+		<table>
+			<tr>
+				<td>			
+					<div id="boxleft1" style="width: 100%">				
+						<p><ui:remove>#{booking.displayName}</ui:remove></p>
+						<p><ui:remove>#{booking.pnr}</ui:remove></p>
+						<p><h:outputText value="#{baseMsg.updatepageOriginalTimeHeading}"/>:</p>
+						<p><ui:remove>#{booking.mainSector}, #{booking.address}</ui:remove></p>			
+						<p><ui:remove>#{booking.timeBookingString}</ui:remove>.</p>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>			
+					<br />	
+					<div id="placediv_place" style="display: inline;background-color:#f3f1f2;" >
+						<table>
+							<tr>
+								<td style="background-color:#f3f1f2;width: 800px" >
 									<table>
-										<tr>
-											<td style="background-color:#f3f1f2;width: 800px" >	
-                                                <table>
-                                                    <tr>					
-                                                        <td style="width: 650px">
-                                                            <h3 style="display: inline">#{bundle.update_page_body_value_5}</h3>
-                                                                <h:form id="helpForm" style="display: inline; text-align: right;" >
-                                                                    <div class="image_block" style="display: inline;text-align: right;">
-                                                                    </div>
-                                                                </h:form> 
-                                                        </td>
-                                                        <td>
-                                                            <a href="help" target="_new">
-                                                                <img src="../VGRImages/help.gif" />
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-	        								</td>
-										</tr>
-									</table>       
-								</div>  <!-- boxleft3inside -->
-							<br/>
-		                </td>
-					</tr>
-					<tr>
-						<td>	                     
-			                <div id="" style="width: 100%;background-color:#ffffff">    
-				                <table>
-									<tr>
-	
-										<td>
-											
-											<f:view>
-												<h:form id="selectForm" action="displaytimes" style="display: inline; text-align: right; padding-right: 20em;" >
-											
-													<h:selectOneMenu rendered="true" id="places" value="#{placesHandler.placesId}"  onchange=""  style="width:320px">
-													   <f:selectItems value="#{bookingplaces}" /> 					
-													</h:selectOneMenu>
-													<p />
-													<sf:commandButton id="displayButton" value="Visa tider" processIds="*" action="displaytimes" style="width: 100px;" />
-											
-												</h:form>
-											</f:view>
-											
-						    			</td>
-						    			
-					    			</tr>
-					    			<tr>
-					    				<td style="display: inline; text-align: right;" >
-											<h:form id="cancelForm" style="display: inline; text-align: right;padding-left: 37.5em;" >
-												<sf:commandButton id="cancelButton" value="Avbryt" processIds="*" action="cancel" style="width: 100px;" />
-											</h:form>
-										</td>
-					    			</tr>
-				    			</table> 
-			    			</div>
-		            	</td>
-					</tr>
-					<tr>
-						<td>
-							<div id="placediv_date" style="display:inline;inline;background-color:#f3f1f2;" >
-								<table>
-									<tr>
-										<td style="background-color:#f3f1f2;width: 800px" >   
-                                            <table>
-                                                <tr>                    
-                                                    <td style="width: 650px">
-                                                        <h3 style="display: inline">#{bundle.update_page_body_value_6}</h3>
-                                                            <h:form id="helpForm" style="display: inline; text-align: right;" >
-                                                                <div class="image_block" style="display: inline;text-align: right;">
-                                                                </div>
-                                                            </h:form> 
-                                                    </td>
-                                                    <td>
-                                                        <a href="help" target="_new">
-                                                            <img src="../VGRImages/help.gif" />
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </td>
-									</tr>
+								    	<tr>
+								        	<td style="width: 650px">
+								            	<h3 style="display: inline"><h:outputText value="#{baseMsg.updatepageChooseLocation}"/></h3>
+								                <h:form id="helpForm" style="display: inline; text-align: right;" >
+								                   	<div class="image_block" style="display: inline;text-align: right;">
+								                   	</div>
+								                </h:form> 
+                                            </td>
+                                            <td>
+                                                <a href="help" target="_new"><img src="../VGRImages/help.gif" /></a>
+                                            </td>
+                                        </tr>
+                                    </table>
+	        					</td>
+							</tr>
+						</table>       
+					</div>  <!-- placediv_place -->
+					<br/>
+		        </td>
+			</tr>
+			<tr>
+				<td>	                     
+			        <div id="" style="width: 100%;background-color:#ffffff">    
+			            <table>
+							<tr>
+								<td>
+									<f:view>
+										<h:form id="selectForm" action="displaytimes" style="display: inline; text-align: right; padding-right: 20em;" >
+											<ui:remove>
+											<h:selectOneMenu rendered="true" id="places" value="#{placesHandler.placesId}"  onchange=""  style="width:320px">
+									       	    <f:selectItems value="#{bookingplaces}" /> 					
+											</h:selectOneMenu>
+											</ui:remove>
+											<p />
+											<sf:commandButton id="displayButton" value="#{baseMsg.updatepageShowTimes}" processIds="*" action="displaytimes" style="width: 100px;" />
+										</h:form>
+									</f:view>
+								</td>
+						    </tr>
+					    	<tr>
+					    		<td style="display: inline; text-align: right;" >
+									<h:form id="cancelForm" style="display: inline; text-align: right;padding-left: 37.5em;" >
+										<sf:commandButton id="cancelButton" value="#{baseMsg.cancelButton}" processIds="*" action="cancel" style="width: 100px;" />
+									</h:form>
+								</td>
+					    	</tr>
+				    	</table> 
+			    	</div>
+		       	</td>
+			</tr>
+			<tr>
+				<td>
+					<div id="placediv_date" style="display:inline;inline;background-color:#f3f1f2;" >
+						<table>
+							<tr>
+								<td style="background-color:#f3f1f2;width: 800px" >   
+                                    <table>
+                                        <tr>                    
+                                            <td style="width: 650px">
+                                                <h3 style="display: inline"><h:outputText value="#{baseMsg.updatepageChooseDate}"/></h3>
+                                                <h:form id="helpForm" style="display: inline; text-align: right;" >
+                                                    <div class="image_block" style="display: inline;text-align: right;">
+                                                    </div>
+                                                </h:form> 
+                                            </td>
+                                            <td>
+                                                <a href="help" target="_new"><img src="../VGRImages/help.gif" /></a>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+							</tr>
+						</table>       
+					</div>   <!-- placediv_date -->
+					<table>
+						<tr>
+							<td style="">
+	                            <p><ui:remove>#{selectedPlace.clinic}, #{selectedPlace.address}</ui:remove></p>
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
 									
-								</table>       
-							</div>   <!-- boxleft3inside -->
-							<table>
-								<tr>
-									<td style="">
-	                                    <p>
-											#{selectedPlace.clinic}, #{selectedPlace.address}
-									    </p>
-									</td>
-								</tr>
-							</table>
-							
-						</td>
-					</tr>
-									
-					<tr>
-						<td>
-							<table>
-								<tr>
-								<p />
-    								<td style="display: inline; text-align: right;" >
-										<h:form id="displayDateForm" style="display: inline; text-align: right;padding-left: 37.5em;" >
+			<tr>
+				<td>
+				<ui:remove>
+					<table>
+						<tr>
+							<p />
+    						<td style="display: inline; text-align: right;" >
+							    <h:form id="displayDateForm" style="display: inline; text-align: right;padding-left: 37.5em;" >
 											
 <!--											<ui:fragment id="calendarFragment">-->
-									<div class="placediv_date" style="text-align: left; align: left">
-										<div style="text-align: left; align: left; width: 14em;">
+								    <div class="placediv_date" style="text-align: left; align: left">
+									   <div style="text-align: left; align: left; width: 14em;">
 											<!--		HEADER		-->
 											<!--	 <   April  >	 	-->
-											<table border="0" style="margin-left: auto; margin-right: auto">
+										<table border="0" style="margin-left: auto; margin-right: auto">
 												<th style="width: 2em; text-align: left; background: #e6e6e6"><h:commandLink id="prev" value="&lt;" action="prev"/></th>
 												<th style="width: 10em; text-align: center; background: #e6e6e6"><h3 style="display: inline"><h:outputText value="#{calendarService.currentMonthAndYear}" /></h3></th>
 												<th style="width: 2em; text-align: right; background: #e6e6e6"><h:commandLink id="next" value="&gt;" action="next"/></th>
-											</table>
+										</table>
 											<!--		HEADER		-->
 											<!--	Må Ti On To Fr Lö Sö	-->
 											<table border="0" style="text-align: right; width: 14em;">
@@ -465,113 +409,101 @@
 												</div>
 											</div>
 <!--	</ui:fragment>-->
-										</h:form>
-									</td>
-    							</tr>
-    							<tr>
-    								<td style="display: inline; text-align: right;" >
-										<h:form id="cancelForm" style="display: inline; text-align: right;padding-left: 37.5em;" >
-											<sf:commandButton id="cancelButton" value="Avbryt" processIds="*" action="cancel" style="width: 100px;" />
-										</h:form>
-									</td>
-    							</tr>
-    													
-    						</table>
-						</td>
-					</tr>	
-                    <tr>
-
-                        <td>
-                            <div id="placediv_time" style="display:inline;background-color:#f3f1f2;" >
-                                <table>
-                                    <tr>
-                                        <td style="background-color:#f3f1f2;width: 800px" >   
-                                            <table>
-                                                <tr>                    
-                                                    <td style="width: 650px">
-                                                        <h3 style="display: inline">#{bundle.update_page_body_value_7}</h3>
-                                                            <h:form id="helpForm" style="display: inline; text-align: right;" >
-                                                                <div class="image_block" style="display: inline;text-align: right;">
-                                                                </div>
-                                                            </h:form> 
-                                                    </td>
-                                                    <td>
-                                                        <a href="help" target="_new">
-                                                            <img src="../VGRImages/help.gif" />
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                    </tr>
-                                </table> 
-                            </div>   <!-- boxleft3inside -->
-                            
-                            
-                        </td>
-                    </tr>
-				</table>
-				
-				<table>
-					<tr>
-						<td>
-                        <p>
-						#{selectedPlace.clinic}, #{selectedPlace.address}
-                        </p>
-						</td>
-					</tr>
-					<p />
-						<h:form id="timeTable" style="display: inline; text-align: right;">
-							<table border="0">								
-								<th style="text-align: center; background: #e6e6e6; width: 260px;"><h3 style="display: inline"><h:outputText value="#{calendarService.currentDayMonthAndYear}" /></h3></th>
-		
-							</table>
-						</h:form>
-						<tr>
-							<td>	
-								<div id="placediv_time" style="display:inline" >
-									
-									<h:form style="display: inline; text-align: left;" >
-										<h:dataTable id="timeTable" columnClasses="col1, col2" style="width: 260px; " value="#{timeListLocal}" var="btl" rendered="#{timeListLocal.rowCount > 0}">
-										
-											<h:column id="col1">
-											<f:facet name="header" >
-												<p>Tid</p>
-											</f:facet>
-												#{btl.time}
-											</h:column>
-											<h:column id="col2">
-												<h:commandButton id="timeButton" value="Välj" style="width: 100px;" action="selecttime" processIds="*" immediate="true" />
-											</h:column>
-										</h:dataTable>
-									</h:form>
-								</div>   <!-- boxleft3inside -->
-	
+							    </h:form>
+						    </td>
+    					</tr>
+    					<tr>
+    						<td style="display: inline; text-align: right;" >
+								<h:form id="cancelForm" style="display: inline; text-align: right;padding-left: 37.5em;" >
+									<sf:commandButton id="cancelButton" value="#{baseMsg.cancelButton}" processIds="*" action="cancel" style="width: 100px;" />
+								</h:form>
 							</td>
-						</tr>
-                    <p>
-                        <h:panelGroup rendered="#{timeListLocal.rowCount &lt; 1}" layout="block">
-        					#{bundle.update_page_body_no_avail_time_text_value}
-                             <a href="mailto:#{bundle.update_page_body_email_value}">#{bundle.update_page_body_email_value}</a>
-                        </h:panelGroup>
-                    </p>
-					<tr>
-                        <td>
-                            <table>
-                                <tr>
-            						<td style="display: inline; text-align: right;" >
-            							<h:form id="cancelForm" style="display: inline;  align: right; text-align: right;padding-left: 37.5em;" >
-            								<sf:commandButton id="cancelButton" value="Avbryt" processIds="*" action="cancel" style="width: 100px;" />
-            							</h:form>
-            						</td>
-                                 </tr>
-                            </table>
-                        </td>
-					</tr>
-				</table>
+    					</tr>
+    													
+    				</table>
+    				</ui:remove>
+				</td>
+			</tr>
+
+            <tr>
+                <td>
+                    <div id="placediv_time" style="display:inline;background-color:#f3f1f2;" >
+                        <table>
+                            <tr>
+                                <td style="background-color:#f3f1f2;width: 800px" >   
+                                    <table>
+                                        <tr>                    
+                                            <td style="width: 650px">
+                                                <h3 style="display: inline">#{baseMsg.updatepageChooseTime}</h3>
+                                                <h:form id="helpForm" style="display: inline; text-align: right;" >
+                                                    <div class="image_block" style="display: inline;text-align: right;">
+                                                    </div>
+                                                </h:form> 
+                                            </td>
+                                            <td>
+                                                <a href="help" target="_new"><img src="../VGRImages/help.gif" /></a>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table> 
+                    </div>   <!-- placediv_time -->
+                </td>
+            </tr>
+		</table>
 				
-		</div>	<!-- boxmiddle -->
-		</div> <!-- boxcontainer -->
+		<table>
+			<tr>
+				<td>
+                    <p><ui:remove>#{selectedPlace.clinic}, #{selectedPlace.address}</ui:remove></p>
+				</td>
+			</tr>
+			<h:form id="timeTable" style="display: inline; text-align: right;">
+				<table border="0">								
+					<th style="text-align: center; background: #e6e6e6; width: 260px;"><h3 style="display: inline"><h:outputText value="#{calendarService.currentDayMonthAndYear}" /></h3></th>
+				</table>
+			</h:form>
+			<tr>
+				<td>	
+					<div id="placediv_time" style="display:inline" >
+						<h:form style="display: inline; text-align: left;" >
+							<h:dataTable id="timeTable" columnClasses="col1, col2" style="width: 260px; " value="#{timeListLocal}" var="btl" rendered="#{timeListLocal.rowCount > 0}">
+								<h:column id="col1">
+    								<f:facet name="header" >
+	       								<p>Tid</p>
+			     					</f:facet>
+				    				#{btl.time}
+								</h:column>
+								<h:column id="col2">
+									<h:commandButton id="timeButton" value="Välj" style="width: 100px;" action="selecttime" processIds="*" immediate="true" />
+								</h:column>
+							</h:dataTable>
+						</h:form>
+					</div>   <!-- placediv_time -->
+				</td>
+			</tr>
+            <h:panelGroup rendered="#{timeListLocal.rowCount &lt; 1}" layout="block">
+    					#{sectionMsg.update_page_body_no_avail_time_text_value}
+                        <a href="mailto:#{sectionMsg.update_page_body_email_value}">#{sectionMsg.update_page_body_email_value}</a>
+            </h:panelGroup>
+			<tr>
+                <td>
+                    <table>
+                        <tr>
+   					        <td style="display: inline; text-align: right;" >
+            			        <h:form id="cancelForm" style="display: inline;  align: right; text-align: right;padding-left: 37.5em;" >
+            						<sf:commandButton id="cancelButton" value="#{baseMsg.cancelButton}" processIds="*" action="cancel" style="width: 100px;" />
+            					</h:form>
+            				</td>
+                        </tr>
+                    </table>
+                </td>
+			</tr>
+		</table>
+				
+	</div>	<!-- boxmiddle -->
+</div> <!-- boxcontainer -->
 			
 		
 </ui:fragment>

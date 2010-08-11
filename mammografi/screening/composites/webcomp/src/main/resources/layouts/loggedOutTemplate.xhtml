@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--
+
+    Copyright 2009 Vastra Gotalandsregionen
+
+      This library is free software; you can redistribute it and/or modify
+      it under the terms of version 2.1 of the GNU Lesser General Public
+      License as published by the Free Software Foundation.
+
+      This library is distributed in the hope that it will be useful,
+      but WITHOUT ANY WARRANTY; without even the implied warranty of
+      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+      GNU Lesser General Public License for more details.
+
+      You should have received a copy of the GNU Lesser General Public
+      License along with this library; if not, write to the
+      Free Software Foundation, Inc., 59 Temple Place, Suite 330,
+      Boston, MA 02111-1307  USA
+
+-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:sf="http://www.springframework.org/tags/faces">
+
+<ui:composition template="baseTemplate.xhtml">
+
+    <ui:define name="localStyles">
+        <style  type="text/css">
+          .col1 {background-color: red;}
+          .col2 {background-color: #f3f1f2;}
+        </style>
+    </ui:define>
+
+    <ui:define name="stylesheetIncludes">
+        <sf:resource path="/styles/style.css" />
+    </ui:define>
+
+    <ui:define name="pagehHeaderIncludes">
+        <form action="http://vard.vgregion.se/sv/Sok1/" method="get">
+        <div id="pageHeaderSearch">
+            <div class="headerlinks">
+                <ul>
+                    <li><a href="http://vard.vgregion.se/sv/Other-languages/">Other languages</a>&nbsp; | &nbsp;</li>
+                    <li><a href="http://vard.vgregion.se/sv/Teckenspraksfilmer/">Teckenspråk</a></li>
+                    <li>  |  <a href="http://spoxy4.insipio.com/generator/se/hittavard.vgregion.se/hriv/HRIV.Search.searchunit-flow.flow?startpage=1" title="Lyssna" class="lyssnaIkon">Lyssna</a>
+                    </li>                   
+                </ul>
+                <input name="quicksearchquery" id="SearchText" accesskey="4" title="Snabbsökning" class="topSearch" type="text" />
+                <input name="Search" value="Sök" id="Search" class="standardButton marginTopFive" type="submit" />
+            </div>
+        </div>
+        </form>
+    </ui:define>
+
+    <ui:define name="menuContainerInclude">
+        <div id="menucontainer">
+            <ul>
+                <li><a class="first" href="http://vard.vgregion.se/sv/Startsidan/"> Startsidan</a></li>
+                <li><a href="http://vard.vgregion.se/sv/Sjukdomar-och-besvar/">Sjukdomar och besvär</a></li>
+                <li><a href="http://vard.vgregion.se/sv/Undersokningar--behandlingar/">Undersökningar och behandlingar</a></li>
+                <li><a href="http://hittavard.vgregion.se/hriv">Hitta rätt i vården</a></li>
+                <li><a href="http://vard.vgregion.se/sv/Regler-och-rattigheter/">Regler och rättigheter</a></li>
+                <li><a href="http://vard.vgregion.se/sv/Mina-tjanster/">Mina tjänster</a></li>
+            </ul>
+        </div>
+    </ui:define>
+
+    <ui:define name="footerInclude">
+        <ui:include src="footerContent.xhtml"/>
+    </ui:define>
+
+</ui:composition>
+
+</html>
