@@ -16,6 +16,7 @@
  *   Boston, MA 02111-1307  USA
  */
 package se.vgregion.webbtidbok.booking.sectra;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -24,40 +25,40 @@ import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.context.support.FileSystemXmlApplicationContext;
 
+import se.vgregion.webbtidbok.domain.sectra.BookingSectra;
 import se.vgregion.webbtidbok.ws.sectra.IRisRescheduleGetBookingInfoErrorInfoFaultFaultMessage;
 import se.vgregion.webbtidbok.ws.sectra.IRisRescheduleListSectionsErrorInfoFaultFaultMessage;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({"sectra-test-context.xml"})
 public class SectraWebServiceHelperInterfaceTest {
 
-    @Autowired
-    SectraWSMock wsMock;
-    
-    SectraWebServiceHelperImpl helper;
-    
-    String patientId = "19770707-0004";
-    String examinationNr = "SEMSUS000001";
-    
-    @Before
-    public void setupWebservice() {
-        helper = new SectraWebServiceHelperImpl();
-        helper.setThePortSU(wsMock);
-    }
-
+	static SectraWebServiceHelperImpl helper = new SectraWebServiceHelperImpl();
+	static String patientId="19770707-0020";
+	static String examinationNr = "SEMSUS000002";
+	
+	@Before
+	public void setup(){
+		FileSystemXmlApplicationContext fileSystemXmlApplicationContext = new FileSystemXmlApplicationContext("classpath:se/vgregion/webbtidbok/booking/web-application-config.xml");
+		SectraWSTestMock bean = (SectraWSTestMock) fileSystemXmlApplicationContext.getBean("sectraMockServiceSU");
+		helper.setThePortSU(bean);
+		helper.setBookingMapperSectra( new BookingMapperSectra());
+	}
+	
 	@Test
 	public void testGetBookingInfo() throws IRisRescheduleGetBookingInfoErrorInfoFaultFaultMessage {
-		BookingInfoLocal bi = null;
-		bi = helper.getBookingInfo(patientId, examinationNr);
+		BookingSectra bi = null;
+		bi = (BookingSectra) helper.getBookingInfo(patientId, examinationNr);
 		
 		assertNotNull(bi);
+
+		String pId = bi.getPatientId();
+		String exNo = bi.getExaminationId();
+		System.out.println("### pId: " + pId);
+		System.out.println("### exNo: " + exNo);
+
 		assertEquals(patientId, bi.getPatientId());
-		assertEquals(examinationNr, bi.getExaminationNr());
+		assertEquals(examinationNr, bi.getExaminationId());
 	}
 
 	@Test
