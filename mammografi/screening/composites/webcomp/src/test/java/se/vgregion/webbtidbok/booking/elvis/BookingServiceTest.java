@@ -34,6 +34,7 @@ public class BookingServiceTest {
 
 	private BookingService bookingService;
 	private ObjectFactory objectFactory;
+  private State state;
 
 	@Before
 	public void setUp() throws Exception {
@@ -41,12 +42,19 @@ public class BookingServiceTest {
 		bookingService.setHelper(new WebServiceHelperMock());
 		objectFactory = new ObjectFactory();
 		objectFactory.createString("test");
+		state = new State();
 	}
 	
 
 	@Test
 	public void testGetSelectedDefaultItem(){
-		Assert.assertEquals(3, bookingService.getSelectedDefaultItem(new State()));
+		Assert.assertEquals(3, bookingService.getSelectedDefaultItem(state));
+	}
+	
+	@Test
+	public void testGetBooking(){
+	  BookingResponseLocal booking = bookingService.getBooking(state);
+	  
 	}
 	
 	class WebServiceHelperMock extends WebServiceHelper{
