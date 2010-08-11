@@ -90,7 +90,7 @@ public class SectraBookingServiceTest{
 
             assertEquals("SU_section_" + i, section.getSecId());
 //            assertEquals("Vägen " + i, section.getSecAddress());
-            assertEquals("Mammografienhet " + i + " på SU", section.getSecDescription());
+            assertEquals("Mammografienhet " + i + " p\u00E5 SU", section.getSecDescription());
             assertEquals("section"+i +"@su.example.com", section.getSecMail());;
             assertEquals("SU Mammografi " + i, section.getSecName());
             assertEquals("123000" +i, section.getSecPhone());
