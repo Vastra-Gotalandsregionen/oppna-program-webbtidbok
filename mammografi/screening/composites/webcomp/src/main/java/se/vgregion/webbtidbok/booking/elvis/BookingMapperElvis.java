@@ -17,30 +17,84 @@
  */
 package se.vgregion.webbtidbok.booking.elvis;
 
+import java.util.Date;
+
+import javax.xml.bind.JAXBElement;
+import javax.xml.datatype.XMLGregorianCalendar;
+
+import org.aspectj.weaver.tools.ISupportsMessageContext;
+
 import se.vgregion.webbtidbok.domain.Booking;
 import se.vgregion.webbtidbok.domain.elvis.BookingElvis;
+import se.vgregion.webbtidbok.lang.StringHandler;
+import se.vgregion.webbtidbok.ws.BookingPlace;
 import se.vgregion.webbtidbok.ws.BookingResponse;
 
 public class BookingMapperElvis {
-	
+
 	public Booking bookingMapping(BookingResponse bookingResponse) {
 		BookingElvis booking = new BookingElvis();
-		booking.setPatientName(bookingResponse.getNamn().getValue());
-		booking.setSurgeryAddress(bookingResponse.getAddress().getValue());
+		booking
+				.setPatientName(changePatientNameStructure(getStringValueFromBooking(bookingResponse
+						.getNamn())));
+		booking.setSurgeryAddress(getStringValueFromBooking(bookingResponse
+				.getMottagning())
+				+ ", "
+				+ getStringValueFromBooking(bookingResponse.getAddress()));
+		booking
+				.setPatientId(getStringValueFromBooking(bookingResponse
+						.getPnr()));
+		booking
+				.setStartTime(getDateFromCalendar(bookingResponse.getBokadTid()));
+		booking.setUpdateable(isUpdateable(bookingResponse));
+
 		return booking;
 	}
-	
-//	this.booking.setSurgeryAddress(br.getAddress().toString());
-//	this.antOmbok = br.getAntalOmbok();
-//	this.bokadTid = br.getBokadTid();
-//	this.ctid = br.getCentralTidbokID();
-//	this.epost = br.getEpost().toString();
-//	this.extId = br.getExternalID().toString();
-//	this.maxAntOmbok = br.getMaxAntalOmbok();
-//	this.mobil = br.getMobilTel().toString();
-//	this.mottagning = br.getMottagning().toString();
-//	this.patientName = br.getNamn().toString();
-//	this.pnr = br.getPnr().toString();
-//	this.vardgivare = br.getVardgivare().toString();
 
+	private String getStringValueFromBooking(JAXBElement<String> jaxbElement) {
+		String value = "";
+		if (jaxbElement != null) {
+			value = jaxbElement.getValue();
+		}
+		return value;
+	}
+
+	private Date getDateFromCalendar(XMLGregorianCalendar calendar) {
+		Date value = null;
+		if (calendar != null) {
+			value = calendar.toGregorianCalendar().getTime();
+		}
+		return value;
+	}
+
+	private boolean isUpdateable(BookingResponse bookingResponse) {
+		boolean value = false;
+		if (bookingResponse.getAntalOmbok() != null
+				&& bookingResponse.getMaxAntalOmbok() != null) {
+			value = bookingResponse.getAntalOmbok() <= bookingResponse
+					.getMaxAntalOmbok();
+		}
+		return value;
+	}
+
+	private String changePatientNameStructure(String name) {
+		name = StringHandler.capitalizeName(name);
+		String theNames[] = name.split(",");
+		if (theNames.length == 2) {
+			name = theNames[1].trim() + " " + theNames[0].trim();
+		}
+		return name;
+	}
+
+	public se.vgregion.webbtidbok.domain.BookingPlace bookingPlaceMapping(
+			BookingPlace bookingPlace) {
+		se.vgregion.webbtidbok.domain.BookingPlace bookingPlaceTemp = new se.vgregion.webbtidbok.domain.BookingPlace();
+		bookingPlaceTemp.setAddress(getStringValueFromBooking(bookingPlace.getAddress()));
+		if (bookingPlace.getCentralTidbokID() != null){
+			bookingPlaceTemp
+			.setCentralTimeBookId(bookingPlace.getCentralTidbokID());
+		}
+		bookingPlaceTemp.setClinic(getStringValueFromBooking(bookingPlace.getMottagning()));
+		return bookingPlaceTemp;
+	}
 }

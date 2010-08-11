@@ -26,6 +26,7 @@
     <var name="placesHandler" class="se.vgregion.webbtidbok.Places"  />
 
     <input name="state" />
+    <input name="booking" />
 
 	<view-state id="update" view="/flows/update/update.xhtml">
 <!--		<on-render>

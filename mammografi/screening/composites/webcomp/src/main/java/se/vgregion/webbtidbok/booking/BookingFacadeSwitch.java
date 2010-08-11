@@ -36,6 +36,11 @@ import se.vgregion.webbtidbok.domain.Booking;
 public class BookingFacadeSwitch implements BookingFacade {
 
 	private SectraBookingFacadeImpl facade;
+	private BookingFacade elvisBookingFacade;
+	
+	public void setElvisBookingFacade(BookingFacade elvisBookingFacade) {
+		this.elvisBookingFacade = elvisBookingFacade;
+	}
 
 	public void setFacade(SectraBookingFacadeImpl facade) {
 		this.facade = facade;
@@ -47,21 +52,16 @@ public class BookingFacadeSwitch implements BookingFacade {
 	@Override
 	public Booking getBookingInfo(State state) {
 		if (state.getService().equals("MAMMO_SU")) {
-			System.out.println("### getService.equals(\"MAMMO_SU\")");
 			Booking booking = null;
-			System.out
-					.println("### BookingWrapper.getBookingInfo(state). State pnr & passw: "
-							+ state.getPnr() + ", " + state.getPasswd());
 			booking = facade.getBookingInfo(state);
-			System.out
-					.println("### returning wrapper after getBookingInfo call");
 			return booking;
 		}
 		if (state.getService().equals("MAMMO_NU")) {
 			// TODO: add logic here
 		}
 		if (state.getService().equals("BUKAORTA")) {
-			// TODO: add logic here
+			Booking bookingInfo = elvisBookingFacade.getBookingInfo(state);
+			return bookingInfo;
 		}
 		return null;
 	}

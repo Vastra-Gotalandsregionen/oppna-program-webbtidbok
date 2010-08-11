@@ -110,11 +110,13 @@
 	<bean id="elvisBookingService"
 		class="se.vgregion.webbtidbok.booking.elvis.ElvisBookingFacadeImpl">
 		<property name="helper" ref="helper" />
-		<property name="bookingMapperElvis"><bean class="se.vgregion.webbtidbok.booking.elvis.BookingMapperElvis"/></property>
+		<property name="bookingMapperElvis" ref="elvisMapper"/>
+		<property name="bookingService" ref="bookingService"/>
 	</bean>
-
+	<bean id="elvisMapper" class="se.vgregion.webbtidbok.booking.elvis.BookingMapperElvis" />
 	<bean id="bookingService" class="se.vgregion.webbtidbok.booking.elvis.BookingService">
 		<property name="helper" ref="helper" />
+		<property name="mapping" ref="elvisMapper"/>
 	</bean>
 
 	<bean id="helper" class="se.vgregion.webbtidbok.booking.elvis.WebServiceHelper">
@@ -137,7 +139,9 @@
 		class="se.vgregion.webbtidbok.booking.sectra.SectraWebServiceHelperImpl">
 		<property name="thePortSU" ref="sectraMockServiceSU" />
 		<property name="thePortNU" ref="sectraMockServiceNU" />
-		<property name="bookingMapperSectra"><bean class="se.vgregion.webbtidbok.booking.sectra.BookingMapperSectra"/></property>
+		<property name="bookingMapperSectra">
+			<bean class="se.vgregion.webbtidbok.booking.sectra.BookingMapperSectra" />
+		</property>
 	</bean>
 
 	<bean id="sectraMockServiceNU" class="se.vgregion.webbtidbok.booking.sectra.SectraWSMock">
@@ -151,10 +155,22 @@
 		</property>
 	</bean>
 
+	<bean id="sectraMockServiceSU" class="se.vgregion.webbtidbok.booking.sectra.SectraWSMock">
+		<property name="businessObjectHolder">
+			<bean
+				class="se.vgregion.webbtidbok.booking.sectra.mock.BusinessObjectHolder">
+				<constructor-arg ref="SU_sections" />
+				<constructor-arg ref="SU_timeblocks" />
+				<constructor-arg ref="SU_bookings" />
+			</bean>
+		</property>
+	</bean>
+
 	<!-- END sectra facade -->
 
 	<bean id="bookingFacade" class="se.vgregion.webbtidbok.booking.BookingFacadeSwitch">
-	<property name="facade" ref="sectraBookingService" />
+		<property name="facade" ref="sectraBookingService" />
+		<property name="elvisBookingFacade" ref="elvisBookingService" />
 	</bean>
 
 	<bean id="stringEncrypter" class="se.vgregion.webbtidbok.crypto.StringEncrypter">

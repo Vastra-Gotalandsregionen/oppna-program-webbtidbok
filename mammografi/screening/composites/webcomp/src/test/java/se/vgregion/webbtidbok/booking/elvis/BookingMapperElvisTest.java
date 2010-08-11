@@ -17,9 +17,9 @@
  */
 package se.vgregion.webbtidbok.booking.elvis;
 
-
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
 
 import static org.junit.Assert.*;
 
@@ -27,46 +27,90 @@ import org.junit.Before;
 import org.junit.Test;
 
 import se.vgregion.webbtidbok.domain.Booking;
+import se.vgregion.webbtidbok.ws.BookingPlace;
 import se.vgregion.webbtidbok.ws.BookingResponse;
 import se.vgregion.webbtidbok.ws.ObjectFactory;
 
 public class BookingMapperElvisTest {
 
-  private static final String ADDRESS = "Vårgatan 2";
-  private static final String NAME = "David Bennehult";
-  private static final String PNR = "19770220-2222";
-  private BookingMapperElvis bookingMapperElvis;
-  private BookingResponse bookingResponse;
+	private static final String MOTTAGNING = "Mölndals sjukhus, Klinisk fysologi";
+	private static final String ADDRESS = "ingång V, entréplan";
+	private static final String NAME = "DAVID BENNEHULT";
+	private static final String PNR = "19770220-2222";
+	private static final int ANTALOMBOK = 0;
+	private BookingMapperElvis bookingMapperElvis;
+	private BookingResponse bookingResponse;
+	private XMLGregorianCalendar newXMLGregorianCalendar;
+	private ObjectFactory objectFactory;
+	private BookingPlace bookingPlace;
 
-  @Before
-  public void setUp() throws Exception {
-    bookingMapperElvis = new BookingMapperElvis();
-    createBookingResponseObject();
-  }
+	@Before
+	public void setUp() throws Exception {
+		bookingMapperElvis = new BookingMapperElvis();
+		objectFactory = new ObjectFactory();
+		createBookingResponseObject();
+		createBookingPlaceObject();
+		
+	}
 
-  private void createBookingResponseObject() throws DatatypeConfigurationException {
-    ObjectFactory objectFactory = new ObjectFactory();
-    bookingResponse = new BookingResponse();
-    bookingResponse.setPnr(objectFactory.createString(PNR));
-    bookingResponse.setNamn(objectFactory.createString(NAME));
-    bookingResponse.setVardgivare(objectFactory.createString("Sahlgrenska"));
-    bookingResponse.setAddress(objectFactory.createString(ADDRESS));
-    bookingResponse.setVardgivare(objectFactory.createString("VGR"));
-    bookingResponse.setMottagning(objectFactory.createString("Akuten"));
-    bookingResponse.setMobilTel(objectFactory.createString("50505050"));
-    bookingResponse.setEpost(objectFactory.createString("test@gmail.com"));
-    bookingResponse.setExternalID(objectFactory.createString("43453532"));
-    bookingResponse.setAntalOmbok(1);
-    bookingResponse.setMaxAntalOmbok(1);
-    bookingResponse.setCentralTidbokID(3);
-    bookingResponse.setBokadTid(DatatypeFactory.newInstance().newXMLGregorianCalendar());
-  }
-  
-  @Test
-  public void testBookingMapping(){
-    Booking bookingMapping = bookingMapperElvis.bookingMapping(bookingResponse);
-    assertEquals(NAME, bookingMapping.getPatientName());
-    assertEquals(ADDRESS, bookingMapping.getSurgeryAddress());
-  }
+	private void createBookingResponseObject()
+			throws DatatypeConfigurationException {
+		bookingResponse = new BookingResponse();
+		bookingResponse.setPnr(objectFactory.createString(PNR));
+		bookingResponse.setNamn(objectFactory.createString(NAME));
+		bookingResponse.setAddress(objectFactory.createString(ADDRESS));
+		bookingResponse.setMottagning(objectFactory.createString(MOTTAGNING));
+		bookingResponse.setAntalOmbok(0);
+		bookingResponse.setMaxAntalOmbok(1);
+		bookingResponse.setCentralTidbokID(3);
+		newXMLGregorianCalendar = DatatypeFactory.newInstance()
+				.newXMLGregorianCalendar();
+		bookingResponse.setBokadTid(newXMLGregorianCalendar);
+
+	}
+	
+	private void createBookingPlaceObject(){
+		bookingPlace = new BookingPlace();
+		bookingPlace.setCentralTidbokID(1);
+		bookingPlace.setMottagning(objectFactory.createString("Sahlgrenska"));
+		bookingPlace.setAddress(objectFactory.createString("blå stråket 1"));
+	}
+
+	@Test
+	public void testBookingMapping() {
+		Booking bookingMapping = bookingMapperElvis
+				.bookingMapping(bookingResponse);
+		assertEquals("David Bennehult", bookingMapping.getPatientName());
+		assertEquals(MOTTAGNING + ", " + ADDRESS, bookingMapping
+				.getSurgeryAddress());
+		assertEquals(PNR, bookingMapping.getPatientId());
+		assertEquals(newXMLGregorianCalendar.toGregorianCalendar().getTime()
+				.toString(), bookingMapping.getStartTime().toString());
+		assertTrue(bookingMapping.isUpdateable());
+	}
+	
+	@Test
+	public void testBookingPlaceMapping() {
+		se.vgregion.webbtidbok.domain.BookingPlace bookingPlaceMapping = bookingMapperElvis.bookingPlaceMapping(bookingPlace);
+		assertEquals(1, bookingPlaceMapping.getCentralTimeBookId());
+		assertEquals("Sahlgrenska", bookingPlaceMapping.getClinic());
+		assertEquals("blå stråket 1", bookingPlaceMapping.getAddress());
+		
+	}
+	
+	@Test
+	public void testNullpointerForBooking(){
+		bookingResponse = new BookingResponse();
+		Booking bookingMapping = bookingMapperElvis.bookingMapping(bookingResponse);
+		assertNotNull(bookingMapping);
+	}
+	
+	@Test
+	public void testNullpointerForBookingPlace(){
+		bookingPlace = new BookingPlace();
+		se.vgregion.webbtidbok.domain.BookingPlace bookingPlaceMapping = bookingMapperElvis.bookingPlaceMapping(bookingPlace);
+		assertNotNull(bookingPlaceMapping);
+	}
+	
 
 }

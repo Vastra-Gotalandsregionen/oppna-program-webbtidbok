@@ -27,7 +27,14 @@ public abstract class Booking implements Serializable{
 	private String surgeryAddress;
 	private String patientId;
 	private Date startTime;
-	
+	private boolean updateable;
+
+	public boolean isUpdateable() {
+		return updateable;
+	}
+	public void setUpdateable(boolean updateable) {
+		this.updateable = updateable;
+	}
 	public Date getStartTime() {
 		return startTime;
 	}
