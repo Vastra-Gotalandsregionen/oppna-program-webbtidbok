@@ -22,57 +22,53 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.context.support.FileSystemXmlApplicationContext;
 
+import se.vgregion.webbtidbok.domain.Booking;
+import se.vgregion.webbtidbok.domain.sectra.BookingSectra;
 import se.vgregion.webbtidbok.ws.sectra.IRisRescheduleGetBookingInfoErrorInfoFaultFaultMessage;
 import se.vgregion.webbtidbok.ws.sectra.IRisRescheduleListSectionsErrorInfoFaultFaultMessage;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({"sectra-test-context.xml"})
 public class SectraBookingServiceTest{
 
-    @Autowired
-    SectraWSMock wsMock;
+    static SectraWebServiceHelperImpl helper = new SectraWebServiceHelperImpl();
+    static String patientId = "19770707-0004";
+    static String examinationNr = "SEMSUS000001";
     
-    SectraWebServiceHelperImpl helper;
-    
-    String patientId = "19770707-0004";
-    String examinationNr = "SEMSUS000001";
-    
-    @Before
-    public void setupWebservice() {
-        helper = new SectraWebServiceHelperImpl();
-        helper.setThePortSU(wsMock);
-    }
+	@Before
+	public void setup(){
+		FileSystemXmlApplicationContext fileSystemXmlApplicationContext = new FileSystemXmlApplicationContext("classpath:se/vgregion/webbtidbok/booking/web-application-config.xml");
+		SectraWSTestMock bean = (SectraWSTestMock) fileSystemXmlApplicationContext.getBean("sectraMockServiceSU");
+		helper.setThePortSU(bean);
+		helper.setBookingMapperSectra( new BookingMapperSectra());
+	}
     
     @Test
     public void testGetBookingInfo() throws IRisRescheduleGetBookingInfoErrorInfoFaultFaultMessage {
         
-        BookingInfoLocal bi = helper.getBookingInfo(patientId, examinationNr);
+        
+        BookingSectra bi = (BookingSectra) helper.getBookingInfo(patientId, examinationNr);
         assertNotNull(bi);
 
-        assertEquals(examinationNr, bi.getExaminationNr());
+        assertEquals(examinationNr, bi.getExaminationId());
         assertEquals("Mammografi", bi.getExamType());
         assertEquals("MAM", bi.getExamTypeCode());
-        assertEquals("S", bi.getLaterality());
         assertEquals(patientId, bi.getPatientId());
         assertEquals("Sara Svensson", bi.getPatientName());
 
-        TimeBlockLocal bt = bi.getBookedTime();
+        Date bt = bi.getStartTime();
         assertNotNull(bt);
-        assertEquals("SU_s1_time_1", bt.getId());
-        assertEquals(15, bt.getLength());
-        
-        assertNotNull(bt.getSection());
-        assertNotNull(bt.getStartTime());
+    
+        //assertEquals("timeBlockId_1", bt.getId());
+        //assertEquals(10, bt.getLength());
+        //assertNotNull(bt.getSection());
+        //assertNotNull(bt.getStartTime());
     }
 
     @Test
@@ -93,11 +89,11 @@ public class SectraBookingServiceTest{
             section = iter.next();
 
             assertEquals("SU_section_" + i, section.getSecId());
-            assertEquals("Grona straket " + i, section.getSecAddress());
-            assertEquals("Mammografienhet " + i, section.getSecDescription());
-            assertEquals("section" + i + "@su.example.com", section.getSecMail());;
+//            assertEquals("Vägen " + i, section.getSecAddress());
+            assertEquals("Mammografienhet " + i + " på SU", section.getSecDescription());
+            assertEquals("section"+i +"@su.example.com", section.getSecMail());;
             assertEquals("SU Mammografi " + i, section.getSecName());
-            assertEquals("123000" + i, section.getSecPhone());
+            assertEquals("123000" +i, section.getSecPhone());
         }           
     }
 }
