@@ -17,6 +17,7 @@
  */
 package se.vgregion.webbtidbok.booking.elvis;
 
+import java.util.Calendar;
 import java.util.List;
 
 import javax.xml.datatype.DatatypeConfigurationException;
@@ -77,6 +78,7 @@ public class BookingServiceTest {
 	
 	@Test
 	public void testGetBookingTime(){
+		state.setSelectedDate(Calendar.getInstance());
 		List<BookingTimeLocal> bookingTime = bookingService.getBookingTime(state);
 		assertNotNull(bookingTime);
 		state.setLoggedIn(true);
