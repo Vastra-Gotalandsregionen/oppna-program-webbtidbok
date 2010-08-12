@@ -47,14 +47,14 @@ import se.vgregion.webbtidbok.ws.ObjectFactory;
  * @author conpem
  * 
  */
-public class BookingTimeTests {
+public class BookingTimeTest {
 
   private static WebServiceHelper ws;
   private final ObjectFactory objectFactory = new ObjectFactory();
 
   @BeforeClass
   public static void setup() {
-    ws = BookingPlacesTests.getWebServiceHelper();
+    ws = BookingPlacesTest.getWebServiceHelper();
   }
 
   /**
@@ -180,7 +180,7 @@ public class BookingTimeTests {
     System.out.println(tCal.getTime().toString());
 
     BookingServiceInterface service = new BookingService();
-    ((BookingService) service).setHelper(BookingPlacesTests.getWebServiceHelper());
+    ((BookingService) service).setHelper(BookingPlacesTest.getWebServiceHelper());
 
     State credentials = new State();
     // credentials.setPasswd("Zs12JzIW");

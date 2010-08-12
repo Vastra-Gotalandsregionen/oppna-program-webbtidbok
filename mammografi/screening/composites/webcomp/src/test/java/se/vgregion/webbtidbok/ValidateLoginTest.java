@@ -24,7 +24,7 @@ import java.util.Calendar;
 
 import org.junit.Test;
 
-public class ValidateLoginTests {
+public class ValidateLoginTest {
 
 	@Test
 	public void testGetYearBefore(){

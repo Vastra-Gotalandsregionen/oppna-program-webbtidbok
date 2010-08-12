@@ -45,7 +45,7 @@ import se.vgregion.webbtidbok.ws.ObjectFactory;
  * @author conpem
  * 
  */
-public class CalendarTests {
+public class CalendarTest {
 
   WebServiceHelper ws;
   private final ObjectFactory objectFactory = new ObjectFactory();
