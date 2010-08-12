@@ -49,7 +49,7 @@ import org.springframework.core.io.support.PropertiesLoaderUtils;
  * @author conpem
  * 
  */
-public class MailSendTests {
+public class MailSendTest {
 
   public void sendMail(String mailServer, String from, String to, String subject, String messageBody, String[] attachments) throws MessagingException, AddressException {
     // Setup mail server

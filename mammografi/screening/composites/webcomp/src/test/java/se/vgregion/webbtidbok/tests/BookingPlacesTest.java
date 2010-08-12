@@ -33,7 +33,7 @@ import se.vgregion.webbtidbok.ws.ArrayOfBookingPlace;
 import se.vgregion.webbtidbok.ws.BookingPlace;
 import se.vgregion.webbtidbok.ws.BookingRequest;
 
-public class BookingPlacesTests {
+public class BookingPlacesTest {
 
   private static WebServiceHelper ws;
 

@@ -33,7 +33,7 @@ import se.vgregion.webbtidbok.State;
  * @author conpem
  * 
  */
-public class LoginTests {
+public class LoginTest {
 
   /**
    * @throws java.lang.Exception

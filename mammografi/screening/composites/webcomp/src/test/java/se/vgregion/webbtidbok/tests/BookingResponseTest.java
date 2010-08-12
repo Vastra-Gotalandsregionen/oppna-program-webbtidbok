@@ -32,7 +32,7 @@ import se.vgregion.webbtidbok.lang.DateHandler;
 import se.vgregion.webbtidbok.ws.BookingRequest;
 import se.vgregion.webbtidbok.ws.BookingResponse;
 
-public class BookingResponseTests {
+public class BookingResponseTest {
 
   WebServiceHelper ws;
 
