@@ -55,21 +55,21 @@
 				<table>
 					<tr>
 						<td>
-							#{booking.displayName}</td><td style="padding-left: 2em">#{booking.pnr}
+							#{booking.patientName}</td><td style="padding-left: 2em">#{booking.patientId}
 						</td>			
 					</tr>			
 					<tr>
 						<td style="padding-left: 2em" valign="top" >
 							Var:
 						</td>
-						<td style="padding-left: 2em">  #{booking.mainSector}, #{booking.address}
+						<td style="padding-left: 2em">  #{booking.surgeryAddress}
 						</td>						
 					</tr>			
 					<tr>
 						<td style="padding-left: 2em" valign="top">
 							När:
 						</td>
-						<td style="padding-left: 2em"> #{booking.timeBookingString}.
+						<td style="padding-left: 2em"> #{booking.startTime}.
 						</td>					
 					</tr>						
 				</table>				
