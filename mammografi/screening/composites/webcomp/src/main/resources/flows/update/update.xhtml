@@ -52,10 +52,10 @@
 			<tr>
 				<td>			
 					<div id="boxleft1" style="width: 100%">				
-						<p><ui:remove>#{booking.patientName}</ui:remove></p>
-						<p><ui:remove>#{booking.patientId}</ui:remove></p>
+						<p>#{booking.patientName}</p>
+						<p>#{booking.patientId}</p>
 						<p><h:outputText value="#{baseMsg.updatepageOriginalTimeHeading}"/>:</p>
-						<p><ui:remove>#{booking.surgeryAddress}</ui:remove></p>			
+						<p>#{booking.surgeryAddress}</p>			
 						<p><h:outputText value="#{booking.startTime}"><f:convertDateTime type="both" pattern="EEEE dd MMMM yyyy, HH:mm" locale="sv" /></h:outputText></p>
 					</div>
 				</td>

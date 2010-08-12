@@ -23,9 +23,11 @@
       xsi:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
 
     <input name="state" />
+    <input name="booking" />
     
     <subflow-state id="update" subflow="update">
         <input name="state" value="state" />
+        <input name="booking" value="booking" />
         <transition on="cancel" to="cancel"/>
         <transition on="ok" to="showConfirmation"/>
     </subflow-state>
