@@ -25,6 +25,7 @@
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd">
 
 	<import resource="testdata-su.xml" />
+	<import resource="testdata-nu.xml" />
 	<!-- Scans for application @Components to deploy -->
 	<context:component-scan base-package="org.springframework.webflow.samples.booking" />
 
@@ -33,6 +34,7 @@
 		<property name="serviceDefinitions">
 			<list>
 				<ref bean="serviceDefinitionMammografiSU" />
+				<ref bean="serviceDefinitionMammografiNU" />
 				<ref bean="serviceDefinitionBukAorta" />
 			</list>
 		</property>
@@ -133,7 +135,6 @@
 
 	<bean id="bookingServiceSectra"
 		class="se.vgregion.webbtidbok.booking.sectra.SectraBookingServiceImpl">
-		<property name="helper" ref="sectraWShelper" />
 		<property name="thePortNU" ref="sectraMockServiceNU"/>
 		<property name="thePortSU" ref="sectraMockServiceSU"/>
 		<property name="bookingMapperSectra" ><bean class="se.vgregion.webbtidbok.booking.sectra.BookingMapperSectra" /></property>
@@ -143,18 +144,15 @@
 		class="se.vgregion.webbtidbok.booking.sectra.SectraWebServiceHelperImpl">
 		<property name="thePortSU" ref="sectraMockServiceSU" />
 		<property name="thePortNU" ref="sectraMockServiceNU" />
-		<property name="bookingMapperSectra">
-			<bean class="se.vgregion.webbtidbok.booking.sectra.BookingMapperSectra" />
-		</property>
 	</bean>
 
 	<bean id="sectraMockServiceNU" class="se.vgregion.webbtidbok.booking.sectra.SectraWSMock">
 		<property name="businessObjectHolder">
 			<bean
 				class="se.vgregion.webbtidbok.booking.sectra.mock.BusinessObjectHolder">
-				<constructor-arg ref="SU_sections" />
-				<constructor-arg ref="SU_timeblocks" />
-				<constructor-arg ref="SU_bookings" />
+				<constructor-arg ref="NU_sections" />
+				<constructor-arg ref="NU_timeblocks" />
+				<constructor-arg ref="NU_bookings" />
 			</bean>
 		</property>
 	</bean>
