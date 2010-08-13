@@ -30,6 +30,7 @@ import org.junit.Test;
 import se.vgregion.webbtidbok.State;
 import se.vgregion.webbtidbok.domain.Booking;
 import se.vgregion.webbtidbok.domain.BookingPlace;
+import se.vgregion.webbtidbok.domain.Surgery;
 import se.vgregion.webbtidbok.ws.ArrayOfBookingPlace;
 import se.vgregion.webbtidbok.ws.BookingRequest;
 import se.vgregion.webbtidbok.ws.BookingResponse;
@@ -69,7 +70,7 @@ public class BookingServiceTest {
 	
 	@Test
 	public void testGetBookingPlace(){
-		List<BookingPlace> bookingPlace = bookingService.getBookingPlace(state);
+		List<Surgery> bookingPlace = bookingService.getBookingPlace(state);
 		assertEquals(0, bookingPlace.size());
 		state.setLoggedIn(true);
 		bookingPlace = bookingService.getBookingPlace(state);

@@ -27,6 +27,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import se.vgregion.webbtidbok.domain.Booking;
+import se.vgregion.webbtidbok.domain.Surgery;
 import se.vgregion.webbtidbok.ws.BookingPlace;
 import se.vgregion.webbtidbok.ws.BookingResponse;
 import se.vgregion.webbtidbok.ws.ObjectFactory;
@@ -91,10 +92,10 @@ public class BookingMapperElvisTest {
 	
 	@Test
 	public void testBookingPlaceMapping() {
-		se.vgregion.webbtidbok.domain.BookingPlace bookingPlaceMapping = bookingMapperElvis.bookingPlaceMapping(bookingPlace);
-		assertEquals(1, bookingPlaceMapping.getCentralTimeBookId());
-		assertEquals("Sahlgrenska", bookingPlaceMapping.getClinic());
-		assertEquals("blå stråket 1", bookingPlaceMapping.getAddress());
+		Surgery bookingPlaceMapping = bookingMapperElvis.bookingPlaceMapping(bookingPlace);
+		assertEquals("1", bookingPlaceMapping.getSurgeryId());
+		assertEquals("Sahlgrenska", bookingPlaceMapping.getSurgeryName());
+		assertEquals("blå stråket 1", bookingPlaceMapping.getSurgeryAddress());
 		
 	}
 	
@@ -108,7 +109,7 @@ public class BookingMapperElvisTest {
 	@Test
 	public void testNullpointerForBookingPlace(){
 		bookingPlace = new BookingPlace();
-		se.vgregion.webbtidbok.domain.BookingPlace bookingPlaceMapping = bookingMapperElvis.bookingPlaceMapping(bookingPlace);
+		Surgery bookingPlaceMapping = bookingMapperElvis.bookingPlaceMapping(bookingPlace);
 		assertNotNull(bookingPlaceMapping);
 	}
 	

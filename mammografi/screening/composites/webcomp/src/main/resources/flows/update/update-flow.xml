@@ -29,23 +29,23 @@
     <input name="booking" />
 
 	<view-state id="update" view="/flows/update/update.xhtml">
-<!--		<on-render>
-			  <evaluate expression="bookingService.getBookingPlaceSelectItems(state)"  result="flowScope.bookingplaces"  >
+		<on-render>
+			  <evaluate expression="bookingFacade.getBookingPlaceSelectItems(state)"  result="flowScope.bookingplaces"  >
 			  </evaluate>
-			  <evaluate expression="placesHandler.setPlacesId(bookingService.getSelectedDefaultItem(state))" >
+			  <evaluate expression="placesHandler.setPlacesId(bookingFacade.getSelectedDefaultItem(state))" >
 			  </evaluate>
-			  <evaluate expression="bookingService.getSelectedPlace(placesHandler, state)" result="flowScope.selectedPlace"  >
+			  <evaluate expression="bookingFacade.getSelectedPlace(placesHandler, state)" result="flowScope.selectedPlace"  >
 			  </evaluate>
-			  <evaluate expression="calendarService.getCalendar(state)"  />
---> 
+<!--			  <evaluate expression="calendarService.getCalendar(state)"  />-->
+
 <!--	only want to do getTimeForChosenDate first time around AND when a NEW date is selected, now it's also done when click on < or >		  -->
 <!--		why is this needed???	  <evaluate expression="bookingService.getSelectedPlace(placesHandler, state)" result="flowScope.selectedPlace"  >-->
 <!--			  </evaluate>-->
-<!-- 			  <evaluate expression="calendarService.getTimeForChosenDate(state)" />
-			  <evaluate expression="bookingService.getBookingTime(state)" result="flowScope.timeListLocal" result-type="dataModel" /> 
- -->
-<!--			  <evaluate expression="calendarService.setSelectedDay(requestParameters.selectedDay)" />
-		</on-render>	-->
+<!--		  <evaluate expression="calendarService.getTimeForChosenDate(state)" />-->
+<!--			  <evaluate expression="bookingService.getBookingTime(state)" result="flowScope.timeListLocal" result-type="dataModel" /> -->
+
+<!--			  <evaluate expression="calendarService.setSelectedDay(requestParameters.selectedDay)" />-->
+		</on-render>	
 		<transition on="showTimeCalendar" to="istimelistempty">
 			<evaluate expression="calendarService.setSelectedDay(requestParameters.selectedDay)" />
 		</transition>		
@@ -76,11 +76,11 @@
 	</view-state>
 
 	<action-state id="isEmptyCalendar">
-			 <evaluate expression="bookingService.getBookingPlaceSelectItems(state)"  result="flowScope.bookingplaces"  >
+			 <evaluate expression="bookingFacade.getBookingPlaceSelectItems(state)"  result="flowScope.bookingplaces"  >
 			 </evaluate>		  
-			 <evaluate expression="placesHandler.setPlacesId(bookingService.getSelectedDefaultItem(state))" >
+			 <evaluate expression="placesHandler.setPlacesId(bookingFacade.getSelectedDefaultItem(state))" >
 			 </evaluate>		  
-			 <evaluate expression="bookingService.getSelectedPlace(placesHandler, state)" result="flowScope.selectedPlace"  >
+			 <evaluate expression="bookingFacade.getSelectedPlace(placesHandler, state)" result="flowScope.selectedPlace"  >
 			 </evaluate>
 			 <evaluate expression="calendarService.getCalendar(state)"  /> 
 			 <evaluate expression="calendarService.isEmptyCalendar()" />
@@ -89,11 +89,11 @@
 	</action-state>
 		
 	<action-state id="istimelistempty">
-		 <evaluate expression="bookingService.getBookingPlaceSelectItems(state)"  result="flowScope.bookingplaces"  >
+		 <evaluate expression="bookingFacade.getBookingPlaceSelectItems(state)"  result="flowScope.bookingplaces"  >
 		 </evaluate>		  
-		 <evaluate expression="placesHandler.setPlacesId(bookingService.getSelectedDefaultItem(state))" >
+		 <evaluate expression="placesHandler.setPlacesId(bookingFacade.getSelectedDefaultItem(state))" >
 		 </evaluate>	  
-		 <evaluate expression="bookingService.getSelectedPlace(placesHandler, state)" result="flowScope.selectedPlace"  >
+		 <evaluate expression="bookingFacade.getSelectedPlace(placesHandler, state)" result="flowScope.selectedPlace"  >
 		 </evaluate>		 
 		 <evaluate expression="calendarService.getTimeForChosenDate(state)" />
 		 <evaluate expression="bookingService.getBookingTime(state)" result="flowScope.timeListLocal" result-type="dataModel" /> 	 
@@ -147,11 +147,11 @@
 -->
 	<view-state id="update2" view="/flows/update/update.xhtml">
 		<on-render >			  
-			  <evaluate expression="bookingService.getBookingPlaceSelectItems(state)"  result="flowScope.bookingplaces"  >
+			  <evaluate expression="bookingFacade.getBookingPlaceSelectItems(state)"  result="flowScope.bookingplaces"  >
 			  </evaluate>			  
-			  <evaluate expression="placesHandler.setPlacesId(bookingService.getSelectedDefaultItem(state))" >
+			  <evaluate expression="placesHandler.setPlacesId(bookingFacade.getSelectedDefaultItem(state))" >
 			  </evaluate>		  
-			  <evaluate expression="bookingService.getSelectedPlace(placesHandler, state)" result="flowScope.selectedPlace"  >
+			  <evaluate expression="bookingFacade.getSelectedPlace(placesHandler, state)" result="flowScope.selectedPlace"  >
 			  </evaluate>		  		  
 			  <evaluate expression="calendarService.getCalendar(state)"  />
 			  <evaluate expression="calendarService.getTimeForChosenDate(state)" />
