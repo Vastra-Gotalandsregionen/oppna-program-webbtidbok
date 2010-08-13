@@ -32,6 +32,7 @@ import org.apache.log4j.Logger;
 import se.vgregion.webbtidbok.Places;
 import se.vgregion.webbtidbok.State;
 import se.vgregion.webbtidbok.domain.Booking;
+import se.vgregion.webbtidbok.domain.Surgery;
 import se.vgregion.webbtidbok.domain.elvis.BookingElvis;
 import se.vgregion.webbtidbok.gui.SelectItemConverter;
 import se.vgregion.webbtidbok.lang.DateHandler;
@@ -44,335 +45,336 @@ import se.vgregion.webbtidbok.ws.BookingTime;
 import se.vgregion.webbtidbok.ws.ObjectFactory;
 
 public class BookingService implements BookingServiceInterface {
-	private static final Logger sLogger = Logger
-			.getLogger("se.vgregion.webbtidbok.logging");
+  private static final Logger sLogger = Logger.getLogger("se.vgregion.webbtidbok.logging");
 
-	int testIndex;
-	BookingResponse response;
-	BookingRequest request;
-	WebServiceHelper helper;
-	private BookingMapperElvis mapping;
+  int testIndex;
+  BookingResponse response;
+  BookingRequest request;
+  WebServiceHelper helper;
+  private BookingMapperElvis mapping;
 
-	public void setMapping(BookingMapperElvis mapping) {
-		this.mapping = mapping;
-	}
+  public void setMapping(BookingMapperElvis mapping) {
+    this.mapping = mapping;
+  }
 
-	public void setHelper(WebServiceHelper helper) {
-		this.helper = helper;
-	}
+  public void setHelper(WebServiceHelper helper) {
+    this.helper = helper;
+  }
 
-	private final ObjectFactory objectFactory = new ObjectFactory();
+  private final ObjectFactory objectFactory = new ObjectFactory();
 
-	public boolean isFirstPlaces = true;
-	private boolean isTimeListEmpty = true;
-	public boolean isUpdated = false;
+  public boolean isFirstPlaces = true;
+  private boolean isTimeListEmpty = true;
+  public boolean isUpdated = false;
 
-	// private String orderDate;
+  // private String orderDate;
 
-	public boolean getIsTimeListEmpty() {
-		return isTimeListEmpty;
-	}
+  public boolean getIsTimeListEmpty() {
+    return isTimeListEmpty;
+  }
 
-	public void setTimeListEmpty(boolean isTimeListEmpty) {
-		this.isTimeListEmpty = isTimeListEmpty;
-	}
+  public void setTimeListEmpty(boolean isTimeListEmpty) {
+    this.isTimeListEmpty = isTimeListEmpty;
+  }
 
-	// constructor
-	public BookingService() {
-	}
+  // constructor
+  public BookingService() {
+  }
 
-	public void setIsUpdated(boolean b) {
-		isUpdated = true;
-	}
+  public void setIsUpdated(boolean b) {
+    isUpdated = true;
+  }
 
-	public boolean isUpdated() {
-		return isUpdated;
-	}
+  public boolean isUpdated() {
+    return isUpdated;
+  }
 
-	public void setFirstPlacesBoolean(boolean b) {
+  public void setFirstPlacesBoolean(boolean b) {
 
-		isFirstPlaces = b;
-		// System.out.println("BookingServices.setFirstPlacesBoolean: " +
-		// isFirstPlaces);
-	}
-
-	public boolean isFirstPlaces() {
-		// System.out.println("BookingServices.isFirstBoolean: " +
-		// isFirstPlaces);
-
-		return isFirstPlaces;
-	}
-
-	public Booking getBooking(State loginCredentials) {
-
-		if (loginCredentials.isLoggedIn()) {
-
-			request = helper.getQueryWSRequest(loginCredentials);
-			response = helper.getQueryWS(request);
-			Booking bookingMapping = mapping.bookingMapping(response);
-			loginCredentials.setCentralTidbokID(response.getCentralTidbokID());
-
-			return bookingMapping;
-		}
-		return new BookingElvis();
-	}
-
-	/**
-	 * Method cancelBooking returns true if deleted
-	 * 
-	 * @param loginCredentials
-	 * @return
-	 */
-	public boolean cancelBooking(State loginCredentials) {
-
-		request = helper.getQueryWSRequest(loginCredentials);
-		boolean cancelledBooking = helper.getQueryWSCancelBooking(request);
-
-		return cancelledBooking;
-		// return true;
-	}
-
-	public List<se.vgregion.webbtidbok.domain.BookingPlace> getBookingPlace(
-			State loginCredentials) {
-
-		List<se.vgregion.webbtidbok.domain.BookingPlace> placeListLocal = new ArrayList<se.vgregion.webbtidbok.domain.BookingPlace>();
-
-		if (loginCredentials.isLoggedIn()) {
-
-			request = helper.getQueryWSRequest(loginCredentials);
-			ArrayOfBookingPlace places = helper
-					.getQueryWSRequestPlaces(request);
-			List<BookingPlace> placeList = places.getBookingPlace();
-			for (BookingPlace p : placeList) {
-				se.vgregion.webbtidbok.domain.BookingPlace bookingPlaceMapping = mapping
-						.bookingPlaceMapping(p);
-				placeListLocal.add(bookingPlaceMapping);
-			}
-
-		}
-		return placeListLocal;
-	}
-
-	public List<BookingTimeLocal> getBookingTime(State loginCredentials) {
-
-		List<BookingTimeLocal> timeListLocal = new ArrayList<BookingTimeLocal>();
-		boolean theInThePastFlag = loginCredentials.getSelectedDate().before(
-				Calendar.getInstance());
-
-		if (loginCredentials.isLoggedIn() && !theInThePastFlag) {
-			Calendar selectedDate = loginCredentials.getSelectedDate();
-
-			String fromDate = DateHandler.setCalendarDateFormat(selectedDate);
-			JAXBElement<String> fromDat = objectFactory
-					.createBookingRequestFromDat(fromDate);
-			request = helper.getQueryWSRequest(loginCredentials);
-			request.setCentralTidbokID(loginCredentials.getCentralTidbokID());
-			request.setFromDat(fromDat);
-
-			ArrayOfBookingTime times = helper.getQueryWSRequestTime(request);
-
-			List<BookingTime> timeList;
-			try {
-				timeList = times.getBookingTime();
-				if (timeList.isEmpty()) {
-					isTimeListEmpty = true;
-				} else {
-					isTimeListEmpty = false;
-				}
-
-				int id = 1;
-				for (BookingTime b : timeList) {
-
-					Calendar dateCal = Calendar.getInstance();
-					dateCal.set(Calendar.YEAR, b.getDatum().getYear());
-					dateCal.set(Calendar.MONTH, b.getDatum().getMonth() - 1);
-					dateCal.set(Calendar.DATE, b.getDatum().getDay());
-
-					String day = DateHandler.setCalendarDateFormat(dateCal);
-
-					BookingTimeLocal pl = new BookingTimeLocal();
-					pl.setNumbers(b.getAntal());
-					pl.setDay(day);
-					pl.setTime(b.getKlocka().getValue());
-					pl.setBookingTimeId(id);
-					timeListLocal.add(pl);
-					id++;
-				}
-			} catch (Exception e) {
-				isTimeListEmpty = true;
-			}
-
-			return timeListLocal;
-		}
-
-		return timeListLocal;
-	}
-
-	/***
-	 * method set selected item
-	 * 
-	 * @param selectedItem
-	 */
-
-	public void setSelectedItem(int selectedItem) {
-		System.out.println("selectitem: " + selectedItem);
-	}
-
-	/***
-	 * 
-	 * @param places
-	 */
-	public void setSelectedItem(Places places) {
-		System.out.println("selectitem: " + places.getPlacesId());
-	}
-
-	/***
-	 * 
-	 * 
-	 * @param places
-	 * @param state
-	 */
-	public void setSelectedItem(Places places, State state) {
-		System.out.println("BookingServices.setSelectedItem: "
-				+ places.getPlacesId());
-		state.setCentralTidbokID(places.getPlacesId());
-		System.out.println("BookingServices.state.centraltidbokid: "
-				+ state.getCentralTidbokID());
-	}
-
-	/*
-	 * Method setting default value for BookingResponse, CentralTimeBookingId
-	 */
-
-	public int getSelectedDefaultItem(State loginCredentials) {
-
-		if (this.isFirstPlaces()) {
-
-			request = helper.getQueryWSRequest(loginCredentials);
-			response = helper.getQueryWS(request);
-			int centralTimeBookingId = response.getCentralTidbokID();
-
-			this.setFirstPlacesBoolean(false);
-			return centralTimeBookingId;
-
-		} else {
-			System.out.println("BookingServices.getSelectedDefaultItem: "
-					+ loginCredentials.getCentralTidbokID());
-
-			return loginCredentials.getCentralTidbokID();
-		}
-
-	}
-
-	/**
-	 * Method finding a selected place in the list of chosen bookingplaces
-	 * return the object to print the selected place
-	 * 
-	 * 
-	 * @param places
-	 * @param login
-	 * @return
-	 */
-
-	public Places getSelectedPlace(Places places, State login) {
-		Places place = new Places();
-		List<se.vgregion.webbtidbok.domain.BookingPlace> bookingPlaces = getBookingPlace(login);
-		for (se.vgregion.webbtidbok.domain.BookingPlace bl : bookingPlaces) {
-			if (bl.getCentralTimeBookId() == places.getPlacesId()) {
-
-				place.setPlacesId(bl.getCentralTimeBookId());
-				place.setClinic(bl.getClinic());
-				place.setAddress(bl.getAddress());
-				place.setRepresentationPlace();
-
-			}
-		}
-
-		if (place != null) {
-			sLogger.debug("Selected place clinic: " + place.getClinic());
-			sLogger.debug("Selected place address: " + place.getAddress());
-			sLogger.debug("Selected place id: " + place.getPlacesId());
-			sLogger.debug("Selected place representation place: "
-					+ place.getRepresentationPlace());
-		}
-		return place;
-	}
-
-	public List<SelectItem> getBookingPlaceSelectItems(State loginCredentials) {
-
-		// Uncomment below for debug, you'll only have to click login,
-		// creds below are hard coded.
-		// String pnr = "19960103-2395";
-		// String psw = "Y8PBZRUr";
-		// loginCredentials.setPnr(pnr);
-		// loginCredentials.setPasswd(psw);
-		// loginCredentials.setLoggedIn(true);
-		List<se.vgregion.webbtidbok.domain.BookingPlace> placeListLocal = new ArrayList<se.vgregion.webbtidbok.domain.BookingPlace>();
-
-		if (loginCredentials.isLoggedIn()) {
-
-			request = helper.getQueryWSRequest(loginCredentials);
-			ArrayOfBookingPlace places = helper
-					.getQueryWSRequestPlaces(request);
-			// response = helper.getQueryWS(request);
-			List<BookingPlace> placeList = places.getBookingPlace();
-			for (BookingPlace p : placeList) {
-				se.vgregion.webbtidbok.domain.BookingPlace pl = mapping
-						.bookingPlaceMapping(p);
-				placeListLocal.add(pl);
-			}
-
-			SelectItemConverter sc = new SelectItemConverter();
-
-			return sc.getSelectItems(placeListLocal);
-		}
-
-		return null;
-	}
-
-	/****
-	 * method setting ombokning
-	 * 
-	 * @param l
-	 */
-	public void setBookingTime(BookingTimeLocal bookingTime, State credentials) {
-		String hour = bookingTime.getTime();
-		String[] hourMinute = hour.split(":");
-
-		GregorianCalendar cal = new GregorianCalendar();
-		cal.setTimeInMillis(credentials.getSelectedDate().getTime().getTime());
-
-		cal.set(Calendar.HOUR_OF_DAY, Integer.parseInt(hourMinute[0]));
-		cal.set(Calendar.MINUTE, Integer.parseInt(hourMinute[1]));
-		cal.set(Calendar.SECOND, 0);
-
-		// update booking
-		if (credentials.isLoggedIn()) {
-
-			request = helper.getQueryWSRequest(credentials);
-
-			XMLGregorianCalendar xmlCal;
-			try {
-
-				xmlCal = DatatypeFactory.newInstance().newXMLGregorianCalendar(
-						cal);
-				request.setBokadTid(xmlCal);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-
-			request.setCentralTidbokID(credentials.getCentralTidbokID());
-
-			BookingResponse response = helper.setBookingUpdate(request);
-
-			if (response == null) {
-				this.setIsUpdated(false);
-			} else {
-				this.setIsUpdated(true);
-			}
-
-		}
-
-	}
+    isFirstPlaces = b;
+    // System.out.println("BookingServices.setFirstPlacesBoolean: " +
+    // isFirstPlaces);
+  }
+
+  public boolean isFirstPlaces() {
+    // System.out.println("BookingServices.isFirstBoolean: " +
+    // isFirstPlaces);
+
+    return isFirstPlaces;
+  }
+
+  public Booking getBooking(State loginCredentials) {
+
+    if (loginCredentials.isLoggedIn()) {
+
+      request = helper.getQueryWSRequest(loginCredentials);
+      response = helper.getQueryWS(request);
+      Booking bookingMapping = mapping.bookingMapping(response);
+      loginCredentials.setCentralTidbokID(response.getCentralTidbokID());
+
+      return bookingMapping;
+    }
+    return new BookingElvis();
+  }
+
+  /**
+   * Method cancelBooking returns true if deleted
+   * 
+   * @param loginCredentials
+   * @return
+   */
+  public boolean cancelBooking(State loginCredentials) {
+
+    request = helper.getQueryWSRequest(loginCredentials);
+    boolean cancelledBooking = helper.getQueryWSCancelBooking(request);
+
+    return cancelledBooking;
+    // return true;
+  }
+
+  public List<Surgery> getBookingPlace(State loginCredentials) {
+
+    List<Surgery> surgeries = new ArrayList<Surgery>();
+
+    if (loginCredentials.isLoggedIn()) {
+
+      request = helper.getQueryWSRequest(loginCredentials);
+      ArrayOfBookingPlace places = helper.getQueryWSRequestPlaces(request);
+      List<BookingPlace> placeList = places.getBookingPlace();
+      for (BookingPlace p : placeList) {
+        Surgery bookingPlaceMapping = mapping.bookingPlaceMapping(p);
+        surgeries.add(bookingPlaceMapping);
+      }
+
+    }
+    return surgeries;
+  }
+
+  public List<BookingTimeLocal> getBookingTime(State loginCredentials) {
+
+    List<BookingTimeLocal> timeListLocal = new ArrayList<BookingTimeLocal>();
+    boolean theInThePastFlag = loginCredentials.getSelectedDate().before(Calendar.getInstance());
+
+    if (loginCredentials.isLoggedIn() && !theInThePastFlag) {
+      Calendar selectedDate = loginCredentials.getSelectedDate();
+
+      String fromDate = DateHandler.setCalendarDateFormat(selectedDate);
+      JAXBElement<String> fromDat = objectFactory.createBookingRequestFromDat(fromDate);
+      request = helper.getQueryWSRequest(loginCredentials);
+      request.setCentralTidbokID(loginCredentials.getCentralTidbokID());
+      request.setFromDat(fromDat);
+
+      ArrayOfBookingTime times = helper.getQueryWSRequestTime(request);
+
+      List<BookingTime> timeList;
+      try {
+        timeList = times.getBookingTime();
+        if (timeList.isEmpty()) {
+          isTimeListEmpty = true;
+        } else {
+          isTimeListEmpty = false;
+        }
+
+        int id = 1;
+        for (BookingTime b : timeList) {
+
+          Calendar dateCal = Calendar.getInstance();
+          dateCal.set(Calendar.YEAR, b.getDatum().getYear());
+          dateCal.set(Calendar.MONTH, b.getDatum().getMonth() - 1);
+          dateCal.set(Calendar.DATE, b.getDatum().getDay());
+
+          String day = DateHandler.setCalendarDateFormat(dateCal);
+
+          BookingTimeLocal pl = new BookingTimeLocal();
+          pl.setNumbers(b.getAntal());
+          pl.setDay(day);
+          pl.setTime(b.getKlocka().getValue());
+          pl.setBookingTimeId(id);
+          timeListLocal.add(pl);
+          id++;
+        }
+      } catch (Exception e) {
+        isTimeListEmpty = true;
+      }
+
+      return timeListLocal;
+    }
+
+    return timeListLocal;
+  }
+
+  /***
+   * method set selected item
+   * 
+   * @param selectedItem
+   */
+
+  public void setSelectedItem(int selectedItem) {
+    System.out.println("selectitem: " + selectedItem);
+  }
+
+  /***
+   * 
+   * @param places
+   */
+  public void setSelectedItem(Places places) {
+    System.out.println("selectitem: " + places.getPlacesId());
+  }
+
+  /***
+   * 
+   * 
+   * @param places
+   * @param state
+   */
+  public void setSelectedItem(Places places, State state) {
+    System.out.println("BookingServices.setSelectedItem: " + places.getPlacesId());
+    state.setCentralTidbokID(places.getPlacesId());
+    System.out.println("BookingServices.state.centraltidbokid: " + state.getCentralTidbokID());
+  }
+
+  /*
+   * Method setting default value for BookingResponse, CentralTimeBookingId
+   */
+
+  public int getSelectedDefaultItem(State loginCredentials) {
+
+    if (this.isFirstPlaces()) {
+
+      request = helper.getQueryWSRequest(loginCredentials);
+      response = helper.getQueryWS(request);
+      int centralTimeBookingId = response.getCentralTidbokID();
+
+      this.setFirstPlacesBoolean(false);
+      return centralTimeBookingId;
+
+    } else {
+      System.out.println("BookingServices.getSelectedDefaultItem: " + loginCredentials.getCentralTidbokID());
+
+      return loginCredentials.getCentralTidbokID();
+    }
+
+  }
+
+  /**
+   * Method finding a selected place in the list of chosen bookingplaces return the object to print the selected place
+   * 
+   * 
+   * @param places
+   * @param login
+   * @return
+   */
+
+  public Places getSelectedPlace(Places places, State login) {
+    Places place = new Places();
+    List<Surgery> bookingPlaces = getBookingPlace(login);
+    for (Surgery bl : bookingPlaces) {
+      if (bl.getSurgeryId() == Integer.toString(places.getPlacesId())) {
+
+        place.setPlacesId(new Integer(bl.getSurgeryId()));
+        place.setClinic(bl.getSurgeryName());
+        place.setAddress(bl.getSurgeryAddress());
+        place.setRepresentationPlace();
+
+      }
+    }
+
+    if (place != null) {
+      sLogger.debug("Selected place clinic: " + place.getClinic());
+      sLogger.debug("Selected place address: " + place.getAddress());
+      sLogger.debug("Selected place id: " + place.getPlacesId());
+      sLogger.debug("Selected place representation place: " + place.getRepresentationPlace());
+    }
+    return place;
+  }
+
+//  public List<SelectItem> getBookingPlaceSelectItems(State loginCredentials) {
+//
+//    // Uncomment below for debug, you'll only have to click login,
+//    // creds below are hard coded.
+//    // String pnr = "19960103-2395";
+//    // String psw = "Y8PBZRUr";
+//    // loginCredentials.setPnr(pnr);
+//    // loginCredentials.setPasswd(psw);
+//    // loginCredentials.setLoggedIn(true);
+//    List<se.vgregion.webbtidbok.domain.BookingPlace> placeListLocal = new ArrayList<se.vgregion.webbtidbok.domain.BookingPlace>();
+//
+//    if (loginCredentials.isLoggedIn()) {
+//
+//      request = helper.getQueryWSRequest(loginCredentials);
+//      ArrayOfBookingPlace places = helper.getQueryWSRequestPlaces(request);
+//      // response = helper.getQueryWS(request);
+//      List<BookingPlace> placeList = places.getBookingPlace();
+//      for (BookingPlace p : placeList) {
+//        se.vgregion.webbtidbok.domain.BookingPlace pl = mapping.bookingPlaceMapping(p);
+//        placeListLocal.add(pl);
+//      }
+//
+//      SelectItemConverter sc = new SelectItemConverter();
+//
+//      return sc.getSelectItems(placeListLocal);
+//    }
+//
+//    return null;
+//  }
+
+  /****
+   * method setting ombokning
+   * 
+   * @param l
+   */
+  public void setBookingTime(BookingTimeLocal bookingTime, State credentials) {
+    String hour = bookingTime.getTime();
+    String[] hourMinute = hour.split(":");
+
+    GregorianCalendar cal = new GregorianCalendar();
+    cal.setTimeInMillis(credentials.getSelectedDate().getTime().getTime());
+
+    cal.set(Calendar.HOUR_OF_DAY, Integer.parseInt(hourMinute[0]));
+    cal.set(Calendar.MINUTE, Integer.parseInt(hourMinute[1]));
+    cal.set(Calendar.SECOND, 0);
+
+    // update booking
+    if (credentials.isLoggedIn()) {
+
+      request = helper.getQueryWSRequest(credentials);
+
+      XMLGregorianCalendar xmlCal;
+      try {
+
+        xmlCal = DatatypeFactory.newInstance().newXMLGregorianCalendar(cal);
+        request.setBokadTid(xmlCal);
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+
+      request.setCentralTidbokID(credentials.getCentralTidbokID());
+
+      BookingResponse response = helper.setBookingUpdate(request);
+
+      if (response == null) {
+        this.setIsUpdated(false);
+      } else {
+        this.setIsUpdated(true);
+      }
+
+    }
+
+  }
+
+  @Override
+  public List<Surgery> getSurgeries(State state) {
+    List<Surgery> surgeryList = new ArrayList<Surgery>();
+    if (state.isLoggedIn()) {
+      request = helper.getQueryWSRequest(state);
+      ArrayOfBookingPlace places = helper.getQueryWSRequestPlaces(request);
+      List<BookingPlace> placeList = places.getBookingPlace();
+      for (BookingPlace p : placeList) {
+        Surgery surgery = mapping.bookingPlaceMapping(p);
+        surgeryList.add(surgery);
+      }
+    }
+    return surgeryList;
+  }
 
 }

@@ -25,6 +25,7 @@ import se.vgregion.webbtidbok.Places;
 import se.vgregion.webbtidbok.State;
 import se.vgregion.webbtidbok.domain.Booking;
 import se.vgregion.webbtidbok.domain.BookingPlace;
+import se.vgregion.webbtidbok.domain.Surgery;
 
 public interface BookingServiceInterface {
 
@@ -50,7 +51,7 @@ public interface BookingServiceInterface {
    */
   public abstract boolean cancelBooking(State loginCredentials);
 
-  public abstract List<BookingPlace> getBookingPlace(State loginCredentials);
+ // public abstract List<BookingPlace> getBookingPlace(State loginCredentials);
 
   public abstract List<BookingTimeLocal> getBookingTime(State loginCredentials);
 
@@ -89,7 +90,7 @@ public interface BookingServiceInterface {
 
   public abstract Places getSelectedPlace(Places places, State login);
 
-  public abstract List<SelectItem> getBookingPlaceSelectItems(State loginCredentials);
+  public abstract List<Surgery> getSurgeries(State state);
 
   /****
    * method setting ombokning

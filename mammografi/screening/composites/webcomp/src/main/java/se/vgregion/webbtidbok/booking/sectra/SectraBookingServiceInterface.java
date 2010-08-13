@@ -27,8 +27,8 @@ public interface SectraBookingServiceInterface {
 
 	abstract public ArrayOfSectionLocal listSections(String examinationNr);
 
-	abstract public Booking reschedule(String examinationNr, String newTimeId,
-			XMLGregorianCalendar startTime, Boolean printNewNotice,
-			String rescheduleComment);
+//	abstract public Booking reschedule(String examinationNr, String newTimeId,
+//			XMLGregorianCalendar startTime, Boolean printNewNotice,
+//			String rescheduleComment);
 	// more booking stuff here as we go
 }

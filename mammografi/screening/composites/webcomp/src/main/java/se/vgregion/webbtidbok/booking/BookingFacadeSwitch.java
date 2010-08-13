@@ -17,57 +17,69 @@
  */
 package se.vgregion.webbtidbok.booking;
 
+import java.util.List;
 
+import javax.faces.model.SelectItem;
+
+import se.vgregion.webbtidbok.Places;
 import se.vgregion.webbtidbok.State;
-import se.vgregion.webbtidbok.booking.sectra.SectraBookingFacadeImpl;
 import se.vgregion.webbtidbok.domain.Booking;
 
 /**
- * Wrap elvis and sectra specific booking classes in order to generalize their
- * return. This would enable the BookingFacade to represent both of them and to
- * in turn be utilized by the presentation layer.
- * 
- * @author carstm
- * 
+ * This class is used as a switch to choose between different {@link BookingFacade} depending on witch service that is used by the user.
  */
-
-// adapt these var names as needed to fit existing xhtml code and vars there in,
-// example: name changed from name to displayName
 public class BookingFacadeSwitch implements BookingFacade {
 
-	private SectraBookingFacadeImpl facade;
-	private BookingFacade elvisBookingFacade;
-	
-	public void setElvisBookingFacade(BookingFacade elvisBookingFacade) {
-		this.elvisBookingFacade = elvisBookingFacade;
-	}
+  private BookingFacade sectraSUfacade;
+  private BookingFacade elvisBookingFacade;
 
-	public void setFacade(SectraBookingFacadeImpl facade) {
-		this.facade = facade;
-	}
+  public void setElvisBookingFacade(BookingFacade elvisBookingFacade) {
+    this.elvisBookingFacade = elvisBookingFacade;
+  }
 
-	public BookingFacadeSwitch() {
-	}
+  public void setSectraSUfacade(BookingFacade sectraSUfacade) {
+    this.sectraSUfacade = sectraSUfacade;
+  }
 
-	@Override
-	public Booking getBookingInfo(State state) {
-		if (state.getService().equals("MAMMO_SU")) {
-			Booking booking = null;
-			booking = facade.getBookingInfo(state);
-			return booking;
-		}
-		if (state.getService().equals("MAMMO_NU")) {
-			// TODO: add logic here
-		}
-		if (state.getService().equals("BUKAORTA")) {
-			Booking bookingInfo = elvisBookingFacade.getBookingInfo(state);
-			return bookingInfo;
-		}
-		return null;
-	}
+  @Override
+  public Booking getBookingInfo(State state) {
+    BookingFacade bookingFacadeForCurrentRequest = getBookingFacadeForCurrentRequest(state);
+    return bookingFacadeForCurrentRequest.getBookingInfo(state);
 
-	@Override
-	public boolean login(State state) {
-		return false;
-	}
+  }
+
+  private BookingFacade getBookingFacadeForCurrentRequest(State state) {
+    BookingFacade facade = null;
+    if (state.getService().equals("MAMMO_SU")) {
+      facade = sectraSUfacade;
+    }
+    if (state.getService().equals("MAMMO_NU")) {
+      // TODO: add logic here
+    }
+    if (state.getService().equals("BUKAORTA")) {
+      facade = elvisBookingFacade;
+    }
+    return facade;
+  }
+
+  @Override
+  public List<SelectItem> getBookingPlaceSelectItems(State state) {
+    return getBookingFacadeForCurrentRequest(state).getBookingPlaceSelectItems(state);
+  }
+
+  @Override
+  public boolean login(State state) {
+    return false;
+  }
+
+  @Override
+  public int getSelectedDefaultItem(State state) {
+    return getBookingFacadeForCurrentRequest(state).getSelectedDefaultItem(state);
+  }
+
+  @Override
+  public Places getSelectedPlace(Places places, State state) {
+    return getBookingFacadeForCurrentRequest(state).getSelectedPlace(places, state);
+  }
+
 }

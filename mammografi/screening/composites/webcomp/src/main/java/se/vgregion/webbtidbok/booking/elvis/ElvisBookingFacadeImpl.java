@@ -1,5 +1,5 @@
 /**
- * Copyright 2009 Vastra Gotalandsregionen
+  * Copyright 2009 Vastra Gotalandsregionen
  *
  *   This library is free software; you can redistribute it and/or modify
  *   it under the terms of version 2.1 of the GNU Lesser General Public
@@ -17,50 +17,65 @@
  */
 package se.vgregion.webbtidbok.booking.elvis;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.faces.model.SelectItem;
+
+import se.vgregion.webbtidbok.Places;
 import se.vgregion.webbtidbok.State;
 import se.vgregion.webbtidbok.booking.BookingFacade;
 import se.vgregion.webbtidbok.domain.Booking;
+import se.vgregion.webbtidbok.domain.Surgery;
 import se.vgregion.webbtidbok.ws.BookingRequest;
 import se.vgregion.webbtidbok.ws.BookingResponse;
 
 public class ElvisBookingFacadeImpl implements BookingFacade {
 
-    private WebServiceHelper helper;
-    private BookingMapperElvis bookingMapperElvis;
-    private BookingServiceInterface bookingService;
-    
-    
-    
-    public void setBookingService(BookingServiceInterface bookingService) {
-		this.bookingService = bookingService;
-	}
+  private WebServiceHelper helper;
+  private BookingServiceInterface bookingService;
 
-	public void setBookingMapperElvis(BookingMapperElvis bookingMapperElvis) {
-		this.bookingMapperElvis = bookingMapperElvis;
-	}
+  public void setBookingService(BookingServiceInterface bookingService) {
+    this.bookingService = bookingService;
+  }
 
-	public void setHelper(WebServiceHelper webServiceHelper) {
-        this.helper = webServiceHelper;
+  public void setHelper(WebServiceHelper webServiceHelper) {
+    this.helper = webServiceHelper;
+  }
+
+  @Override
+  public boolean login(State state) {
+    BookingRequest request = helper.getQueryWSRequest(state);
+    BookingResponse response = helper.getQueryWS(request);
+    state.setBookingResponse(response);
+    return response != null;
+  }
+
+  @Override
+  public Booking getBookingInfo(State state) {
+    return bookingService.getBooking(state);
+  }
+
+  @Override
+  public List<SelectItem> getBookingPlaceSelectItems(State state) {
+    List<SelectItem> selectItems = new ArrayList<SelectItem>(); 
+    List<Surgery> surgeries = bookingService.getSurgeries(state);
+    for (Surgery surgery : surgeries) {
+      SelectItem selectItem = new SelectItem();
+      selectItem.setLabel(surgery.getSurgeryName());
+      selectItem.setValue(surgery.getSurgeryId());
+      selectItems.add(selectItem);
     }
+    return selectItems;
+  }
 
-    @Override
-    public boolean login(State state) {
-    	BookingRequest request = helper.getQueryWSRequest(state);
-        BookingResponse response = helper.getQueryWS(request);
-        state.setBookingResponse(response);
-        return response != null;
-    }
-    
-    @Override
-    public Booking getBookingInfo(State state) {
-    	return bookingService.getBooking(state);
-    }
-    
-    public Booking getBookingInfoNew(State state){
-    	BookingRequest request =  helper.getQueryWSRequest(state);
-    	BookingResponse response = helper.getQueryWS(request);
-    	return bookingMapperElvis.bookingMapping(response);
-    }
+  @Override
+  public int getSelectedDefaultItem(State state) {
+    return bookingService.getSelectedDefaultItem(state);
+  }
 
-
+  @Override
+  public Places getSelectedPlace(Places places, State state) {
+    return bookingService.getSelectedPlace(places, state);
+  }
 }

@@ -17,22 +17,29 @@
  */
 package se.vgregion.webbtidbok.booking;
 
+import java.util.List;
+
+import javax.faces.model.SelectItem;
+
 import se.vgregion.webbtidbok.domain.Booking;
+import se.vgregion.webbtidbok.Places;
 import se.vgregion.webbtidbok.State;
 
 public interface BookingFacade {
 
-    /**
-     * Login to the booking system.
-     * 
-     * @param state The session state used to store the login credentials.
-     * @return true if login succeeded.
-     */
-    public boolean login(State state);
-    
-//    public BookingInfoLocal getBooking(State state);
-//    
-//    public BookingResponseLocal getBooking(State state);
-    
-    public Booking getBookingInfo(State state);
+  /**
+   * Login to the booking system.
+   * 
+   * @param state The session state used to store the login credentials.
+   * @return true if login succeeded.
+   */
+  public boolean login(State state);
+
+  public Booking getBookingInfo(State state);
+
+  List<SelectItem> getBookingPlaceSelectItems(State state);
+
+  int getSelectedDefaultItem(State state);
+  
+  Places getSelectedPlace(Places places, State state);
 }
