@@ -33,62 +33,64 @@ import se.vgregion.webbtidbok.domain.sectra.BookingSectra;
 
 public class SectraBookingFacadeImpl implements BookingFacade {
 
-  private BookingServiceInterface service;
+	private BookingServiceInterface service;
 
-  private SectraWebServiceHelperInterface helper;
+	private SectraWebServiceHelperInterface sectraWebServiceHelper;
 
-  public void setHelper(SectraWebServiceHelperInterface helper) {
-    this.helper = helper;
-  }
+	public void setHelper(SectraWebServiceHelperInterface helper) {
+		this.sectraWebServiceHelper = helper;
+	}
 
-  public void setService(SectraBookingServiceImpl service) {
-    this.service = service;
-  }
+	public void setService(SectraBookingServiceImpl service) {
+		this.service = service;
+	}
 
-  @Override
-  public boolean login(State state) {
-    boolean isLoggedIn = helper.login(state);
-    state.setLoggedIn(isLoggedIn);
-    return isLoggedIn;
-  }
+	@Override
+	public boolean login(State state) {
+		boolean isLoggedIn = sectraWebServiceHelper.login(state);
+		state.setLoggedIn(isLoggedIn);
+		return isLoggedIn;
+	}
 
-  @Override
-  public Booking getBookingInfo(State state) {
-    Booking booking = null;
-    if (state.isLoggedIn()) {
-      booking = service.getBooking(state);
-    } else {
-      booking = new BookingSectra();
-    }
-    return booking;
-  }
+	@Override
+	public Booking getBookingInfo(State state) {
+		Booking booking = null;
+		if (state.isLoggedIn()) {
+			booking = service.getBooking(state);
+		} else {
+			booking = new BookingSectra();
+		}
+		return booking;
+	}
 
-  public Booking reschedule(String examinationNr, String newTimeId, XMLGregorianCalendar startTime, Boolean printNewNotice, String rescheduleComment) {
-    return null;
-  }
+	public Booking reschedule(String examinationNr, String newTimeId,
+			XMLGregorianCalendar startTime, Boolean printNewNotice,
+			String rescheduleComment) {
+		return null;
+	}
 
-  @Override
-  public List<SelectItem> getBookingPlaceSelectItems(State state) {
-    List<Surgery> surgeries = service.getSurgeries(state);
-    List<SelectItem> selectedItems = new ArrayList<SelectItem>();
-    for (Surgery surgery : surgeries) {
-      SelectItem s = new SelectItem();
-      s.setLabel(surgery.getSurgeryName());
-      s.setValue(surgery.getSurgeryId());
-      selectedItems.add(s);
-    }
-    return selectedItems;
+	@Override
+	public List<SelectItem> getBookingPlaceSelectItems(State state) {
+		List<Surgery> surgeries = service.getSurgeries(state);
+		List<SelectItem> selectedItems = new ArrayList<SelectItem>();
+		for (Surgery surgery : surgeries) {
+			SelectItem s = new SelectItem();
+			s.setLabel(surgery.getSurgeryName());
+			s.setValue(surgery.getSurgeryId());
+			selectedItems.add(s);
+		}
+		return selectedItems;
 
-  }
+	}
 
-  @Override
-  public int getSelectedDefaultItem(State state) {
-    return service.getSelectedDefaultItem(state);
-  }
+	@Override
+	public int getSelectedDefaultItem(State state) {
+		return service.getSelectedDefaultItem(state);
+	}
 
-  @Override
-  public Places getSelectedPlace(Places places, State state) {
-    // TODO: Add implementation
-    return new Places();
-  }
+	@Override
+	public Places getSelectedPlace(Places places, State state) {
+		// TODO: Add implementation
+		return new Places();
+	}
 }

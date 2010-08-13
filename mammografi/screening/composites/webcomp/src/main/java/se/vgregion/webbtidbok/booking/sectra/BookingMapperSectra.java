@@ -29,37 +29,42 @@ import se.vgregion.webbtidbok.ws.sectra.TimeBlock;
 
 public class BookingMapperSectra {
 
-  public Booking bookingMapping(BookingInfo bookingInfo) {
-    BookingSectra booking = new BookingSectra();
-    booking.setPatientName(bookingInfo.getPatientName().getValue());
-    booking.setPatientId(bookingInfo.getPatientId().getValue());
-    booking.setExamTypeCode(bookingInfo.getExamTypeCode().getValue());
-    booking.setExamType(bookingInfo.getExamType().getValue());
-    booking.setExaminationId(bookingInfo.getExamNo().getValue());
-    TimeBlock value = bookingInfo.getBookedTime().getValue();
-    XMLGregorianCalendar startTime = value.getStartTime();
-    booking.setStartTime(startTime.toGregorianCalendar().getTime());
-    JAXBElement<Section> section = bookingInfo.getBookedTime().getValue().getSection();
-    String sectionName = section.getValue().getName().getValue();
-    String address = bookingInfo.getBookedTime().getValue().getSection().getValue().getAddress().getValue();
-    booking.setSurgeryAddress(sectionName + ", " + address);
-    return booking;
-  }
+	public Booking bookingMapping(BookingInfo bookingInfo) {
+		BookingSectra booking = new BookingSectra();
+		booking.setPatientName(getStringValue(bookingInfo.getPatientName()));
+		booking.setPatientId(getStringValue(bookingInfo.getPatientId()));
+		booking.setExamTypeCode(getStringValue(bookingInfo.getExamTypeCode()));
+		booking.setExamType(getStringValue(bookingInfo.getExamType()));
+		booking.setExaminationId(getStringValue(bookingInfo.getExamNo()));
 
-  public Surgery surgeryMapping(Section section){
-	  Surgery surgery = new Surgery();
-	  surgery.setSurgeryId(getStringValue(section.getId()));
-	  surgery.setSurgeryName(getStringValue(section.getName()));
-	  surgery.setSurgeryAddress(getStringValue(section.getAddress()));
-	 return  surgery;
+		if (bookingInfo.getBookedTime() != null) {
+			TimeBlock value = bookingInfo.getBookedTime().getValue();
+			XMLGregorianCalendar startTime = value.getStartTime();
+			booking.setStartTime(startTime.toGregorianCalendar().getTime());
+			JAXBElement<Section> section = bookingInfo.getBookedTime()
+					.getValue().getSection();
+			String sectionName = section.getValue().getName().getValue();
+			String address = bookingInfo.getBookedTime().getValue()
+					.getSection().getValue().getAddress().getValue();
+			booking.setSurgeryAddress(sectionName + ", " + address);
+		}
+		return booking;
 	}
 
-  private String getStringValue(JAXBElement<String> jaxbElement) {
-    String value = "";
-    if (jaxbElement != null) {
-      value = jaxbElement.getValue();
-    }
-    return value;
-  }
+	public Surgery surgeryMapping(Section section) {
+		Surgery surgery = new Surgery();
+		surgery.setSurgeryId(getStringValue(section.getId()));
+		surgery.setSurgeryName(getStringValue(section.getName()));
+		surgery.setSurgeryAddress(getStringValue(section.getAddress()));
+		return surgery;
+	}
+
+	private String getStringValue(JAXBElement<String> jaxbElement) {
+		String value = "";
+		if (jaxbElement != null) {
+			value = jaxbElement.getValue();
+		}
+		return value;
+	}
 
 }

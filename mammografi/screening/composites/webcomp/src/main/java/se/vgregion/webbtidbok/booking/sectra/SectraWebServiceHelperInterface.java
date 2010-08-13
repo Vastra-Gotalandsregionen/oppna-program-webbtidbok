@@ -17,22 +17,9 @@
  */
 package se.vgregion.webbtidbok.booking.sectra;
 
-import java.util.List;
-
-import javax.xml.datatype.XMLGregorianCalendar;
-
 import se.vgregion.webbtidbok.State;
-import se.vgregion.webbtidbok.domain.Booking;
-import se.vgregion.webbtidbok.ws.sectra.IRisRescheduleGetBookingInfoErrorInfoFaultFaultMessage;
-import se.vgregion.webbtidbok.ws.sectra.IRisRescheduleListSectionsErrorInfoFaultFaultMessage;
-import se.vgregion.webbtidbok.ws.sectra.IRisRescheduleRescheduleErrorInfoFaultFaultMessage;
-import se.vgregion.webbtidbok.ws.sectra.Section;
 
 public interface SectraWebServiceHelperInterface {
 
-	abstract public Booking getBookingInfo(String patientId, String examinationNr) throws IRisRescheduleGetBookingInfoErrorInfoFaultFaultMessage;
-	abstract public ArrayOfSectionLocal listSections(String examinationNr) throws IRisRescheduleListSectionsErrorInfoFaultFaultMessage;
-	abstract public Booking reschedule(String examinationNr, String newTimeId, XMLGregorianCalendar startTime, Boolean printNewNotice, String rescheduleComment) throws IRisRescheduleRescheduleErrorInfoFaultFaultMessage;
 	boolean login(State state);
-	//List<Section> getSectionForExaminationNbr(String examinationNbr);
 }

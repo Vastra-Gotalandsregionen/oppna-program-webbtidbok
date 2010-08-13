@@ -17,32 +17,21 @@
  */
 package se.vgregion.webbtidbok.booking.sectra;
 
-import javax.xml.datatype.XMLGregorianCalendar;
-
 import se.vgregion.webbtidbok.State;
-import se.vgregion.webbtidbok.domain.Booking;
-import se.vgregion.webbtidbok.ws.sectra.BookingInfo;
 import se.vgregion.webbtidbok.ws.sectra.IRisReschedule;
 import se.vgregion.webbtidbok.ws.sectra.IRisRescheduleGetBookingInfoErrorInfoFaultFaultMessage;
-import se.vgregion.webbtidbok.ws.sectra.IRisRescheduleListSectionsErrorInfoFaultFaultMessage;
-import se.vgregion.webbtidbok.ws.sectra.IRisRescheduleRescheduleErrorInfoFaultFaultMessage;
-import se.vgregion.webbtidbok.ws.sectra.TimeBlock;
 
-/*
- * This class was supposed to build request using an objectfactory, seemsl ike it ain't needed though?
- * since IRisReschedule.java seems to declare it doesn't need have JXBEelement params set in a request to respond to calls.
- * 	//objectfactory... creata ws request här fyll med JAXB-params (pat.id, examination.nbr.)
+/**
+ * Used for login functionality.
+ * 
+ * @author carstm
+ * 
  */
 public class SectraWebServiceHelperImpl implements
 		SectraWebServiceHelperInterface {
 
 	private IRisReschedule thePortSU;
 	private IRisReschedule thePortNU;
-	private BookingMapperSectra bookingMapperSectra;
-
-	public void setBookingMapperSectra(BookingMapperSectra bookingMapperSectra) {
-		this.bookingMapperSectra = bookingMapperSectra;
-	}
 
 	public void setThePortSU(IRisReschedule thePortSU) {
 		this.thePortSU = thePortSU;
@@ -52,82 +41,30 @@ public class SectraWebServiceHelperImpl implements
 		this.thePortNU = thePortNU;
 	}
 
-	public Booking getBookingInfo(String patientId, String examinationNr)
-			throws IRisRescheduleGetBookingInfoErrorInfoFaultFaultMessage {
-
-		BookingInfo bi = thePortSU.getBookingInfo(patientId, examinationNr);
-		// TODO: remove
-		TimeBlock tb = bi.getBookedTime().getValue();
-		System.out.println("###.... tb." + tb.getStartTime().toString());
-
-		return bookingMapperSectra.bookingMapping(bi);
-	}
-
 	// TODO fix some crap here to simulate login call
 	@Override
 	public boolean login(State state) {
-	  boolean returnValue;
-	  if (state.getPnr() == null || state.getPasswd() == null){
-      returnValue = false;
-	  }
+		boolean returnValue;
+		if (state.getPnr() == null || state.getPasswd() == null) {
+			returnValue = false;
+		}
 		try {
-			thePortSU.getBookingInfo(state.getPnr(), state.getPasswd());
-			returnValue =  true;
+			IRisReschedule wsInterface = getWSInterface(state);
+			wsInterface.getBookingInfo(state.getPnr(), state.getPasswd());
+			returnValue = true;
 		} catch (IRisRescheduleGetBookingInfoErrorInfoFaultFaultMessage e) {
-		  returnValue = false;
+			returnValue = false;
 		}
 		return returnValue;
 	}
 
-	// public ArrayOfdateTime listFreeDays(XMLGregorianCalendar startDate,
-	// XMLGregorianCalendar endDate, String examinationNr, String sectionId)
-	// throws IRisRescheduleListFreeDaysErrorInfoFaultFaultMessage {
-	// // TODO Auto-generated method stub
-	// return null;
-	// }
-	//
-	// public ArrayOfTimeBlock listFreeTimes(XMLGregorianCalendar startDate,
-	// XMLGregorianCalendar endDate, String examinationNr, String sectionId)
-	// throws IRisRescheduleListFreeTimesErrorInfoFaultFaultMessage {
-	// // TODO Auto-generated method stub
-	// return null;
-	// }
-	//
-	//
-	public ArrayOfSectionLocal listSections(String examinationNr)
-			throws IRisRescheduleListSectionsErrorInfoFaultFaultMessage {
+	private IRisReschedule getWSInterface(State state) {
 
-		ArrayOfSectionLocal sectionArrayL = new ArrayOfSectionLocal(thePortSU
-				.listSections(examinationNr));
-
-		return sectionArrayL;
+		if (state.getService().equals("MAMMO_NU")) {
+			return this.thePortNU;
+		} else {
+			return this.thePortSU;
+		}
 	}
-
-	public Booking reschedule(String examinationNr, String newTimeId,
-			XMLGregorianCalendar startTime, Boolean printNewNotice,
-			String rescheduleComment)
-			throws IRisRescheduleRescheduleErrorInfoFaultFaultMessage {
-
-		System.out
-				.println("startTime in SectraWebServiceHelper.reeschedule(): "
-						+ startTime.toString());
-		BookingInfo reschedule = thePortSU.reschedule(examinationNr, newTimeId,
-				startTime, printNewNotice, rescheduleComment);
-
-		// TODO: remove
-		TimeBlock tb = reschedule.getBookedTime().getValue();
-		System.out.println("### startTime after thePort.reschedule() call: "
-				+ tb.getStartTime().toString());
-		return bookingMapperSectra.bookingMapping(reschedule);
-	}
-	
-	
-	//
-	//
-	// public ArrayOfBookingInfo getBookings(String patientId)
-	// throws IRisRescheduleGetBookingsErrorInfoFaultFaultMessage {
-	// // TODO Auto-generated method stub
-	// return null;
-	// }
 
 }
