@@ -27,6 +27,7 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
+import se.vgregion.webbtidbok.State;
 import se.vgregion.webbtidbok.domain.Booking;
 import se.vgregion.webbtidbok.domain.sectra.BookingSectra;
 
@@ -42,8 +43,10 @@ public class SectraRISManualTestClient {
 	public static void printGetBookingInfoResult(Booking inputBiL){
 	
 		if(inputBiL == null){
-			
-			staticBiL = (BookingSectra) service.getBookingInfo("1912121212", "SERTEST00012345");
+			State state = new State();
+			state.setPnr("1912121212");
+			state.setPasswd("SERTEST00012345");
+			staticBiL = (BookingSectra) service.getBooking(state);
 			Date tb = staticBiL.getStartTime();
 			System.out.println("TimeBlock.getId: " + tb);
 			
@@ -102,7 +105,7 @@ public class SectraRISManualTestClient {
 		
 		System.out.println("xmlGregCal:" +xmlGregCal.toString());
 		//HOW are the setters for this? doesn't seem to take uh?
-		staticBiL = (BookingSectra) service.reschedule("SERTEST00012345", "newTimeId_1", xmlGregCal, printNewNotice, rescheduleComment);
+		//staticBiL = (BookingSectra) service.reschedule("SERTEST00012345", "newTimeId_1", xmlGregCal, printNewNotice, rescheduleComment);
 		//TimeBlockLocal tb = staticBiL.getBookedTime();
 		//check that what goes in comes back out again
 		//System.out.println("printing sttartTime after reschedule call: " + tb.getStartTime());
@@ -112,9 +115,9 @@ public class SectraRISManualTestClient {
 	
 	public static void login(String patientId, String password){
 		
-		boolean isLoggedIn = service.login(patientId, password);
+		//boolean isLoggedIn = service.login(patientId, password);
 		
-		System.out.println("Login.isLoggedIn: " + isLoggedIn);
+		//System.out.println("Login.isLoggedIn: " + isLoggedIn);
 	}
 	
 	public static void main (String[] args) throws DatatypeConfigurationException{

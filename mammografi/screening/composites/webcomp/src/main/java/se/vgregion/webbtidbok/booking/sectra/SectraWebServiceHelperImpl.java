@@ -19,6 +19,7 @@ package se.vgregion.webbtidbok.booking.sectra;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 
+import se.vgregion.webbtidbok.State;
 import se.vgregion.webbtidbok.domain.Booking;
 import se.vgregion.webbtidbok.ws.sectra.BookingInfo;
 import se.vgregion.webbtidbok.ws.sectra.IRisReschedule;
@@ -63,14 +64,19 @@ public class SectraWebServiceHelperImpl implements
 	}
 
 	// TODO fix some crap here to simulate login call
-	public boolean login(String patientId, String password) {
-
+	@Override
+	public boolean login(State state) {
+	  boolean returnValue;
+	  if (state.getPnr() == null || state.getPasswd() == null){
+      returnValue = false;
+	  }
 		try {
-			thePortSU.getBookingInfo(patientId, password);
-			return true;
+			thePortSU.getBookingInfo(state.getPnr(), state.getPasswd());
+			returnValue =  true;
 		} catch (IRisRescheduleGetBookingInfoErrorInfoFaultFaultMessage e) {
-			return false;
+		  returnValue = false;
 		}
+		return returnValue;
 	}
 
 	// public ArrayOfdateTime listFreeDays(XMLGregorianCalendar startDate,
@@ -114,6 +120,8 @@ public class SectraWebServiceHelperImpl implements
 				+ tb.getStartTime().toString());
 		return bookingMapperSectra.bookingMapping(reschedule);
 	}
+	
+	
 	//
 	//
 	// public ArrayOfBookingInfo getBookings(String patientId)
