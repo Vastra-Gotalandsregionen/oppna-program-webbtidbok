@@ -17,34 +17,22 @@
  */
 package se.vgregion.webbtidbok.booking;
 
-import java.util.List;
-import java.util.HashMap;
-import java.util.Map;
-
 import se.vgregion.webbtidbok.State;
-import se.vgregion.webbtidbok.servicedef.ServiceDefinition;
 
-public class BookingFactory {
+public interface BookingFactory {
 
-    private Map<String, ServiceDefinition> serviceDefinitions;
+    /**
+     * Get a BookingFacade for a given service, using state information.
+     * @param state The state used to look up service information.
+     * @return A facade for the booking system.
+     */
+    public BookingFacade getService(State state);
     
-    public void setServiceDefinitions(List<ServiceDefinition> serviceDefinitionsList) {
-        serviceDefinitions = new HashMap<String, ServiceDefinition>();
-        for(ServiceDefinition sd : serviceDefinitionsList) {
-            serviceDefinitions.put(sd.getServiceID(), sd);
-        }
-    }
-
-    public BookingFacade getService(State loginCredentials) {
-        return getService(loginCredentials.getService());
-    }
-    
-    public BookingFacade getService(String serviceId) {
-        if(serviceDefinitions.containsKey(serviceId)) {
-            return serviceDefinitions.get(serviceId).getBookingService();
-        } else {
-            throw new RuntimeException("Trying to acquire unknown service definition: " + serviceId);
-        }
-    }
+    /**
+     * Get a BookingFacade for a given service, using a service id.
+     * @param serviceId The designated service id of the booking system.
+     * @return A facade for the booking system.
+     */
+    public BookingFacade getService(String serviceId);
 
 }

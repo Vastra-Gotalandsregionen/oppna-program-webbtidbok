@@ -22,6 +22,7 @@ import java.util.ArrayList;
 
 import junit.framework.Assert;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import se.vgregion.webbtidbok.State;
@@ -29,12 +30,16 @@ import se.vgregion.webbtidbok.servicedef.ServiceDefinition;
 
 public class BookingFactoryTest {
 
-    @Test
-    public void testSettingServiceDefinition() {
-        BookingFactory factory = new BookingFactory();
+    private BookingFactory factory;
+    private State state;
+    private ServiceDefinition sd1;
+    
+    @Before
+    public void setUp() {
+        factory = new BookingFactoryImpl();
 
         ArrayList<ServiceDefinition> list = new ArrayList<ServiceDefinition>();
-        ServiceDefinition sd1 = new ServiceDefinition();
+        sd1 = new ServiceDefinition();
         sd1.setServiceID("sd1");
         sd1.setBookingService(new BookingFacadeDummy());
         list.add(sd1);
@@ -47,16 +52,25 @@ public class BookingFactoryTest {
         sd3.setBookingService(new BookingFacadeDummy());
         list.add(sd3);
 
-        factory.setServiceDefinitions(list);
+        ((BookingFactoryImpl)factory).setServiceDefinitions(list);
 
-        State state = new State();
-
+        state = new State();
+    }
+    
+    @Test
+    public void testGettingServiceDefinition() {
         state.setService(sd1.getServiceID());
         Assert.assertEquals(sd1.getBookingService(), factory.getService(state));
-
+    }
+    
+    @Test(expected = RuntimeException.class)
+    public void testGettingNonExistingServiceDefinition() {
         state.setService("nonexisting");
-        Assert.assertNull(factory.getService(state));
+        factory.getService(state);
+    }
         
+    @Test(expected = RuntimeException.class)
+    public void testGettingNullServiceDefinition() {
         state.setService(null);
         Assert.assertNull(factory.getService(state));
     }

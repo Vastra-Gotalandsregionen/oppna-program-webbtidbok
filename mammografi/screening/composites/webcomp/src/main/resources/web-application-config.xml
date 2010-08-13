@@ -30,7 +30,7 @@
 	<context:component-scan base-package="org.springframework.webflow.samples.booking" />
 
 
-	<bean id="bookingFactory" class="se.vgregion.webbtidbok.booking.BookingFactory">
+	<bean id="bookingFactory" class="se.vgregion.webbtidbok.booking.BookingFactoryImpl">
 		<property name="serviceDefinitions">
 			<list>
 				<ref bean="serviceDefinitionMammografiSU" />
@@ -112,11 +112,11 @@
 	<bean id="elvisBookingService"
 		class="se.vgregion.webbtidbok.booking.elvis.ElvisBookingFacadeImpl">
 		<property name="helper" ref="helper" />
-		<property name="bookingService" ref="bookingService"/>
+		<property name="bookingService" ref="bookingServiceElvis"/>
 	</bean>
 	<bean id="elvisMapper" class="se.vgregion.webbtidbok.booking.elvis.BookingMapperElvis" />
 	
-	<bean id="bookingService" class="se.vgregion.webbtidbok.booking.elvis.BookingService">
+	<bean id="bookingServiceElvis" class="se.vgregion.webbtidbok.booking.elvis.BookingService">
 		<property name="helper" ref="helper" />
 		<property name="mapping" ref="elvisMapper"/>
 	</bean>

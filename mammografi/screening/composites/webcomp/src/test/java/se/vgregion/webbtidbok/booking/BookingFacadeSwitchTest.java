@@ -36,6 +36,7 @@ public class BookingFacadeSwitchTest {
 
   private BookingFacadeSwitch bookingFacadeSwitch;
   private State state;
+  private BookingFactoryMock bookingFactoryMock;
   private BookingFacadeSectraMock bookingFacadeSectraMock;
   private BookingFacadeElvisMock bookingFacadeElvisMock;
 
@@ -46,8 +47,8 @@ public class BookingFacadeSwitchTest {
     state.setService("MAMMO_SU");
     bookingFacadeSectraMock = new BookingFacadeSectraMock();
     bookingFacadeElvisMock = new BookingFacadeElvisMock();
-    bookingFacadeSwitch.setElvisBookingFacade(bookingFacadeElvisMock);
-    bookingFacadeSwitch.setSectraSUfacade(bookingFacadeSectraMock);
+    bookingFactoryMock = new BookingFactoryMock(bookingFacadeSectraMock, bookingFacadeElvisMock);
+    bookingFacadeSwitch.setBookingFactory(bookingFactoryMock);
   }
 
   @Test
@@ -186,6 +187,34 @@ public class BookingFacadeSwitchTest {
       return false;
     }
 
+  }
+  
+  class BookingFactoryMock implements BookingFactory {
+
+    private BookingFacade sectraService; 
+    private BookingFacade elvisService;
+
+    public BookingFactoryMock(BookingFacade sectraMock, BookingFacade elvisMock) {
+        sectraService = sectraMock;
+        elvisService = elvisMock;
+    }
+      
+    @Override
+    public BookingFacade getService(State state) {
+        return getService(state.getService());
+    }
+
+    @Override
+    public BookingFacade getService(String serviceId) {
+        if ("MAMMO_SU".equals(serviceId)) {
+            return sectraService;
+        } else if ("BUKAORTA".equals(serviceId)) {
+            return elvisService;
+        } else {
+            throw new RuntimeException("Incorrect booking service.");
+        }
+    }
+      
   }
 
 }
