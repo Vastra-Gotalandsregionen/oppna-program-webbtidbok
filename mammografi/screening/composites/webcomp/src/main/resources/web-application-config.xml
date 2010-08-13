@@ -110,10 +110,10 @@
 	<bean id="elvisBookingService"
 		class="se.vgregion.webbtidbok.booking.elvis.ElvisBookingFacadeImpl">
 		<property name="helper" ref="helper" />
-		<property name="bookingMapperElvis" ref="elvisMapper"/>
 		<property name="bookingService" ref="bookingService"/>
 	</bean>
 	<bean id="elvisMapper" class="se.vgregion.webbtidbok.booking.elvis.BookingMapperElvis" />
+	
 	<bean id="bookingService" class="se.vgregion.webbtidbok.booking.elvis.BookingService">
 		<property name="helper" ref="helper" />
 		<property name="mapping" ref="elvisMapper"/>
@@ -128,11 +128,15 @@
 	<bean id="sectraBookingService"
 		class="se.vgregion.webbtidbok.booking.sectra.SectraBookingFacadeImpl">
 		<property name="service" ref="bookingServiceSectra" />
+		<property name="helper" ref="sectraWShelper"/>
 	</bean>
 
 	<bean id="bookingServiceSectra"
 		class="se.vgregion.webbtidbok.booking.sectra.SectraBookingServiceImpl">
 		<property name="helper" ref="sectraWShelper" />
+		<property name="thePortNU" ref="sectraMockServiceNU"/>
+		<property name="thePortSU" ref="sectraMockServiceSU"/>
+		<property name="bookingMapperSectra" ><bean class="se.vgregion.webbtidbok.booking.sectra.BookingMapperSectra" /></property>
 	</bean>
 
 	<bean id="sectraWShelper"
@@ -169,7 +173,7 @@
 	<!-- END sectra facade -->
 
 	<bean id="bookingFacade" class="se.vgregion.webbtidbok.booking.BookingFacadeSwitch">
-		<property name="facade" ref="sectraBookingService" />
+		<property name="sectraSUfacade" ref="sectraBookingService" />
 		<property name="elvisBookingFacade" ref="elvisBookingService" />
 	</bean>
 

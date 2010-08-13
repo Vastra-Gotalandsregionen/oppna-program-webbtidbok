@@ -17,6 +17,11 @@
  */
 package se.vgregion.webbtidbok.booking;
 
+import java.util.List;
+
+import javax.faces.model.SelectItem;
+
+import se.vgregion.webbtidbok.Places;
 import se.vgregion.webbtidbok.State;
 
 /**
@@ -37,5 +42,23 @@ public class BookingFacadeDummy implements BookingFacade {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+  @Override
+  public List<SelectItem> getBookingPlaceSelectItems(State state) {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public int getSelectedDefaultItem(State state) {
+    // TODO Auto-generated method stub
+    return 0;
+  }
+
+  @Override
+  public Places getSelectedPlace(Places places, State state) {
+    // TODO Auto-generated method stub
+    return null;
+  }
 
 }
