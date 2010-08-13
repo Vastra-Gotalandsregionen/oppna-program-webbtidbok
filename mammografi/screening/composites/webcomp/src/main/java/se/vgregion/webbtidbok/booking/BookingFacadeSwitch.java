@@ -31,37 +31,22 @@ import se.vgregion.webbtidbok.domain.Booking;
  */
 public class BookingFacadeSwitch implements BookingFacade {
 
-	private BookingFacade sectraSUfacade;
-	private BookingFacade elvisBookingFacade;
+    private BookingFactory bookingFactory;
 
-	public void setElvisBookingFacade(BookingFacade elvisBookingFacade) {
-		this.elvisBookingFacade = elvisBookingFacade;
-	}
+    public void setBookingFactory(BookingFactory factory) {
+        bookingFactory = factory;
+    }
 
-	public void setSectraSUfacade(BookingFacade sectraSUfacade) {
-		this.sectraSUfacade = sectraSUfacade;
-	}
-
-	@Override
-	public Booking getBookingInfo(State state) {
+    @Override
+    public Booking getBookingInfo(State state) {
 		BookingFacade bookingFacadeForCurrentRequest = getBookingFacadeForCurrentRequest(state);
 		return bookingFacadeForCurrentRequest.getBookingInfo(state);
 
 	}
 
-	private BookingFacade getBookingFacadeForCurrentRequest(State state) {
-		BookingFacade facade = null;
-		if (state.getService().equals("MAMMO_SU")) {
-			facade = sectraSUfacade;
-		}
-		if (state.getService().equals("MAMMO_NU")) {
-			facade = sectraSUfacade;
-		}
-		if (state.getService().equals("BUKAORTA")) {
-			facade = elvisBookingFacade;
-		}
-		return facade;
-	}
+    private BookingFacade getBookingFacadeForCurrentRequest(State state) {
+        return bookingFactory.getService(state);
+    }
 
 	@Override
 	public List<SelectItem> getBookingPlaceSelectItems(State state) {
