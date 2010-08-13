@@ -36,12 +36,14 @@ public class BookingFactory {
     }
 
     public BookingFacade getService(State loginCredentials) {
-        String key = loginCredentials.getService();
-        if(serviceDefinitions.containsKey(key)) {
-            return serviceDefinitions.get(key).getBookingService();
+        return getService(loginCredentials.getService());
+    }
+    
+    public BookingFacade getService(String serviceId) {
+        if(serviceDefinitions.containsKey(serviceId)) {
+            return serviceDefinitions.get(serviceId).getBookingService();
         } else {
-            // TODO: Proper error response
-            return null;
+            throw new RuntimeException("Trying to acquire unknown service definition: " + serviceId);
         }
     }
 

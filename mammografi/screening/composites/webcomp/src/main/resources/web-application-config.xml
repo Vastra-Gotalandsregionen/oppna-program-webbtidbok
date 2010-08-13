@@ -171,8 +171,7 @@
 	<!-- END sectra facade -->
 
 	<bean id="bookingFacade" class="se.vgregion.webbtidbok.booking.BookingFacadeSwitch">
-		<property name="sectraSUfacade" ref="sectraBookingService" />
-		<property name="elvisBookingFacade" ref="elvisBookingService" />
+	    <property name="bookingFactory" ref="bookingFactory"/>
 	</bean>
 
 	<bean id="stringEncrypter" class="se.vgregion.webbtidbok.crypto.StringEncrypter">
