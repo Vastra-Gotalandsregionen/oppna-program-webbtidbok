@@ -22,27 +22,30 @@ import java.util.List;
 
 import javax.faces.model.SelectItem;
 
-import se.vgregion.webbtidbok.domain.Booking;
 import se.vgregion.webbtidbok.Places;
 import se.vgregion.webbtidbok.State;
+import se.vgregion.webbtidbok.domain.Booking;
 
 public interface BookingFacade {
 
-  /**
-   * Login to the booking system.
-   * 
-   * @param state The session state used to store the login credentials.
-   * @return true if login succeeded.
-   */
-  public boolean login(State state);
+	/**
+	 * Login to the booking system.
+	 * 
+	 * @param state
+	 *            The session state used to store the login credentials.
+	 * @return true if login succeeded.
+	 */
+	public boolean login(State state);
 
-  public Booking getBookingInfo(State state);
+	public Booking getBookingInfo(State state);
 
-  List<SelectItem> getBookingPlaceSelectItems(State state);
+	List<SelectItem> getBookingPlaceSelectItems(State state);
 
-  int getSelectedDefaultItem(State state);
-  
-  Places getSelectedPlace(Places places, State state);
-  
-  List<Date> getFreeDays(State state, Date startDate, Date endDate);
+	int getSelectedDefaultItem(State state);
+
+	Places getSelectedPlace(Places places, State state);
+
+	List<Date> getFreeDays(State state, Date startDate, Date endDate);
+
+	void setSelectedItem(Places places, State state);
 }

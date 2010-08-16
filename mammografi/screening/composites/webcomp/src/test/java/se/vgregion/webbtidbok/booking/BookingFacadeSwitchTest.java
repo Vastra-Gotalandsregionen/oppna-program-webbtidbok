@@ -17,7 +17,8 @@
  */
 package se.vgregion.webbtidbok.booking;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Date;
 import java.util.List;
@@ -35,199 +36,213 @@ import se.vgregion.webbtidbok.domain.sectra.BookingSectra;
 
 public class BookingFacadeSwitchTest {
 
-  private BookingFacadeSwitch bookingFacadeSwitch;
-  private State state;
-  private BookingFactoryMock bookingFactoryMock;
-  private BookingFacadeSectraMock bookingFacadeSectraMock;
-  private BookingFacadeElvisMock bookingFacadeElvisMock;
+	private BookingFacadeSwitch bookingFacadeSwitch;
+	private State state;
+	private BookingFactoryMock bookingFactoryMock;
+	private BookingFacadeSectraMock bookingFacadeSectraMock;
+	private BookingFacadeElvisMock bookingFacadeElvisMock;
 
-  @Before
-  public void setUp() throws Exception {
-    bookingFacadeSwitch = new BookingFacadeSwitch();
-    state = new State();
-    state.setService("MAMMO_SU");
-    bookingFacadeSectraMock = new BookingFacadeSectraMock();
-    bookingFacadeElvisMock = new BookingFacadeElvisMock();
-    bookingFactoryMock = new BookingFactoryMock(bookingFacadeSectraMock, bookingFacadeElvisMock);
-    bookingFacadeSwitch.setBookingFactory(bookingFactoryMock);
-  }
+	@Before
+	public void setUp() throws Exception {
+		bookingFacadeSwitch = new BookingFacadeSwitch();
+		state = new State();
+		state.setService("MAMMO_SU");
+		bookingFacadeSectraMock = new BookingFacadeSectraMock();
+		bookingFacadeElvisMock = new BookingFacadeElvisMock();
+		bookingFactoryMock = new BookingFactoryMock(bookingFacadeSectraMock,
+				bookingFacadeElvisMock);
+		bookingFacadeSwitch.setBookingFactory(bookingFactoryMock);
+	}
 
-  @Test
-  public void testGetBookingInfo() throws Exception {
-    // Test sectra facade.
-    bookingFacadeSwitch.getBookingInfo(state);
-    assertFalse(bookingFacadeElvisMock.wasCalled);
-    assertTrue(bookingFacadeSectraMock.wasCalled);
-    setUp();
-    // Test elvis facade
-    state.setService("BUKAORTA");
-    bookingFacadeSwitch.getBookingInfo(state);
-    assertTrue(bookingFacadeElvisMock.wasCalled);
-    assertFalse(bookingFacadeSectraMock.wasCalled);
-  }
+	@Test
+	public void testGetBookingInfo() throws Exception {
+		// Test sectra facade.
+		bookingFacadeSwitch.getBookingInfo(state);
+		assertFalse(bookingFacadeElvisMock.wasCalled);
+		assertTrue(bookingFacadeSectraMock.wasCalled);
+		setUp();
+		// Test elvis facade
+		state.setService("BUKAORTA");
+		bookingFacadeSwitch.getBookingInfo(state);
+		assertTrue(bookingFacadeElvisMock.wasCalled);
+		assertFalse(bookingFacadeSectraMock.wasCalled);
+	}
 
-  @Test
-  public void testGetBookingPlaceSelectItems() throws Exception {
+	@Test
+	public void testGetBookingPlaceSelectItems() throws Exception {
 
-    bookingFacadeSwitch.getBookingPlaceSelectItems(state);
-    assertThatSectraFacadeWasCalled();
-    setUp();
-    // Test elvis facade
-    state.setService("BUKAORTA");
-    bookingFacadeSwitch.getBookingPlaceSelectItems(state);
-    assertThatElvisFacadeWasCAlled();
-  }
+		bookingFacadeSwitch.getBookingPlaceSelectItems(state);
+		assertThatSectraFacadeWasCalled();
+		setUp();
+		// Test elvis facade
+		state.setService("BUKAORTA");
+		bookingFacadeSwitch.getBookingPlaceSelectItems(state);
+		assertThatElvisFacadeWasCAlled();
+	}
 
-  private void assertThatSectraFacadeWasCalled() {
-    assertFalse(bookingFacadeElvisMock.wasCalled);
-    assertTrue(bookingFacadeSectraMock.wasCalled);
-  }
+	private void assertThatSectraFacadeWasCalled() {
+		assertFalse(bookingFacadeElvisMock.wasCalled);
+		assertTrue(bookingFacadeSectraMock.wasCalled);
+	}
 
-  private void assertThatElvisFacadeWasCAlled() {
-    assertTrue(bookingFacadeElvisMock.wasCalled);
-    assertFalse(bookingFacadeSectraMock.wasCalled);
-  }
+	private void assertThatElvisFacadeWasCAlled() {
+		assertTrue(bookingFacadeElvisMock.wasCalled);
+		assertFalse(bookingFacadeSectraMock.wasCalled);
+	}
 
-  @Test
-  public void testLogin() {
-    assertFalse(bookingFacadeSwitch.login(state));
-  }
+	@Test
+	public void testLogin() {
+		assertFalse(bookingFacadeSwitch.login(state));
+	}
 
-  @Test
-  public void testGetSelectedDefaultItem() throws Exception {
+	@Test
+	public void testGetSelectedDefaultItem() throws Exception {
 
-    bookingFacadeSwitch.getSelectedDefaultItem(state);
-    assertThatSectraFacadeWasCalled();
-    setUp();
-    state.setService("BUKAORTA");
-    bookingFacadeSwitch.getSelectedDefaultItem(state);
-    assertThatElvisFacadeWasCAlled();
+		bookingFacadeSwitch.getSelectedDefaultItem(state);
+		assertThatSectraFacadeWasCalled();
+		setUp();
+		state.setService("BUKAORTA");
+		bookingFacadeSwitch.getSelectedDefaultItem(state);
+		assertThatElvisFacadeWasCAlled();
 
-  }
+	}
 
-  @Test
-  public void testGetSelectedPlace() throws Exception {
-    bookingFacadeSwitch.getSelectedPlace(null, state);
-    assertThatSectraFacadeWasCalled();
-    setUp();
-    state.setService("BUKAORTA");
-    bookingFacadeSwitch.getSelectedPlace(null, state);
-    assertThatElvisFacadeWasCAlled();
-  }
+	@Test
+	public void testGetSelectedPlace() throws Exception {
+		bookingFacadeSwitch.getSelectedPlace(null, state);
+		assertThatSectraFacadeWasCalled();
+		setUp();
+		state.setService("BUKAORTA");
+		bookingFacadeSwitch.getSelectedPlace(null, state);
+		assertThatElvisFacadeWasCAlled();
+	}
 
-  class BookingFacadeSectraMock implements BookingFacade {
+	class BookingFacadeSectraMock implements BookingFacade {
 
-    boolean wasCalled;
+		boolean wasCalled;
 
-    @Override
-    public Booking getBookingInfo(State state) {
+		@Override
+		public Booking getBookingInfo(State state) {
 
-      wasCalled = true;
+			wasCalled = true;
 
-      return new BookingSectra();
-    }
+			return new BookingSectra();
+		}
 
-    @Override
-    public List<SelectItem> getBookingPlaceSelectItems(State state) {
-      wasCalled = true;
-      return null;
-    }
+		@Override
+		public List<SelectItem> getBookingPlaceSelectItems(State state) {
+			wasCalled = true;
+			return null;
+		}
 
-    @Override
-    public int getSelectedDefaultItem(State state) {
-      wasCalled = true;
-      return 0;
-    }
+		@Override
+		public int getSelectedDefaultItem(State state) {
+			wasCalled = true;
+			return 0;
+		}
 
-    @Override
-    public Places getSelectedPlace(Places places, State state) {
-      wasCalled = true;
-      return null;
-    }
+		@Override
+		public Places getSelectedPlace(Places places, State state) {
+			wasCalled = true;
+			return null;
+		}
 
-    @Override
-    public boolean login(State state) {
-      wasCalled = true;
-      return false;
-    }
+		@Override
+		public boolean login(State state) {
+			wasCalled = true;
+			return false;
+		}
 
-    @Override
-    public List<Date> getFreeDays(State state, Date startDate, Date endDate) {
-      wasCalled = true;
-      return null;
-    }
-  }
+		@Override
+		public List<Date> getFreeDays(State state, Date startDate, Date endDate) {
+			wasCalled = true;
+			return null;
+		}
 
-  class BookingFacadeElvisMock implements BookingFacade {
+		@Override
+		public void setSelectedItem(Places places, State state) {
+			wasCalled = true;
 
-    boolean wasCalled;
+		}
+	}
 
-    @Override
-    public Booking getBookingInfo(State state) {
+	class BookingFacadeElvisMock implements BookingFacade {
 
-      wasCalled = true;
+		boolean wasCalled;
 
-      return new BookingElvis();
-    }
+		@Override
+		public Booking getBookingInfo(State state) {
 
-    @Override
-    public List<SelectItem> getBookingPlaceSelectItems(State state) {
-      wasCalled = true;
-      return null;
-    }
+			wasCalled = true;
 
-    @Override
-    public int getSelectedDefaultItem(State state) {
-      wasCalled = true;
-      return 0;
-    }
+			return new BookingElvis();
+		}
 
-    @Override
-    public Places getSelectedPlace(Places places, State state) {
-      wasCalled = true;
-      return null;
-    }
+		@Override
+		public List<SelectItem> getBookingPlaceSelectItems(State state) {
+			wasCalled = true;
+			return null;
+		}
 
-    @Override
-    public boolean login(State state) {
-      wasCalled = true;
-      return false;
-    }
+		@Override
+		public int getSelectedDefaultItem(State state) {
+			wasCalled = true;
+			return 0;
+		}
 
-    @Override
-    public List<Date> getFreeDays(State state, Date startDate, Date endDate) {
-      wasCalled = true;
-      return null;
-    }
+		@Override
+		public Places getSelectedPlace(Places places, State state) {
+			wasCalled = true;
+			return null;
+		}
 
-  }
-  
-  class BookingFactoryMock implements BookingFactory {
+		@Override
+		public boolean login(State state) {
+			wasCalled = true;
+			return false;
+		}
 
-    private BookingFacade sectraService; 
-    private BookingFacade elvisService;
+		@Override
+		public List<Date> getFreeDays(State state, Date startDate, Date endDate) {
+			wasCalled = true;
+			return null;
+		}
 
-    public BookingFactoryMock(BookingFacade sectraMock, BookingFacade elvisMock) {
-        sectraService = sectraMock;
-        elvisService = elvisMock;
-    }
-      
-    @Override
-    public BookingFacade getService(State state) {
-        return getService(state.getService());
-    }
+		@Override
+		public void setSelectedItem(Places places, State state) {
+			wasCalled = true;
 
-    @Override
-    public BookingFacade getService(String serviceId) {
-        if ("MAMMO_SU".equals(serviceId)) {
-            return sectraService;
-        } else if ("BUKAORTA".equals(serviceId)) {
-            return elvisService;
-        } else {
-            throw new RuntimeException("Incorrect booking service.");
-        }
-    }
-      
-  }
+		}
+
+	}
+
+	class BookingFactoryMock implements BookingFactory {
+
+		private BookingFacade sectraService;
+		private BookingFacade elvisService;
+
+		public BookingFactoryMock(BookingFacade sectraMock,
+				BookingFacade elvisMock) {
+			sectraService = sectraMock;
+			elvisService = elvisMock;
+		}
+
+		@Override
+		public BookingFacade getService(State state) {
+			return getService(state.getService());
+		}
+
+		@Override
+		public BookingFacade getService(String serviceId) {
+			if ("MAMMO_SU".equals(serviceId)) {
+				return sectraService;
+			} else if ("BUKAORTA".equals(serviceId)) {
+				return elvisService;
+			} else {
+				throw new RuntimeException("Incorrect booking service.");
+			}
+		}
+
+	}
 
 }

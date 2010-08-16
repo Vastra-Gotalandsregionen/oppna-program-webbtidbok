@@ -50,7 +50,7 @@
 			<evaluate expression="calendarService.setSelectedDay(requestParameters.selectedDay)" />
 		</transition>		
 		<transition on="displaytimes" to="isEmptyCalendar">
-			<evaluate expression="bookingService.setSelectedItem(placesHandler, state)"   >
+			<evaluate expression="bookingFacade.setSelectedItem(placesHandler, state)"   >
 			</evaluate>			
 			<evaluate expression="placesHandler.getPlacesId()"  result="viewScope.placesId">
 			</evaluate>					
@@ -106,7 +106,7 @@
 	
 	<view-state id="updateNoTimeTable" view="/flows/update/updateNoTimeTable.xhtml">	
 		<on-render>		
-			<evaluate expression="bookingService.setSelectedItem(placesHandler, state)"   >
+			<evaluate expression="bookingFacade.setSelectedItem(placesHandler, state)"   >
 			</evaluate>		
 			<evaluate expression="placesHandler.getPlacesId()"  result="viewScope.placesId">
 			</evaluate>
@@ -120,15 +120,17 @@
 		</transition>	
 		
 		<transition on="displaytimes" to="isEmptyCalendar">
-			<evaluate expression="bookingService.setSelectedItem(placesHandler, state)"   >
+			<evaluate expression="bookingFacade.setSelectedItem(placesHandler, state)"   >
 			</evaluate>			
 			<evaluate expression="placesHandler.getPlacesId()"  result="viewScope.placesId">
 			</evaluate>					
 		</transition>
+		
 		<transition on="prev" to="update2">
             <evaluate expression="calendarService.setCalendarMonth(state, -1)" />
             <render fragments="displayTimeForm:calendarFragment" />
         </transition>   
+        
         <transition on="next" to="update2">
             <evaluate expression="calendarService.setCalendarMonth(state, 1)" />
             <render fragments="displayTimeForm:calendarFragment" />
@@ -165,7 +167,7 @@
 <!--			<set name="calendarService.selectedDay" value="requestParameters.selectedDay" />-->
 <!--		</transition>-->
 		<transition on="displaytimes" to="isEmptyCalendar">
-			<evaluate expression="bookingService.setSelectedItem(placesHandler, state)"   >
+			<evaluate expression="bookingFacade.setSelectedItem(placesHandler, state)"   >
 			</evaluate>		
 			<evaluate expression="placesHandler.getPlacesId()"  result="viewScope.placesId">
 			</evaluate>				
