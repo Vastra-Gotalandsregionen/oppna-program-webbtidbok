@@ -17,6 +17,7 @@
  */
 package se.vgregion.webbtidbok.booking;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.faces.model.SelectItem;
@@ -57,6 +58,12 @@ public class BookingFacadeDummy implements BookingFacade {
 
   @Override
   public Places getSelectedPlace(Places places, State state) {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public List<Date> getFreeDays(State state, Date startDate, Date endDate) {
     // TODO Auto-generated method stub
     return null;
   }

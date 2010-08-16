@@ -129,14 +129,18 @@
 	<!-- New style booking facade for Sectra -->
 	<bean id="sectraBookingService"
 		class="se.vgregion.webbtidbok.booking.sectra.SectraBookingFacadeImpl">
-		<property name="service" ref="bookingServiceSectra" />
+		<property name="serviceFactory" ref="sectraBookingServiceFactory" />
 		<property name="helper" ref="sectraWShelper"/>
 	</bean>
 
-	<bean id="bookingServiceSectra"
-		class="se.vgregion.webbtidbok.booking.sectra.SectraBookingServiceImpl">
-		<property name="thePortNU" ref="sectraMockServiceNU"/>
-		<property name="thePortSU" ref="sectraMockServiceSU"/>
+	<bean id="sectraBookingServiceFactory"
+		class="se.vgregion.webbtidbok.booking.sectra.SectraBookingServiceFactory">
+		<property name="portMap">
+            <map>
+                <entry key="MAMMO_NU" value-ref="sectraMockServiceNU"/>
+                <entry key="MAMMO_SU" value-ref="sectraMockServiceSU"/>
+            </map>
+		</property>
 		<property name="bookingMapperSectra" ><bean class="se.vgregion.webbtidbok.booking.sectra.BookingMapperSectra" /></property>
 	</bean>
 

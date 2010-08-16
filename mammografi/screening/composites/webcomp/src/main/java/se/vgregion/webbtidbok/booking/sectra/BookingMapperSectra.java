@@ -17,7 +17,12 @@
  */
 package se.vgregion.webbtidbok.booking.sectra;
 
+import java.util.Date;
+import java.util.GregorianCalendar;
+
 import javax.xml.bind.JAXBElement;
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 import se.vgregion.webbtidbok.domain.Booking;
@@ -66,5 +71,22 @@ public class BookingMapperSectra {
 		}
 		return value;
 	}
+
+	
+    public XMLGregorianCalendar dateToXmlCalendar(Date date) {
+        GregorianCalendar c = new GregorianCalendar();
+        c.setTime(date);
+            try {
+                return DatatypeFactory.newInstance().newXMLGregorianCalendar(c);
+            } catch (DatatypeConfigurationException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+                throw new RuntimeException("Could not create XMLGregorianCalendar", e);
+            }
+    }
+
+    public Date daysMapping(XMLGregorianCalendar time) {
+        return time.toGregorianCalendar().getTime();
+    }
 
 }

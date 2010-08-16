@@ -19,7 +19,13 @@ package se.vgregion.webbtidbok.booking.sectra;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
+
+import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
@@ -112,4 +118,24 @@ public class BookingMapperSectraTest {
 		assertNotNull(bookingMapping);
 	}
 
+	@Test
+	public void testDaysMapping() {
+	        try {
+                XMLGregorianCalendar xcal = DatatypeFactory.newInstance().newXMLGregorianCalendar(2010, 1, 1, 12, 30, 0, 0, 0);
+                Date date = bookingMapperSectra.daysMapping(xcal);
+
+                Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+                cal.setTime(date);
+                assertEquals(2010, cal.get(Calendar.YEAR));
+                assertEquals(0, cal.get(Calendar.MONTH)); // January is month 0, not 1 in Calendar class.
+                assertEquals(1, cal.get(Calendar.DAY_OF_MONTH));
+                assertEquals(12, cal.get(Calendar.HOUR_OF_DAY));
+                assertEquals(30, cal.get(Calendar.MINUTE));
+                assertEquals(0, cal.get(Calendar.SECOND));
+            } catch (DatatypeConfigurationException e) {
+                e.printStackTrace();
+                fail("DatatypConfiguration incorrect");
+            }
+	    
+	}
 }
