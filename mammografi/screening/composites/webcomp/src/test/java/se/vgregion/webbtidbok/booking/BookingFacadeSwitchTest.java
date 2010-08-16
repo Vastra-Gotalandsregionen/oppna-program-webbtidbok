@@ -19,6 +19,7 @@ package se.vgregion.webbtidbok.booking;
 
 import static org.junit.Assert.*;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.faces.model.SelectItem;
@@ -149,6 +150,12 @@ public class BookingFacadeSwitchTest {
       wasCalled = true;
       return false;
     }
+
+    @Override
+    public List<Date> getFreeDays(State state, Date startDate, Date endDate) {
+      wasCalled = true;
+      return null;
+    }
   }
 
   class BookingFacadeElvisMock implements BookingFacade {
@@ -185,6 +192,12 @@ public class BookingFacadeSwitchTest {
     public boolean login(State state) {
       wasCalled = true;
       return false;
+    }
+
+    @Override
+    public List<Date> getFreeDays(State state, Date startDate, Date endDate) {
+      wasCalled = true;
+      return null;
     }
 
   }

@@ -17,16 +17,29 @@
  */
 package se.vgregion.webbtidbok.booking.sectra;
 
-import javax.xml.datatype.XMLGregorianCalendar;
+import java.util.Date;
+import java.util.List;
 
 import se.vgregion.webbtidbok.domain.Booking;
+import se.vgregion.webbtidbok.domain.Surgery;
 
+/**
+ * This is the interface to the Sectra web services.
+ * Anything using this interface should only use business objects.
+ * Anything below this interface should only use web service objects.
+ * Use the BookingMapperSectra class to convert them if necessary.
+ *
+ * @author andhen
+ */
 public interface SectraBookingServiceInterface {
 
-	abstract public Booking getBookingInfo(String ptientId, String examinationNo);
+    public abstract Booking getBooking();
 
-	abstract public ArrayOfSectionLocal listSections(String examinationNr);
+    public abstract List<Surgery> getSurgeries();
 
+    public abstract List<Date> getFreeDays(Date startDate,
+            Date endDate, String sectionId);
+    
 //	abstract public Booking reschedule(String examinationNr, String newTimeId,
 //			XMLGregorianCalendar startTime, Boolean printNewNotice,
 //			String rescheduleComment);

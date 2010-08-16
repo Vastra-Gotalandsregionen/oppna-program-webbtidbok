@@ -18,6 +18,7 @@
 package se.vgregion.webbtidbok.booking.elvis;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.faces.model.SelectItem;
@@ -78,4 +79,11 @@ public class ElvisBookingFacadeImpl implements BookingFacade {
   public Places getSelectedPlace(Places places, State state) {
     return bookingService.getSelectedPlace(places, state);
   }
+
+  @Override
+  public List<Date> getFreeDays(State state, Date startDate, Date endDate) {
+      // TODO: This method needs implementing.
+      return null;
+  }
+
 }

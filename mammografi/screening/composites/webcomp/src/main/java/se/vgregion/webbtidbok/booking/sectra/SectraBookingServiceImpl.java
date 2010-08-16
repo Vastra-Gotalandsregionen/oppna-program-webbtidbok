@@ -18,188 +18,99 @@
 package se.vgregion.webbtidbok.booking.sectra;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-import se.vgregion.webbtidbok.Places;
-import se.vgregion.webbtidbok.State;
-import se.vgregion.webbtidbok.booking.elvis.BookingServiceInterface;
-import se.vgregion.webbtidbok.booking.elvis.BookingTimeLocal;
+import javax.xml.datatype.XMLGregorianCalendar;
+
 import se.vgregion.webbtidbok.domain.Booking;
 import se.vgregion.webbtidbok.domain.Surgery;
 import se.vgregion.webbtidbok.domain.sectra.BookingSectra;
 import se.vgregion.webbtidbok.ws.sectra.ArrayOfSection;
+import se.vgregion.webbtidbok.ws.sectra.ArrayOfdateTime;
 import se.vgregion.webbtidbok.ws.sectra.BookingInfo;
 import se.vgregion.webbtidbok.ws.sectra.IRisReschedule;
 import se.vgregion.webbtidbok.ws.sectra.IRisRescheduleGetBookingInfoErrorInfoFaultFaultMessage;
+import se.vgregion.webbtidbok.ws.sectra.IRisRescheduleListFreeDaysErrorInfoFaultFaultMessage;
 import se.vgregion.webbtidbok.ws.sectra.IRisRescheduleListSectionsErrorInfoFaultFaultMessage;
 import se.vgregion.webbtidbok.ws.sectra.Section;
 
-public class SectraBookingServiceImpl implements BookingServiceInterface {
+public class SectraBookingServiceImpl implements SectraBookingServiceInterface {
+    
+    private IRisReschedule thePort;
+    private BookingMapperSectra bookingMapperSectra;
 
-	private IRisReschedule thePortSU;
-	private IRisReschedule thePortNU;
-	private BookingMapperSectra bookingMapperSectra;
+    private String patientNr;
+    private String examinationNr;
 
-	public void setThePortSU(IRisReschedule thePortSU) {
-		this.thePortSU = thePortSU;
+	public void setPatientNr(String patientNr) {
+	    this.patientNr = patientNr;
 	}
-
-	public void setThePortNU(IRisReschedule thePortNU) {
-		this.thePortNU = thePortNU;
+	
+	public void setExaminationNr(String examinationNr) {
+	    this.examinationNr = examinationNr;
+	}
+	
+	public void setThePort(IRisReschedule thePort) {
+		this.thePort = thePort;
 	}
 
 	public void setBookingMapperSectra(BookingMapperSectra bookingMapperSectra) {
 		this.bookingMapperSectra = bookingMapperSectra;
 	}
 
+	
 	@Override
-	public Booking getBooking(State state) {
-
+	public Booking getBooking() {
 		Booking booking;
-		try {
 
-			IRisReschedule wsInterface = getWSInterface(state);
-			BookingInfo bi = wsInterface.getBookingInfo(state.getPnr(), state
-					.getPasswd());
+		try {
+			BookingInfo bi = thePort.getBookingInfo(patientNr, examinationNr);
 			booking = bookingMapperSectra.bookingMapping(bi);
 		} catch (IRisRescheduleGetBookingInfoErrorInfoFaultFaultMessage e) {
-			e.printStackTrace();
+		    // TODO: Is this really the proper response if the web service fails?
+		    e.printStackTrace();
 			booking = new BookingSectra();
 		}
 		return booking;
 	}
 
-	private ArrayOfSection listSections(State state) {
-
-		ArrayOfSection listSections = null;
-		try {
-
-			IRisReschedule wsInterface = getWSInterface(state);
-			listSections = wsInterface.listSections(state.getPasswd());
-			// sectionArrayL = webServiceHelper.listSections(state);
-
-		} catch (IRisRescheduleListSectionsErrorInfoFaultFaultMessage e) {
-			listSections = new ArrayOfSection();
-			e.printStackTrace();
-		}
-
-		return listSections;
-	}
-
 	@Override
-	public boolean cancelBooking(State loginCredentials) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	public List<Surgery> getBookingPlace(State loginCredentials) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<BookingTimeLocal> getBookingTime(State loginCredentials) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean getIsTimeListEmpty() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public int getSelectedDefaultItem(State state) {
-		ArrayOfSection listSections = this.listSections(state);
-		return listSections.getSection().size();
-	}
-
-	@Override
-	public Places getSelectedPlace(Places places, State login) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean isFirstPlaces() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean isUpdated() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void setBookingTime(BookingTimeLocal bookingTime, State credentials) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void setFirstPlacesBoolean(boolean b) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void setIsUpdated(boolean b) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void setSelectedItem(int selectedItem) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void setSelectedItem(Places places) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void setSelectedItem(Places places, State state) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void setTimeListEmpty(boolean isTimeListEmpty) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public List<Surgery> getSurgeries(State state) {
+	public List<Surgery> getSurgeries() {
 		List<Surgery> surgeries = new ArrayList<Surgery>();
 		try {
-			IRisReschedule wsInterface = getWSInterface(state);
-			ArrayOfSection sections = wsInterface.listSections(state
-					.getPasswd());
+			ArrayOfSection sections = thePort.listSections(examinationNr);
 			List<Section> sectionList = sections.getSection();
 			for (Section section : sectionList) {
 				Surgery surgery = bookingMapperSectra.surgeryMapping(section);
 				surgeries.add(surgery);
 			}
 		} catch (IRisRescheduleListSectionsErrorInfoFaultFaultMessage e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+            throw new RuntimeException("Error response from web service when getting surgeries.", e);
 		}
 		return surgeries;
 	}
 
-	private IRisReschedule getWSInterface(State state) {
+    @Override
+    public List<Date> getFreeDays(Date startDate, Date endDate, String sectionId) {
+        List<Date> dates = new ArrayList<Date>();
+        
+        ArrayOfdateTime times;
+        try {
+            times = thePort.listFreeDays(bookingMapperSectra.dateToXmlCalendar(startDate),
+                    bookingMapperSectra.dateToXmlCalendar(endDate), examinationNr, sectionId);
+            List<XMLGregorianCalendar> timesList = times.getDateTime();
+            for (XMLGregorianCalendar time : timesList) {
+                Date date = bookingMapperSectra.daysMapping(time);
+                dates.add(date);
+            }
+            return dates;
+        } catch (IRisRescheduleListFreeDaysErrorInfoFaultFaultMessage e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error response from web service when getting free days.", e);
+        }
+    }
 
-		if (state.getService().equals("MAMMO_NU")) {
-			return this.thePortNU;
-		} else {
-			return this.thePortSU;
-		}
-	}
+
 }

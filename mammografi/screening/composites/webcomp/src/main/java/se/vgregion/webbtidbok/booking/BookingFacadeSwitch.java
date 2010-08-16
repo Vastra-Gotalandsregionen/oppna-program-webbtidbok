@@ -17,6 +17,7 @@
  */
 package se.vgregion.webbtidbok.booking;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.faces.model.SelectItem;
@@ -71,4 +72,10 @@ public class BookingFacadeSwitch implements BookingFacade {
 				places, state);
 	}
 
+    @Override
+    public List<Date> getFreeDays(State state, Date startDate, Date endDate) {
+        return getBookingFacadeForCurrentRequest(state).getFreeDays(state, startDate, endDate);
+    }
+
+	
 }
