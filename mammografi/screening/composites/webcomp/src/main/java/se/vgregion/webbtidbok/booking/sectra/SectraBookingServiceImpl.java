@@ -70,7 +70,7 @@ public class SectraBookingServiceImpl implements SectraBookingServiceInterface {
 		} catch (IRisRescheduleGetBookingInfoErrorInfoFaultFaultMessage e) {
 		    // TODO: Is this really the proper response if the web service fails?
 		    e.printStackTrace();
-			booking = new BookingSectra();
+            throw new RuntimeException("Error response from web service when getting booking.", e);
 		}
 		return booking;
 	}

@@ -35,12 +35,6 @@ public class SectraBookingFacadeImpl implements BookingFacade {
 
 	private SectraBookingServiceFactory serviceFactory;
 
-	private SectraWebServiceHelperInterface sectraWebServiceHelper;
-
-	public void setHelper(SectraWebServiceHelperInterface helper) {
-		this.sectraWebServiceHelper = helper;
-	}
-
 	public void setServiceFactory(SectraBookingServiceFactory serviceFactory) {
 		this.serviceFactory = serviceFactory;
 	}
@@ -54,7 +48,15 @@ public class SectraBookingFacadeImpl implements BookingFacade {
 
 	@Override
 	public boolean login(State state) {
-		boolean isLoggedIn = sectraWebServiceHelper.login(state);
+	    boolean isLoggedIn = false;
+	    try {
+	        getService(state).getBooking();
+	        isLoggedIn = true;
+	    }
+	    catch (RuntimeException e) {
+	        // This means we could not log in, probably wrong patient or password.
+	        // Just stay not logged in.
+	    }
 		state.setLoggedIn(isLoggedIn);
 		return isLoggedIn;
 	}

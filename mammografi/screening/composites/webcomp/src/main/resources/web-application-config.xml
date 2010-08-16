@@ -130,7 +130,6 @@
 	<bean id="sectraBookingService"
 		class="se.vgregion.webbtidbok.booking.sectra.SectraBookingFacadeImpl">
 		<property name="serviceFactory" ref="sectraBookingServiceFactory" />
-		<property name="helper" ref="sectraWShelper"/>
 	</bean>
 
 	<bean id="sectraBookingServiceFactory"
@@ -142,12 +141,6 @@
             </map>
 		</property>
 		<property name="bookingMapperSectra" ><bean class="se.vgregion.webbtidbok.booking.sectra.BookingMapperSectra" /></property>
-	</bean>
-
-	<bean id="sectraWShelper"
-		class="se.vgregion.webbtidbok.booking.sectra.SectraWebServiceHelperImpl">
-		<property name="thePortSU" ref="sectraMockServiceSU" />
-		<property name="thePortNU" ref="sectraMockServiceNU" />
 	</bean>
 
 	<bean id="sectraMockServiceNU" class="se.vgregion.webbtidbok.booking.sectra.SectraWSMock">
