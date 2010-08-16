@@ -32,22 +32,22 @@ import se.vgregion.webbtidbok.domain.Booking;
  */
 public class BookingFacadeSwitch implements BookingFacade {
 
-    private BookingFactory bookingFactory;
+	private BookingFactory bookingFactory;
 
-    public void setBookingFactory(BookingFactory factory) {
-        bookingFactory = factory;
-    }
+	public void setBookingFactory(BookingFactory factory) {
+		bookingFactory = factory;
+	}
 
-    @Override
-    public Booking getBookingInfo(State state) {
+	@Override
+	public Booking getBookingInfo(State state) {
 		BookingFacade bookingFacadeForCurrentRequest = getBookingFacadeForCurrentRequest(state);
 		return bookingFacadeForCurrentRequest.getBookingInfo(state);
 
 	}
 
-    private BookingFacade getBookingFacadeForCurrentRequest(State state) {
-        return bookingFactory.getService(state);
-    }
+	private BookingFacade getBookingFacadeForCurrentRequest(State state) {
+		return bookingFactory.getService(state);
+	}
 
 	@Override
 	public List<SelectItem> getBookingPlaceSelectItems(State state) {
@@ -72,10 +72,15 @@ public class BookingFacadeSwitch implements BookingFacade {
 				places, state);
 	}
 
-    @Override
-    public List<Date> getFreeDays(State state, Date startDate, Date endDate) {
-        return getBookingFacadeForCurrentRequest(state).getFreeDays(state, startDate, endDate);
-    }
+	@Override
+	public List<Date> getFreeDays(State state, Date startDate, Date endDate) {
+		return getBookingFacadeForCurrentRequest(state).getFreeDays(state,
+				startDate, endDate);
+	}
 
-	
+	@Override
+	public void setSelectedItem(Places places, State state) {
+		state.setCentralTidbokID(places.getPlacesId());
+	}
+
 }

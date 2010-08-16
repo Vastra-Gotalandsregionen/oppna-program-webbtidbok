@@ -1,5 +1,5 @@
 /**
-  * Copyright 2009 Vastra Gotalandsregionen
+ * Copyright 2009 Vastra Gotalandsregionen
  *
  *   This library is free software; you can redistribute it and/or modify
  *   it under the terms of version 2.1 of the GNU Lesser General Public
@@ -33,57 +33,63 @@ import se.vgregion.webbtidbok.ws.BookingResponse;
 
 public class ElvisBookingFacadeImpl implements BookingFacade {
 
-  private WebServiceHelper helper;
-  private BookingServiceInterface bookingService;
+	private WebServiceHelper helper;
+	private BookingServiceInterface bookingService;
 
-  public void setBookingService(BookingServiceInterface bookingService) {
-    this.bookingService = bookingService;
-  }
+	public void setBookingService(BookingServiceInterface bookingService) {
+		this.bookingService = bookingService;
+	}
 
-  public void setHelper(WebServiceHelper webServiceHelper) {
-    this.helper = webServiceHelper;
-  }
+	public void setHelper(WebServiceHelper webServiceHelper) {
+		this.helper = webServiceHelper;
+	}
 
-  @Override
-  public boolean login(State state) {
-    BookingRequest request = helper.getQueryWSRequest(state);
-    BookingResponse response = helper.getQueryWS(request);
-    state.setBookingResponse(response);
-    return response != null;
-  }
+	@Override
+	public boolean login(State state) {
+		BookingRequest request = helper.getQueryWSRequest(state);
+		BookingResponse response = helper.getQueryWS(request);
+		state.setBookingResponse(response);
+		return response != null;
+	}
 
-  @Override
-  public Booking getBookingInfo(State state) {
-    return bookingService.getBooking(state);
-  }
+	@Override
+	public Booking getBookingInfo(State state) {
+		return bookingService.getBooking(state);
+	}
 
-  @Override
-  public List<SelectItem> getBookingPlaceSelectItems(State state) {
-    List<SelectItem> selectItems = new ArrayList<SelectItem>(); 
-    List<Surgery> surgeries = bookingService.getSurgeries(state);
-    for (Surgery surgery : surgeries) {
-      SelectItem selectItem = new SelectItem();
-      selectItem.setLabel(surgery.getSurgeryName());
-      selectItem.setValue(surgery.getSurgeryId());
-      selectItems.add(selectItem);
-    }
-    return selectItems;
-  }
+	@Override
+	public List<SelectItem> getBookingPlaceSelectItems(State state) {
+		List<SelectItem> selectItems = new ArrayList<SelectItem>();
+		List<Surgery> surgeries = bookingService.getSurgeries(state);
+		for (Surgery surgery : surgeries) {
+			SelectItem selectItem = new SelectItem();
+			selectItem.setLabel(surgery.getSurgeryName());
+			selectItem.setValue(surgery.getSurgeryId());
+			selectItems.add(selectItem);
+		}
+		return selectItems;
+	}
 
-  @Override
-  public int getSelectedDefaultItem(State state) {
-    return bookingService.getSelectedDefaultItem(state);
-  }
+	@Override
+	public int getSelectedDefaultItem(State state) {
+		return bookingService.getSelectedDefaultItem(state);
+	}
 
-  @Override
-  public Places getSelectedPlace(Places places, State state) {
-    return bookingService.getSelectedPlace(places, state);
-  }
+	@Override
+	public Places getSelectedPlace(Places places, State state) {
+		return bookingService.getSelectedPlace(places, state);
+	}
 
-  @Override
-  public List<Date> getFreeDays(State state, Date startDate, Date endDate) {
-      // TODO: This method needs implementing.
-      return null;
-  }
+	@Override
+	public List<Date> getFreeDays(State state, Date startDate, Date endDate) {
+		// TODO: This method needs implementing.
+		return null;
+	}
+
+	@Override
+	public void setSelectedItem(Places places, State state) {
+		// TODO Auto-generated method stub
+
+	}
 
 }

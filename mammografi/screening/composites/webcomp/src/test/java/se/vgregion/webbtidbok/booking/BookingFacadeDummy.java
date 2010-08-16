@@ -26,17 +26,17 @@ import se.vgregion.webbtidbok.Places;
 import se.vgregion.webbtidbok.State;
 
 /**
- * This class is just empty stubs. Use it as a base class for your test case classes,
- * so you don't have to implement all methods in every testcase.
+ * This class is just empty stubs. Use it as a base class for your test case
+ * classes, so you don't have to implement all methods in every testcase.
  * 
  * @author anders.henriksson@knowit.se
  */
 public class BookingFacadeDummy implements BookingFacade {
 
-    @Override
-    public boolean login(State state) {
-        return false;
-    }
+	@Override
+	public boolean login(State state) {
+		return false;
+	}
 
 	@Override
 	public se.vgregion.webbtidbok.domain.Booking getBookingInfo(State state) {
@@ -44,28 +44,34 @@ public class BookingFacadeDummy implements BookingFacade {
 		return null;
 	}
 
-  @Override
-  public List<SelectItem> getBookingPlaceSelectItems(State state) {
-    // TODO Auto-generated method stub
-    return null;
-  }
+	@Override
+	public List<SelectItem> getBookingPlaceSelectItems(State state) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-  @Override
-  public int getSelectedDefaultItem(State state) {
-    // TODO Auto-generated method stub
-    return 0;
-  }
+	@Override
+	public int getSelectedDefaultItem(State state) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 
-  @Override
-  public Places getSelectedPlace(Places places, State state) {
-    // TODO Auto-generated method stub
-    return null;
-  }
+	@Override
+	public Places getSelectedPlace(Places places, State state) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-  @Override
-  public List<Date> getFreeDays(State state, Date startDate, Date endDate) {
-    // TODO Auto-generated method stub
-    return null;
-  }
+	@Override
+	public List<Date> getFreeDays(State state, Date startDate, Date endDate) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setSelectedItem(Places places, State state) {
+		// TODO Auto-generated method stub
+
+	}
 
 }

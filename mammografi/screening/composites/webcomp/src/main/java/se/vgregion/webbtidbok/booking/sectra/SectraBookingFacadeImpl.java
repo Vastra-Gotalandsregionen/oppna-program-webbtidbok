@@ -43,7 +43,8 @@ public class SectraBookingFacadeImpl implements BookingFacade {
 	 * Use this to get a connection to the proper web service.
 	 */
 	private SectraBookingServiceInterface getService(State state) {
-	    return serviceFactory.getServiceInstance(state.getService(), state.getPnr(), state.getPasswd());
+		return serviceFactory.getServiceInstance(state.getService(), state
+				.getPnr(), state.getPasswd());
 	}
 
 	@Override
@@ -94,9 +95,9 @@ public class SectraBookingFacadeImpl implements BookingFacade {
 
 	@Override
 	public int getSelectedDefaultItem(State state) {
-		//return getService(state).getSelectedDefaultItem(state);
-	    // TODO: Fix this response.
-	    return 0;
+		// return getService(state).getSelectedDefaultItem(state);
+		// TODO: Fix this response.
+		return 0;
 	}
 
 	@Override
@@ -105,9 +106,16 @@ public class SectraBookingFacadeImpl implements BookingFacade {
 		return new Places();
 	}
 
-    @Override
-    public List<Date> getFreeDays(State state, Date startDate, Date endDate) {
-        // TODO: Needs to provide the section id from state somehow.
-        return getService(state).getFreeDays(startDate, endDate, "BADSECTIONID");
-    }
+	@Override
+	public List<Date> getFreeDays(State state, Date startDate, Date endDate) {
+		// TODO: Needs to provide the section id from state somehow.
+		return getService(state)
+				.getFreeDays(startDate, endDate, "BADSECTIONID");
+	}
+
+	@Override
+	public void setSelectedItem(Places places, State state) {
+		// TODO Auto-generated method stub
+
+	}
 }
