@@ -20,6 +20,7 @@ package se.vgregion.webbtidbok.lang;
 import java.lang.*;
 import java.text.*;
 import java.util.*;
+
 import javax.xml.datatype.*;
 
 public class DateHandler {
@@ -150,4 +151,32 @@ public class DateHandler {
 			return null;
 		}	
 	}
+	
+
+	/**
+	 * Create a new Date object for a given date.
+	 */
+    public static Date dateFor(int year, int month, int day) {
+        Calendar cal = Calendar.getInstance();
+        cal.clear();
+        cal.set(year, month, day, 0, 0, 0);
+        return cal.getTime();
+    }
+
+    /**
+     * Create a new XMLGregorianCalendar for a given date.
+     */
+    public static XMLGregorianCalendar xmlCalendarFor(int year, int month, int day) {
+        try {
+            return DatatypeFactory.newInstance().newXMLGregorianCalendarDate(year, month, day, 0);
+        } catch (DatatypeConfigurationException e) {
+            throw new RuntimeException(e);
+        }
+    }
+	
+    public static Calendar calendarFromDate(Date date) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        return cal;
+    }
 }
