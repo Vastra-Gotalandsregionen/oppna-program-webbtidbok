@@ -36,11 +36,7 @@ public class CalendarUtil implements CalendarUtilInterface {
   static int NEXT = 1;
   // Empty first element to start actual days on index 1
   String[] weekDaysSv = { "", "Söndag", "Måndag", "Tisdag", "Onsdag", "Torsdag", "Fredag", "Lördag" };
-  String[] shortDaysSv = { "", "Må", "Ti", "On", "To", "Fr", "Lö", "Sö" };
   String[] monthsSv = { "Januari", "Februari", "Mars", "April", "Maj", "Juni", "Juli", "Augusti", "September", "Oktober", "November", "December" };
-  String[] weekDaysEn = { "", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
-  String[] shortDaysEn = { "", "Må", "Ti", "On", "To", "Fr", "Lö", "Sö" };
-  String[] monthsEn = { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
 
   Calendar masterCalendar = Calendar.getInstance();
   WebServiceHelper helper;
@@ -53,7 +49,6 @@ public class CalendarUtil implements CalendarUtilInterface {
 
   private List<Calendar> availableDates = new ArrayList<Calendar>();
   private List<String> days;
-  private List<String> commandLinkDays;
   private List<Boolean> isLink;
   private int index = 0;
   private int commandLinkDayIndex = 0;
@@ -367,7 +362,6 @@ public class CalendarUtil implements CalendarUtilInterface {
     // TODO: highlight exam date
     availableDates = getAvailableDates(state);
     days = new ArrayList<String>();
-    commandLinkDays = new ArrayList<String>();
     isLink = new ArrayList<Boolean>();
 
     int today = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
@@ -493,8 +487,8 @@ public class CalendarUtil implements CalendarUtilInterface {
     System.out.println("++++++ state.getSelectedDate(): " + state.getSelectedDate());
 
     selectedDate.set(state.getSelectedDate().get(Calendar.YEAR),
-
-    state.getSelectedDate().get(Calendar.MONTH), state.getSelectedDate().get(Calendar.DATE));
+            state.getSelectedDate().get(Calendar.MONTH),
+            state.getSelectedDate().get(Calendar.DATE));
     System.out.println("++++++ state.getSelectedDate() after set: " + selectedDate.get(Calendar.YEAR) + " " + selectedDate.get(Calendar.MONTH) + " " + selectedDate.get(Calendar.DATE));
 
     if (getSelectedDay().isEmpty()) {
