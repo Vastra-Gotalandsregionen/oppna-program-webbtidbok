@@ -55,7 +55,7 @@
 						<p>#{booking.patientName}</p>
 						<p>#{booking.patientId}</p>
 						<p><h:outputText value="#{baseMsg.updatepageOriginalTimeHeading}"/>:</p>
-						<p>#{booking.surgeryAddress}</p>			
+						<p>#{booking.surgery.fullAddress}</p>			
 						<p><h:outputText value="#{booking.startTime}"><f:convertDateTime type="both" pattern="EEEE dd MMMM yyyy, HH:mm" locale="sv" /></h:outputText></p>
 					</div>
 				</td>

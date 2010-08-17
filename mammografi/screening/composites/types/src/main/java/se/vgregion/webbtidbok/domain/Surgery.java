@@ -17,12 +17,16 @@
  */
 package se.vgregion.webbtidbok.domain;
 
+import java.io.Serializable;
+
 /**
  * 
  * @author David & Carl. Class used for surgery description.
  * 
  */
-public class Surgery {
+public class Surgery implements Serializable {
+
+  private static final long serialVersionUID = 1L;
 
   private String surgeryId;
   private String surgeryName;
@@ -50,6 +54,10 @@ public class Surgery {
 
   public void setSurgeryAddress(String surgeryAddress) {
     this.surgeryAddress = surgeryAddress;
+  }
+
+  public String getFullAddress() {
+      return surgeryName + ", " + surgeryAddress;
   }
 
 }

@@ -83,7 +83,7 @@ public class BookingMapperElvisTest {
 				.bookingMapping(bookingResponse);
 		assertEquals("David Bennehult", bookingMapping.getPatientName());
 		assertEquals(MOTTAGNING + ", " + ADDRESS, bookingMapping
-				.getSurgeryAddress());
+				.getSurgery().getFullAddress());
 		assertEquals(PNR, bookingMapping.getPatientId());
 		assertEquals(newXMLGregorianCalendar.toGregorianCalendar().getTime()
 				.toString(), bookingMapping.getStartTime().toString());

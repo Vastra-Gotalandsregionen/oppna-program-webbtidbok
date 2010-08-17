@@ -36,7 +36,14 @@ public class BookingMapperElvis {
   public Booking bookingMapping(BookingResponse bookingResponse) {
     BookingElvis booking = new BookingElvis();
     booking.setPatientName(changePatientNameStructure(getStringValueFromBooking(bookingResponse.getNamn())));
-    booking.setSurgeryAddress(getStringValueFromBooking(bookingResponse.getMottagning()) + ", " + getStringValueFromBooking(bookingResponse.getAddress()));
+    
+    Surgery surgery = new Surgery();
+    if (bookingResponse.getCentralTidbokID() != null) {
+        surgery.setSurgeryId(Integer.toString(bookingResponse.getCentralTidbokID()));
+    }
+    surgery.setSurgeryName(getStringValueFromBooking(bookingResponse.getMottagning()));
+    surgery.setSurgeryAddress(getStringValueFromBooking(bookingResponse.getAddress()));
+    booking.setSurgery(surgery);
     booking.setPatientId(getStringValueFromBooking(bookingResponse.getPnr()));
     booking.setStartTime(getDateFromCalendar(bookingResponse.getBokadTid()));
     booking.setUpdateable(isUpdateable(bookingResponse));

@@ -32,6 +32,7 @@ import se.vgregion.webbtidbok.Places;
 import se.vgregion.webbtidbok.State;
 import se.vgregion.webbtidbok.domain.Booking;
 import se.vgregion.webbtidbok.domain.BookingTime;
+import se.vgregion.webbtidbok.domain.Surgery;
 import se.vgregion.webbtidbok.domain.elvis.BookingElvis;
 import se.vgregion.webbtidbok.domain.sectra.BookingSectra;
 
@@ -131,6 +132,12 @@ public class BookingFacadeSwitchTest {
 		}
 
 		@Override
+		public List<Surgery> getAvailableSurgeries(State state) {
+		    wasCalled = true;
+		    return null;
+		}
+
+		@Override
 		public List<SelectItem> getBookingPlaceSelectItems(State state) {
 			wasCalled = true;
 			return null;
@@ -185,10 +192,14 @@ public class BookingFacadeSwitchTest {
 
 		@Override
 		public Booking getBookingInfo(State state) {
+            wasCalled = true;
+            return new BookingElvis();
+        }
 
-			wasCalled = true;
-
-			return new BookingElvis();
+		@Override
+		public List<Surgery> getAvailableSurgeries(State state) {
+		    wasCalled = true;
+		    return null;
 		}
 
 		@Override
