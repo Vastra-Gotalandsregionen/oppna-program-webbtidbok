@@ -23,9 +23,11 @@ import java.util.List;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import se.vgregion.webbtidbok.domain.Booking;
 import se.vgregion.webbtidbok.domain.Surgery;
-import se.vgregion.webbtidbok.domain.sectra.BookingSectra;
 import se.vgregion.webbtidbok.ws.sectra.ArrayOfSection;
 import se.vgregion.webbtidbok.ws.sectra.ArrayOfdateTime;
 import se.vgregion.webbtidbok.ws.sectra.BookingInfo;
@@ -36,81 +38,78 @@ import se.vgregion.webbtidbok.ws.sectra.IRisRescheduleListSectionsErrorInfoFault
 import se.vgregion.webbtidbok.ws.sectra.Section;
 
 public class SectraBookingServiceImpl implements SectraBookingServiceInterface {
-    
-    private IRisReschedule thePort;
-    private BookingMapperSectra bookingMapperSectra;
 
-    private String patientNr;
-    private String examinationNr;
+  private final Log log = LogFactory.getLog(SectraBookingServiceImpl.class);
+  private IRisReschedule thePort;
+  private BookingMapperSectra bookingMapperSectra;
 
-	public void setPatientNr(String patientNr) {
-	    this.patientNr = patientNr;
-	}
-	
-	public void setExaminationNr(String examinationNr) {
-	    this.examinationNr = examinationNr;
-	}
-	
-	public void setThePort(IRisReschedule thePort) {
-		this.thePort = thePort;
-	}
+  private String patientNr;
+  private String examinationNr;
 
-	public void setBookingMapperSectra(BookingMapperSectra bookingMapperSectra) {
-		this.bookingMapperSectra = bookingMapperSectra;
-	}
+  public void setPatientNr(String patientNr) {
+    this.patientNr = patientNr;
+  }
 
-	
-	@Override
-	public Booking getBooking() {
-		Booking booking;
+  public void setExaminationNr(String examinationNr) {
+    this.examinationNr = examinationNr;
+  }
 
-		try {
-			BookingInfo bi = thePort.getBookingInfo(patientNr, examinationNr);
-			booking = bookingMapperSectra.bookingMapping(bi);
-		} catch (IRisRescheduleGetBookingInfoErrorInfoFaultFaultMessage e) {
-		    // TODO: Is this really the proper response if the web service fails?
-		    e.printStackTrace();
-            throw new RuntimeException("Error response from web service when getting booking.", e);
-		}
-		return booking;
-	}
+  public void setThePort(IRisReschedule thePort) {
+    this.thePort = thePort;
+  }
 
-	@Override
-	public List<Surgery> getSurgeries() {
-		List<Surgery> surgeries = new ArrayList<Surgery>();
-		try {
-			ArrayOfSection sections = thePort.listSections(examinationNr);
-			List<Section> sectionList = sections.getSection();
-			for (Section section : sectionList) {
-				Surgery surgery = bookingMapperSectra.surgeryMapping(section);
-				surgeries.add(surgery);
-			}
-		} catch (IRisRescheduleListSectionsErrorInfoFaultFaultMessage e) {
-			e.printStackTrace();
-            throw new RuntimeException("Error response from web service when getting surgeries.", e);
-		}
-		return surgeries;
-	}
+  public void setBookingMapperSectra(BookingMapperSectra bookingMapperSectra) {
+    this.bookingMapperSectra = bookingMapperSectra;
+  }
 
-    @Override
-    public List<Date> getFreeDays(Date startDate, Date endDate, String sectionId) {
-        List<Date> dates = new ArrayList<Date>();
-        
-        ArrayOfdateTime times;
-        try {
-            times = thePort.listFreeDays(bookingMapperSectra.dateToXmlCalendar(startDate),
-                    bookingMapperSectra.dateToXmlCalendar(endDate), examinationNr, sectionId);
-            List<XMLGregorianCalendar> timesList = times.getDateTime();
-            for (XMLGregorianCalendar time : timesList) {
-                Date date = bookingMapperSectra.daysMapping(time);
-                dates.add(date);
-            }
-            return dates;
-        } catch (IRisRescheduleListFreeDaysErrorInfoFaultFaultMessage e) {
-            e.printStackTrace();
-            throw new RuntimeException("Error response from web service when getting free days.", e);
-        }
+  @Override
+  public Booking getBooking() {
+    Booking booking;
+
+    try {
+      BookingInfo bi = thePort.getBookingInfo(patientNr, examinationNr);
+      booking = bookingMapperSectra.bookingMapping(bi);
+    } catch (IRisRescheduleGetBookingInfoErrorInfoFaultFaultMessage e) {
+      log.error("Error response from web service when getting booking.", e);
+      throw new RuntimeException("Error response from web service when getting booking.", e);
     }
+    return booking;
+  }
 
+  @Override
+  public List<Surgery> getSurgeries() {
+    List<Surgery> surgeries = new ArrayList<Surgery>();
+    try {
+      ArrayOfSection sections = thePort.listSections(examinationNr);
+      List<Section> sectionList = sections.getSection();
+      for (Section section : sectionList) {
+        Surgery surgery = bookingMapperSectra.surgeryMapping(section);
+        surgeries.add(surgery);
+      }
+    } catch (IRisRescheduleListSectionsErrorInfoFaultFaultMessage e) {
+      log.error("Error response from web service when getting surgeries.", e);
+      throw new RuntimeException("Error response from web service when getting surgeries.", e);
+    }
+    return surgeries;
+  }
+
+  @Override
+  public List<Date> getFreeDays(Date startDate, Date endDate, String sectionId) {
+    List<Date> dates = new ArrayList<Date>();
+
+    ArrayOfdateTime times;
+    try {
+      times = thePort.listFreeDays(bookingMapperSectra.dateToXmlCalendar(startDate), bookingMapperSectra.dateToXmlCalendar(endDate), examinationNr, sectionId);
+      List<XMLGregorianCalendar> timesList = times.getDateTime();
+      for (XMLGregorianCalendar time : timesList) {
+        Date date = bookingMapperSectra.daysMapping(time);
+        dates.add(date);
+      }
+      return dates;
+    } catch (IRisRescheduleListFreeDaysErrorInfoFaultFaultMessage e) {
+      log.error("Error response from web service when getting free days.", e);
+      throw new RuntimeException("Error response from web service when getting free days.", e);
+    }
+  }
 
 }
