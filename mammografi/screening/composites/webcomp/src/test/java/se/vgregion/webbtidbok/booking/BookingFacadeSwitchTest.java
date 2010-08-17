@@ -31,6 +31,7 @@ import org.junit.Test;
 import se.vgregion.webbtidbok.Places;
 import se.vgregion.webbtidbok.State;
 import se.vgregion.webbtidbok.domain.Booking;
+import se.vgregion.webbtidbok.domain.BookingTime;
 import se.vgregion.webbtidbok.domain.elvis.BookingElvis;
 import se.vgregion.webbtidbok.domain.sectra.BookingSectra;
 
@@ -164,6 +165,18 @@ public class BookingFacadeSwitchTest {
 			wasCalled = true;
 
 		}
+
+		@Override
+		public List<BookingTime> getBookingTime(State state) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public boolean getIsTimeListEmpty(State state) {
+			// TODO Auto-generated method stub
+			return false;
+		}
 	}
 
 	class BookingFacadeElvisMock implements BookingFacade {
@@ -212,6 +225,18 @@ public class BookingFacadeSwitchTest {
 		public void setSelectedItem(Places places, State state) {
 			wasCalled = true;
 
+		}
+
+		@Override
+		public List<BookingTime> getBookingTime(State state) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public boolean getIsTimeListEmpty(State state) {
+			wasCalled = true;
+			return false;
 		}
 
 	}

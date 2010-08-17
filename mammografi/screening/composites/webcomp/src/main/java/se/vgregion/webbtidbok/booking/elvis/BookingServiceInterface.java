@@ -19,84 +19,85 @@ package se.vgregion.webbtidbok.booking.elvis;
 
 import java.util.List;
 
-import javax.faces.model.SelectItem;
-
 import se.vgregion.webbtidbok.Places;
 import se.vgregion.webbtidbok.State;
 import se.vgregion.webbtidbok.domain.Booking;
-import se.vgregion.webbtidbok.domain.BookingPlace;
+import se.vgregion.webbtidbok.domain.BookingTime;
 import se.vgregion.webbtidbok.domain.Surgery;
 
 public interface BookingServiceInterface {
 
-  public abstract boolean getIsTimeListEmpty();
+	public abstract boolean getIsTimeListEmpty();
 
-  public abstract void setTimeListEmpty(boolean isTimeListEmpty);
+	public abstract void setTimeListEmpty(boolean isTimeListEmpty);
 
-  public abstract void setIsUpdated(boolean b);
+	public abstract void setIsUpdated(boolean b);
 
-  public abstract boolean isUpdated();
+	public abstract boolean isUpdated();
 
-  public abstract void setFirstPlacesBoolean(boolean b);
+	public abstract void setFirstPlacesBoolean(boolean b);
 
-  public abstract boolean isFirstPlaces();
+	public abstract boolean isFirstPlaces();
 
-  public abstract Booking getBooking(State loginCredentials);
+	public abstract Booking getBooking(State loginCredentials);
 
-  /**
-   * Method cancelBooking returns true if deleted
-   * 
-   * @param loginCredentials
-   * @return
-   */
-  public abstract boolean cancelBooking(State loginCredentials);
+	/**
+	 * Method cancelBooking returns true if deleted
+	 * 
+	 * @param loginCredentials
+	 * @return
+	 */
+	public abstract boolean cancelBooking(State loginCredentials);
 
- // public abstract List<BookingPlace> getBookingPlace(State loginCredentials);
+	// public abstract List<BookingPlace> getBookingPlace(State
+	// loginCredentials);
 
-  public abstract List<BookingTimeLocal> getBookingTime(State loginCredentials);
+	public abstract List<BookingTime> getBookingTime(State loginCredentials);
 
-  /***
-   * method set selected item
-   * 
-   * @param selectedItem
-   */
+	/***
+	 * method set selected item
+	 * 
+	 * @param selectedItem
+	 */
 
-  public abstract void setSelectedItem(int selectedItem);
+	public abstract void setSelectedItem(int selectedItem);
 
-  /***
-   * 
-   * @param places
-   */
-  public abstract void setSelectedItem(Places places);
+	/***
+	 * 
+	 * @param places
+	 */
+	public abstract void setSelectedItem(Places places);
 
-  /***
-   * 
-   * 
-   * @param places
-   * @param state
-   */
-  public abstract void setSelectedItem(Places places, State state);
+	/***
+	 * 
+	 * 
+	 * @param places
+	 * @param state
+	 */
+	public abstract void setSelectedItem(Places places, State state);
 
-  public abstract int getSelectedDefaultItem(State loginCredentials);
+	public abstract int getSelectedDefaultItem(State loginCredentials);
 
-  /**
-   * Method finding a selected place in the list of chosen bookingplaces return the object to print the selected place
-   * 
-   * 
-   * @param places
-   * @param login
-   * @return
-   */
+	/**
+	 * Method finding a selected place in the list of chosen bookingplaces
+	 * return the object to print the selected place
+	 * 
+	 * 
+	 * @param places
+	 * @param login
+	 * @return
+	 */
 
-  public abstract Places getSelectedPlace(Places places, State login);
+	public abstract Places getSelectedPlace(Places places, State login);
 
-  public abstract List<Surgery> getSurgeries(State state);
+	public abstract List<Surgery> getSurgeries(State state);
 
-  /****
-   * method setting ombokning
-   * 
-   * @param l
-   */
-  public abstract void setBookingTime(BookingTimeLocal bookingTime, State credentials);
+	/****
+	 * method setting ombokning
+	 * 
+	 * @param l
+	 */
+	public abstract void setBookingTime(BookingTimeLocal bookingTime,
+			State credentials);
 
 }

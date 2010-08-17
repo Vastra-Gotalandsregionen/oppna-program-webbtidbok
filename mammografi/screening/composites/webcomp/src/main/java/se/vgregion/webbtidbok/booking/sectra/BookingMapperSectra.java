@@ -28,11 +28,20 @@ import javax.xml.datatype.XMLGregorianCalendar;
 import se.vgregion.webbtidbok.domain.Booking;
 import se.vgregion.webbtidbok.domain.Surgery;
 import se.vgregion.webbtidbok.domain.sectra.BookingSectra;
+import se.vgregion.webbtidbok.ws.BookingTime;
 import se.vgregion.webbtidbok.ws.sectra.BookingInfo;
 import se.vgregion.webbtidbok.ws.sectra.Section;
 import se.vgregion.webbtidbok.ws.sectra.TimeBlock;
 
 public class BookingMapperSectra {
+
+	public se.vgregion.webbtidbok.domain.BookingTime bookingTimeMapping(
+			BookingTime bookingTime) {
+		se.vgregion.webbtidbok.domain.BookingTime bookTime = new se.vgregion.webbtidbok.domain.BookingTime();
+		XMLGregorianCalendar date = bookingTime.getDatum();
+		bookTime.setTime(date.toGregorianCalendar());
+		return bookTime;
+	}
 
 	public Booking bookingMapping(BookingInfo bookingInfo) {
 		BookingSectra booking = new BookingSectra();
@@ -72,21 +81,21 @@ public class BookingMapperSectra {
 		return value;
 	}
 
-	
-    public XMLGregorianCalendar dateToXmlCalendar(Date date) {
-        GregorianCalendar c = new GregorianCalendar();
-        c.setTime(date);
-            try {
-                return DatatypeFactory.newInstance().newXMLGregorianCalendar(c);
-            } catch (DatatypeConfigurationException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-                throw new RuntimeException("Could not create XMLGregorianCalendar", e);
-            }
-    }
+	public XMLGregorianCalendar dateToXmlCalendar(Date date) {
+		GregorianCalendar c = new GregorianCalendar();
+		c.setTime(date);
+		try {
+			return DatatypeFactory.newInstance().newXMLGregorianCalendar(c);
+		} catch (DatatypeConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new RuntimeException("Could not create XMLGregorianCalendar",
+					e);
+		}
+	}
 
-    public Date daysMapping(XMLGregorianCalendar time) {
-        return time.toGregorianCalendar().getTime();
-    }
+	public Date daysMapping(XMLGregorianCalendar time) {
+		return time.toGregorianCalendar().getTime();
+	}
 
 }

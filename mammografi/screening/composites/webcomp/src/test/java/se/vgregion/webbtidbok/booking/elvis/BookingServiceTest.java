@@ -17,19 +17,21 @@
  */
 package se.vgregion.webbtidbok.booking.elvis;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import java.util.Calendar;
 import java.util.List;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 
-import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
 import se.vgregion.webbtidbok.State;
 import se.vgregion.webbtidbok.domain.Booking;
-import se.vgregion.webbtidbok.domain.BookingPlace;
+import se.vgregion.webbtidbok.domain.BookingTime;
 import se.vgregion.webbtidbok.domain.Surgery;
 import se.vgregion.webbtidbok.ws.ArrayOfBookingPlace;
 import se.vgregion.webbtidbok.ws.BookingRequest;
@@ -67,20 +69,20 @@ public class BookingServiceTest {
 		assertEquals(3, state.getCentralTidbokID());
 
 	}
-	
+
 	@Test
-	public void testGetBookingPlace(){
+	public void testGetBookingPlace() {
 		List<Surgery> bookingPlace = bookingService.getBookingPlace(state);
 		assertEquals(0, bookingPlace.size());
 		state.setLoggedIn(true);
 		bookingPlace = bookingService.getBookingPlace(state);
 		assertEquals(2, bookingPlace.size());
 	}
-	
+
 	@Test
-	public void testGetBookingTime(){
+	public void testGetBookingTime() {
 		state.setSelectedDate(Calendar.getInstance());
-		List<BookingTimeLocal> bookingTime = bookingService.getBookingTime(state);
+		List<BookingTime> bookingTime = bookingService.getBookingTime(state);
 		assertNotNull(bookingTime);
 		state.setLoggedIn(true);
 		bookingTime = bookingService.getBookingTime(state);
@@ -93,6 +95,7 @@ public class BookingServiceTest {
 			BookingRequest bookingRequest = new BookingRequest();
 			return bookingRequest;
 		}
+
 		@Override
 		public ArrayOfBookingPlace getQueryWSRequestPlaces(
 				BookingRequest request) {

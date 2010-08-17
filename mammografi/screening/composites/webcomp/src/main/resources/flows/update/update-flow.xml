@@ -96,8 +96,8 @@
 		 <evaluate expression="bookingFacade.getSelectedPlace(placesHandler, state)" result="flowScope.selectedPlace"  >
 		 </evaluate>		 
 		 <evaluate expression="calendarService.getTimeForChosenDate(state)" />
-		 <evaluate expression="bookingService.getBookingTime(state)" result="flowScope.timeListLocal" result-type="dataModel" /> 	 
-		 <evaluate expression="bookingService.getIsTimeListEmpty()" />	 
+		 <evaluate expression="bookingFacade.getBookingTime(state)" result="flowScope.timeListLocal" result-type="dataModel" /> 	 
+		 <evaluate expression="bookingFacade.getIsTimeListEmpty()" />	 
 	 	<transition on="yes" to="updateNoTimeTable">
 	 	</transition>
 		<transition on="no" to="update">
@@ -157,7 +157,7 @@
 			  </evaluate>		  		  
 			  <evaluate expression="calendarService.getCalendar(state)"  />
 			  <evaluate expression="calendarService.getTimeForChosenDate(state)" />
-			  <evaluate expression="bookingService.getBookingTime(state)" result="flowScope.timeListLocal" result-type="dataModel" />		  
+			  <evaluate expression="bookingFacade.getBookingTime(state)" result="flowScope.timeListLocal" result-type="dataModel" />		  
 		</on-render>	
 	
 		<transition on="showTimeCalendar" to="istimelistempty">
