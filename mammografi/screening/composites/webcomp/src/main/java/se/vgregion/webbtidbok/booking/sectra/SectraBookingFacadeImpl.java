@@ -28,6 +28,7 @@ import se.vgregion.webbtidbok.Places;
 import se.vgregion.webbtidbok.State;
 import se.vgregion.webbtidbok.booking.BookingFacade;
 import se.vgregion.webbtidbok.domain.Booking;
+import se.vgregion.webbtidbok.domain.BookingTime;
 import se.vgregion.webbtidbok.domain.Surgery;
 import se.vgregion.webbtidbok.domain.sectra.BookingSectra;
 
@@ -49,15 +50,15 @@ public class SectraBookingFacadeImpl implements BookingFacade {
 
 	@Override
 	public boolean login(State state) {
-	    boolean isLoggedIn = false;
-	    try {
-	        getService(state).getBooking();
-	        isLoggedIn = true;
-	    }
-	    catch (RuntimeException e) {
-	        // This means we could not log in, probably wrong patient or password.
-	        // Just stay not logged in.
-	    }
+		boolean isLoggedIn = false;
+		try {
+			getService(state).getBooking();
+			isLoggedIn = true;
+		} catch (RuntimeException e) {
+			// This means we could not log in, probably wrong patient or
+			// password.
+			// Just stay not logged in.
+		}
 		state.setLoggedIn(isLoggedIn);
 		return isLoggedIn;
 	}
@@ -117,5 +118,17 @@ public class SectraBookingFacadeImpl implements BookingFacade {
 	public void setSelectedItem(Places places, State state) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public List<BookingTime> getBookingTime(State state) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean getIsTimeListEmpty(State state) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

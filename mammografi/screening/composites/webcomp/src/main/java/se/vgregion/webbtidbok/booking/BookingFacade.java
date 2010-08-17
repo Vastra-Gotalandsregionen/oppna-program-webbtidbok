@@ -25,6 +25,7 @@ import javax.faces.model.SelectItem;
 import se.vgregion.webbtidbok.Places;
 import se.vgregion.webbtidbok.State;
 import se.vgregion.webbtidbok.domain.Booking;
+import se.vgregion.webbtidbok.domain.BookingTime;
 
 public interface BookingFacade {
 
@@ -48,4 +49,9 @@ public interface BookingFacade {
 	List<Date> getFreeDays(State state, Date startDate, Date endDate);
 
 	void setSelectedItem(Places places, State state);
+
+	List<BookingTime> getBookingTime(State state);
+
+	boolean getIsTimeListEmpty(State state);
+
 }

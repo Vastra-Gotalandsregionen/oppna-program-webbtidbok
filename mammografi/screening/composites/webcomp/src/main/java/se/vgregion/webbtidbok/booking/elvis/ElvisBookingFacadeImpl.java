@@ -27,6 +27,7 @@ import se.vgregion.webbtidbok.Places;
 import se.vgregion.webbtidbok.State;
 import se.vgregion.webbtidbok.booking.BookingFacade;
 import se.vgregion.webbtidbok.domain.Booking;
+import se.vgregion.webbtidbok.domain.BookingTime;
 import se.vgregion.webbtidbok.domain.Surgery;
 import se.vgregion.webbtidbok.ws.BookingRequest;
 import se.vgregion.webbtidbok.ws.BookingResponse;
@@ -90,6 +91,16 @@ public class ElvisBookingFacadeImpl implements BookingFacade {
 	public void setSelectedItem(Places places, State state) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public List<BookingTime> getBookingTime(State state) {
+		return bookingService.getBookingTime(state);
+	}
+
+	@Override
+	public boolean getIsTimeListEmpty(State state) {
+		return bookingService.getIsTimeListEmpty();
 	}
 
 }

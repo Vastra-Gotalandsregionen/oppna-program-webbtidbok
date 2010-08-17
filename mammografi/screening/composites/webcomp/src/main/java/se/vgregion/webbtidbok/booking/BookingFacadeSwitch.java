@@ -25,6 +25,7 @@ import javax.faces.model.SelectItem;
 import se.vgregion.webbtidbok.Places;
 import se.vgregion.webbtidbok.State;
 import se.vgregion.webbtidbok.domain.Booking;
+import se.vgregion.webbtidbok.domain.BookingTime;
 
 /**
  * This class is used as a switch to choose between different
@@ -81,6 +82,18 @@ public class BookingFacadeSwitch implements BookingFacade {
 	@Override
 	public void setSelectedItem(Places places, State state) {
 		state.setCentralTidbokID(places.getPlacesId());
+	}
+
+	@Override
+	public List<BookingTime> getBookingTime(State state) {
+		return getBookingFacadeForCurrentRequest(state).getBookingTime(state);
+	}
+
+	@Override
+	public boolean getIsTimeListEmpty(State state) {
+
+		return getBookingFacadeForCurrentRequest(state).getIsTimeListEmpty(
+				state);
 	}
 
 }
