@@ -64,48 +64,14 @@ public class ElvisBookingFacadeImpl implements BookingFacade {
 	}
 
 	@Override
-	public List<SelectItem> getBookingPlaceSelectItems(State state) {
-		List<SelectItem> selectItems = new ArrayList<SelectItem>();
-		List<Surgery> surgeries = bookingService.getSurgeries(state);
-		for (Surgery surgery : surgeries) {
-			SelectItem selectItem = new SelectItem();
-			selectItem.setLabel(surgery.getSurgeryName());
-			selectItem.setValue(surgery.getSurgeryId());
-			selectItems.add(selectItem);
-		}
-		return selectItems;
-	}
-
-	@Override
-	public int getSelectedDefaultItem(State state) {
-		return bookingService.getSelectedDefaultItem(state);
-	}
-
-	@Override
-	public Places getSelectedPlace(Places places, State state) {
-		return bookingService.getSelectedPlace(places, state);
-	}
-
-	@Override
 	public List<Date> getFreeDays(State state, Date startDate, Date endDate) {
 		// TODO: This method needs implementing.
 		return null;
 	}
 
 	@Override
-	public void setSelectedItem(Places places, State state) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public List<BookingTime> getBookingTime(State state) {
 		return bookingService.getBookingTime(state);
-	}
-
-	@Override
-	public boolean getIsTimeListEmpty(State state) {
-		return bookingService.getIsTimeListEmpty();
 	}
 
 }

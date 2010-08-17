@@ -43,18 +43,8 @@ public interface BookingFacade {
   
 	public List<Surgery> getAvailableSurgeries(State state);
 
-	List<SelectItem> getBookingPlaceSelectItems(State state);
-
-	int getSelectedDefaultItem(State state);
-
-	Places getSelectedPlace(Places places, State state);
-
 	List<Date> getFreeDays(State state, Date startDate, Date endDate);
 
-	void setSelectedItem(Places places, State state);
-
 	List<BookingTime> getBookingTime(State state);
-
-	boolean getIsTimeListEmpty(State state);
 
 }

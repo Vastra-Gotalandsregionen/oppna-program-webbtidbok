@@ -30,11 +30,11 @@
 
 	<view-state id="update" view="/flows/update/update.xhtml">
 		<on-render>
-			  <evaluate expression="bookingFacade.getBookingPlaceSelectItems(state)"  result="flowScope.bookingplaces"  >
+			  <evaluate expression="guiUtility.getBookingPlaceSelectItems(state)"  result="flowScope.bookingplaces"  >
 			  </evaluate>
-			  <evaluate expression="placesHandler.setPlacesId(bookingFacade.getSelectedDefaultItem(state))" >
+			  <evaluate expression="placesHandler.setPlacesId(guiUtility.getSelectedDefaultItem(state))" >
 			  </evaluate>
-			  <evaluate expression="bookingFacade.getSelectedPlace(placesHandler, state)" result="flowScope.selectedPlace"  >
+			  <evaluate expression="guiUtility.getSelectedPlace(placesHandler, state)" result="flowScope.selectedPlace"  >
 			  </evaluate>
 <!--			  <evaluate expression="calendarService.getCalendar(state)"  />-->
 
@@ -50,7 +50,7 @@
 			<evaluate expression="calendarService.setSelectedDay(requestParameters.selectedDay)" />
 		</transition>		
 		<transition on="displaytimes" to="isEmptyCalendar">
-			<evaluate expression="bookingFacade.setSelectedItem(placesHandler, state)"   >
+			<evaluate expression="guiUtility.setSelectedItem(placesHandler, state)"   >
 			</evaluate>			
 			<evaluate expression="placesHandler.getPlacesId()"  result="viewScope.placesId">
 			</evaluate>					
@@ -62,7 +62,7 @@
 			<evaluate expression="calendarService.setSelectedDay(calendarService.selectedDay)" >
 			</evaluate>			
 			<set name="conversationScope.timeTable" value="timeListLocal.selectedRow"  />		 
-			<evaluate expression="bookingService.setBookingTime(conversationScope.timeTable, state)" >
+			<evaluate expression="guiUtility.setBookingTime(conversationScope.timeTable, state)" >
 			</evaluate>		
 		</transition>
 		<transition on="prev" to="update2">
@@ -76,11 +76,11 @@
 	</view-state>
 
 	<action-state id="isEmptyCalendar">
-			 <evaluate expression="bookingFacade.getBookingPlaceSelectItems(state)"  result="flowScope.bookingplaces"  >
+			 <evaluate expression="guiUtility.getBookingPlaceSelectItems(state)"  result="flowScope.bookingplaces"  >
 			 </evaluate>		  
-			 <evaluate expression="placesHandler.setPlacesId(bookingFacade.getSelectedDefaultItem(state))" >
+			 <evaluate expression="placesHandler.setPlacesId(guiUtility.getSelectedDefaultItem(state))" >
 			 </evaluate>		  
-			 <evaluate expression="bookingFacade.getSelectedPlace(placesHandler, state)" result="flowScope.selectedPlace"  >
+			 <evaluate expression="guiUtility.getSelectedPlace(placesHandler, state)" result="flowScope.selectedPlace"  >
 			 </evaluate>
 			 <evaluate expression="calendarService.getCalendar(state)"  /> 
 			 <evaluate expression="calendarService.isEmptyCalendar()" />
@@ -89,15 +89,15 @@
 	</action-state>
 		
 	<action-state id="istimelistempty">
-		 <evaluate expression="bookingFacade.getBookingPlaceSelectItems(state)"  result="flowScope.bookingplaces"  >
+		 <evaluate expression="guiUtility.getBookingPlaceSelectItems(state)"  result="flowScope.bookingplaces"  >
 		 </evaluate>		  
-		 <evaluate expression="placesHandler.setPlacesId(bookingFacade.getSelectedDefaultItem(state))" >
+		 <evaluate expression="placesHandler.setPlacesId(guiUtility.getSelectedDefaultItem(state))" >
 		 </evaluate>	  
-		 <evaluate expression="bookingFacade.getSelectedPlace(placesHandler, state)" result="flowScope.selectedPlace"  >
+		 <evaluate expression="guiUtility.getSelectedPlace(placesHandler, state)" result="flowScope.selectedPlace"  >
 		 </evaluate>		 
 		 <evaluate expression="calendarService.getTimeForChosenDate(state)" />
 		 <evaluate expression="bookingFacade.getBookingTime(state)" result="flowScope.timeListLocal" result-type="dataModel" /> 	 
-		 <evaluate expression="bookingFacade.getIsTimeListEmpty()" />	 
+		 <evaluate expression="guiUtility.getIsTimeListEmpty()" />	 
 	 	<transition on="yes" to="updateNoTimeTable">
 	 	</transition>
 		<transition on="no" to="update">
@@ -106,7 +106,7 @@
 	
 	<view-state id="updateNoTimeTable" view="/flows/update/updateNoTimeTable.xhtml">	
 		<on-render>		
-			<evaluate expression="bookingFacade.setSelectedItem(placesHandler, state)"   >
+			<evaluate expression="guiUtility.setSelectedItem(placesHandler, state)"   >
 			</evaluate>		
 			<evaluate expression="placesHandler.getPlacesId()"  result="viewScope.placesId">
 			</evaluate>
@@ -120,7 +120,7 @@
 		</transition>	
 		
 		<transition on="displaytimes" to="isEmptyCalendar">
-			<evaluate expression="bookingFacade.setSelectedItem(placesHandler, state)"   >
+			<evaluate expression="guiUtility.setSelectedItem(placesHandler, state)"   >
 			</evaluate>			
 			<evaluate expression="placesHandler.getPlacesId()"  result="viewScope.placesId">
 			</evaluate>					
@@ -149,11 +149,11 @@
 -->
 	<view-state id="update2" view="/flows/update/update.xhtml">
 		<on-render >			  
-			  <evaluate expression="bookingFacade.getBookingPlaceSelectItems(state)"  result="flowScope.bookingplaces"  >
+			  <evaluate expression="guiUtility.getBookingPlaceSelectItems(state)"  result="flowScope.bookingplaces"  >
 			  </evaluate>			  
-			  <evaluate expression="placesHandler.setPlacesId(bookingFacade.getSelectedDefaultItem(state))" >
+			  <evaluate expression="placesHandler.setPlacesId(guiUtility.getSelectedDefaultItem(state))" >
 			  </evaluate>		  
-			  <evaluate expression="bookingFacade.getSelectedPlace(placesHandler, state)" result="flowScope.selectedPlace"  >
+			  <evaluate expression="guiUtility.getSelectedPlace(placesHandler, state)" result="flowScope.selectedPlace"  >
 			  </evaluate>		  		  
 			  <evaluate expression="calendarService.getCalendar(state)"  />
 			  <evaluate expression="calendarService.getTimeForChosenDate(state)" />
@@ -167,7 +167,7 @@
 <!--			<set name="calendarService.selectedDay" value="requestParameters.selectedDay" />-->
 <!--		</transition>-->
 		<transition on="displaytimes" to="isEmptyCalendar">
-			<evaluate expression="bookingFacade.setSelectedItem(placesHandler, state)"   >
+			<evaluate expression="guiUtility.setSelectedItem(placesHandler, state)"   >
 			</evaluate>		
 			<evaluate expression="placesHandler.getPlacesId()"  result="viewScope.placesId">
 			</evaluate>				

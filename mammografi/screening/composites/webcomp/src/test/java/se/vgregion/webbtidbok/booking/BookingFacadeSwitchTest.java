@@ -70,18 +70,6 @@ public class BookingFacadeSwitchTest {
 		assertFalse(bookingFacadeSectraMock.wasCalled);
 	}
 
-	@Test
-	public void testGetBookingPlaceSelectItems() throws Exception {
-
-		bookingFacadeSwitch.getBookingPlaceSelectItems(state);
-		assertThatSectraFacadeWasCalled();
-		setUp();
-		// Test elvis facade
-		state.setService("BUKAORTA");
-		bookingFacadeSwitch.getBookingPlaceSelectItems(state);
-		assertThatElvisFacadeWasCAlled();
-	}
-
 	private void assertThatSectraFacadeWasCalled() {
 		assertFalse(bookingFacadeElvisMock.wasCalled);
 		assertTrue(bookingFacadeSectraMock.wasCalled);
@@ -95,28 +83,6 @@ public class BookingFacadeSwitchTest {
 	@Test
 	public void testLogin() {
 		assertFalse(bookingFacadeSwitch.login(state));
-	}
-
-	@Test
-	public void testGetSelectedDefaultItem() throws Exception {
-
-		bookingFacadeSwitch.getSelectedDefaultItem(state);
-		assertThatSectraFacadeWasCalled();
-		setUp();
-		state.setService("BUKAORTA");
-		bookingFacadeSwitch.getSelectedDefaultItem(state);
-		assertThatElvisFacadeWasCAlled();
-
-	}
-
-	@Test
-	public void testGetSelectedPlace() throws Exception {
-		bookingFacadeSwitch.getSelectedPlace(null, state);
-		assertThatSectraFacadeWasCalled();
-		setUp();
-		state.setService("BUKAORTA");
-		bookingFacadeSwitch.getSelectedPlace(null, state);
-		assertThatElvisFacadeWasCAlled();
 	}
 
 	class BookingFacadeSectraMock implements BookingFacade {
@@ -138,24 +104,6 @@ public class BookingFacadeSwitchTest {
 		}
 
 		@Override
-		public List<SelectItem> getBookingPlaceSelectItems(State state) {
-			wasCalled = true;
-			return null;
-		}
-
-		@Override
-		public int getSelectedDefaultItem(State state) {
-			wasCalled = true;
-			return 0;
-		}
-
-		@Override
-		public Places getSelectedPlace(Places places, State state) {
-			wasCalled = true;
-			return null;
-		}
-
-		@Override
 		public boolean login(State state) {
 			wasCalled = true;
 			return false;
@@ -168,22 +116,11 @@ public class BookingFacadeSwitchTest {
 		}
 
 		@Override
-		public void setSelectedItem(Places places, State state) {
-			wasCalled = true;
-
-		}
-
-		@Override
 		public List<BookingTime> getBookingTime(State state) {
-			// TODO Auto-generated method stub
+            wasCalled = true;
 			return null;
 		}
 
-		@Override
-		public boolean getIsTimeListEmpty(State state) {
-			// TODO Auto-generated method stub
-			return false;
-		}
 	}
 
 	class BookingFacadeElvisMock implements BookingFacade {
@@ -203,24 +140,6 @@ public class BookingFacadeSwitchTest {
 		}
 
 		@Override
-		public List<SelectItem> getBookingPlaceSelectItems(State state) {
-			wasCalled = true;
-			return null;
-		}
-
-		@Override
-		public int getSelectedDefaultItem(State state) {
-			wasCalled = true;
-			return 0;
-		}
-
-		@Override
-		public Places getSelectedPlace(Places places, State state) {
-			wasCalled = true;
-			return null;
-		}
-
-		@Override
 		public boolean login(State state) {
 			wasCalled = true;
 			return false;
@@ -233,21 +152,9 @@ public class BookingFacadeSwitchTest {
 		}
 
 		@Override
-		public void setSelectedItem(Places places, State state) {
-			wasCalled = true;
-
-		}
-
-		@Override
 		public List<BookingTime> getBookingTime(State state) {
-			// TODO Auto-generated method stub
+            wasCalled = true;
 			return null;
-		}
-
-		@Override
-		public boolean getIsTimeListEmpty(State state) {
-			wasCalled = true;
-			return false;
 		}
 
 	}

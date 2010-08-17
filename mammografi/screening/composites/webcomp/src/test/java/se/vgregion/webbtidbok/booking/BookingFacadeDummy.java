@@ -53,33 +53,9 @@ public class BookingFacadeDummy implements BookingFacade {
 	}
 
 	@Override
-	public List<SelectItem> getBookingPlaceSelectItems(State state) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int getSelectedDefaultItem(State state) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public Places getSelectedPlace(Places places, State state) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public List<Date> getFreeDays(State state, Date startDate, Date endDate) {
 		// TODO Auto-generated method stub
 		return null;
-	}
-
-	@Override
-	public void setSelectedItem(Places places, State state) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -87,11 +63,4 @@ public class BookingFacadeDummy implements BookingFacade {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-	@Override
-	public boolean getIsTimeListEmpty(State state) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
 }
