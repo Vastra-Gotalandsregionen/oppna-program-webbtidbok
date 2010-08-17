@@ -83,17 +83,6 @@ public class CalendarUtil implements CalendarUtilInterface {
     color.add(colorCode);
   }
 
-  // public void emptyColorList(){
-  // int tmpIndex = 0;
-  //	
-  // if(color.size() > 0 && !color.get(tmpIndex).equals(null)){
-  // for(int i = 0; i < color.size();i++){
-  // color.remove(i);
-  // tmpIndex++;
-  // }
-  // }
-  // }
-
   /**
    * Returns the date for the current day
    * 
@@ -281,12 +270,7 @@ public class CalendarUtil implements CalendarUtilInterface {
     // System.out.println("         ****** "+state.getPnr());
     createCalendarForMonth(state);
 
-    int tmpIndex = 0;
-    for (String s : color) {
-      tmpIndex++;
-    }
     System.out.println("index: " + index);
-    tmpIndex = 0;
   }
 
   private void webService(State state) {
