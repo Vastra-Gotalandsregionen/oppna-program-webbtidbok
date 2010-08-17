@@ -26,6 +26,7 @@ import se.vgregion.webbtidbok.Places;
 import se.vgregion.webbtidbok.State;
 import se.vgregion.webbtidbok.domain.Booking;
 import se.vgregion.webbtidbok.domain.BookingTime;
+import se.vgregion.webbtidbok.domain.Surgery;
 
 /**
  * This class is used as a switch to choose between different
@@ -39,17 +40,20 @@ public class BookingFacadeSwitch implements BookingFacade {
 		bookingFactory = factory;
 	}
 
+    private BookingFacade getBookingFacadeForCurrentRequest(State state) {
+        return bookingFactory.getService(state);
+    }
+
 	@Override
 	public Booking getBookingInfo(State state) {
-		BookingFacade bookingFacadeForCurrentRequest = getBookingFacadeForCurrentRequest(state);
-		return bookingFacadeForCurrentRequest.getBookingInfo(state);
-
+		return getBookingFacadeForCurrentRequest(state).getBookingInfo(state);
 	}
 
-	private BookingFacade getBookingFacadeForCurrentRequest(State state) {
-		return bookingFactory.getService(state);
-	}
-
+    @Override
+    public List<Surgery> getAvailableSurgeries(State state) {
+        return getBookingFacadeForCurrentRequest(state).getAvailableSurgeries(state);
+    }
+    
 	@Override
 	public List<SelectItem> getBookingPlaceSelectItems(State state) {
 		return getBookingFacadeForCurrentRequest(state)

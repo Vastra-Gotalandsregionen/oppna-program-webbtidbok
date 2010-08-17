@@ -25,6 +25,7 @@ import javax.faces.model.SelectItem;
 import se.vgregion.webbtidbok.Places;
 import se.vgregion.webbtidbok.State;
 import se.vgregion.webbtidbok.domain.BookingTime;
+import se.vgregion.webbtidbok.domain.Surgery;
 
 /**
  * This class is just empty stubs. Use it as a base class for your test case
@@ -43,6 +44,12 @@ public class BookingFacadeDummy implements BookingFacade {
 	public se.vgregion.webbtidbok.domain.Booking getBookingInfo(State state) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public List<Surgery> getAvailableSurgeries(State state) {
+	    // TODO Auto-generated method stub
+	    return null;
 	}
 
 	@Override

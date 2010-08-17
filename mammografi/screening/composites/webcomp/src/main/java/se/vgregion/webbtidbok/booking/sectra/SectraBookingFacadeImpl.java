@@ -80,6 +80,11 @@ public class SectraBookingFacadeImpl implements BookingFacade {
 		return null;
 	}
 
+    @Override
+    public List<Surgery> getAvailableSurgeries(State state) {
+        return getService(state).getSurgeries();
+    }
+
 	@Override
 	public List<SelectItem> getBookingPlaceSelectItems(State state) {
 		List<Surgery> surgeries = getService(state).getSurgeries();

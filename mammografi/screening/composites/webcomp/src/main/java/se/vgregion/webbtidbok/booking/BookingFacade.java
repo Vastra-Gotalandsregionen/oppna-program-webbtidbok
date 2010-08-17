@@ -22,6 +22,7 @@ import java.util.List;
 
 import javax.faces.model.SelectItem;
 
+import se.vgregion.webbtidbok.domain.Surgery;
 import se.vgregion.webbtidbok.Places;
 import se.vgregion.webbtidbok.State;
 import se.vgregion.webbtidbok.domain.Booking;
@@ -39,6 +40,8 @@ public interface BookingFacade {
 	public boolean login(State state);
 
 	public Booking getBookingInfo(State state);
+  
+	public List<Surgery> getAvailableSurgeries(State state);
 
 	List<SelectItem> getBookingPlaceSelectItems(State state);
 

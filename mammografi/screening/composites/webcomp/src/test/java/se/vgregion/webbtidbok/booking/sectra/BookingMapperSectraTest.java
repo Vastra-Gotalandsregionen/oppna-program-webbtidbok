@@ -115,7 +115,7 @@ public class BookingMapperSectraTest {
 		assertEquals(newXMLGregorianCalendar.toGregorianCalendar().getTime()
 				.getTime(), bookingMapping.getStartTime().getTime());
 		assertEquals(SECTIONNAME + ", " + SECTIONADDRESS, bookingMapping
-				.getSurgeryAddress());
+				.getSurgery().getFullAddress());
 
 	}
 

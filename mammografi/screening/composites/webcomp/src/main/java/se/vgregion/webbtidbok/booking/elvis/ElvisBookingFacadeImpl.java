@@ -59,6 +59,11 @@ public class ElvisBookingFacadeImpl implements BookingFacade {
 	}
 
 	@Override
+	public List<Surgery> getAvailableSurgeries(State state) {
+	    return bookingService.getSurgeries(state);
+	}
+
+	@Override
 	public List<SelectItem> getBookingPlaceSelectItems(State state) {
 		List<SelectItem> selectItems = new ArrayList<SelectItem>();
 		List<Surgery> surgeries = bookingService.getSurgeries(state);

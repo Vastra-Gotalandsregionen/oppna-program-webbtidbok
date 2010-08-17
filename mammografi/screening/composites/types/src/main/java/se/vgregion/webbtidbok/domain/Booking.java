@@ -24,7 +24,7 @@ public abstract class Booking implements Serializable{
 	
 	private static final long serialVersionUID = 7686724985905225950L;
 	private String patientName;
-	private String surgeryAddress;
+	private Surgery surgery;
 	private String patientId;
 	private Date startTime;
 	private boolean updateable;
@@ -66,20 +66,18 @@ public abstract class Booking implements Serializable{
 
 	/**
 	 * 
-	 * @return {@link String} address to the surgery.
+	 * @return {@link Surgery} the surgery the patient is booked to.
 	 */
-	public String getSurgeryAddress() {
-		return surgeryAddress;
+	public Surgery getSurgery() {
+		return surgery;
 	}
 
 	/**
 	 * 
-	 * @param surgeryAddress {@link String} address to the surgery.
+	 * @param surgery {@link Surgery} the surgery the patient is booked to.
 	 */
-	public void setSurgeryAddress(String surgeryAddress) {
-		this.surgeryAddress = surgeryAddress;
+	public void setSurgery(Surgery surgery) {
+		this.surgery = surgery;
 	}
-	
-	
 
 }

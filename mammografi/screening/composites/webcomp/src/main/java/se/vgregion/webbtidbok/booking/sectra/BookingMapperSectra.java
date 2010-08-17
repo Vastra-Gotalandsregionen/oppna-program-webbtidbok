@@ -57,10 +57,7 @@ public class BookingMapperSectra {
 			booking.setStartTime(startTime.toGregorianCalendar().getTime());
 			JAXBElement<Section> section = bookingInfo.getBookedTime()
 					.getValue().getSection();
-			String sectionName = section.getValue().getName().getValue();
-			String address = bookingInfo.getBookedTime().getValue()
-					.getSection().getValue().getAddress().getValue();
-			booking.setSurgeryAddress(sectionName + ", " + address);
+			booking.setSurgery(surgeryMapping(section.getValue()));
 		}
 		return booking;
 	}
