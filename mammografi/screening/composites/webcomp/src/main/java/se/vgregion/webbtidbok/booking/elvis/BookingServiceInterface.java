@@ -27,10 +27,6 @@ import se.vgregion.webbtidbok.domain.Surgery;
 
 public interface BookingServiceInterface {
 
-	public abstract boolean getIsTimeListEmpty();
-
-	public abstract void setTimeListEmpty(boolean isTimeListEmpty);
-
 	public abstract void setIsUpdated(boolean b);
 
 	public abstract boolean isUpdated();
@@ -49,46 +45,7 @@ public interface BookingServiceInterface {
 	 */
 	public abstract boolean cancelBooking(State loginCredentials);
 
-	// public abstract List<BookingPlace> getBookingPlace(State
-	// loginCredentials);
-
 	public abstract List<BookingTime> getBookingTime(State loginCredentials);
-
-	/***
-	 * method set selected item
-	 * 
-	 * @param selectedItem
-	 */
-
-	public abstract void setSelectedItem(int selectedItem);
-
-	/***
-	 * 
-	 * @param places
-	 */
-	public abstract void setSelectedItem(Places places);
-
-	/***
-	 * 
-	 * 
-	 * @param places
-	 * @param state
-	 */
-	public abstract void setSelectedItem(Places places, State state);
-
-	public abstract int getSelectedDefaultItem(State loginCredentials);
-
-	/**
-	 * Method finding a selected place in the list of chosen bookingplaces
-	 * return the object to print the selected place
-	 * 
-	 * 
-	 * @param places
-	 * @param login
-	 * @return
-	 */
-
-	public abstract Places getSelectedPlace(Places places, State login);
 
 	public abstract List<Surgery> getSurgeries(State state);
 

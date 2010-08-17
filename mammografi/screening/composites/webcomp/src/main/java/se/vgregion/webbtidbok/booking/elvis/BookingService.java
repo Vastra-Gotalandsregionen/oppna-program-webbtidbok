@@ -44,10 +44,8 @@ import se.vgregion.webbtidbok.ws.BookingTime;
 import se.vgregion.webbtidbok.ws.ObjectFactory;
 
 public class BookingService implements BookingServiceInterface {
-	private static final Logger sLogger = Logger
-			.getLogger("se.vgregion.webbtidbok.logging");
 
-	int testIndex;
+    int testIndex;
 	BookingResponse response;
 	BookingRequest request;
 	WebServiceHelper helper;
@@ -69,14 +67,6 @@ public class BookingService implements BookingServiceInterface {
 	public boolean isUpdated = false;
 
 	// private String orderDate;
-
-	public boolean getIsTimeListEmpty() {
-		return isTimeListEmpty;
-	}
-
-	public void setTimeListEmpty(boolean isTimeListEmpty) {
-		this.isTimeListEmpty = isTimeListEmpty;
-	}
 
 	// constructor
 	public BookingService() {
@@ -206,129 +196,6 @@ public class BookingService implements BookingServiceInterface {
 		}
 		return bookingTimeArrayList;
 	}
-
-	/***
-	 * method set selected item
-	 * 
-	 * @param selectedItem
-	 */
-
-	public void setSelectedItem(int selectedItem) {
-		System.out.println("selectitem: " + selectedItem);
-	}
-
-	/***
-	 * 
-	 * @param places
-	 */
-	public void setSelectedItem(Places places) {
-		System.out.println("selectitem: " + places.getPlacesId());
-	}
-
-	/***
-	 * 
-	 * 
-	 * @param places
-	 * @param state
-	 */
-	public void setSelectedItem(Places places, State state) {
-		System.out.println("BookingServices.setSelectedItem: "
-				+ places.getPlacesId());
-		state.setCentralTidbokID(places.getPlacesId());
-		System.out.println("BookingServices.state.centraltidbokid: "
-				+ state.getCentralTidbokID());
-	}
-
-	/*
-	 * Method setting default value for BookingResponse, CentralTimeBookingId
-	 */
-
-	public int getSelectedDefaultItem(State loginCredentials) {
-
-		if (this.isFirstPlaces()) {
-
-			request = helper.getQueryWSRequest(loginCredentials);
-			response = helper.getQueryWS(request);
-			int centralTimeBookingId = response.getCentralTidbokID();
-
-			this.setFirstPlacesBoolean(false);
-			return centralTimeBookingId;
-
-		} else {
-			System.out.println("BookingServices.getSelectedDefaultItem: "
-					+ loginCredentials.getCentralTidbokID());
-
-			return loginCredentials.getCentralTidbokID();
-		}
-
-	}
-
-	/**
-	 * Method finding a selected place in the list of chosen bookingplaces
-	 * return the object to print the selected place
-	 * 
-	 * 
-	 * @param places
-	 * @param login
-	 * @return
-	 */
-
-	public Places getSelectedPlace(Places places, State login) {
-		Places place = new Places();
-		List<Surgery> bookingPlaces = getBookingPlace(login);
-		for (Surgery bl : bookingPlaces) {
-			if (bl.getSurgeryId() == Integer.toString(places.getPlacesId())) {
-
-				place.setPlacesId(new Integer(bl.getSurgeryId()));
-				place.setClinic(bl.getSurgeryName());
-				place.setAddress(bl.getSurgeryAddress());
-				place.setRepresentationPlace();
-
-			}
-		}
-
-		if (place != null) {
-			sLogger.debug("Selected place clinic: " + place.getClinic());
-			sLogger.debug("Selected place address: " + place.getAddress());
-			sLogger.debug("Selected place id: " + place.getPlacesId());
-			sLogger.debug("Selected place representation place: "
-					+ place.getRepresentationPlace());
-		}
-		return place;
-	}
-
-	// public List<SelectItem> getBookingPlaceSelectItems(State
-	// loginCredentials) {
-	//
-	// // Uncomment below for debug, you'll only have to click login,
-	// // creds below are hard coded.
-	// // String pnr = "19960103-2395";
-	// // String psw = "Y8PBZRUr";
-	// // loginCredentials.setPnr(pnr);
-	// // loginCredentials.setPasswd(psw);
-	// // loginCredentials.setLoggedIn(true);
-	// List<se.vgregion.webbtidbok.domain.BookingPlace> placeListLocal = new
-	// ArrayList<se.vgregion.webbtidbok.domain.BookingPlace>();
-	//
-	// if (loginCredentials.isLoggedIn()) {
-	//
-	// request = helper.getQueryWSRequest(loginCredentials);
-	// ArrayOfBookingPlace places = helper.getQueryWSRequestPlaces(request);
-	// // response = helper.getQueryWS(request);
-	// List<BookingPlace> placeList = places.getBookingPlace();
-	// for (BookingPlace p : placeList) {
-	// se.vgregion.webbtidbok.domain.BookingPlace pl =
-	// mapping.bookingPlaceMapping(p);
-	// placeListLocal.add(pl);
-	// }
-	//
-	// SelectItemConverter sc = new SelectItemConverter();
-	//
-	// return sc.getSelectItems(placeListLocal);
-	// }
-	//
-	// return null;
-	// }
 
 	/****
 	 * method setting ombokning

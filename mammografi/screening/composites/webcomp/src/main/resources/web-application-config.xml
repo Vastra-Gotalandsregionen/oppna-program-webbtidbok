@@ -194,6 +194,12 @@
 		</aop:aspect>
 	</aop:config>
 
+
+    <!-- Utility bean for dumping methods we don't have a proper home for. -->
+    <bean id="guiUtility" class="se.vgregion.webbtidbok.GUIUtilities">
+        <property name="bookingFacade" ref="bookingFacade" />
+    </bean>
+
 	<!-- Flow handler handling exceptions for the 'login' flow. -->
 	<bean name="login"
 		class="se.vgregion.webbtidbok.errorhandling.ExceptionFlowHandler">

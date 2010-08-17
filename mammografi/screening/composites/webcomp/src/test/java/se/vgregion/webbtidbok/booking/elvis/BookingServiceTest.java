@@ -55,11 +55,6 @@ public class BookingServiceTest {
 	}
 
 	@Test
-	public void testGetSelectedDefaultItem() {
-		assertEquals(3, bookingService.getSelectedDefaultItem(state));
-	}
-
-	@Test
 	public void testGetBooking() {
 		Booking booking = bookingService.getBooking(state);
 		assertNotNull(booking);

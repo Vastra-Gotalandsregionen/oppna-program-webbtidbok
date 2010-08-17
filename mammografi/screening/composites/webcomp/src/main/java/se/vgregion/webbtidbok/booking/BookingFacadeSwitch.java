@@ -55,26 +55,8 @@ public class BookingFacadeSwitch implements BookingFacade {
     }
     
 	@Override
-	public List<SelectItem> getBookingPlaceSelectItems(State state) {
-		return getBookingFacadeForCurrentRequest(state)
-				.getBookingPlaceSelectItems(state);
-	}
-
-	@Override
 	public boolean login(State state) {
 		return false;
-	}
-
-	@Override
-	public int getSelectedDefaultItem(State state) {
-		return getBookingFacadeForCurrentRequest(state).getSelectedDefaultItem(
-				state);
-	}
-
-	@Override
-	public Places getSelectedPlace(Places places, State state) {
-		return getBookingFacadeForCurrentRequest(state).getSelectedPlace(
-				places, state);
 	}
 
 	@Override
@@ -84,20 +66,8 @@ public class BookingFacadeSwitch implements BookingFacade {
 	}
 
 	@Override
-	public void setSelectedItem(Places places, State state) {
-		state.setCentralTidbokID(places.getPlacesId());
-	}
-
-	@Override
 	public List<BookingTime> getBookingTime(State state) {
 		return getBookingFacadeForCurrentRequest(state).getBookingTime(state);
-	}
-
-	@Override
-	public boolean getIsTimeListEmpty(State state) {
-
-		return getBookingFacadeForCurrentRequest(state).getIsTimeListEmpty(
-				state);
 	}
 
 }

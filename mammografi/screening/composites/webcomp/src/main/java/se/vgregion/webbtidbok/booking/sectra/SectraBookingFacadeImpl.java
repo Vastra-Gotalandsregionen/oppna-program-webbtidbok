@@ -86,33 +86,6 @@ public class SectraBookingFacadeImpl implements BookingFacade {
     }
 
 	@Override
-	public List<SelectItem> getBookingPlaceSelectItems(State state) {
-		List<Surgery> surgeries = getService(state).getSurgeries();
-		List<SelectItem> selectedItems = new ArrayList<SelectItem>();
-		for (Surgery surgery : surgeries) {
-			SelectItem s = new SelectItem();
-			s.setLabel(surgery.getSurgeryName());
-			s.setValue(surgery.getSurgeryId());
-			selectedItems.add(s);
-		}
-		return selectedItems;
-
-	}
-
-	@Override
-	public int getSelectedDefaultItem(State state) {
-		// return getService(state).getSelectedDefaultItem(state);
-		// TODO: Fix this response.
-		return 0;
-	}
-
-	@Override
-	public Places getSelectedPlace(Places places, State state) {
-		// TODO: Add implementation
-		return new Places();
-	}
-
-	@Override
 	public List<Date> getFreeDays(State state, Date startDate, Date endDate) {
 		// TODO: Needs to provide the section id from state somehow.
 		return getService(state)
@@ -120,20 +93,8 @@ public class SectraBookingFacadeImpl implements BookingFacade {
 	}
 
 	@Override
-	public void setSelectedItem(Places places, State state) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public List<BookingTime> getBookingTime(State state) {
 		// TODO Auto-generated method stub
 		return null;
-	}
-
-	@Override
-	public boolean getIsTimeListEmpty(State state) {
-		// TODO Auto-generated method stub
-		return false;
 	}
 }
