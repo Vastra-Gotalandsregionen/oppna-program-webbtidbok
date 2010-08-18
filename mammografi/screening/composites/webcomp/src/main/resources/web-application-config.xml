@@ -26,6 +26,7 @@
 
 	<import resource="testdata-su.xml" />
 	<import resource="testdata-nu.xml" />
+	<import resource="elvisMockConfig.xml" />
 	<!-- Scans for application @Components to deploy -->
 	<context:component-scan base-package="org.springframework.webflow.samples.booking" />
 
@@ -112,18 +113,27 @@
 	<bean id="elvisBookingService"
 		class="se.vgregion.webbtidbok.booking.elvis.ElvisBookingFacadeImpl">
 		<property name="helper" ref="helper" />
-		<property name="bookingService" ref="bookingServiceElvis"/>
+		<property name="bookingService" ref="bookingServiceElvis" />
 	</bean>
 	<bean id="elvisMapper" class="se.vgregion.webbtidbok.booking.elvis.BookingMapperElvis" />
-	
+
 	<bean id="bookingServiceElvis" class="se.vgregion.webbtidbok.booking.elvis.BookingService">
 		<property name="helper" ref="helper" />
-		<property name="mapping" ref="elvisMapper"/>
+		<property name="mapping" ref="elvisMapper" />
 	</bean>
 
-	<bean id="helper" class="se.vgregion.webbtidbok.booking.elvis.WebServiceHelper">
+	<bean id="helper" class="se.vgregion.webbtidbok.booking.elvis.WebServiceHelper"
+		lazy-init="false">
 		<property name="encrypter" ref="stringEncrypter" />
+		<!--
+			<property name="elvisWebService"><bean factory-bean="elvisWebService"
+			factory-method="getBasicHttpBindingICentralBookingWS"/></property>
+		-->
+		<property name="elvisWebService" ref="elvisWebserviceMock" />
 	</bean>
+
+	<bean id="elvisWebService" class="se.vgregion.webbtidbok.ws.CentralBookingWS" />
+
 	<!-- END Elvis facade -->
 
 	<!-- New style booking facade for Sectra -->
@@ -135,12 +145,14 @@
 	<bean id="sectraBookingServiceFactory"
 		class="se.vgregion.webbtidbok.booking.sectra.SectraBookingServiceFactory">
 		<property name="portMap">
-            <map>
-                <entry key="MAMMO_NU" value-ref="sectraMockServiceNU"/>
-                <entry key="MAMMO_SU" value-ref="sectraMockServiceSU"/>
-            </map>
+			<map>
+				<entry key="MAMMO_NU" value-ref="sectraMockServiceNU" />
+				<entry key="MAMMO_SU" value-ref="sectraMockServiceSU" />
+			</map>
 		</property>
-		<property name="bookingMapperSectra" ><bean class="se.vgregion.webbtidbok.booking.sectra.BookingMapperSectra" /></property>
+		<property name="bookingMapperSectra">
+			<bean class="se.vgregion.webbtidbok.booking.sectra.BookingMapperSectra" />
+		</property>
 	</bean>
 
 	<bean id="sectraMockServiceNU" class="se.vgregion.webbtidbok.booking.sectra.SectraWSMock">
@@ -168,7 +180,7 @@
 	<!-- END sectra facade -->
 
 	<bean id="bookingFacade" class="se.vgregion.webbtidbok.booking.BookingFacadeSwitch">
-	    <property name="bookingFactory" ref="bookingFactory"/>
+		<property name="bookingFactory" ref="bookingFactory" />
 	</bean>
 
 	<bean id="stringEncrypter" class="se.vgregion.webbtidbok.crypto.StringEncrypter">

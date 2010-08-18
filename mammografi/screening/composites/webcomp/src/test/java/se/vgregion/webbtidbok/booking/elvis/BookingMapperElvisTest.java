@@ -112,6 +112,4 @@ public class BookingMapperElvisTest {
 		Surgery bookingPlaceMapping = bookingMapperElvis.bookingPlaceMapping(bookingPlace);
 		assertNotNull(bookingPlaceMapping);
 	}
-	
-
 }

@@ -25,7 +25,7 @@
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd">
 
 	<import resource="testdata-su.xml" />
-		<!-- Mock service for sectra ws	-->
+	<!-- Mock service for sectra ws	-->
 	<bean id="sectraMockServiceSU" class="se.vgregion.webbtidbok.booking.sectra.SectraWSTestMock">
 		<property name="businessObjectHolder">
 			<bean
@@ -35,5 +35,24 @@
 				<constructor-arg ref="SU_bookings" />
 			</bean>
 		</property>
+	</bean>
+
+	<bean id="helper" class="se.vgregion.webbtidbok.booking.elvis.WebServiceHelper"
+		lazy-init="false">
+		<property name="encrypter" ref="stringEncrypter" />
+
+		<property name="elvisWebService">
+			<bean factory-bean="elvisWebService" factory-method="getBasicHttpBindingICentralBookingWS" />
+		</property>
+
+	</bean>
+
+	<bean id="elvisWebService" class="se.vgregion.webbtidbok.ws.CentralBookingWS" />
+
+	<bean id="stringEncrypter" class="se.vgregion.webbtidbok.crypto.StringEncrypter">
+		<property name="keyStoreFile" value="classpath:asd.pfx" />
+		<property name="keyAlias"
+			value="a6c21dcdd9534d742aa1bd4afae16210_956e2a3a-b426-49f4-a107-72c603d2f58c" />
+		<property name="keyPassWord" value="asd" />
 	</bean>
 </beans>
