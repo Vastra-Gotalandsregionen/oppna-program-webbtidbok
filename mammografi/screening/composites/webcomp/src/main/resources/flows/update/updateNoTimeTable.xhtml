@@ -141,8 +141,8 @@
 											<f:view>
 												<h:form id="selectForm" action="displaytimes" style="display: inline; text-align: right; padding-right: 20em;" >
 											
-													<h:selectOneMenu rendered="true" id="places" value="#{placesHandler.placesId}"  style="width:320px">
-													   <f:selectItems value="#{bookingplaces}" /> 					
+													<h:selectOneMenu rendered="true" id="places" value="#{location.locationId}"  style="width:320px">
+													   <f:selectItems value="#{location.selectItems}" /> 					
 													</h:selectOneMenu>
 													<p />
 													<sf:commandButton id="displayButton" value="Visa tider" processIds="*" action="displaytimes" style="width: 100px;" />
@@ -193,10 +193,8 @@
 							</div>   <!-- boxleft3inside -->
 							<table>
 								<tr>
-									<td style="">
-                                        <p>
-										#{selectedPlace.clinic}, #{selectedPlace.address}
-                                        </p>											
+									<td>
+                                        <p>#{location.currentLocation.fullAddress}</p>											
 									</td>
 								</tr>
 							</table>							
@@ -509,9 +507,7 @@
                 <table>
                     <tr>
                         <td>
-                        <p>
-                        #{selectedPlace.clinic}, #{selectedPlace.address}
-                        </p>
+                            <p>#{location.currentLocation.fullAddress}</p>
                         </td>
                     </tr>
                     <p />

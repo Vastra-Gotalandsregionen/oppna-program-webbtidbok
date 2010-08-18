@@ -196,7 +196,7 @@
 
 
     <!-- Utility bean for dumping methods we don't have a proper home for. -->
-    <bean id="guiUtility" class="se.vgregion.webbtidbok.GUIUtilities">
+    <bean id="guiUtility" class="se.vgregion.webbtidbok.gui.GUIUtilities">
         <property name="bookingFacade" ref="bookingFacade" />
     </bean>
 
