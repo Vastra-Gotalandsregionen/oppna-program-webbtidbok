@@ -182,6 +182,17 @@ public class DateHandler {
         }
     }
 	
+    /**
+     * Create a new XMLGregorianCalendar for a given date.
+     */
+    public static XMLGregorianCalendar xmlCalendarFor(int year, int month, int day, int hour, int minute, int second) {
+        try {
+            return DatatypeFactory.newInstance().newXMLGregorianCalendar(year, month, day, hour, minute, second, 0, 0);
+        } catch (DatatypeConfigurationException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    
     public static Calendar calendarFromDate(Date date) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);

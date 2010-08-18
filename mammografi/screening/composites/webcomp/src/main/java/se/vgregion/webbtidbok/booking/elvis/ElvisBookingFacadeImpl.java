@@ -21,8 +21,12 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import se.vgregion.webbtidbok.State;
 import se.vgregion.webbtidbok.booking.BookingFacade;
+import se.vgregion.webbtidbok.booking.elvis.mock.ElvisServiceMock;
 import se.vgregion.webbtidbok.domain.Booking;
 import se.vgregion.webbtidbok.domain.BookingTime;
 import se.vgregion.webbtidbok.domain.Surgery;
@@ -30,6 +34,8 @@ import se.vgregion.webbtidbok.ws.BookingRequest;
 import se.vgregion.webbtidbok.ws.BookingResponse;
 
 public class ElvisBookingFacadeImpl implements BookingFacade {
+
+    private final Log log = LogFactory.getLog(ElvisBookingFacadeImpl.class);
 
 	private WebServiceHelper helper;
 	private BookingServiceInterface bookingService;
@@ -62,12 +68,13 @@ public class ElvisBookingFacadeImpl implements BookingFacade {
 
 	@Override
 	public List<Calendar> getFreeDays(State state, String surgeryId, Calendar startDate, Calendar endDate) {
-		// TODO: This method needs implementing.
-	    // request.setCentralTidbokID(state.getCentralTidbokID());
-	    // request.setFromDat(fromDat);
-	    // request.setToDat(toDat);
-        // getQueryWSRequestCalendar(BookingRequest request)
-		return null;
+	    try {
+	        int tidbokId = Integer.parseInt(surgeryId, 10);
+	        return bookingService.getFreeDays(state, tidbokId, startDate, endDate);
+	    } catch (NumberFormatException e) {
+	        log.error("Non-numeric surgeryId in Elvis session. Must be an integer.", e);
+	        throw new RuntimeException("Non-numeric surgeryId in Elvis session. Must be an integer.", e);
+	    }
 	}
 
 	@Override

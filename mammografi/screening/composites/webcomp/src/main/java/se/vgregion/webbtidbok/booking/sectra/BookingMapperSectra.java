@@ -46,6 +46,7 @@ public class BookingMapperSectra {
 
 	public Booking bookingMapping(BookingInfo bookingInfo) {
 		BookingSectra booking = new BookingSectra();
+		booking.setUpdateable(true);
 		booking.setPatientName(getStringValue(bookingInfo.getPatientName()));
 		booking.setPatientId(getStringValue(bookingInfo.getPatientId()));
 		booking.setExamTypeCode(getStringValue(bookingInfo.getExamTypeCode()));
