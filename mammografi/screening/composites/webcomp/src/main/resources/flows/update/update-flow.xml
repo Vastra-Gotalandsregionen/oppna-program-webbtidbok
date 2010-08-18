@@ -23,46 +23,34 @@
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
 
-    <var name="placesHandler" class="se.vgregion.webbtidbok.Places"  />
-
     <input name="state" />
     <input name="booking" />
+    
+    <on-start>
+        <evaluate expression="guiUtility.setupLocations(booking, state)"  result="flowScope.location"  />
+    </on-start>
 
 	<view-state id="update" view="/flows/update/update.xhtml">
-		<on-render>
-			  <evaluate expression="guiUtility.getBookingPlaceSelectItems(state)"  result="flowScope.bookingplaces"  >
-			  </evaluate>
-			  <evaluate expression="placesHandler.setPlacesId(guiUtility.getSelectedDefaultItem(state))" >
-			  </evaluate>
-			  <evaluate expression="guiUtility.getSelectedPlace(placesHandler, state)" result="flowScope.selectedPlace"  >
-			  </evaluate>
+		<!-- on-render -->
 <!--			  <evaluate expression="calendarService.getCalendar(state)"  />-->
 
 <!--	only want to do getTimeForChosenDate first time around AND when a NEW date is selected, now it's also done when click on < or >		  -->
-<!--		why is this needed???	  <evaluate expression="bookingService.getSelectedPlace(placesHandler, state)" result="flowScope.selectedPlace"  >-->
-<!--			  </evaluate>-->
 <!--		  <evaluate expression="calendarService.getTimeForChosenDate(state)" />-->
 <!--			  <evaluate expression="bookingService.getBookingTime(state)" result="flowScope.timeListLocal" result-type="dataModel" /> -->
 
 <!--			  <evaluate expression="calendarService.setSelectedDay(requestParameters.selectedDay)" />-->
-		</on-render>	
+		<!-- /on-render -->	
 		<transition on="showTimeCalendar" to="istimelistempty">
 			<evaluate expression="calendarService.setSelectedDay(requestParameters.selectedDay)" />
 		</transition>		
 		<transition on="displaytimes" to="isEmptyCalendar">
-			<evaluate expression="guiUtility.setSelectedItem(placesHandler, state)"   >
-			</evaluate>			
-			<evaluate expression="placesHandler.getPlacesId()"  result="viewScope.placesId">
-			</evaluate>					
-		</transition>		
-		<transition on="test" to="istimelistempty">
-		<evaluate expression="calendarService.test()" />
+		    <evaluate expression="guiUtility.setCentralTidbokIDfromLocation(state, location.locationId)" />
 		</transition>
 		<transition on="selecttime" to="ok"> 
 			<evaluate expression="calendarService.setSelectedDay(calendarService.selectedDay)" >
 			</evaluate>			
 			<set name="conversationScope.timeTable" value="timeListLocal.selectedRow"  />		 
-			<evaluate expression="guiUtility.setBookingTime(conversationScope.timeTable, state)" >
+			<evaluate expression="bookingFacade.setBookingTime(conversationScope.timeTable, state)" >
 			</evaluate>		
 		</transition>
 		<transition on="prev" to="update2">
@@ -76,12 +64,6 @@
 	</view-state>
 
 	<action-state id="isEmptyCalendar">
-			 <evaluate expression="guiUtility.getBookingPlaceSelectItems(state)"  result="flowScope.bookingplaces"  >
-			 </evaluate>		  
-			 <evaluate expression="placesHandler.setPlacesId(guiUtility.getSelectedDefaultItem(state))" >
-			 </evaluate>		  
-			 <evaluate expression="guiUtility.getSelectedPlace(placesHandler, state)" result="flowScope.selectedPlace"  >
-			 </evaluate>
 			 <evaluate expression="calendarService.getCalendar(state)"  /> 
 			 <evaluate expression="calendarService.isEmptyCalendar()" />
 			 <transition on="yes" to="updateNoTimeTable"></transition>
@@ -89,15 +71,9 @@
 	</action-state>
 		
 	<action-state id="istimelistempty">
-		 <evaluate expression="guiUtility.getBookingPlaceSelectItems(state)"  result="flowScope.bookingplaces"  >
-		 </evaluate>		  
-		 <evaluate expression="placesHandler.setPlacesId(guiUtility.getSelectedDefaultItem(state))" >
-		 </evaluate>	  
-		 <evaluate expression="guiUtility.getSelectedPlace(placesHandler, state)" result="flowScope.selectedPlace"  >
-		 </evaluate>		 
 		 <evaluate expression="calendarService.getTimeForChosenDate(state)" />
 		 <evaluate expression="bookingFacade.getBookingTime(state)" result="flowScope.timeListLocal" result-type="dataModel" /> 	 
-		 <evaluate expression="guiUtility.getIsTimeListEmpty()" />	 
+		 <evaluate expression="guiUtility.getIsTimeListEmpty(timeListLocal)" />	 
 	 	<transition on="yes" to="updateNoTimeTable">
 	 	</transition>
 		<transition on="no" to="update">
@@ -105,11 +81,7 @@
 	</action-state>
 	
 	<view-state id="updateNoTimeTable" view="/flows/update/updateNoTimeTable.xhtml">	
-		<on-render>		
-			<evaluate expression="guiUtility.setSelectedItem(placesHandler, state)"   >
-			</evaluate>		
-			<evaluate expression="placesHandler.getPlacesId()"  result="viewScope.placesId">
-			</evaluate>
+		<on-render>
 			<evaluate expression="calendarService.setSelectedDay(requestParameters.selectedDay)" />
 			<evaluate expression="calendarService.getCalendar(state)" />
 			<evaluate expression="calendarService.getTimeForChosenDate(state)" />
@@ -122,8 +94,6 @@
 		<transition on="displaytimes" to="isEmptyCalendar">
 			<evaluate expression="guiUtility.setSelectedItem(placesHandler, state)"   >
 			</evaluate>			
-			<evaluate expression="placesHandler.getPlacesId()"  result="viewScope.placesId">
-			</evaluate>					
 		</transition>
 		
 		<transition on="prev" to="update2">
@@ -149,12 +119,8 @@
 -->
 	<view-state id="update2" view="/flows/update/update.xhtml">
 		<on-render >			  
-			  <evaluate expression="guiUtility.getBookingPlaceSelectItems(state)"  result="flowScope.bookingplaces"  >
-			  </evaluate>			  
 			  <evaluate expression="placesHandler.setPlacesId(guiUtility.getSelectedDefaultItem(state))" >
 			  </evaluate>		  
-			  <evaluate expression="guiUtility.getSelectedPlace(placesHandler, state)" result="flowScope.selectedPlace"  >
-			  </evaluate>		  		  
 			  <evaluate expression="calendarService.getCalendar(state)"  />
 			  <evaluate expression="calendarService.getTimeForChosenDate(state)" />
 			  <evaluate expression="bookingFacade.getBookingTime(state)" result="flowScope.timeListLocal" result-type="dataModel" />		  

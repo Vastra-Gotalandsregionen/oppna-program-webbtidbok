@@ -97,8 +97,8 @@
 									<f:view>
 										<h:form id="selectForm" action="displaytimes" style="display: inline; text-align: right; padding-right: 20em;" >
 											
-											<h:selectOneMenu rendered="true" id="places" value="#{placesHandler.placesId}"  onchange=""  style="width:320px">
-									       	    <f:selectItems value="#{bookingplaces}" /> 					
+											<h:selectOneMenu rendered="true" id="places" value="#{location.locationId}"  onchange=""  style="width:320px">
+									       	    <f:selectItems value="#{location.selectItems}" /> 					
 											</h:selectOneMenu>
 											
 											<p />
@@ -144,8 +144,8 @@
 					</div>   <!-- placediv_date -->
 					<table>
 						<tr>
-							<td style="">
-	                            <p>#{selectedPlace.clinic}, #{selectedPlace.address}</p>
+							<td>
+	                            <p>#{location.currentLocation.fullAddress}</p>
 							</td>
 						</tr>
 					</table>
@@ -456,7 +456,7 @@
 		<table>
 			<tr>
 				<td>
-                    <p><ui:remove>#{selectedPlace.clinic}, #{selectedPlace.address}</ui:remove></p>
+                    <p>#{location.currentLocation.fullAddress}</p>
 				</td>
 			</tr>
 			<h:form id="timeTable" style="display: inline; text-align: right;">
