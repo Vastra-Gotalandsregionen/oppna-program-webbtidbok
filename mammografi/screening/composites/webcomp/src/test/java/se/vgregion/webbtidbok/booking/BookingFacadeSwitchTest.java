@@ -57,15 +57,49 @@ public class BookingFacadeSwitchTest {
 	public void testGetBookingInfo() throws Exception {
 		// Test sectra facade.
 		bookingFacadeSwitch.getBookingInfo(state);
-		assertFalse(bookingFacadeElvisMock.wasCalled);
-		assertTrue(bookingFacadeSectraMock.wasCalled);
+		assertThatSectraFacadeWasCalled();
 		setUp();
 		// Test elvis facade
 		state.setService("BUKAORTA");
 		bookingFacadeSwitch.getBookingInfo(state);
-		assertTrue(bookingFacadeElvisMock.wasCalled);
-		assertFalse(bookingFacadeSectraMock.wasCalled);
+		assertThatElvisFacadeWasCAlled();
 	}
+
+	@Test
+	public void testGetAvailableSurgeries() throws Exception {
+	    // Test sectra facade.
+	    bookingFacadeSwitch.getAvailableSurgeries(state);
+	    assertThatSectraFacadeWasCalled();
+	    setUp();
+	    // Test elvis facade
+	    state.setService("BUKAORTA");
+	    bookingFacadeSwitch.getAvailableSurgeries(state);
+	    assertThatElvisFacadeWasCAlled();
+	}
+
+	@Test
+	public void testGetFreeDays() throws Exception {
+	    // Test sectra facade.
+	    bookingFacadeSwitch.getFreeDays(state, null, null);
+	    assertThatSectraFacadeWasCalled();
+	    setUp();
+	    // Test elvis facade
+	    state.setService("BUKAORTA");
+	    bookingFacadeSwitch.getFreeDays(state, null, null);
+	    assertThatElvisFacadeWasCAlled();
+	}
+
+    @Test
+    public void testGetBookingTime() throws Exception {
+        // Test sectra facade.
+        bookingFacadeSwitch.getBookingTime(state);
+        assertThatSectraFacadeWasCalled();
+        setUp();
+        // Test elvis facade
+        state.setService("BUKAORTA");
+        bookingFacadeSwitch.getBookingTime(state);
+        assertThatElvisFacadeWasCAlled();
+    }
 
 	private void assertThatSectraFacadeWasCalled() {
 		assertFalse(bookingFacadeElvisMock.wasCalled);
