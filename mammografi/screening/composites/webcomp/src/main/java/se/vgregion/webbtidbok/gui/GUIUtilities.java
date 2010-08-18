@@ -19,7 +19,6 @@ package se.vgregion.webbtidbok.gui;
 
 import java.util.List;
 
-import se.vgregion.webbtidbok.Places;
 import se.vgregion.webbtidbok.State;
 import se.vgregion.webbtidbok.booking.BookingFacade;
 import se.vgregion.webbtidbok.domain.Booking;
