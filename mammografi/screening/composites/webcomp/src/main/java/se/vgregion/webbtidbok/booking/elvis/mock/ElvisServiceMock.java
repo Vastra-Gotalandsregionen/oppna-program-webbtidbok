@@ -17,11 +17,6 @@
  */
 package se.vgregion.webbtidbok.booking.elvis.mock;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -49,38 +44,16 @@ import se.vgregion.webbtidbok.ws.ICentralBookingWSGetBookingTimeICFaultFaultFaul
 import se.vgregion.webbtidbok.ws.ICentralBookingWSGetCalandarICFaultFaultFaultMessage;
 import se.vgregion.webbtidbok.ws.ObjectFactory;
 
-import com.thoughtworks.xstream.XStream;
-
 public class ElvisServiceMock implements ICentralBookingWS {
 
   private final Log log = LogFactory.getLog(ElvisServiceMock.class);
   private Map<String, Object> elvisMockData;
   private Resource elvisMockDataResourse;
-  private XStream xStream = new XStream();
   private ObjectFactory objectFactory = new ObjectFactory();
   private int centralTidbokID;
-  
+
   public void setElvisMockDataResourse(Resource elvisMockDataResourse) {
     this.elvisMockDataResourse = elvisMockDataResourse;
-  }
-
-  public void setxStream(XStream xStream) {
-    this.xStream = xStream;
-  }
-
-  private void createXmlFromObjet(String fileName, Object object) {
-    try {
-      File file = new File(fileName);
-      FileWriter fileWriter = new FileWriter(file);
-      ObjectOutputStream objectOutputStream = xStream.createObjectOutputStream(fileWriter);
-      objectOutputStream.writeObject(object);
-      objectOutputStream.flush();
-      objectOutputStream.close();
-
-    } catch (IOException e) {
-      log.error(e.getMessage(), e);
-    }
-
   }
 
   public static void main(String[] args) throws DatatypeConfigurationException {
@@ -98,7 +71,7 @@ public class ElvisServiceMock implements ICentralBookingWS {
     String pNR2 = "20100312-2222";
     bookings.put(pNR1, createBookings(pNR1, "KALLE 1", "ADRESS 1", "MOTAGNING 1", xmlGregorianCalendar));
     bookings.put(pNR2, createBookings(pNR2, "KALLE 2", "ADRESS 2", "MOTAGNING 2", xmlGregorianCalendar));
-    elvisMockData.put("bookings" , bookings);
+    elvisMockData.put("bookings", bookings);
 
     // Create bookingPlaces.
     Map<String, ArrayOfBookingPlace> bookingPlaces = new HashMap<String, ArrayOfBookingPlace>();
@@ -119,7 +92,7 @@ public class ElvisServiceMock implements ICentralBookingWS {
     bookingTimes.put(pNR1, arrayOfBookingTime);
     bookingTimes.put(pNR2, arrayOfBookingTime);
     elvisMockData.put("bookingTimes", bookingTimes);
-    createXmlFromObjet("src/main/resources/elvisMockData.xml", elvisMockData);
+    // createXmlFromObjet("src/main/resources/elvisMockData.xml", elvisMockData);
 
   }
 
@@ -151,39 +124,18 @@ public class ElvisServiceMock implements ICentralBookingWS {
     bookingPlace.setMottagning(objectFactory.createString(mottagning));
     return bookingPlace;
   }
-  
-  private void loadElvisMockDateFromResource(){
-    try {
-      elvisMockData = new HashMap<String, Object>();
-      ObjectInputStream objectInputStream = xStream.createObjectInputStream(elvisMockDataResourse.getInputStream());
-      elvisMockData = (Map<String, Object>) objectInputStream.readObject();
-    } catch (IOException e) {
-      log.error(e.getMessage(), e);
-    } catch (ClassNotFoundException e) {
-      log.error(e.getMessage(), e);
-    }
-  }
 
   private BookingResponse getBookingResponseForBooking(String pnr) {
-    if (elvisMockData == null) {
-     loadElvisMockDateFromResource();
-    }
-    Map<String, BookingResponse>  bookings = (Map<String, BookingResponse>) elvisMockData.get("bookings");
+    Map<String, BookingResponse> bookings = (Map<String, BookingResponse>) elvisMockData.get("bookings");
     return bookings.get(pnr);
   }
 
   private ArrayOfBookingPlace getBookingPlaces(String pnr) {
-    if (elvisMockData == null) {
-      loadElvisMockDateFromResource();
-     }
     Map<String, ArrayOfBookingPlace> bookingPlaces = (Map<String, ArrayOfBookingPlace>) elvisMockData.get("bookingPlaces");
     return bookingPlaces.get(pnr);
   }
 
   private ArrayOfBookingTime getBookingTimes(String pnr) {
-    if (elvisMockData == null) {
-      loadElvisMockDateFromResource();
-     }
     Map<String, ArrayOfBookingTime> bookingTimes = (Map<String, ArrayOfBookingTime>) elvisMockData.get("bookingTimes");
     return bookingTimes.get(pnr);
   }
