@@ -82,6 +82,17 @@ public class LocationHolderTest {
         assertEquals("Testaddress 1", s3.getSurgeryAddress());
     }
 
+    @Test
+    public void testGetEmptyCurrentLocation() {
+        holder.setAvailableLocations(createTestSurgeries());
+        holder.setLocationId(null);
+        
+        Surgery s1 = holder.getCurrentLocation();
+        assertEquals("", s1.getSurgeryId());
+        assertEquals("", s1.getSurgeryName());
+        assertEquals("", s1.getSurgeryAddress());
+    }
+    
     private List<Surgery> createTestSurgeries() {
         List<Surgery> surgeries = new ArrayList<Surgery>();
         

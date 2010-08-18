@@ -45,7 +45,9 @@ public class GUIUtilitiesTest {
 
     @Test
     public void testGetIsTimeListEmpty() {
-        List<Integer> list = new ArrayList<Integer>();
+        List<Integer> list = null;
+        assertTrue(guiUtility.getIsTimeListEmpty(list));
+        list = new ArrayList<Integer>();
         assertTrue(guiUtility.getIsTimeListEmpty(list));
         list.add(new Integer(1));
         assertFalse(guiUtility.getIsTimeListEmpty(list));
@@ -88,6 +90,18 @@ public class GUIUtilitiesTest {
         assertEquals(2, holder.getSelectItems().size());
     }
 
+    @Test
+    public void testSetupLocationsNullBooking() {
+        guiUtility.setBookingFacade(new TestFacade());
+        State state = new State();
+
+        LocationHolder holder = guiUtility.setupLocations(null, state);
+        assertEquals("", holder.getLocationId());
+        assertEquals("", holder.getCurrentLocation().getSurgeryName());
+        assertEquals("", holder.getCurrentLocation().getSurgeryAddress());
+
+    }
+    
     private class TestFacade extends BookingFacadeDummy {
 
         @Override
