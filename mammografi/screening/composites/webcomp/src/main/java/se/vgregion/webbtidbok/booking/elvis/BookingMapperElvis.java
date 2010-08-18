@@ -17,12 +17,11 @@
  */
 package se.vgregion.webbtidbok.booking.elvis;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.xml.bind.JAXBElement;
 import javax.xml.datatype.XMLGregorianCalendar;
-
-import org.aspectj.weaver.tools.ISupportsMessageContext;
 
 import se.vgregion.webbtidbok.domain.Booking;
 import se.vgregion.webbtidbok.domain.Surgery;
@@ -92,5 +91,9 @@ public class BookingMapperElvis {
     }
     surgery.setSurgeryName(getStringValueFromBooking(bookingPlace.getMottagning()));
     return surgery;
+  }
+
+  public Calendar daysMapping(se.vgregion.webbtidbok.ws.Calendar wrapCal) {
+    return wrapCal.getDatum().toGregorianCalendar();
   }
 }

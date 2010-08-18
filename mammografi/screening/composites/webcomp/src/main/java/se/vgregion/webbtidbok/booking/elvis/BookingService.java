@@ -17,6 +17,7 @@
  */
 package se.vgregion.webbtidbok.booking.elvis;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -34,6 +35,7 @@ import se.vgregion.webbtidbok.domain.elvis.BookingElvis;
 import se.vgregion.webbtidbok.lang.DateHandler;
 import se.vgregion.webbtidbok.ws.ArrayOfBookingPlace;
 import se.vgregion.webbtidbok.ws.ArrayOfBookingTime;
+import se.vgregion.webbtidbok.ws.ArrayOfCalendar;
 import se.vgregion.webbtidbok.ws.BookingPlace;
 import se.vgregion.webbtidbok.ws.BookingRequest;
 import se.vgregion.webbtidbok.ws.BookingResponse;
@@ -254,5 +256,31 @@ public class BookingService implements BookingServiceInterface {
 		}
 		return surgeryList;
 	}
+
+    @Override
+    public List<Calendar> getFreeDays(State state, int tidbokID,
+            Calendar startDate, Calendar endDate) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        String from = format.format(startDate.getTime());
+        JAXBElement<String> fromDat = objectFactory.createBookingRequestFromDat(from);
+        String to = format.format(startDate.getTime());
+        JAXBElement<String> toDat = objectFactory.createBookingRequestToDat(to);
+
+        BookingRequest request = helper.getQueryWSRequest(state);
+        request.setCentralTidbokID(tidbokID);
+        request.setFromDat(fromDat);
+        request.setToDat(toDat);
+
+        ArrayOfCalendar cals = helper.getQueryWSRequestCalendar(request);
+
+        List<Calendar> calendars = new ArrayList<Calendar>();
+        if (cals != null) {
+            for (se.vgregion.webbtidbok.ws.Calendar wrapCal : cals.getCalendar()) {
+                Calendar calendar = mapping.daysMapping(wrapCal);
+                calendars.add(calendar);
+            }
+        }
+        return calendars;
+    }
 
 }
