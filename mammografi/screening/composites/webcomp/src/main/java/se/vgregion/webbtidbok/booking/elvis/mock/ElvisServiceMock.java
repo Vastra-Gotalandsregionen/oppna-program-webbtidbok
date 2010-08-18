@@ -17,16 +17,14 @@
  */
 package se.vgregion.webbtidbok.booking.elvis.mock;
 
+import static se.vgregion.webbtidbok.lang.DateHandler.xmlCalendarFor;
+
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.springframework.core.io.Resource;
 
 import se.vgregion.webbtidbok.ws.ArrayOfBookingPlace;
 import se.vgregion.webbtidbok.ws.ArrayOfBookingTime;
@@ -46,22 +44,18 @@ import se.vgregion.webbtidbok.ws.ObjectFactory;
 
 public class ElvisServiceMock implements ICentralBookingWS {
 
-  private final Log log = LogFactory.getLog(ElvisServiceMock.class);
   private Map<String, Object> elvisMockData;
-  private Resource elvisMockDataResourse;
   private ObjectFactory objectFactory = new ObjectFactory();
   private int centralTidbokID;
 
-  public void setElvisMockDataResourse(Resource elvisMockDataResourse) {
-    this.elvisMockDataResourse = elvisMockDataResourse;
+  public ElvisServiceMock() {
+      try {
+          createMockData();
+      } catch (DatatypeConfigurationException e) {
+          throw new RuntimeException(e);
+      }
   }
-
-  public static void main(String[] args) throws DatatypeConfigurationException {
-    // Create Bookings objects
-    ElvisServiceMock elvisServiceMock = new ElvisServiceMock();
-    elvisServiceMock.createMockData();
-  }
-
+  
   public void createMockData() throws DatatypeConfigurationException {
     elvisMockData = new HashMap<String, Object>();
     // Creagte bookings.
@@ -69,8 +63,8 @@ public class ElvisServiceMock implements ICentralBookingWS {
     XMLGregorianCalendar xmlGregorianCalendar = DatatypeFactory.newInstance().newXMLGregorianCalendar();
     String pNR1 = "20101012-2222";
     String pNR2 = "20100312-2222";
-    bookings.put(pNR1, createBookings(pNR1, "KALLE 1", "ADRESS 1", "MOTAGNING 1", xmlGregorianCalendar));
-    bookings.put(pNR2, createBookings(pNR2, "KALLE 2", "ADRESS 2", "MOTAGNING 2", xmlGregorianCalendar));
+    bookings.put(pNR1, createBookings(pNR1, "KALLE 1", "ADRESS 1", "MOTAGNING 1", xmlCalendarFor(2010, 8, 24, 11, 0, 0)));
+    bookings.put(pNR2, createBookings(pNR2, "KALLE 2", "ADRESS 2", "MOTAGNING 2", xmlCalendarFor(2010, 8, 26, 12, 0, 0)));
     elvisMockData.put("bookings", bookings);
 
     // Create bookingPlaces.
@@ -85,10 +79,10 @@ public class ElvisServiceMock implements ICentralBookingWS {
     // Create bookingTimes
     Map<String, ArrayOfBookingTime> bookingTimes = new HashMap<String, ArrayOfBookingTime>();
     ArrayOfBookingTime arrayOfBookingTime = new ArrayOfBookingTime();
-    arrayOfBookingTime.getBookingTime().add(createBookingTime(xmlGregorianCalendar, "07:00"));
-    arrayOfBookingTime.getBookingTime().add(createBookingTime(xmlGregorianCalendar, "12:00"));
-    arrayOfBookingTime.getBookingTime().add(createBookingTime(xmlGregorianCalendar, "16:30"));
-    arrayOfBookingTime.getBookingTime().add(createBookingTime(xmlGregorianCalendar, "19:00"));
+    arrayOfBookingTime.getBookingTime().add(createBookingTime(xmlCalendarFor(2010, 8, 27, 11, 0, 0), "07:00"));
+    arrayOfBookingTime.getBookingTime().add(createBookingTime(xmlCalendarFor(2010, 8, 30, 11, 0, 0), "12:00"));
+    arrayOfBookingTime.getBookingTime().add(createBookingTime(xmlCalendarFor(2010, 8, 31, 11, 0, 0), "16:30"));
+    arrayOfBookingTime.getBookingTime().add(createBookingTime(xmlCalendarFor(2010, 9, 1, 11, 0, 0), "19:00"));
     bookingTimes.put(pNR1, arrayOfBookingTime);
     bookingTimes.put(pNR2, arrayOfBookingTime);
     elvisMockData.put("bookingTimes", bookingTimes);

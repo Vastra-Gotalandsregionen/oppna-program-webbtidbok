@@ -24,10 +24,5 @@
 
 
 	<bean id="elvisWebserviceMock"
-		class="se.vgregion.webbtidbok.booking.elvis.mock.ElvisServiceMock">
-		<property name="elvisMockDataResourse" value="classpath:elvisMockData.xml" />
-		<property name="xStream">
-			<bean class="com.thoughtworks.xstream.XStream" />
-		</property>
-	</bean>
+		class="se.vgregion.webbtidbok.booking.elvis.mock.ElvisServiceMock" />
 </beans>
