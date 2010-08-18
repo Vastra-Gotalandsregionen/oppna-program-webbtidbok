@@ -84,10 +84,10 @@ public class SectraBookingFacadeImpl implements BookingFacade {
     }
 
 	@Override
-	public List<Calendar> getFreeDays(State state, Calendar startDate, Calendar endDate) {
+	public List<Calendar> getFreeDays(State state, String surgeryId, Calendar startDate, Calendar endDate) {
 		// TODO: Needs to provide the section id from state somehow.
 		return getService(state)
-				.getFreeDays(startDate, endDate, "BADSECTIONID");
+				.getFreeDays(startDate, endDate, surgeryId);
 	}
 
 	@Override

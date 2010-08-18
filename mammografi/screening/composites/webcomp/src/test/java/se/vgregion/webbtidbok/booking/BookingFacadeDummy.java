@@ -50,7 +50,7 @@ public class BookingFacadeDummy implements BookingFacade {
 	}
 
 	@Override
-	public List<Calendar> getFreeDays(State state, Calendar startDate, Calendar endDate) {
+	public List<Calendar> getFreeDays(State state, String surgeryId, Calendar startDate, Calendar endDate) {
 		// TODO Auto-generated method stub
 		return null;
 	}

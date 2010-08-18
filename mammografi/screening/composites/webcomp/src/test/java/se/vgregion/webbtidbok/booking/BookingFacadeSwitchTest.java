@@ -80,12 +80,12 @@ public class BookingFacadeSwitchTest {
 	@Test
 	public void testGetFreeDays() throws Exception {
 	    // Test sectra facade.
-	    bookingFacadeSwitch.getFreeDays(state, null, null);
+	    bookingFacadeSwitch.getFreeDays(state, null, null, null);
 	    assertThatSectraFacadeWasCalled();
 	    setUp();
 	    // Test elvis facade
 	    state.setService("BUKAORTA");
-	    bookingFacadeSwitch.getFreeDays(state, null, null);
+	    bookingFacadeSwitch.getFreeDays(state, null, null, null);
 	    assertThatElvisFacadeWasCAlled();
 	}
 
@@ -141,7 +141,7 @@ public class BookingFacadeSwitchTest {
 		}
 
 		@Override
-		public List<Calendar> getFreeDays(State state, Calendar startDate, Calendar endDate) {
+		public List<Calendar> getFreeDays(State state, String surgeryId, Calendar startDate, Calendar endDate) {
 			wasCalled = true;
 			return null;
 		}
@@ -177,7 +177,7 @@ public class BookingFacadeSwitchTest {
 		}
 
 		@Override
-		public List<Calendar> getFreeDays(State state, Calendar startDate, Calendar endDate) {
+		public List<Calendar> getFreeDays(State state, String surgeryId, Calendar startDate, Calendar endDate) {
 			wasCalled = true;
 			return null;
 		}
