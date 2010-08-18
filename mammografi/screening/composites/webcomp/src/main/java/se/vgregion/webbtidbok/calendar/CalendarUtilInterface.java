@@ -17,6 +17,8 @@
  */
 package se.vgregion.webbtidbok.calendar;
 
+import java.util.Calendar;
+
 import se.vgregion.webbtidbok.State;
 
 public interface CalendarUtilInterface {
@@ -67,31 +69,19 @@ public interface CalendarUtilInterface {
 
   public abstract String getCurrentDayMonthAndYear();
 
-  /**
-   * Returns the name of the previous month
-   * 
-   * @return the name of the month previous to the current month
-   */
-  public abstract String getPreviousMonth();
-
-  /**
-   * Returns the name of the next month
-   * 
-   * @return the name of the month after to the current month
-   */
-  public abstract String getNextMonth();
-
   public abstract int getCalendarMonth();
 
   public abstract void setCalendarMonth(State state, int direction);
 
+  public abstract void getCalendar(State state, String surgeryId);
+  
   /**
    * This method is used to generate a calendar month which is to be rendered in the update.xhtml page. The calendar is first rendered from the kallelse of the person you're logged in as. Then the
    * getCalendar() method may be called if you wish to switch month with the < > arrows in the gui.
    * 
    * @param state
    */
-  public abstract void getCalendar(State state);
+  public abstract void getCalendar(State state, String surgeryId, Calendar monthToDisplay, Calendar selectedDate);
 
   public abstract void setEmptyCalendar(boolean isEmpty);
 

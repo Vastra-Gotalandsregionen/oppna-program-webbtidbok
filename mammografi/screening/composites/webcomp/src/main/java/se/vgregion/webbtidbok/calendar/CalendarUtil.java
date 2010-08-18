@@ -17,19 +17,13 @@
  */
 package se.vgregion.webbtidbok.calendar;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import javax.xml.bind.JAXBElement;
-import javax.xml.datatype.XMLGregorianCalendar;
-
 import se.vgregion.webbtidbok.State;
-import se.vgregion.webbtidbok.booking.elvis.WebServiceHelper;
-import se.vgregion.webbtidbok.ws.ArrayOfCalendar;
+import se.vgregion.webbtidbok.booking.BookingFacade;
 import se.vgregion.webbtidbok.ws.BookingRequest;
-import se.vgregion.webbtidbok.ws.ObjectFactory;
 
 public class CalendarUtil implements CalendarUtilInterface {
   static int PREVIOUS = -1;
@@ -39,15 +33,15 @@ public class CalendarUtil implements CalendarUtilInterface {
   String[] monthsSv = { "Januari", "Februari", "Mars", "April", "Maj", "Juni", "Juli", "Augusti", "September", "Oktober", "November", "December" };
 
   Calendar masterCalendar = Calendar.getInstance();
-  WebServiceHelper helper;
 
-  public void setHelper(WebServiceHelper helper) {
-    this.helper = helper;
+  BookingFacade bookingFacade;
+
+  public void setBookingFacade(BookingFacade bookingFacade) {
+    this.bookingFacade = bookingFacade;
   }
 
   BookingRequest request;
 
-  private List<Calendar> availableDates = new ArrayList<Calendar>();
   private List<String> days;
   private List<Boolean> isLink;
   private int index = 0;
@@ -180,36 +174,6 @@ public class CalendarUtil implements CalendarUtilInterface {
     return dayMonthYear;
   }
 
-  /**
-   * Returns the name of the previous month
-   * 
-   * @return the name of the month previous to the current month
-   */
-  public String getPreviousMonth() {
-    int month = masterCalendar.get(Calendar.MONTH);
-    if (month == Calendar.JANUARY) {
-      month = Calendar.DECEMBER;
-    } else {
-      month--;
-    }
-    return monthsSv[month];
-  }
-
-  /**
-   * Returns the name of the next month
-   * 
-   * @return the name of the month after to the current month
-   */
-  public String getNextMonth() {
-    int month = masterCalendar.get(Calendar.MONTH);
-    if (month == Calendar.DECEMBER) {
-      month = Calendar.JANUARY;
-    } else {
-      month++;
-    }
-    return monthsSv[month];
-  }
-
   public int getCalendarMonth() {
     return this.masterCalendar.get(Calendar.MONTH);
   }
@@ -248,13 +212,17 @@ public class CalendarUtil implements CalendarUtilInterface {
     state.setSelectedDate(c);
   }
 
+  public void getCalendar(State state, String surgeryId) {
+      getCalendar(state, surgeryId, Calendar.getInstance(), null);
+  }
+  
   /**
    * This method is used to generate a calendar month which is to be rendered in the update.xhtml page. The calendar is first rendered from the kallelse of the person you're logged in as. Then the
    * getCalendar() method may be called if you wish to switch month with the < > arrows in the gui.
    * 
    * @param state
    */
-  public void getCalendar(State state) {
+  public void getCalendar(State state, String surgeryId, Calendar monthToDisplay, Calendar selectedDate) {
     System.out.println("Today is " + masterCalendar.getTime().toString());
 
     // both indexes reset to 0 because we want to restart the index count at beginning of each month
@@ -263,19 +231,12 @@ public class CalendarUtil implements CalendarUtilInterface {
 
     gotALink = false;
     color = new ArrayList<String>();
-    if (state.getBookingResponse() == null) {
-      webService(state);
-    }
 
     // System.out.println("         ****** "+state.getPnr());
-    createCalendarForMonth(state);
+    List<Calendar> availableDates = getAvailableDates(state, surgeryId, monthToDisplay);
+    createCalendarForMonth(availableDates);
 
     System.out.println("index: " + index);
-  }
-
-  private void webService(State state) {
-    request = helper.getQueryWSRequest(state);
-    state.setBookingResponse(helper.getQueryWS(request));
   }
 
   public void setEmptyCalendar(boolean isEmpty) {
@@ -286,65 +247,25 @@ public class CalendarUtil implements CalendarUtilInterface {
     return this.isEmptyCalendar;
   }
 
-  private List<Calendar> getAvailableDates(State state) {
-    ObjectFactory objectFactory = new ObjectFactory();
-    String pattern = "yyyy-MM-dd";
-    SimpleDateFormat format = new SimpleDateFormat(pattern);
+  private List<Calendar> getAvailableDates(State state, String surgeryId, Calendar monthToDisplay) {
+    Calendar startDate = Calendar.getInstance();
+    startDate.set(Calendar.YEAR, monthToDisplay.get(Calendar.YEAR));
+    startDate.set(Calendar.MONTH, monthToDisplay.get(Calendar.MONTH));
+    startDate.set(Calendar.DATE, 1);
+    
+    Calendar endDate = Calendar.getInstance();
+    endDate.set(Calendar.YEAR, monthToDisplay.get(Calendar.YEAR));
+    endDate.set(Calendar.MONTH, monthToDisplay.get(Calendar.MONTH));
+    endDate.set(Calendar.DATE, monthToDisplay.getActualMaximum(Calendar.DAY_OF_MONTH));
 
-    if (state.isDefaultDate()) {
-      XMLGregorianCalendar xmlCal = state.getBookingResponse().getBokadTid();
-      masterCalendar.set(Calendar.YEAR, xmlCal.getYear());
-      masterCalendar.set(Calendar.MONTH, xmlCal.getMonth() - 1);
-      masterCalendar.set(Calendar.DATE, xmlCal.getDay());
-      state.setSelectedDate(masterCalendar);
-      state.setDefaultDate(false);
-    } else {
-      masterCalendar = state.getSelectedDate();
-    }
+    List<Calendar> availableDates = bookingFacade.getFreeDays(state, surgeryId, startDate, endDate);
+    setEmptyCalendar(availableDates.isEmpty());
 
-    Calendar tmpCalendar = Calendar.getInstance();
-    tmpCalendar.set(Calendar.YEAR, masterCalendar.get(Calendar.YEAR));
-    tmpCalendar.set(Calendar.MONTH, masterCalendar.get(Calendar.MONTH));
-    tmpCalendar.set(Calendar.DATE, masterCalendar.get(Calendar.DAY_OF_MONTH));
-    tmpCalendar.set(Calendar.DATE, 1);
-    String from = format.format(tmpCalendar.getTime());
-
-    int lastDay = tmpCalendar.getActualMaximum(Calendar.DAY_OF_MONTH);
-    tmpCalendar.set(Calendar.DATE, lastDay);
-    String to = format.format(tmpCalendar.getTime());
-
-    System.out.println("getAvailableDates FROM: " + from + ", TO: " + to);
-    JAXBElement<String> fromDat = objectFactory.createBookingRequestFromDat(from);
-    JAXBElement<String> toDat = objectFactory.createBookingRequestToDat(to);
-
-    request.setCentralTidbokID(state.getCentralTidbokID());
-    request.setFromDat(fromDat);
-    request.setToDat(toDat);
-
-    ArrayOfCalendar calArr = helper.getQueryWSRequestCalendar(request);
-    List<se.vgregion.webbtidbok.ws.Calendar> calList = new ArrayList<se.vgregion.webbtidbok.ws.Calendar>();
-    if (calArr != null && calArr.getCalendar() != null && !calArr.getCalendar().isEmpty()) {
-      calList = calArr.getCalendar();
-      this.setEmptyCalendar(false);
-    } else {
-      this.setEmptyCalendar(true);
-    }
-    List<Calendar> returnCal = new ArrayList<Calendar>();
-
-    for (se.vgregion.webbtidbok.ws.Calendar c : calList) {
-      Calendar tCal = Calendar.getInstance();
-      tCal.set(Calendar.YEAR, c.getDatum().getYear());
-      tCal.set(Calendar.MONTH, c.getDatum().getMonth() - 1);
-      tCal.set(Calendar.DATE, c.getDatum().getDay());
-      returnCal.add(tCal);
-    }
-
-    return returnCal;
+    return availableDates;
   }
 
-  private void createCalendarForMonth(State state) {
+  private void createCalendarForMonth(List<Calendar> availableDates) {
     // TODO: highlight exam date
-    availableDates = getAvailableDates(state);
     days = new ArrayList<String>();
     isLink = new ArrayList<Boolean>();
 
@@ -469,11 +390,6 @@ public class CalendarUtil implements CalendarUtilInterface {
     int day;
     Calendar selectedDate = Calendar.getInstance();
     System.out.println("++++++ state.getSelectedDate(): " + state.getSelectedDate());
-
-    selectedDate.set(state.getSelectedDate().get(Calendar.YEAR),
-            state.getSelectedDate().get(Calendar.MONTH),
-            state.getSelectedDate().get(Calendar.DATE));
-    System.out.println("++++++ state.getSelectedDate() after set: " + selectedDate.get(Calendar.YEAR) + " " + selectedDate.get(Calendar.MONTH) + " " + selectedDate.get(Calendar.DATE));
 
     if (getSelectedDay().isEmpty()) {
       System.out.println("+++++ selectedDay is empty");

@@ -189,8 +189,9 @@
 			value="a6c21dcdd9534d742aa1bd4afae16210_956e2a3a-b426-49f4-a107-72c603d2f58c" />
 		<property name="keyPassWord" value="asd" />
 	</bean>
+	
 	<bean id="calendarService" class="se.vgregion.webbtidbok.calendar.CalendarUtil">
-		<property name="helper" ref="helper" />
+		<property name="bookingFacade" ref="bookingFacade" />
 	</bean>
 
 	<bean id="loggingAdvice" class="se.vgregion.webbtidbok.logging.LoggingAdvice" />
