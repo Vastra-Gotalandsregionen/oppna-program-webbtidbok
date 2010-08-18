@@ -17,7 +17,7 @@
  */
 package se.vgregion.webbtidbok.booking;
 
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 
 import se.vgregion.webbtidbok.State;
@@ -50,7 +50,7 @@ public class BookingFacadeDummy implements BookingFacade {
 	}
 
 	@Override
-	public List<Date> getFreeDays(State state, Date startDate, Date endDate) {
+	public List<Calendar> getFreeDays(State state, Calendar startDate, Calendar endDate) {
 		// TODO Auto-generated method stub
 		return null;
 	}

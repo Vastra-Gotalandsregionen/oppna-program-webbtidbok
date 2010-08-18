@@ -20,7 +20,7 @@ package se.vgregion.webbtidbok.booking;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 
 import org.junit.Before;
@@ -141,7 +141,7 @@ public class BookingFacadeSwitchTest {
 		}
 
 		@Override
-		public List<Date> getFreeDays(State state, Date startDate, Date endDate) {
+		public List<Calendar> getFreeDays(State state, Calendar startDate, Calendar endDate) {
 			wasCalled = true;
 			return null;
 		}
@@ -177,7 +177,7 @@ public class BookingFacadeSwitchTest {
 		}
 
 		@Override
-		public List<Date> getFreeDays(State state, Date startDate, Date endDate) {
+		public List<Calendar> getFreeDays(State state, Calendar startDate, Calendar endDate) {
 			wasCalled = true;
 			return null;
 		}

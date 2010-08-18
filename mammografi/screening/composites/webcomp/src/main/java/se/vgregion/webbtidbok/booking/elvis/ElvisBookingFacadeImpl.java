@@ -17,6 +17,7 @@
  */
 package se.vgregion.webbtidbok.booking.elvis;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -60,7 +61,7 @@ public class ElvisBookingFacadeImpl implements BookingFacade {
 	}
 
 	@Override
-	public List<Date> getFreeDays(State state, Date startDate, Date endDate) {
+	public List<Calendar> getFreeDays(State state, Calendar startDate, Calendar endDate) {
 		// TODO: This method needs implementing.
 		return null;
 	}

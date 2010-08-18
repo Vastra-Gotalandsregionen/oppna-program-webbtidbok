@@ -17,6 +17,7 @@
  */
 package se.vgregion.webbtidbok.booking;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -57,7 +58,7 @@ public class BookingFacadeSwitch implements BookingFacade {
 	}
 
 	@Override
-	public List<Date> getFreeDays(State state, Date startDate, Date endDate) {
+	public List<Calendar> getFreeDays(State state, Calendar startDate, Calendar endDate) {
 		return getBookingFacadeForCurrentRequest(state).getFreeDays(state,
 				startDate, endDate);
 	}

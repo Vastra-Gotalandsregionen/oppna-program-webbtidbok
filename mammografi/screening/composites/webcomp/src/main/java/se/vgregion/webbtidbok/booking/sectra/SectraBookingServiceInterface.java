@@ -17,6 +17,7 @@
  */
 package se.vgregion.webbtidbok.booking.sectra;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -37,8 +38,8 @@ public interface SectraBookingServiceInterface {
 
     public abstract List<Surgery> getSurgeries();
 
-    public abstract List<Date> getFreeDays(Date startDate,
-            Date endDate, String sectionId);
+    public abstract List<Calendar> getFreeDays(Calendar startDate,
+            Calendar endDate, String sectionId);
     
 //	abstract public Booking reschedule(String examinationNr, String newTimeId,
 //			XMLGregorianCalendar startTime, Boolean printNewNotice,

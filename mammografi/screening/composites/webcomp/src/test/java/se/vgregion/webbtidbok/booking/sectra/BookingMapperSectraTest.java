@@ -145,10 +145,8 @@ public class BookingMapperSectraTest {
 		try {
 			XMLGregorianCalendar xcal = DatatypeFactory.newInstance()
 					.newXMLGregorianCalendar(2010, 1, 1, 12, 30, 0, 0, 0);
-			Date date = bookingMapperSectra.daysMapping(xcal);
+			Calendar cal = bookingMapperSectra.daysMapping(xcal);
 
-			Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
-			cal.setTime(date);
 			assertEquals(2010, cal.get(Calendar.YEAR));
 			assertEquals(0, cal.get(Calendar.MONTH)); // January is month 0, not
 			// 1 in Calendar class.
