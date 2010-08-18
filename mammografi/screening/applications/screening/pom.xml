@@ -50,5 +50,11 @@ Generation time : 2010-03-10 17:15:23 CET
       <version>${project.version}</version>
       <type>war</type>
     </dependency>
+    	<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${spring.fw.version}</version>
+			<scope>test</scope>
+		</dependency>
   </dependencies>
 </project>
