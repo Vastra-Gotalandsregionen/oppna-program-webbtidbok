@@ -20,13 +20,11 @@ package se.vgregion.webbtidbok.booking.sectra;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.fail;
 import static org.junit.Assert.assertEquals;
-import static se.vgregion.webbtidbok.lang.DateHandler.calendarFromDate;
-import static se.vgregion.webbtidbok.lang.DateHandler.dateFor;
+import static se.vgregion.webbtidbok.lang.DateHandler.calendarFor;
 import static se.vgregion.webbtidbok.lang.DateHandler.xmlCalendarFor;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import javax.xml.datatype.XMLGregorianCalendar;
@@ -34,10 +32,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
-
-import com.opensymphony.oscache.base.NeedsRefreshException;
 
 import se.vgregion.webbtidbok.LogFactoryMock;
 import se.vgregion.webbtidbok.domain.Booking;
@@ -122,24 +117,24 @@ public class SectraBookingServiceImplTest {
 
   @Test
   public void testGetFreeDays() {
-    List<Date> freeDays = service.getFreeDays(dateFor(2010, 8, 1), dateFor(2010, 8, 31), sectionId);
+    List<Calendar> freeDays = service.getFreeDays(calendarFor(2010, 8, 1), calendarFor(2010, 8, 31), sectionId);
 
-    Calendar cal = calendarFromDate(freeDays.get(0));
+    Calendar cal = freeDays.get(0);
     assertEquals(2010, cal.get(Calendar.YEAR));
     assertEquals(7, cal.get(Calendar.MONTH));
     assertEquals(2, cal.get(Calendar.DAY_OF_MONTH));
 
-    cal = calendarFromDate(freeDays.get(1));
+    cal = freeDays.get(1);
     assertEquals(2010, cal.get(Calendar.YEAR));
     assertEquals(7, cal.get(Calendar.MONTH));
     assertEquals(4, cal.get(Calendar.DAY_OF_MONTH));
 
-    cal = calendarFromDate(freeDays.get(2));
+    cal = freeDays.get(2);
     assertEquals(2010, cal.get(Calendar.YEAR));
     assertEquals(7, cal.get(Calendar.MONTH));
     assertEquals(8, cal.get(Calendar.DAY_OF_MONTH));
 
-    cal = calendarFromDate(freeDays.get(3));
+    cal = freeDays.get(3);
     assertEquals(2010, cal.get(Calendar.YEAR));
     assertEquals(7, cal.get(Calendar.MONTH));
     assertEquals(16, cal.get(Calendar.DAY_OF_MONTH));

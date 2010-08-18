@@ -17,6 +17,7 @@
  */
 package se.vgregion.webbtidbok.booking;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -40,7 +41,7 @@ public interface BookingFacade {
   
 	public List<Surgery> getAvailableSurgeries(State state);
 
-	List<Date> getFreeDays(State state, Date startDate, Date endDate);
+	List<Calendar> getFreeDays(State state, Calendar startDate, Calendar endDate);
 
 	List<BookingTime> getBookingTime(State state);
 

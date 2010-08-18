@@ -157,11 +157,19 @@ public class DateHandler {
 	 * Create a new Date object for a given date.
 	 */
     public static Date dateFor(int year, int month, int day) {
+        return calendarFor(year, month, day).getTime();
+    }
+
+    /**
+     * Create a new Calendar object for a given date.
+     */
+    public static Calendar calendarFor(int year, int month, int day) {
         Calendar cal = Calendar.getInstance();
         cal.clear();
         cal.set(year, month, day, 0, 0, 0);
-        return cal.getTime();
+        return cal;
     }
+
 
     /**
      * Create a new XMLGregorianCalendar for a given date.

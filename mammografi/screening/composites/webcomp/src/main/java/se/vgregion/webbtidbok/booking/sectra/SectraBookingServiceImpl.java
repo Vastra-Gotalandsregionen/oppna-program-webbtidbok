@@ -18,6 +18,7 @@
 package se.vgregion.webbtidbok.booking.sectra;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -94,15 +95,15 @@ public class SectraBookingServiceImpl implements SectraBookingServiceInterface {
   }
 
   @Override
-  public List<Date> getFreeDays(Date startDate, Date endDate, String sectionId) {
-    List<Date> dates = new ArrayList<Date>();
+  public List<Calendar> getFreeDays(Calendar startDate, Calendar endDate, String sectionId) {
+    List<Calendar> dates = new ArrayList<Calendar>();
 
     ArrayOfdateTime times;
     try {
       times = thePort.listFreeDays(bookingMapperSectra.dateToXmlCalendar(startDate), bookingMapperSectra.dateToXmlCalendar(endDate), examinationNr, sectionId);
       List<XMLGregorianCalendar> timesList = times.getDateTime();
       for (XMLGregorianCalendar time : timesList) {
-        Date date = bookingMapperSectra.daysMapping(time);
+        Calendar date = bookingMapperSectra.daysMapping(time);
         dates.add(date);
       }
       return dates;
