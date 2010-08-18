@@ -58,8 +58,8 @@ public class BookingFacadeSwitch implements BookingFacade {
 	}
 
 	@Override
-	public List<Calendar> getFreeDays(State state, Calendar startDate, Calendar endDate) {
-		return getBookingFacadeForCurrentRequest(state).getFreeDays(state,
+	public List<Calendar> getFreeDays(State state, String surgeryId, Calendar startDate, Calendar endDate) {
+		return getBookingFacadeForCurrentRequest(state).getFreeDays(state, surgeryId,
 				startDate, endDate);
 	}
 

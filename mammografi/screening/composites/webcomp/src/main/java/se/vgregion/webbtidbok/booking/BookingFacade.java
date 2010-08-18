@@ -41,7 +41,7 @@ public interface BookingFacade {
   
 	public List<Surgery> getAvailableSurgeries(State state);
 
-	List<Calendar> getFreeDays(State state, Calendar startDate, Calendar endDate);
+	List<Calendar> getFreeDays(State state, String surgeryId, Calendar startDate, Calendar endDate);
 
 	List<BookingTime> getBookingTime(State state);
 

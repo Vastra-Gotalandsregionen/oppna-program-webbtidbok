@@ -61,8 +61,12 @@ public class ElvisBookingFacadeImpl implements BookingFacade {
 	}
 
 	@Override
-	public List<Calendar> getFreeDays(State state, Calendar startDate, Calendar endDate) {
+	public List<Calendar> getFreeDays(State state, String surgeryId, Calendar startDate, Calendar endDate) {
 		// TODO: This method needs implementing.
+	    // request.setCentralTidbokID(state.getCentralTidbokID());
+	    // request.setFromDat(fromDat);
+	    // request.setToDat(toDat);
+        // getQueryWSRequestCalendar(BookingRequest request)
 		return null;
 	}
 
