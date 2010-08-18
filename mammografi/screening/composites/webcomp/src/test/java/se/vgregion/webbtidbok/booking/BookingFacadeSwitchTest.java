@@ -23,12 +23,9 @@ import static org.junit.Assert.assertTrue;
 import java.util.Date;
 import java.util.List;
 
-import javax.faces.model.SelectItem;
-
 import org.junit.Before;
 import org.junit.Test;
 
-import se.vgregion.webbtidbok.Places;
 import se.vgregion.webbtidbok.State;
 import se.vgregion.webbtidbok.domain.Booking;
 import se.vgregion.webbtidbok.domain.BookingTime;

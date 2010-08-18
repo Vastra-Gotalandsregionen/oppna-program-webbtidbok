@@ -17,14 +17,11 @@
  */
 package se.vgregion.webbtidbok.booking.sectra;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.faces.model.SelectItem;
 import javax.xml.datatype.XMLGregorianCalendar;
 
-import se.vgregion.webbtidbok.Places;
 import se.vgregion.webbtidbok.State;
 import se.vgregion.webbtidbok.booking.BookingFacade;
 import se.vgregion.webbtidbok.domain.Booking;

@@ -20,13 +20,10 @@ package se.vgregion.webbtidbok.booking;
 import java.util.Date;
 import java.util.List;
 
-import javax.faces.model.SelectItem;
-
-import se.vgregion.webbtidbok.domain.Surgery;
-import se.vgregion.webbtidbok.Places;
 import se.vgregion.webbtidbok.State;
 import se.vgregion.webbtidbok.domain.Booking;
 import se.vgregion.webbtidbok.domain.BookingTime;
+import se.vgregion.webbtidbok.domain.Surgery;
 
 public interface BookingFacade {
 
