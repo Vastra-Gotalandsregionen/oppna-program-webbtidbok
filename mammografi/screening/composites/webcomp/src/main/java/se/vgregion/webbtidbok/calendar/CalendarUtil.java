@@ -23,7 +23,7 @@ import java.util.List;
 
 import se.vgregion.webbtidbok.State;
 import se.vgregion.webbtidbok.booking.BookingFacade;
-import se.vgregion.webbtidbok.ws.BookingRequest;
+import se.vgregion.webbtidbok.lang.StringHandler;
 
 public class CalendarUtil implements CalendarUtilInterface {
   static int PREVIOUS = -1;
@@ -158,19 +158,19 @@ public class CalendarUtil implements CalendarUtilInterface {
    * @return the name of the current month
    */
   public String getCurrentMonth() {
-    int month = masterCalendar.get(Calendar.MONTH);
-    return monthsSv[month];
+    return formatMasterCalendar("MMMMM");
   }
 
   public String getCurrentMonthAndYear() {
-    return getCurrentMonth() + " " + masterCalendar.get(Calendar.YEAR);
+    return formatMasterCalendar("MMMMM yyyy");
   }
 
   public String getCurrentDayMonthAndYear() {
-    String dayMonthYear;
-    dayMonthYear = weekDaysSv[masterCalendar.get(Calendar.DAY_OF_WEEK)] + " " + masterCalendar.get(Calendar.DATE) + " " + getCurrentMonthAndYear().toLowerCase();
-
-    return dayMonthYear;
+    return formatMasterCalendar("EEEE d MMMMM yyyy");
+  }
+  
+  private String formatMasterCalendar(String format) {
+      return StringHandler.toFirstLetterToUpperCase(StringHandler.formatCalendar(format, masterCalendar));
   }
 
   public int getCalendarMonth() {
@@ -179,35 +179,14 @@ public class CalendarUtil implements CalendarUtilInterface {
 
   public void setCalendarMonth(State state, int direction) {
     Calendar c = Calendar.getInstance();
-    int currentYear = state.getSelectedDate().get(Calendar.YEAR);
-    int currentMonth = state.getSelectedDate().get(Calendar.MONTH);
-    // reset selected day when the < or > is clicked in calendar
-    selectedDay = "";
-    if (direction == PREVIOUS) {
-      System.out.print("     ***** PREVIOUS clicked: ");
-      if (currentMonth == Calendar.JANUARY) {
-        currentMonth = Calendar.DECEMBER;
-        currentYear--;
-      } else {
-        currentMonth--;
-      }
-    }
-
-    if (direction == NEXT) {
-      System.out.print("     ***** NEXT clicked: ");
-      if (currentMonth == Calendar.DECEMBER) {
-        currentMonth = Calendar.JANUARY;
-        currentYear++;
-      } else {
-        currentMonth++;
-      }
-    }
-
-    c.set(Calendar.YEAR, currentYear);
-    c.set(Calendar.MONTH, currentMonth);
+    c.set(Calendar.YEAR, state.getSelectedDate().get(Calendar.YEAR));
+    c.set(Calendar.MONTH, state.getSelectedDate().get(Calendar.MONTH));
     c.set(Calendar.DATE, 1);
 
-    System.out.println("" + currentYear + "-" + currentMonth + "-" + c.get(Calendar.DATE));
+    c.roll(Calendar.MONTH, direction);
+
+    // reset selected day when the < or > is clicked in calendar
+    selectedDay = "";
     state.setSelectedDate(c);
   }
 
