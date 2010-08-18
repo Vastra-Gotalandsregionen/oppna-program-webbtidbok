@@ -166,7 +166,7 @@ public class DateHandler {
     public static Calendar calendarFor(int year, int month, int day) {
         Calendar cal = Calendar.getInstance();
         cal.clear();
-        cal.set(year, month, day, 0, 0, 0);
+        cal.set(year, month-1, day, 0, 0, 0);
         return cal;
     }
 
