@@ -17,6 +17,7 @@
  */
 package se.vgregion.webbtidbok.booking.elvis;
 
+import java.util.Calendar;
 import java.util.List;
 
 import se.vgregion.webbtidbok.State;
@@ -47,6 +48,8 @@ public interface BookingServiceInterface {
 	public abstract List<BookingTime> getBookingTime(State loginCredentials);
 
 	public abstract List<Surgery> getSurgeries(State state);
+	
+	public abstract List<Calendar> getFreeDays(State state, int tidbokID, Calendar startDate, Calendar endDate);
 
 	/****
 	 * method setting ombokning
