@@ -75,10 +75,10 @@ public class CalendarUtilTest {
     @Test
     public void testGetCurrentDayMonthAndYear() {
         SimpleDateFormat sdf = new SimpleDateFormat();
-        util.masterCalendar = calendarFor(2010, 8, 1);
+        util.masterCalendar = calendarFor(2010, 8, 3);
         System.out.println(sdf.format(util.masterCalendar.getTime()));
 
-        assertEquals("Söndag 1 augusti 2010", util.getCurrentDayMonthAndYear());
+        assertEquals("Tisdag 3 augusti 2010", util.getCurrentDayMonthAndYear());
     }
 
     @Test
