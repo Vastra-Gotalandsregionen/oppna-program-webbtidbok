@@ -22,22 +22,12 @@
 <!DOCTYPE application PUBLIC "-//Sun Microsystems, Inc.//DTD J2EE Application 1.3//EN" "http://java.sun.com/dtd/application_1_3.dtd">
 <application id="Application_ID">
 	<display-name>webbtidbok-screening-app</display-name>
-	<module id="WebModule_1268292578253">
-		<web>
-			<web-uri>webbtidbok-screening-module-portlet-1.0-SNAPSHOT.war</web-uri>
-			<context-root>/webbtidbok-screening-module-portlet</context-root>
-		</web>
-	</module>
+
 	<module id="WebModule_1268292578287">
 		<web>
 			<web-uri>webbtidbok-screening-module-web-1.0-SNAPSHOT.war</web-uri>
 			<context-root>/webbtidbok-screening-module-web</context-root>
 		</web>
 	</module>
-	<module id="WebModule_1268292578323">
-		<web>
-			<web-uri>webbtidbok-screening-module-intsvc-1.0-SNAPSHOT.war</web-uri>
-			<context-root>/webbtidbok-screening-module-intsvc</context-root>
-		</web>
-	</module>
+	
 </application>
