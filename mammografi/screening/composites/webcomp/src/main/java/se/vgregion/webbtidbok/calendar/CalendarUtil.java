@@ -40,7 +40,6 @@ public class CalendarUtil implements CalendarUtilInterface {
     this.bookingFacade = bookingFacade;
   }
 
-  BookingRequest request;
 
   private List<String> days;
   private List<Boolean> isLink;

@@ -17,20 +17,46 @@
  */
 package se.vgregion.webbtidbok.calendar;
 
+import static org.junit.Assert.assertEquals;
+import static se.vgregion.webbtidbok.lang.DateHandler.calendarFor;
+
+import java.util.Calendar;
 
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import se.vgregion.webbtidbok.State;
+
 public class CalendarUtilTest {
 
+    private CalendarUtil util;
+    
     @Before
     public void setUp() throws Exception {
+        util = new CalendarUtil();
     }
 
     @Test
     @Ignore
-    public void testSomethingImportantSoon() {
+    public void testSetCalendarMonth() {
+        State state = new State();
+        Calendar cal = calendarFor(2010, 8, 1);
+        state.setSelectedDate(cal);
+        
+        util.setCalendarMonth(state, 1);
+        assertCalendar(state.getSelectedDate(), 2010, 9, 1);
+
+        util.setCalendarMonth(state, 1);
+        assertCalendar(state.getSelectedDate(), 2010, 10, 1);
+    
+        util.setCalendarMonth(state, -1);
+        assertCalendar(state.getSelectedDate(), 2010, 9, 1);
     }
     
+    private void assertCalendar(Calendar cal, int year, int month, int day) {
+        assertEquals(year, cal.get(Calendar.YEAR));
+        assertEquals(month, cal.get(Calendar.MONTH));
+        assertEquals(day, cal.get(Calendar.DAY_OF_MONTH));
+    }
 }
