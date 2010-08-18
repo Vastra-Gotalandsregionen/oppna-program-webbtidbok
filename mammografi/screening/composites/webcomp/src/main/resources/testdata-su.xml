@@ -118,7 +118,7 @@
     <util:map id="SU_s1_time_8">
         <entry key="id" value="SU_s1_time_8"/>
         <entry key="section" value="SU_section_1"/>
-        <entry key="time" value="2010-10-01T10:15:00"/>
+        <entry key="time" value="2010-08-24T10:15:00"/>
         <entry key="length" value="15"/>
     </util:map>
 
@@ -167,7 +167,7 @@
     <util:map id="SU_s2_time_8">
         <entry key="id" value="SU_s2_time_8"/>
         <entry key="section" value="SU_section_2"/>
-        <entry key="time" value="2010-09-15T11:00:00"/>
+        <entry key="time" value="2010-08-25T11:00:00"/>
         <entry key="length" value="15"/>
     </util:map>
 
