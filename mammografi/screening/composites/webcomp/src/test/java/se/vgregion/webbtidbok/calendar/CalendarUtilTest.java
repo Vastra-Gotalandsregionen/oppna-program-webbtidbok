@@ -20,6 +20,7 @@ package se.vgregion.webbtidbok.calendar;
 import static org.junit.Assert.assertEquals;
 import static se.vgregion.webbtidbok.lang.DateHandler.calendarFor;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import org.junit.Before;
@@ -38,7 +39,6 @@ public class CalendarUtilTest {
     }
 
     @Test
-    @Ignore
     public void testSetCalendarMonth() {
         State state = new State();
         Calendar cal = calendarFor(2010, 8, 1);
@@ -54,9 +54,43 @@ public class CalendarUtilTest {
         assertCalendar(state.getSelectedDate(), 2010, 9, 1);
     }
     
+    @Test
+    public void testGetCurrentMonth() {
+        SimpleDateFormat sdf = new SimpleDateFormat();
+        util.masterCalendar = calendarFor(2010, 8, 1);
+        System.out.println(sdf.format(util.masterCalendar.getTime()));
+
+        assertEquals("Augusti", util.getCurrentMonth());
+    }
+
+    @Test
+    public void testGetCurrentMonthAndYear() {
+        SimpleDateFormat sdf = new SimpleDateFormat();
+        util.masterCalendar = calendarFor(2010, 8, 1);
+        System.out.println(sdf.format(util.masterCalendar.getTime()));
+
+        assertEquals("Augusti 2010", util.getCurrentMonthAndYear());
+    }
+
+    @Test
+    public void testGetCurrentDayMonthAndYear() {
+        SimpleDateFormat sdf = new SimpleDateFormat();
+        util.masterCalendar = calendarFor(2010, 8, 1);
+        System.out.println(sdf.format(util.masterCalendar.getTime()));
+
+        assertEquals("Söndag 1 augusti 2010", util.getCurrentDayMonthAndYear());
+    }
+
+    @Test
+    public void testGetCalendarMonth() {
+        util.masterCalendar = calendarFor(2010, 8, 1);
+        // Calendar months are zero based, for some unknown reason.
+        assertEquals(7, util.getCalendarMonth());
+    }
+    
     private void assertCalendar(Calendar cal, int year, int month, int day) {
         assertEquals(year, cal.get(Calendar.YEAR));
-        assertEquals(month, cal.get(Calendar.MONTH));
+        assertEquals(month, cal.get(Calendar.MONTH)+1);
         assertEquals(day, cal.get(Calendar.DAY_OF_MONTH));
     }
 }

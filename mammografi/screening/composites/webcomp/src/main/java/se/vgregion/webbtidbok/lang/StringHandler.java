@@ -17,6 +17,8 @@
  */
 package se.vgregion.webbtidbok.lang;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -48,5 +50,10 @@ public class StringHandler {
 		theMatcher.appendTail(theResult);
 		
 		return theResult.toString();
+	}
+	
+	public static String formatCalendar(String pattern, Calendar cal) {
+	    SimpleDateFormat format = new SimpleDateFormat(pattern);
+	    return format.format(cal.getTime());
 	}
 }
