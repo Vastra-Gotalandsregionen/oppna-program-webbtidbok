@@ -17,16 +17,11 @@
  */
 package se.vgregion.webbtidbok.booking.elvis.mock;
 
-import static org.junit.Assert.*;
-
-import java.io.ObjectInputStream;
-import java.util.Map;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.ResourceEditor;
-import org.springframework.util.ResourceUtils;
 
 import se.vgregion.webbtidbok.ws.ArrayOfBookingPlace;
 import se.vgregion.webbtidbok.ws.ArrayOfBookingTime;
@@ -36,8 +31,6 @@ import se.vgregion.webbtidbok.ws.ICentralBookingWSGetBookingICFaultFaultFaultMes
 import se.vgregion.webbtidbok.ws.ICentralBookingWSGetBookingPlaceICFaultFaultFaultMessage;
 import se.vgregion.webbtidbok.ws.ICentralBookingWSGetBookingTimeICFaultFaultFaultMessage;
 import se.vgregion.webbtidbok.ws.ObjectFactory;
-
-import com.thoughtworks.xstream.XStream;
 
 public class ElvisServiceMockTest {
 
@@ -50,12 +43,9 @@ public class ElvisServiceMockTest {
   public void setUp() throws Exception {
     elvisServiceMock = new ElvisServiceMock();
     elvisServiceMock.createMockData();
-    ClassPathResource elvisMockData = new ClassPathResource("elvisMockData.xml");
-    elvisServiceMock.setElvisMockDataResourse(elvisMockData);
-    elvisServiceMock.setxStream(new XStream());
     bookingRequest = new BookingRequest();
     bookingRequest.setPnr(objectFactory.createString(pNR1));
-
+    
   }
 
   @Test
