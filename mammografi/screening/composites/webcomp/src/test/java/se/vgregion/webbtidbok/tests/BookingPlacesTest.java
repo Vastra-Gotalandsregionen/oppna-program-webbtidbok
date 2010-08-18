@@ -23,8 +23,12 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.Resource;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import se.vgregion.webbtidbok.State;
 import se.vgregion.webbtidbok.booking.elvis.WebServiceHelper;
@@ -33,14 +37,14 @@ import se.vgregion.webbtidbok.ws.ArrayOfBookingPlace;
 import se.vgregion.webbtidbok.ws.BookingPlace;
 import se.vgregion.webbtidbok.ws.BookingRequest;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = { "/se/vgregion/webbtidbok/booking/web-application-config.xml"})
 public class BookingPlacesTest {
 
-  private static WebServiceHelper ws;
+  @Autowired
+  private WebServiceHelper ws;
 
-  @BeforeClass
-  public static void setup() {
-    ws = getWebServiceHelper();
-  }
+
 
   /*
    * Test logging in with blank pid and pwd, should return false if able to login with blank

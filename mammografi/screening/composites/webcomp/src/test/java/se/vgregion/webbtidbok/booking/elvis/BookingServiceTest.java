@@ -28,16 +28,22 @@ import javax.xml.datatype.DatatypeFactory;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import se.vgregion.webbtidbok.State;
 import se.vgregion.webbtidbok.domain.Booking;
 import se.vgregion.webbtidbok.domain.BookingTime;
 import se.vgregion.webbtidbok.domain.Surgery;
 import se.vgregion.webbtidbok.ws.ArrayOfBookingPlace;
+import se.vgregion.webbtidbok.ws.ArrayOfBookingTime;
 import se.vgregion.webbtidbok.ws.BookingRequest;
 import se.vgregion.webbtidbok.ws.BookingResponse;
 import se.vgregion.webbtidbok.ws.ObjectFactory;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = { "/se/vgregion/webbtidbok/booking/web-application-config.xml"})
 public class BookingServiceTest {
 
 	private BookingService bookingService;
@@ -49,6 +55,7 @@ public class BookingServiceTest {
 		bookingService = new BookingService();
 		bookingService.setHelper(new WebServiceHelperMock());
 		bookingService.setMapping(new BookingMapperElvis());
+		//bookingService.setHelper(webServiceHelper);
 		objectFactory = new ObjectFactory();
 		objectFactory.createString("test");
 		state = new State();
@@ -85,6 +92,11 @@ public class BookingServiceTest {
 
 	class WebServiceHelperMock extends WebServiceHelper {
 
+	  @Override
+	  public ArrayOfBookingTime getQueryWSRequestTime(BookingRequest request) {
+	    return new ArrayOfBookingTime();
+	  }
+	  
 		@Override
 		public BookingRequest getQueryWSRequest(State loginCredentials) {
 			BookingRequest bookingRequest = new BookingRequest();
