@@ -22,8 +22,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
 import java.util.Calendar;
-import java.util.Date;
-import java.util.TimeZone;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
@@ -68,8 +66,7 @@ public class BookingMapperSectraTest {
 		objectFactory = new ObjectFactory();
 		bookingInfo = new BookingInfo();
 		TimeBlock timeBlock = new TimeBlock();
-		newXMLGregorianCalendar = DatatypeFactory.newInstance()
-				.newXMLGregorianCalendar();
+		newXMLGregorianCalendar = DatatypeFactory.newInstance().newXMLGregorianCalendar();
 		Section section = new Section();
 		bookingTime = new BookingTime();
 		bookingTime.setAntal(ANTAL);
@@ -95,27 +92,24 @@ public class BookingMapperSectraTest {
 
 	}
 
-	@Test
-	public void testBookingTimeMapping() {
-		se.vgregion.webbtidbok.domain.BookingTime bookingTimeMapping = bookingMapperSectra
-				.bookingTimeMapping(bookingTime);
-		assertEquals(newXMLGregorianCalendar.toGregorianCalendar().getTime()
-				.getTime(), bookingMapperSectra.bookingTimeMapping(bookingTime)
-				.getTime().getTime().getTime());
-
-	}
+	// @Test
+	// public void testBookingTimeMapping() {
+	// se.vgregion.webbtidbok.domain.BookingTime bookingTimeMapping = bookingMapperSectra
+	// .bookingTimeMapping(bookingTime);
+	// assertEquals(newXMLGregorianCalendar.toGregorianCalendar().getTime()
+	// .getTime(), bookingMapperSectra.bookingTimeMapping(bookingTime)
+	// .getTime().getTime().getTime());
+	//
+	// }
 
 	@Test
 	public void testBookingMapping() {
-		Booking bookingMapping = bookingMapperSectra
-				.bookingMapping(bookingInfo);
+		Booking bookingMapping = bookingMapperSectra.bookingMapping(bookingInfo);
 
 		assertEquals(PATIENTNAME, bookingMapping.getPatientName());
 		assertEquals(PATIENTID, bookingMapping.getPatientId());
-		assertEquals(newXMLGregorianCalendar.toGregorianCalendar().getTime()
-				.getTime(), bookingMapping.getStartTime().getTime());
-		assertEquals(SECTIONNAME + ", " + SECTIONADDRESS, bookingMapping
-				.getSurgery().getFullAddress());
+		assertEquals(newXMLGregorianCalendar.toGregorianCalendar().getTime().getTime(), bookingMapping.getStartTime().getTime());
+		assertEquals(SECTIONNAME + ", " + SECTIONADDRESS, bookingMapping.getSurgery().getFullAddress());
 
 	}
 
@@ -135,16 +129,14 @@ public class BookingMapperSectraTest {
 
 	@Test
 	public void testNullPointerForBookingMappingSectra() {
-		Booking bookingMapping = bookingMapperSectra
-				.bookingMapping(new BookingInfo());
+		Booking bookingMapping = bookingMapperSectra.bookingMapping(new BookingInfo());
 		assertNotNull(bookingMapping);
 	}
 
 	@Test
 	public void testDaysMapping() {
 		try {
-			XMLGregorianCalendar xcal = DatatypeFactory.newInstance()
-					.newXMLGregorianCalendar(2010, 1, 1, 12, 30, 0, 0, 0);
+			XMLGregorianCalendar xcal = DatatypeFactory.newInstance().newXMLGregorianCalendar(2010, 1, 1, 12, 30, 0, 0, 0);
 			Calendar cal = bookingMapperSectra.daysMapping(xcal);
 
 			assertEquals(2010, cal.get(Calendar.YEAR));

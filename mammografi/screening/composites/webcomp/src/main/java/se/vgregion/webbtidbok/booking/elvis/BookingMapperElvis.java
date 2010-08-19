@@ -19,6 +19,7 @@ package se.vgregion.webbtidbok.booking.elvis;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import javax.xml.bind.JAXBElement;
 import javax.xml.datatype.XMLGregorianCalendar;
@@ -29,8 +30,26 @@ import se.vgregion.webbtidbok.domain.elvis.BookingElvis;
 import se.vgregion.webbtidbok.lang.StringHandler;
 import se.vgregion.webbtidbok.ws.BookingPlace;
 import se.vgregion.webbtidbok.ws.BookingResponse;
+import se.vgregion.webbtidbok.ws.BookingTime;
 
 public class BookingMapperElvis {
+
+	public se.vgregion.webbtidbok.domain.BookingTime bookingTimeMapping(BookingTime bookingTime) {
+		se.vgregion.webbtidbok.domain.BookingTime bookTime = new se.vgregion.webbtidbok.domain.BookingTime();
+		XMLGregorianCalendar date = bookingTime.getDatum();
+		String time = bookingTime.getKlocka().getValue();
+		String hour = time.substring(0, 2);
+		String minute = time.substring(3, 5);
+		date.setHour(Integer.parseInt(hour));
+		date.setMinute(Integer.parseInt(minute));
+		GregorianCalendar gregorianCalendar = date.toGregorianCalendar();
+
+		Date dateTime = new Date(gregorianCalendar.getTimeInMillis());
+		System.out.println("lla dateTime: " + dateTime.toString());
+		bookTime.setDateTime(dateTime);
+		bookTime.setTime(date);
+		return bookTime;
+	}
 
   public Booking bookingMapping(BookingResponse bookingResponse) {
     BookingElvis booking = new BookingElvis();
@@ -50,48 +69,49 @@ public class BookingMapperElvis {
     return booking;
   }
 
-  private String getStringValueFromBooking(JAXBElement<String> jaxbElement) {
-    String value = "";
-    if (jaxbElement != null) {
-      value = jaxbElement.getValue();
-    }
-    return value;
-  }
 
-  private Date getDateFromCalendar(XMLGregorianCalendar calendar) {
-    Date value = null;
-    if (calendar != null) {
-      value = calendar.toGregorianCalendar().getTime();
-    }
-    return value;
-  }
+	private String getStringValueFromBooking(JAXBElement<String> jaxbElement) {
+		String value = "";
+		if (jaxbElement != null) {
+			value = jaxbElement.getValue();
+		}
+		return value;
+	}
 
-  private boolean isUpdateable(BookingResponse bookingResponse) {
-    boolean value = false;
-    if (bookingResponse.getAntalOmbok() != null && bookingResponse.getMaxAntalOmbok() != null) {
-      value = bookingResponse.getAntalOmbok() <= bookingResponse.getMaxAntalOmbok();
-    }
-    return value;
-  }
+	private Date getDateFromCalendar(XMLGregorianCalendar calendar) {
+		Date value = null;
+		if (calendar != null) {
+			value = calendar.toGregorianCalendar().getTime();
+		}
+		return value;
+	}
 
-  private String changePatientNameStructure(String name) {
-    name = StringHandler.capitalizeName(name);
-    String theNames[] = name.split(",");
-    if (theNames.length == 2) {
-      name = theNames[1].trim() + " " + theNames[0].trim();
-    }
-    return name;
-  }
+	private boolean isUpdateable(BookingResponse bookingResponse) {
+		boolean value = false;
+		if (bookingResponse.getAntalOmbok() != null && bookingResponse.getMaxAntalOmbok() != null) {
+			value = bookingResponse.getAntalOmbok() <= bookingResponse.getMaxAntalOmbok();
+		}
+		return value;
+	}
 
-  public Surgery bookingPlaceMapping(BookingPlace bookingPlace) {
-    Surgery surgery = new Surgery();
-    surgery.setSurgeryAddress(getStringValueFromBooking(bookingPlace.getAddress()));
-    if (bookingPlace.getCentralTidbokID() != null) {
-      surgery.setSurgeryId(Integer.toString(bookingPlace.getCentralTidbokID()));
-    }
-    surgery.setSurgeryName(getStringValueFromBooking(bookingPlace.getMottagning()));
-    return surgery;
-  }
+	private String changePatientNameStructure(String name) {
+		name = StringHandler.capitalizeName(name);
+		String theNames[] = name.split(",");
+		if (theNames.length == 2) {
+			name = theNames[1].trim() + " " + theNames[0].trim();
+		}
+		return name;
+	}
+
+	public Surgery bookingPlaceMapping(BookingPlace bookingPlace) {
+		Surgery surgery = new Surgery();
+		surgery.setSurgeryAddress(getStringValueFromBooking(bookingPlace.getAddress()));
+		if (bookingPlace.getCentralTidbokID() != null) {
+			surgery.setSurgeryId(Integer.toString(bookingPlace.getCentralTidbokID()));
+		}
+		surgery.setSurgeryName(getStringValueFromBooking(bookingPlace.getMottagning()));
+		return surgery;
+	}
 
   public Calendar daysMapping(se.vgregion.webbtidbok.ws.Calendar wrapCal) {
     return wrapCal.getDatum().toGregorianCalendar();

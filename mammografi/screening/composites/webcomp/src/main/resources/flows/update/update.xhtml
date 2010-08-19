@@ -154,6 +154,7 @@
 									
 			<tr>
 				<td>
+			
 					<table>
 						<tr>
 							<p />
@@ -170,12 +171,14 @@
 												<th style="width: 10em; text-align: center; background: #e6e6e6"><h3 style="display: inline"><h:outputText value="#{calendarService.currentMonthAndYear}" /></h3></th>
 												<th style="width: 2em; text-align: right; background: #e6e6e6"><h:commandLink id="next" value="&gt;" action="next"/></th>
 										</table>
+
 											<!--		HEADER		-->
 											<!--	Må Ti On To Fr Lö Sö	-->
 											<table border="0" style="text-align: right; width: 14em;">
 												<th style="width: 2em;">Må</th><th style="width: 2em;">Ti</th><th style="width: 2em;">On</th>
 												<th style="width: 2em;">To</th><th style="width: 2em;">Fr</th><th style="width: 2em;">Lö</th><th style="width: 2em;">Sö</th>
 												<!-- week 1 -->
+
 												<tr>
 													<td style="width: 2em;background: #{calendarService.color};">
 														<h:commandLink escape="false" id="mon1" value="#{calendarService.day}" action="showTimeCalendar" >
@@ -403,8 +406,9 @@
 														</h:commandLink>
 													</td>
 												</tr>
-												
+	
 												</table>
+										
 												</div>
 											</div>
                             	</ui:fragment>
@@ -420,7 +424,8 @@
     					</tr>
     													
     				</table>
-    			</td>
+    				
+				</td>
 			</tr>
 
             <tr>
@@ -471,7 +476,7 @@
     								<f:facet name="header" >
 	       								<p>Tid</p>
 			     					</f:facet>
-				    				#{btl.time}
+				    				<h:outputText value="#{btl.dateTime}"><f:convertDateTime type="time" pattern="HH:mm" locale="sv" /></h:outputText>
 								</h:column>
 								<h:column id="col2">
 									<h:commandButton id="timeButton" value="Välj" style="width: 100px;" action="selecttime" processIds="*" immediate="true" />
