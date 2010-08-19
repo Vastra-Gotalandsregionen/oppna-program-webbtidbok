@@ -164,7 +164,6 @@
         <transition on="cancel" history="invalidate" to="cancel">
             <!-- Do we really need these? -->
             <evaluate expression="calendarService.setSelectedDay('')" />
-            <evaluate expression="bookingService.setFirstPlacesBoolean(true)" />
         </transition>
         <transition on="logout" history="invalidate" to="logout"/>
         <transition on-exception="java.lang.Error" history="invalidate" to="logout"/>
