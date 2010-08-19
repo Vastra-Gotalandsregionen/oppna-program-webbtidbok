@@ -36,20 +36,18 @@
 		<div id="boxmiddle">
 			<p/>
 			<br />
-			<h1 style="display: inline">Bekräftelse av ny tid</h1>
+			<h1 style="display: inline">#{sectionMsg.updateconfirmationHeader}</h1>
 				<h:form id="mainForm" style="display: inline; text-align: right; padding-left: 16em;" >
 					<div align="right">
-		                <sf:commandButton id="logout" value="Logga ut" processIds="*" action="logout" />
+		                <sf:commandButton id="logout" value="#{baseMsg.logoutButton}" processIds="*" action="logout" />
 		            </div>
 				</h:form>
 				<p/>
 				<br/>
-				<p>Om du behöver kontrollera din tid eller boka om den kan logga in igen. Du kan boka om din tid maximalt två gånger. Spara lösenordet du fick i kallelsen. 
-				Du kan också ta kontakt med Kontaktpunkten för att boka om eller avboka din tid. Ring då på telefonnummer 031- 324 69 55 tisdag, onsdag eller torsdag mellan klockan 09:00-15:00, alternativt 031-342 24 00. 
-				Du kan också skicka e-post: <a href="mailto:kontaktpunkten.su@vgregion.se">kontaktpunkten.su@vgregion.se</a>.</p><br/>
+				<p><h:outputText value="#{sectionMsg.updateconfirmationRescheduleInfo}" escape="false"/></p><br/>
 				
 				
-				<h3> Din tid för undersökning av stora kroppspulsådern är ombokad </h3>
+				<h3>#{sectionMsg.updateconfirmationRescheduledMessage}</h3>
 				<br />			
 				<div id="boxleft1" style="width: 100%">				
 				<table>
@@ -60,14 +58,14 @@
 					</tr>			
 					<tr>
 						<td style="padding-left: 2em" valign="top" >
-							Var:
+							<p></p><h:outputText value="#{baseMsg.locationBoxWhere}"/>:</p>
 						</td>
 						<td style="padding-left: 2em">  #{booking.surgery.fullAddress}
 						</td>						
 					</tr>			
 					<tr>
 						<td style="padding-left: 2em" valign="top">
-							När:
+							<p></p><h:outputText value="#{baseMsg.locationBoxWhen}"/>:</p>
 						</td>
 						<td style="padding-left: 2em"> #{booking.startTime}.
 						</td>					
@@ -76,6 +74,7 @@
 				</div>	
 				<br />
 				<p></p>
+				<ui:remove>
 <!--				<table>-->
 <!--					<tr>-->
 <!--						<td >-->
@@ -157,7 +156,7 @@
 <!--							</table>-->
 <!--						</h:form>-->
 <!--					</div>	-->
-					
+					</ui:remove>
 					
 				</div>	
 				</div>
