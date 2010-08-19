@@ -28,6 +28,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import se.vgregion.webbtidbok.State;
+import se.vgregion.webbtidbok.lang.DateHandler;
 
 public class CalendarUtilTest {
 
@@ -92,5 +93,22 @@ public class CalendarUtilTest {
         assertEquals(year, cal.get(Calendar.YEAR));
         assertEquals(month, cal.get(Calendar.MONTH)+1);
         assertEquals(day, cal.get(Calendar.DAY_OF_MONTH));
+    }
+    
+    @Test
+    public void testGetTimeForChosenDate() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+        State state = new State();
+        state.setSelectedDate(DateHandler.calendarFor(2010, 8, 1));
+        
+        util.masterCalendar = DateHandler.calendarFor(2010, 9, 15);
+        util.setSelectedDay("25");
+        
+        util.getTimeForChosenDate(state);
+        assertEquals("2010-09-25", sdf.format(state.getSelectedDate().getTime()));
+        
+        util.setSelectedDay("");
+        assertEquals("2010-09-25", sdf.format(state.getSelectedDate().getTime()));
     }
 }
