@@ -20,8 +20,8 @@ package se.vgregion.webbtidbok.domain;
 import java.io.Serializable;
 import java.util.Date;
 
-public abstract class Booking implements Serializable{
-	
+public abstract class Booking implements Serializable {
+
 	private static final long serialVersionUID = 7686724985905225950L;
 	private String patientName;
 	private Surgery surgery;
@@ -32,24 +32,32 @@ public abstract class Booking implements Serializable{
 	public boolean isUpdateable() {
 		return updateable;
 	}
+
 	public void setUpdateable(boolean updateable) {
 		this.updateable = updateable;
 	}
+
 	public Date getStartTime() {
-		return (Date)startTime.clone();
+		return (Date) startTime.clone();
 	}
+
 	public void setStartTime(Date startTime) {
-		this.startTime = (Date)startTime.clone();
+		if (startTime != null) {
+			this.startTime = (Date) startTime.clone();
+		}
 	}
+
 	public String getPatientId() {
 		return patientId;
 	}
+
 	public void setPatientId(String patientId) {
 		this.patientId = patientId;
 	}
 
 	/**
 	 * The firstname and lastname of the patient.
+	 * 
 	 * @return {@link String} of fisrtname and lastname.
 	 */
 	public String getPatientName() {
@@ -58,7 +66,8 @@ public abstract class Booking implements Serializable{
 
 	/**
 	 * 
-	 * @param patientName Fisrtname ond lastname.
+	 * @param patientName
+	 *            Fisrtname ond lastname.
 	 */
 	public void setPatientName(String patientName) {
 		this.patientName = patientName;
@@ -74,7 +83,8 @@ public abstract class Booking implements Serializable{
 
 	/**
 	 * 
-	 * @param surgery {@link Surgery} the surgery the patient is booked to.
+	 * @param surgery
+	 *            {@link Surgery} the surgery the patient is booked to.
 	 */
 	public void setSurgery(Surgery surgery) {
 		this.surgery = surgery;

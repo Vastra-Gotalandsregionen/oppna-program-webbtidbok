@@ -25,8 +25,8 @@ import se.vgregion.webbtidbok.domain.BookingTime;
 import se.vgregion.webbtidbok.domain.Surgery;
 
 /**
- * This class is just empty stubs. Use it as a base class for your test case
- * classes, so you don't have to implement all methods in every testcase.
+ * This class is just empty stubs. Use it as a base class for your test case classes, so you don't have to implement all methods
+ * in every testcase.
  * 
  * @author anders.henriksson@knowit.se
  */
@@ -45,8 +45,8 @@ public class BookingFacadeDummy implements BookingFacade {
 
 	@Override
 	public List<Surgery> getAvailableSurgeries(State state) {
-	    // TODO Auto-generated method stub
-	    return null;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
@@ -59,5 +59,11 @@ public class BookingFacadeDummy implements BookingFacade {
 	public List<BookingTime> getBookingTime(State state) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void reschedule(BookingTime bookingTime, State state) {
+		// TODO Auto-generated method stub
+
 	}
 }

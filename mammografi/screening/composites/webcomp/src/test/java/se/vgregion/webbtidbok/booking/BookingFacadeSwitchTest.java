@@ -48,8 +48,7 @@ public class BookingFacadeSwitchTest {
 		state.setService("MAMMO_SU");
 		bookingFacadeSectraMock = new BookingFacadeSectraMock();
 		bookingFacadeElvisMock = new BookingFacadeElvisMock();
-		bookingFactoryMock = new BookingFactoryMock(bookingFacadeSectraMock,
-				bookingFacadeElvisMock);
+		bookingFactoryMock = new BookingFactoryMock(bookingFacadeSectraMock, bookingFacadeElvisMock);
 		bookingFacadeSwitch.setBookingFactory(bookingFactoryMock);
 	}
 
@@ -67,39 +66,39 @@ public class BookingFacadeSwitchTest {
 
 	@Test
 	public void testGetAvailableSurgeries() throws Exception {
-	    // Test sectra facade.
-	    bookingFacadeSwitch.getAvailableSurgeries(state);
-	    assertThatSectraFacadeWasCalled();
-	    setUp();
-	    // Test elvis facade
-	    state.setService("BUKAORTA");
-	    bookingFacadeSwitch.getAvailableSurgeries(state);
-	    assertThatElvisFacadeWasCAlled();
+		// Test sectra facade.
+		bookingFacadeSwitch.getAvailableSurgeries(state);
+		assertThatSectraFacadeWasCalled();
+		setUp();
+		// Test elvis facade
+		state.setService("BUKAORTA");
+		bookingFacadeSwitch.getAvailableSurgeries(state);
+		assertThatElvisFacadeWasCAlled();
 	}
 
 	@Test
 	public void testGetFreeDays() throws Exception {
-	    // Test sectra facade.
-	    bookingFacadeSwitch.getFreeDays(state, null, null, null);
-	    assertThatSectraFacadeWasCalled();
-	    setUp();
-	    // Test elvis facade
-	    state.setService("BUKAORTA");
-	    bookingFacadeSwitch.getFreeDays(state, null, null, null);
-	    assertThatElvisFacadeWasCAlled();
+		// Test sectra facade.
+		bookingFacadeSwitch.getFreeDays(state, null, null, null);
+		assertThatSectraFacadeWasCalled();
+		setUp();
+		// Test elvis facade
+		state.setService("BUKAORTA");
+		bookingFacadeSwitch.getFreeDays(state, null, null, null);
+		assertThatElvisFacadeWasCAlled();
 	}
 
-    @Test
-    public void testGetBookingTime() throws Exception {
-        // Test sectra facade.
-        bookingFacadeSwitch.getBookingTime(state);
-        assertThatSectraFacadeWasCalled();
-        setUp();
-        // Test elvis facade
-        state.setService("BUKAORTA");
-        bookingFacadeSwitch.getBookingTime(state);
-        assertThatElvisFacadeWasCAlled();
-    }
+	@Test
+	public void testGetBookingTime() throws Exception {
+		// Test sectra facade.
+		bookingFacadeSwitch.getBookingTime(state);
+		assertThatSectraFacadeWasCalled();
+		setUp();
+		// Test elvis facade
+		state.setService("BUKAORTA");
+		bookingFacadeSwitch.getBookingTime(state);
+		assertThatElvisFacadeWasCAlled();
+	}
 
 	private void assertThatSectraFacadeWasCalled() {
 		assertFalse(bookingFacadeElvisMock.wasCalled);
@@ -130,8 +129,8 @@ public class BookingFacadeSwitchTest {
 
 		@Override
 		public List<Surgery> getAvailableSurgeries(State state) {
-		    wasCalled = true;
-		    return null;
+			wasCalled = true;
+			return null;
 		}
 
 		@Override
@@ -148,8 +147,14 @@ public class BookingFacadeSwitchTest {
 
 		@Override
 		public List<BookingTime> getBookingTime(State state) {
-            wasCalled = true;
+			wasCalled = true;
 			return null;
+		}
+
+		@Override
+		public void reschedule(BookingTime bookingTime, State state) {
+			// TODO Auto-generated method stub
+
 		}
 
 	}
@@ -160,14 +165,14 @@ public class BookingFacadeSwitchTest {
 
 		@Override
 		public Booking getBookingInfo(State state) {
-            wasCalled = true;
-            return new BookingElvis();
-        }
+			wasCalled = true;
+			return new BookingElvis();
+		}
 
 		@Override
 		public List<Surgery> getAvailableSurgeries(State state) {
-		    wasCalled = true;
-		    return null;
+			wasCalled = true;
+			return null;
 		}
 
 		@Override
@@ -184,8 +189,14 @@ public class BookingFacadeSwitchTest {
 
 		@Override
 		public List<BookingTime> getBookingTime(State state) {
-            wasCalled = true;
+			wasCalled = true;
 			return null;
+		}
+
+		@Override
+		public void reschedule(BookingTime bookingTime, State state) {
+			// TODO Auto-generated method stub
+
 		}
 
 	}
@@ -195,8 +206,7 @@ public class BookingFacadeSwitchTest {
 		private BookingFacade sectraService;
 		private BookingFacade elvisService;
 
-		public BookingFactoryMock(BookingFacade sectraMock,
-				BookingFacade elvisMock) {
+		public BookingFactoryMock(BookingFacade sectraMock, BookingFacade elvisMock) {
 			sectraService = sectraMock;
 			elvisService = elvisMock;
 		}

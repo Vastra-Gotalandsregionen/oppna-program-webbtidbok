@@ -69,21 +69,24 @@ public class ElvisServiceMock implements ICentralBookingWS {
 		// Create bookingPlaces.
 		Map<String, ArrayOfBookingPlace> bookingPlaces = new HashMap<String, ArrayOfBookingPlace>();
 		ArrayOfBookingPlace arrayOfBookingPlace = new ArrayOfBookingPlace();
-		arrayOfBookingPlace.getBookingPlace().add(createBookingPlaces("Address 1", "Mottagning 1", 1));
-		arrayOfBookingPlace.getBookingPlace().add(createBookingPlaces("Address 2", "Mottagning 2", 2));
+		int centralTidbokID1 = 1;
+		int centralTidbokID2 = 2;
+		arrayOfBookingPlace.getBookingPlace().add(createBookingPlaces("Address 1", "Mottagning 1", centralTidbokID1));
+		arrayOfBookingPlace.getBookingPlace().add(createBookingPlaces("Address 2", "Mottagning 2", centralTidbokID2));
 		bookingPlaces.put(pNR1, arrayOfBookingPlace);
 		bookingPlaces.put(pNR2, arrayOfBookingPlace);
 		elvisMockData.put("bookingPlaces", bookingPlaces);
 
 		// Create bookingTimes
-		Map<String, ArrayOfBookingTime> bookingTimes = new HashMap<String, ArrayOfBookingTime>();
+		Map<Integer, ArrayOfBookingTime> bookingTimes = new HashMap<Integer, ArrayOfBookingTime>();
 		ArrayOfBookingTime arrayOfBookingTime = new ArrayOfBookingTime();
 		arrayOfBookingTime.getBookingTime().add(createBookingTime(xmlCalendarFor(2010, 8, 27, 11, 0, 0), "07:00"));
 		arrayOfBookingTime.getBookingTime().add(createBookingTime(xmlCalendarFor(2010, 8, 30, 11, 0, 0), "12:00"));
 		arrayOfBookingTime.getBookingTime().add(createBookingTime(xmlCalendarFor(2010, 8, 31, 11, 0, 0), "16:30"));
 		arrayOfBookingTime.getBookingTime().add(createBookingTime(xmlCalendarFor(2010, 9, 1, 11, 0, 0), "19:00"));
-		bookingTimes.put(pNR1, arrayOfBookingTime);
-		bookingTimes.put(pNR2, arrayOfBookingTime);
+		// Add bookingTimes for bookingPlaces.
+		bookingTimes.put(Integer.valueOf(centralTidbokID1), arrayOfBookingTime);
+		bookingTimes.put(Integer.valueOf(centralTidbokID2), arrayOfBookingTime);
 		elvisMockData.put("bookingTimes", bookingTimes);
 		// createXmlFromObjet("src/main/resources/elvisMockData.xml", elvisMockData);
 
@@ -129,8 +132,8 @@ public class ElvisServiceMock implements ICentralBookingWS {
 		return bookingPlaces.get(pnr);
 	}
 
-	private ArrayOfBookingTime getBookingTimes(String pnr) {
-		Map<String, ArrayOfBookingTime> bookingTimes = (Map<String, ArrayOfBookingTime>) elvisMockData.get("bookingTimes");
+	private ArrayOfBookingTime getBookingTimes(Integer pnr) {
+		Map<Integer, ArrayOfBookingTime> bookingTimes = (Map<Integer, ArrayOfBookingTime>) elvisMockData.get("bookingTimes");
 		return bookingTimes.get(pnr);
 	}
 
@@ -160,7 +163,7 @@ public class ElvisServiceMock implements ICentralBookingWS {
 	@Override
 	public ArrayOfBookingTime getBookingTime(BookingRequest request)
 			throws ICentralBookingWSGetBookingTimeICFaultFaultFaultMessage {
-		return getBookingTimes(request.getPnr().getValue());
+		return getBookingTimes(request.getCentralTidbokID());
 	}
 
 	@Override

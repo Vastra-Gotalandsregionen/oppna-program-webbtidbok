@@ -43,7 +43,7 @@ import se.vgregion.webbtidbok.ws.ObjectFactory;
 
 public class BookingService implements BookingServiceInterface {
 
-    int testIndex;
+	int testIndex;
 	BookingResponse response;
 	BookingRequest request;
 	WebServiceHelper helper;
@@ -129,8 +129,7 @@ public class BookingService implements BookingServiceInterface {
 		if (loginCredentials.isLoggedIn()) {
 
 			request = helper.getQueryWSRequest(loginCredentials);
-			ArrayOfBookingPlace places = helper
-					.getQueryWSRequestPlaces(request);
+			ArrayOfBookingPlace places = helper.getQueryWSRequestPlaces(request);
 			List<BookingPlace> placeList = places.getBookingPlace();
 			for (BookingPlace p : placeList) {
 				Surgery bookingPlaceMapping = mapping.bookingPlaceMapping(p);
@@ -141,18 +140,15 @@ public class BookingService implements BookingServiceInterface {
 		return surgeries;
 	}
 
-	public List<se.vgregion.webbtidbok.domain.BookingTime> getBookingTime(
-			State loginCredentials) {
+	public List<se.vgregion.webbtidbok.domain.BookingTime> getBookingTime(State loginCredentials) {
 		List<se.vgregion.webbtidbok.domain.BookingTime> bookingTimeArrayList = new ArrayList<se.vgregion.webbtidbok.domain.BookingTime>();
-		boolean theInThePastFlag = loginCredentials.getSelectedDate().before(
-				Calendar.getInstance());
+		boolean theInThePastFlag = loginCredentials.getSelectedDate().before(Calendar.getInstance());
 
 		if (loginCredentials.isLoggedIn() && !theInThePastFlag) {
 			Calendar selectedDate = loginCredentials.getSelectedDate();
 
 			String fromDate = DateHandler.setCalendarDateFormat(selectedDate);
-			JAXBElement<String> fromDat = objectFactory
-					.createBookingRequestFromDat(fromDate);
+			JAXBElement<String> fromDat = objectFactory.createBookingRequestFromDat(fromDate);
 			request = helper.getQueryWSRequest(loginCredentials);
 			request.setCentralTidbokID(loginCredentials.getCentralTidbokID());
 			request.setFromDat(fromDat);
@@ -183,8 +179,7 @@ public class BookingService implements BookingServiceInterface {
 					pl.setAntal(b.getAntal());
 					pl.setDatum(b.getDatum());
 					pl.setKlocka(b.getKlocka());
-					se.vgregion.webbtidbok.domain.BookingTime bookingTimeMapping = mapping
-							.bookingTimeMapping(pl);
+					se.vgregion.webbtidbok.domain.BookingTime bookingTimeMapping = mapping.bookingTimeMapping(pl);
 					bookingTimeArrayList.add(bookingTimeMapping);
 
 					id++;
@@ -201,15 +196,19 @@ public class BookingService implements BookingServiceInterface {
 	 * 
 	 * @param l
 	 */
-	public void setBookingTime(BookingTimeLocal bookingTime, State credentials) {
-		String hour = bookingTime.getTime();
-		String[] hourMinute = hour.split(":");
+	@Override
+	public void reschedule(se.vgregion.webbtidbok.domain.BookingTime bookingTime, State credentials) {
+
+		Calendar date = GregorianCalendar.getInstance();
+		date.setTime(bookingTime.getDateTime());
+
+		// String[] hourMinute = hour.split(":");
 
 		GregorianCalendar cal = new GregorianCalendar();
 		cal.setTimeInMillis(credentials.getSelectedDate().getTime().getTime());
 
-		cal.set(Calendar.HOUR_OF_DAY, Integer.parseInt(hourMinute[0]));
-		cal.set(Calendar.MINUTE, Integer.parseInt(hourMinute[1]));
+		cal.set(Calendar.HOUR_OF_DAY, date.get(Calendar.HOUR_OF_DAY));
+		cal.set(Calendar.MINUTE, date.get(Calendar.MINUTE));
 		cal.set(Calendar.SECOND, 0);
 
 		// update booking
@@ -220,8 +219,7 @@ public class BookingService implements BookingServiceInterface {
 			XMLGregorianCalendar xmlCal;
 			try {
 
-				xmlCal = DatatypeFactory.newInstance().newXMLGregorianCalendar(
-						cal);
+				xmlCal = DatatypeFactory.newInstance().newXMLGregorianCalendar(cal);
 				request.setBokadTid(xmlCal);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -246,8 +244,7 @@ public class BookingService implements BookingServiceInterface {
 		List<Surgery> surgeryList = new ArrayList<Surgery>();
 		if (state.isLoggedIn()) {
 			request = helper.getQueryWSRequest(state);
-			ArrayOfBookingPlace places = helper
-					.getQueryWSRequestPlaces(request);
+			ArrayOfBookingPlace places = helper.getQueryWSRequestPlaces(request);
 			List<BookingPlace> placeList = places.getBookingPlace();
 			for (BookingPlace p : placeList) {
 				Surgery surgery = mapping.bookingPlaceMapping(p);
@@ -257,30 +254,28 @@ public class BookingService implements BookingServiceInterface {
 		return surgeryList;
 	}
 
-    @Override
-    public List<Calendar> getFreeDays(State state, int tidbokID,
-            Calendar startDate, Calendar endDate) {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        String from = format.format(startDate.getTime());
-        JAXBElement<String> fromDat = objectFactory.createBookingRequestFromDat(from);
-        String to = format.format(startDate.getTime());
-        JAXBElement<String> toDat = objectFactory.createBookingRequestToDat(to);
+	@Override
+	public List<Calendar> getFreeDays(State state, int tidbokID, Calendar startDate, Calendar endDate) {
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		String from = format.format(startDate.getTime());
+		JAXBElement<String> fromDat = objectFactory.createBookingRequestFromDat(from);
+		String to = format.format(startDate.getTime());
+		JAXBElement<String> toDat = objectFactory.createBookingRequestToDat(to);
 
-        BookingRequest request = helper.getQueryWSRequest(state);
-        request.setCentralTidbokID(tidbokID);
-        request.setFromDat(fromDat);
-        request.setToDat(toDat);
+		BookingRequest request = helper.getQueryWSRequest(state);
+		request.setCentralTidbokID(tidbokID);
+		request.setFromDat(fromDat);
+		request.setToDat(toDat);
 
-        ArrayOfCalendar cals = helper.getQueryWSRequestCalendar(request);
+		ArrayOfCalendar cals = helper.getQueryWSRequestCalendar(request);
 
-        List<Calendar> calendars = new ArrayList<Calendar>();
-        if (cals != null) {
-            for (se.vgregion.webbtidbok.ws.Calendar wrapCal : cals.getCalendar()) {
-                Calendar calendar = mapping.daysMapping(wrapCal);
-                calendars.add(calendar);
-            }
-        }
-        return calendars;
-    }
-
+		List<Calendar> calendars = new ArrayList<Calendar>();
+		if (cals != null) {
+			for (se.vgregion.webbtidbok.ws.Calendar wrapCal : cals.getCalendar()) {
+				Calendar calendar = mapping.daysMapping(wrapCal);
+				calendars.add(calendar);
+			}
+		}
+		return calendars;
+	}
 }

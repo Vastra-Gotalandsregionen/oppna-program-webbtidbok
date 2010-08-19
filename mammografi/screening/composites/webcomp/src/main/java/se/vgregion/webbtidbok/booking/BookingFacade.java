@@ -18,7 +18,6 @@
 package se.vgregion.webbtidbok.booking;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import se.vgregion.webbtidbok.State;
@@ -35,11 +34,13 @@ public interface BookingFacade {
 	 *            The session state used to store the login credentials.
 	 * @return true if login succeeded.
 	 */
-	public boolean login(State state);
+	boolean login(State state);
 
-	public Booking getBookingInfo(State state);
-  
-	public List<Surgery> getAvailableSurgeries(State state);
+	Booking getBookingInfo(State state);
+
+	void reschedule(BookingTime bookingTime, State state);
+
+	List<Surgery> getAvailableSurgeries(State state);
 
 	List<Calendar> getFreeDays(State state, String surgeryId, Calendar startDate, Calendar endDate);
 

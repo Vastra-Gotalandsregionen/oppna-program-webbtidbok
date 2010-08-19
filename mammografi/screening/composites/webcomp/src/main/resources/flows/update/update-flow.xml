@@ -39,13 +39,17 @@
 -->
 <!--	only want to do getTimeForChosenDate first time around AND when a NEW date is selected, now it's also done when click on < or >		  -->
 <!--		  <evaluate expression="calendarService.getTimeForChosenDate(state)" />-->
-<!--			  <evaluate expression="bookingService.getBookingTime(state)" result="flowScope.timeListLocal" result-type="dataModel" /> -->
+<!--			  <evaluate expression="bookingService.getBookingTime(state)" result="flowScope.timeListLocal" result-type="dataModel" />
+-->
 <!--
 			  <evaluate expression="calendarService.setSelectedDay(requestParameters.selectedDay)" />
 		</on-render>
 -->
-		<transition on="showTimeCalendar" to="istimelistempty">
+
+		<transition on="showTimeCalendar">
 			<evaluate expression="calendarService.setSelectedDay(requestParameters.selectedDay)" />
+			<evaluate expression="calendarService.getTimeForChosenDate(state)" />
+		 	<evaluate expression="bookingFacade.getBookingTime(state)" result="flowScope.timeListLocal" result-type="dataModel" /> 
 		</transition>		
 		<transition on="displaytimes" to="isEmptyCalendar">
 		    <evaluate expression="guiUtility.setCentralTidbokIDfromLocation(state, location.locationId)" />
@@ -54,7 +58,7 @@
 			<evaluate expression="calendarService.setSelectedDay(calendarService.selectedDay)" >
 			</evaluate>			
 			<set name="conversationScope.timeTable" value="timeListLocal.selectedRow"  />		 
-			<evaluate expression="bookingFacade.setBookingTime(conversationScope.timeTable, state)" >
+			<evaluate expression="bookingFacade.reschedule(conversationScope.timeTable, state)" >
 			</evaluate>		
 		</transition>
 		<transition on="prev" to="update2">
@@ -74,10 +78,10 @@
 			 <transition on="no" to="istimelistempty"/>			
 	</action-state>
 		
-	<!--  -->	
+	<!--  should not be used-->	
 	<action-state id="istimelistempty">
 		 <evaluate expression="calendarService.getTimeForChosenDate(state)" />
-		 <evaluate expression="bookingFacade.getBookingTime(state)" result="flowScope.timeListLocal"  /> 	 
+		 <evaluate expression="bookingFacade.getBookingTime(state)" result="flowScope.timeListLocal" result-type="dataModel" /> 	 
 		 <evaluate expression="guiUtility.getIsTimeListEmpty(timeListLocal)" />	 
 	 	<transition on="yes" to="update">
 	 	</transition>
@@ -124,7 +128,7 @@
 		<on-render >			  
 			  <evaluate expression="calendarService.getCalendar(state, location.locationId)"  />
 			  <evaluate expression="calendarService.getTimeForChosenDate(state)" />
-			  <evaluate expression="bookingFacade.getBookingTime(state)" result="flowScope.timeListLocal" />		  
+			  <evaluate expression="bookingFacade.getBookingTime(state)" result="flowScope.timeListLocal" result-type="dataModel" />		  
 		</on-render>	
 	
 		<transition on="showTimeCalendar" to="istimelistempty">
@@ -139,7 +143,7 @@
 			<evaluate expression="calendarService.setSelectedDay(calendarService.selectedDay)" >
 			</evaluate>		
 			<set name="conversationScope.timeTable" value="timeListLocal.selectedRow"  />		
-			<evaluate expression="bookingService.setBookingTime(conversationScope.timeTable, state)" >
+			<evaluate expression="bookingFacade.reschedule(conversationScope.timeTable, state)" >
 			</evaluate>	
 		</transition>	
 		<transition on="prev" to="update">
