@@ -18,7 +18,6 @@
 package se.vgregion.webbtidbok.booking.sectra;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import javax.xml.datatype.XMLGregorianCalendar;
@@ -42,8 +41,7 @@ public class SectraBookingFacadeImpl implements BookingFacade {
 	 * Use this to get a connection to the proper web service.
 	 */
 	private SectraBookingServiceInterface getService(State state) {
-		return serviceFactory.getServiceInstance(state.getService(), state
-				.getPnr(), state.getPasswd());
+		return serviceFactory.getServiceInstance(state.getService(), state.getPnr(), state.getPasswd());
 	}
 
 	@Override
@@ -72,27 +70,31 @@ public class SectraBookingFacadeImpl implements BookingFacade {
 		return booking;
 	}
 
-	public Booking reschedule(String examinationNr, String newTimeId,
-			XMLGregorianCalendar startTime, Boolean printNewNotice,
+	public Booking reschedule(String examinationNr, String newTimeId, XMLGregorianCalendar startTime, Boolean printNewNotice,
 			String rescheduleComment) {
 		return null;
 	}
 
-    @Override
-    public List<Surgery> getAvailableSurgeries(State state) {
-        return getService(state).getSurgeries();
-    }
+	@Override
+	public List<Surgery> getAvailableSurgeries(State state) {
+		return getService(state).getSurgeries();
+	}
 
 	@Override
 	public List<Calendar> getFreeDays(State state, String surgeryId, Calendar startDate, Calendar endDate) {
 		// TODO: Needs to provide the section id from state somehow.
-		return getService(state)
-				.getFreeDays(startDate, endDate, surgeryId);
+		return getService(state).getFreeDays(startDate, endDate, surgeryId);
 	}
 
 	@Override
 	public List<BookingTime> getBookingTime(State state) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void reschedule(BookingTime bookingTime, State state) {
+		// TODO Auto-generated method stub
+
 	}
 }

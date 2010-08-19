@@ -48,7 +48,7 @@ public interface BookingServiceInterface {
 	public abstract List<BookingTime> getBookingTime(State loginCredentials);
 
 	public abstract List<Surgery> getSurgeries(State state);
-	
+
 	public abstract List<Calendar> getFreeDays(State state, int tidbokID, Calendar startDate, Calendar endDate);
 
 	/****
@@ -56,7 +56,6 @@ public interface BookingServiceInterface {
 	 * 
 	 * @param l
 	 */
-	public abstract void setBookingTime(BookingTimeLocal bookingTime,
-			State credentials);
+	void reschedule(BookingTime bookingTime, State credentials);
 
 }

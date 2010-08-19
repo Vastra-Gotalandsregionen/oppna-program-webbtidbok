@@ -18,7 +18,6 @@
 package se.vgregion.webbtidbok.booking;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import se.vgregion.webbtidbok.State;
@@ -27,8 +26,8 @@ import se.vgregion.webbtidbok.domain.BookingTime;
 import se.vgregion.webbtidbok.domain.Surgery;
 
 /**
- * This class is used as a switch to choose between different
- * {@link BookingFacade} depending on witch service that is used by the user.
+ * This class is used as a switch to choose between different {@link BookingFacade} depending on witch service that is used by the
+ * user.
  */
 public class BookingFacadeSwitch implements BookingFacade {
 
@@ -38,20 +37,20 @@ public class BookingFacadeSwitch implements BookingFacade {
 		bookingFactory = factory;
 	}
 
-    private BookingFacade getBookingFacadeForCurrentRequest(State state) {
-        return bookingFactory.getService(state);
-    }
+	private BookingFacade getBookingFacadeForCurrentRequest(State state) {
+		return bookingFactory.getService(state);
+	}
 
 	@Override
 	public Booking getBookingInfo(State state) {
 		return getBookingFacadeForCurrentRequest(state).getBookingInfo(state);
 	}
 
-    @Override
-    public List<Surgery> getAvailableSurgeries(State state) {
-        return getBookingFacadeForCurrentRequest(state).getAvailableSurgeries(state);
-    }
-    
+	@Override
+	public List<Surgery> getAvailableSurgeries(State state) {
+		return getBookingFacadeForCurrentRequest(state).getAvailableSurgeries(state);
+	}
+
 	@Override
 	public boolean login(State state) {
 		return false;
@@ -59,13 +58,17 @@ public class BookingFacadeSwitch implements BookingFacade {
 
 	@Override
 	public List<Calendar> getFreeDays(State state, String surgeryId, Calendar startDate, Calendar endDate) {
-		return getBookingFacadeForCurrentRequest(state).getFreeDays(state, surgeryId,
-				startDate, endDate);
+		return getBookingFacadeForCurrentRequest(state).getFreeDays(state, surgeryId, startDate, endDate);
 	}
 
 	@Override
 	public List<BookingTime> getBookingTime(State state) {
 		return getBookingFacadeForCurrentRequest(state).getBookingTime(state);
+	}
+
+	@Override
+	public void reschedule(BookingTime bookingTime, State state) {
+		getBookingFacadeForCurrentRequest(state).reschedule(bookingTime, state);
 	}
 
 }

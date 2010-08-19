@@ -34,7 +34,7 @@
 
     <view-state id="showConfirmation" view="/flows/updatewrapper/showUpdateConfirmation.xhtml">
         <on-render >
-            <evaluate expression="bookingService.getBooking(state)" result="flowScope.booking" /> 
+            <evaluate expression="bookingFacade.getBookingTime(state)" result="flowScope.booking" /> 
         </on-render>    
     </view-state>
 

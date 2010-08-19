@@ -34,53 +34,53 @@ import se.vgregion.webbtidbok.ws.ObjectFactory;
 
 public class ElvisServiceMockTest {
 
-  private ElvisServiceMock elvisServiceMock;
-  private ObjectFactory objectFactory = new ObjectFactory();
-  private BookingRequest bookingRequest;
-  private String pNR1 = "20101012-2222";
+	private ElvisServiceMock elvisServiceMock;
+	private ObjectFactory objectFactory = new ObjectFactory();
+	private BookingRequest bookingRequest;
+	private String pNR1 = "19700123-9297";
 
-  @Before
-  public void setUp() throws Exception {
-    elvisServiceMock = new ElvisServiceMock();
-    elvisServiceMock.createMockData();
-    bookingRequest = new BookingRequest();
-    bookingRequest.setPnr(objectFactory.createString(pNR1));
-    
-  }
+	@Before
+	public void setUp() throws Exception {
+		elvisServiceMock = new ElvisServiceMock();
+		elvisServiceMock.createMockData();
+		bookingRequest = new BookingRequest();
+		bookingRequest.setPnr(objectFactory.createString(pNR1));
+		bookingRequest.setCentralTidbokID(Integer.valueOf(1));
 
-  @Test
-  public void testCancelBooking() {
-    //fail("Not yet implemented");
-  }
+	}
 
-  @Test
-  public void testConfirmBooking() {
-    //fail("Not yet implemented");
-  }
+	@Test
+	public void testCancelBooking() {
+		// fail("Not yet implemented");
+	}
 
-  @Test
-  public void testGetBooking() throws ICentralBookingWSGetBookingICFaultFaultFaultMessage {
-    BookingResponse booking = elvisServiceMock.getBooking(bookingRequest);
-    assertNotNull(booking);
-    assertEquals(pNR1, booking.getPnr().getValue());
-  }
+	@Test
+	public void testConfirmBooking() {
+		// fail("Not yet implemented");
+	}
 
-  @Test
-  public void testGetBookingPlace() throws ICentralBookingWSGetBookingPlaceICFaultFaultFaultMessage {
-    ArrayOfBookingPlace bookingPlace = elvisServiceMock.getBookingPlace(bookingRequest);
-    assertNotNull(bookingPlace);
-    assertEquals("Mottagning 1", bookingPlace.getBookingPlace().get(0).getMottagning().getValue());
-  }
+	@Test
+	public void testGetBooking() throws ICentralBookingWSGetBookingICFaultFaultFaultMessage {
+		BookingResponse booking = elvisServiceMock.getBooking(bookingRequest);
+		assertNotNull(booking);
+	}
 
-  @Test
-  public void testGetBookingTime() throws ICentralBookingWSGetBookingTimeICFaultFaultFaultMessage {
-    ArrayOfBookingTime bookingTime = elvisServiceMock.getBookingTime(bookingRequest);
-    assertEquals("16:30", bookingTime.getBookingTime().get(2).getKlocka().getValue());
-  }
+	@Test
+	public void testGetBookingPlace() throws ICentralBookingWSGetBookingPlaceICFaultFaultFaultMessage {
+		ArrayOfBookingPlace bookingPlace = elvisServiceMock.getBookingPlace(bookingRequest);
+		assertNotNull(bookingPlace);
+		assertEquals("Mottagning 1", bookingPlace.getBookingPlace().get(0).getMottagning().getValue());
+	}
 
-  @Test
-  public void testGetCalandar() {
-    //fail("Not yet implemented");
-  }
+	@Test
+	public void testGetBookingTime() throws ICentralBookingWSGetBookingTimeICFaultFaultFaultMessage {
+		ArrayOfBookingTime bookingTime = elvisServiceMock.getBookingTime(bookingRequest);
+		assertEquals("16:30", bookingTime.getBookingTime().get(2).getKlocka().getValue());
+	}
+
+	@Test
+	public void testGetCalandar() {
+		// fail("Not yet implemented");
+	}
 
 }

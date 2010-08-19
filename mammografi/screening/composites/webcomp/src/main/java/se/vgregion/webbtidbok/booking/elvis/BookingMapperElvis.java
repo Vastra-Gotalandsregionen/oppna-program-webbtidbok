@@ -43,32 +43,28 @@ public class BookingMapperElvis {
 		date.setHour(Integer.parseInt(hour));
 		date.setMinute(Integer.parseInt(minute));
 		GregorianCalendar gregorianCalendar = date.toGregorianCalendar();
-
 		Date dateTime = new Date(gregorianCalendar.getTimeInMillis());
-		System.out.println("lla dateTime: " + dateTime.toString());
 		bookTime.setDateTime(dateTime);
-		bookTime.setTime(date);
 		return bookTime;
 	}
 
-  public Booking bookingMapping(BookingResponse bookingResponse) {
-    BookingElvis booking = new BookingElvis();
-    booking.setPatientName(changePatientNameStructure(getStringValueFromBooking(bookingResponse.getNamn())));
-    
-    Surgery surgery = new Surgery();
-    if (bookingResponse.getCentralTidbokID() != null) {
-        surgery.setSurgeryId(Integer.toString(bookingResponse.getCentralTidbokID()));
-    }
-    surgery.setSurgeryName(getStringValueFromBooking(bookingResponse.getMottagning()));
-    surgery.setSurgeryAddress(getStringValueFromBooking(bookingResponse.getAddress()));
-    booking.setSurgery(surgery);
-    booking.setPatientId(getStringValueFromBooking(bookingResponse.getPnr()));
-    booking.setStartTime(getDateFromCalendar(bookingResponse.getBokadTid()));
-    booking.setUpdateable(isUpdateable(bookingResponse));
+	public Booking bookingMapping(BookingResponse bookingResponse) {
+		BookingElvis booking = new BookingElvis();
+		booking.setPatientName(changePatientNameStructure(getStringValueFromBooking(bookingResponse.getNamn())));
 
-    return booking;
-  }
+		Surgery surgery = new Surgery();
+		if (bookingResponse.getCentralTidbokID() != null) {
+			surgery.setSurgeryId(Integer.toString(bookingResponse.getCentralTidbokID()));
+		}
+		surgery.setSurgeryName(getStringValueFromBooking(bookingResponse.getMottagning()));
+		surgery.setSurgeryAddress(getStringValueFromBooking(bookingResponse.getAddress()));
+		booking.setSurgery(surgery);
+		booking.setPatientId(getStringValueFromBooking(bookingResponse.getPnr()));
+		booking.setStartTime(getDateFromCalendar(bookingResponse.getBokadTid()));
+		booking.setUpdateable(isUpdateable(bookingResponse));
 
+		return booking;
+	}
 
 	private String getStringValueFromBooking(JAXBElement<String> jaxbElement) {
 		String value = "";
@@ -113,7 +109,7 @@ public class BookingMapperElvis {
 		return surgery;
 	}
 
-  public Calendar daysMapping(se.vgregion.webbtidbok.ws.Calendar wrapCal) {
-    return wrapCal.getDatum().toGregorianCalendar();
-  }
+	public Calendar daysMapping(se.vgregion.webbtidbok.ws.Calendar wrapCal) {
+		return wrapCal.getDatum().toGregorianCalendar();
+	}
 }
