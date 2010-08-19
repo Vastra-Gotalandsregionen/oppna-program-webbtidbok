@@ -36,10 +36,10 @@ public abstract class Booking implements Serializable{
 		this.updateable = updateable;
 	}
 	public Date getStartTime() {
-		return startTime;
+		return (Date)startTime.clone();
 	}
 	public void setStartTime(Date startTime) {
-		this.startTime = startTime;
+		this.startTime = (Date)startTime.clone();
 	}
 	public String getPatientId() {
 		return patientId;
