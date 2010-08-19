@@ -33,9 +33,9 @@
     </on-start>
 
 	<view-state id="update" view="/flows/update/update.xhtml">
-<!--		
-		<on-render>
-			  <evaluate expression="calendarService.getCalendar(state)"  />
+		
+<!--  		<on-render>
+			  <evaluate expression="calendarService.getCalendar(state, location.locationId)"  />
 -->
 <!--	only want to do getTimeForChosenDate first time around AND when a NEW date is selected, now it's also done when click on < or >		  -->
 <!--		  <evaluate expression="calendarService.getTimeForChosenDate(state)" />-->
@@ -74,11 +74,12 @@
 			 <transition on="no" to="istimelistempty"/>			
 	</action-state>
 		
+	<!--  -->	
 	<action-state id="istimelistempty">
 		 <evaluate expression="calendarService.getTimeForChosenDate(state)" />
-		 <evaluate expression="bookingFacade.getBookingTime(state)" result="flowScope.timeListLocal" result-type="dataModel" /> 	 
+		 <evaluate expression="bookingFacade.getBookingTime(state)" result="flowScope.timeListLocal"  /> 	 
 		 <evaluate expression="guiUtility.getIsTimeListEmpty(timeListLocal)" />	 
-	 	<transition on="yes" to="updateNoTimeTable">
+	 	<transition on="yes" to="update">
 	 	</transition>
 		<transition on="no" to="update">
 		</transition>				
@@ -123,7 +124,7 @@
 		<on-render >			  
 			  <evaluate expression="calendarService.getCalendar(state, location.locationId)"  />
 			  <evaluate expression="calendarService.getTimeForChosenDate(state)" />
-			  <evaluate expression="bookingFacade.getBookingTime(state)" result="flowScope.timeListLocal" result-type="dataModel" />		  
+			  <evaluate expression="bookingFacade.getBookingTime(state)" result="flowScope.timeListLocal" />		  
 		</on-render>	
 	
 		<transition on="showTimeCalendar" to="istimelistempty">

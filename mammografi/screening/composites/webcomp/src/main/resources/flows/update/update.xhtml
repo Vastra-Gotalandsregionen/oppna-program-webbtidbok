@@ -36,7 +36,7 @@
 <div id="boxcontainer" style="padding-bottom: 1em;">
 	<div id="boxleft" />
 	<div id="boxmiddle">
-			
+			REMOVE: UPDATE
 		<p/>
 		<br/>
 		<h1>#{sectionMsg.updatepageHeader}</h1>
@@ -427,7 +427,8 @@
     				
 				</td>
 			</tr>
-
+			<!-- Only show timelist if not empty -->
+			
             <tr>
                 <td>
                     <div id="placediv_time" style="display:inline;background-color:#f3f1f2;" >
@@ -454,8 +455,8 @@
                     </div>   <!-- placediv_time -->
                 </td>
             </tr>
-		</table>
-				
+ 
+		</table>			
 		<table>
 			<tr>
 				<td>
@@ -469,9 +470,10 @@
 			</h:form>
 			<tr>
 				<td>	
+					#{empty timeListLocal}
 					<div id="placediv_time" style="display:inline" >
 						<h:form style="display: inline; text-align: left;" >
-							<h:dataTable id="timeTable" columnClasses="col1, col2" style="width: 260px; " value="#{timeListLocal}" var="btl" rendered="#{timeListLocal.rowCount > 0}">
+							<h:dataTable id="timeTable" columnClasses="col1, col2" style="width: 260px; " value="#{timeListLocal}" var="btl" rendered="#{!empty timeListLocal}">
 								<h:column id="col1">
     								<f:facet name="header" >
 	       								<p>Tid</p>
@@ -486,7 +488,7 @@
 					</div>   <!-- placediv_time -->
 				</td>
 			</tr>
-            <h:panelGroup rendered="#{timeListLocal.rowCount &lt; 1}" layout="block">
+            <h:panelGroup rendered="#{empty timeListLocal}" layout="block">
     					#{sectionMsg.update_page_body_no_avail_time_text_value}
                         <a href="mailto:#{sectionMsg.update_page_body_email_value}">#{sectionMsg.update_page_body_email_value}</a>
             </h:panelGroup>
@@ -503,8 +505,7 @@
                     </table>
                 </td>
 			</tr>
-		</table>
-				
+		</table>				
 	</div>	<!-- boxmiddle -->
 </div> <!-- boxcontainer -->
 			

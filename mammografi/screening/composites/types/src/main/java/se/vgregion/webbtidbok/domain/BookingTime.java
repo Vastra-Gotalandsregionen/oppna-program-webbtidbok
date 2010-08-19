@@ -18,13 +18,16 @@
 package se.vgregion.webbtidbok.domain;
 
 import java.io.Serializable;
-import java.util.Calendar;
+import java.util.Date;
+
+import javax.xml.datatype.XMLGregorianCalendar;
 
 public class BookingTime implements Serializable {
 
 	private static final long serialVersionUID = 5023666003372389346L;
 	private int bookingTimeId;
-	private Calendar time;
+	private XMLGregorianCalendar time;
+	private Date dateTime;
 
 	public void setBookingTimeId(int bookingTimeId) {
 		this.bookingTimeId = bookingTimeId;
@@ -34,12 +37,20 @@ public class BookingTime implements Serializable {
 		return bookingTimeId;
 	}
 
-	public void setTime(Calendar time) {
+	public void setTime(XMLGregorianCalendar time) {
 		this.time = time;
 	}
 
-	public Calendar getTime() {
+	public XMLGregorianCalendar getTime() {
 		return time;
+	}
+
+	public void setDateTime(Date dateTime) {
+		this.dateTime = dateTime;
+	}
+
+	public Date getDateTime() {
+		return dateTime;
 	}
 
 }

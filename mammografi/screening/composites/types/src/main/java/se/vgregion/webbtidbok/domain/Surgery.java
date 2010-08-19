@@ -26,38 +26,43 @@ import java.io.Serializable;
  */
 public class Surgery implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-  private String surgeryId;
-  private String surgeryName;
-  private String surgeryAddress;
+	private String surgeryId;
+	private String surgeryName;
+	private String surgeryAddress;
 
-  public String getSurgeryId() {
-    return surgeryId;
-  }
+	public String getSurgeryId() {
+		return surgeryId;
+	}
 
-  public void setSurgeryId(String surgeryId) {
-    this.surgeryId = surgeryId;
-  }
+	public void setSurgeryId(String surgeryId) {
+		this.surgeryId = surgeryId;
+	}
 
-  public String getSurgeryName() {
-    return surgeryName;
-  }
+	public String getSurgeryName() {
+		return surgeryName;
+	}
 
-  public void setSurgeryName(String surgeryName) {
-    this.surgeryName = surgeryName;
-  }
+	public void setSurgeryName(String surgeryName) {
+		this.surgeryName = surgeryName;
+	}
 
-  public String getSurgeryAddress() {
-    return surgeryAddress;
-  }
+	public String getSurgeryAddress() {
+		return surgeryAddress;
+	}
 
-  public void setSurgeryAddress(String surgeryAddress) {
-    this.surgeryAddress = surgeryAddress;
-  }
+	public void setSurgeryAddress(String surgeryAddress) {
+		this.surgeryAddress = surgeryAddress;
+	}
 
-  public String getFullAddress() {
-      return surgeryName + ", " + surgeryAddress;
-  }
-
+	public String getFullAddress() {
+		String returnValue = "";
+		if ((surgeryName != null && !"".equals(surgeryName)) && (surgeryAddress != null && !"".equals(surgeryAddress))) {
+			returnValue = surgeryName + ", " + surgeryAddress;
+		} else {
+			returnValue = surgeryName;
+		}
+		return returnValue;
+	}
 }
