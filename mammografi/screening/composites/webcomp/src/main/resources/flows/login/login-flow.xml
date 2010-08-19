@@ -81,7 +81,6 @@
 	<end-state id="loggedout" view="/flows/login/loggedout.xhtml">
 		<on-entry>
             <evaluate expression="loginService.logout(state)" />
-            <evaluate expression="bookingService.setFirstPlacesBoolean(true)" />            
         </on-entry>
 	</end-state>
 
