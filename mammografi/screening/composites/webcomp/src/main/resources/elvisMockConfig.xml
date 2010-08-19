@@ -24,5 +24,5 @@
 
 
 	<bean id="elvisWebserviceMock"
-		class="se.vgregion.webbtidbok.booking.elvis.mock.ElvisServiceMock" />
+		class="se.vgregion.webbtidbok.booking.elvis.mock.ElvisServiceMock" init-method="createMockData" />
 </beans>
