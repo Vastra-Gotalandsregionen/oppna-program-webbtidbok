@@ -22,6 +22,7 @@ import java.util.List;
 import se.vgregion.webbtidbok.State;
 import se.vgregion.webbtidbok.booking.BookingFacade;
 import se.vgregion.webbtidbok.domain.Booking;
+import se.vgregion.webbtidbok.lang.DateHandler;
 
 /**
  * This class is a temporary home for methods which previously were part of the
@@ -69,4 +70,10 @@ public class GUIUtilities {
         }
     }
     
+    // TODO: This is a fix method for backwards compatibility. Remove when possible.
+    public void setStateSelectedDateFromBooking(State state, Booking booking) {
+        if (booking != null && booking.getStartTime() != null) {
+            state.setSelectedDate(DateHandler.calendarFromDate(booking.getStartTime()));
+        }
+    }
 }

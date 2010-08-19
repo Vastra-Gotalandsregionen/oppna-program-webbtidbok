@@ -27,17 +27,14 @@
     <input name="booking" />
     
     <on-start>
+        <evaluate expression="guiUtility.setStateSelectedDateFromBooking(state, booking)" />
         <evaluate expression="guiUtility.setupLocations(booking, state)"  result="flowScope.location"  />
+        <evaluate expression="calendarService.getCalendar(state, location.locationId)"  /> 
     </on-start>
 
 	<view-state id="update" view="/flows/update/update.xhtml">
 		<!-- on-render -->
-<!--			  <evaluate expression="calendarService.getCalendar(state)"  />-->
-
-<!--	only want to do getTimeForChosenDate first time around AND when a NEW date is selected, now it's also done when click on < or >		  -->
-<!--		  <evaluate expression="calendarService.getTimeForChosenDate(state)" />-->
 <!--			  <evaluate expression="bookingService.getBookingTime(state)" result="flowScope.timeListLocal" result-type="dataModel" /> -->
-
 <!--			  <evaluate expression="calendarService.setSelectedDay(requestParameters.selectedDay)" />-->
 		<!-- /on-render -->	
 		<transition on="showTimeCalendar" to="istimelistempty">
