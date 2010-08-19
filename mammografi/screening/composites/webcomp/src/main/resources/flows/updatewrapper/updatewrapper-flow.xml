@@ -29,12 +29,12 @@
         <input name="state" value="state" />
         <input name="booking" value="booking" />
         <transition on="cancel" to="cancel"/>
-        <transition on="ok" to="showConfirmation"/>
+	    <transition on="ok" to="showConfirmation"/>
     </subflow-state>
 
     <view-state id="showConfirmation" view="/flows/updatewrapper/showUpdateConfirmation.xhtml">
         <on-render >
-            <evaluate expression="bookingFacade.getBookingTime(state)" result="flowScope.booking" /> 
+            <evaluate expression="bookingFacade.getBookingInfo(state)" result="flowScope.booking" /> 
         </on-render>    
     </view-state>
 
