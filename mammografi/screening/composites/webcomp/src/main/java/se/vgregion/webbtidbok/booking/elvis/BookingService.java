@@ -28,7 +28,6 @@ import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 import se.vgregion.webbtidbok.State;
-import se.vgregion.webbtidbok.booking.sectra.BookingMapperSectra;
 import se.vgregion.webbtidbok.domain.Booking;
 import se.vgregion.webbtidbok.domain.Surgery;
 import se.vgregion.webbtidbok.domain.elvis.BookingElvis;
@@ -49,7 +48,8 @@ public class BookingService implements BookingServiceInterface {
 	BookingRequest request;
 	WebServiceHelper helper;
 	private BookingMapperElvis mapping;
-	private BookingMapperSectra mappingToSectra;
+
+	// private BookingMapperSectra mappingToSectra;
 
 	public void setMapping(BookingMapperElvis mapping) {
 		this.mapping = mapping;
@@ -183,9 +183,9 @@ public class BookingService implements BookingServiceInterface {
 					pl.setAntal(b.getAntal());
 					pl.setDatum(b.getDatum());
 					pl.setKlocka(b.getKlocka());
-
-					bookingTimeArrayList.add(mappingToSectra
-							.bookingTimeMapping(pl));
+					se.vgregion.webbtidbok.domain.BookingTime bookingTimeMapping = mapping
+							.bookingTimeMapping(pl);
+					bookingTimeArrayList.add(bookingTimeMapping);
 
 					id++;
 				}
