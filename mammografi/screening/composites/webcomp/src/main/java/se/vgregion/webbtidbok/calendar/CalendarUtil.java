@@ -23,14 +23,12 @@ import java.util.List;
 
 import se.vgregion.webbtidbok.State;
 import se.vgregion.webbtidbok.booking.BookingFacade;
+import se.vgregion.webbtidbok.lang.DateHandler;
 import se.vgregion.webbtidbok.lang.StringHandler;
 
 public class CalendarUtil implements CalendarUtilInterface {
   static int PREVIOUS = -1;
   static int NEXT = 1;
-  // Empty first element to start actual days on index 1
-  String[] weekDaysSv = { "", "Söndag", "Måndag", "Tisdag", "Onsdag", "Torsdag", "Fredag", "Lördag" };
-  String[] monthsSv = { "Januari", "Februari", "Mars", "April", "Maj", "Juni", "Juli", "Augusti", "September", "Oktober", "November", "December" };
 
   Calendar masterCalendar = Calendar.getInstance();
 
@@ -191,7 +189,8 @@ public class CalendarUtil implements CalendarUtilInterface {
   }
 
   public void getCalendar(State state, String surgeryId) {
-      getCalendar(state, surgeryId, Calendar.getInstance(), null);
+      Calendar cal = state.getSelectedDate() != null ? state.getSelectedDate() : Calendar.getInstance();
+      getCalendar(state, surgeryId, cal, null);
   }
   
   /**
@@ -239,6 +238,11 @@ public class CalendarUtil implements CalendarUtilInterface {
     List<Calendar> availableDates = bookingFacade.getFreeDays(state, surgeryId, startDate, endDate);
     setEmptyCalendar(availableDates.isEmpty());
 
+    // TODO: For backwards compatibility only. Remove when possible.
+    masterCalendar = DateHandler.cloneCalendar(monthToDisplay);
+    state.setDefaultDate(false);
+    // End backwards compatibility.
+    
     return availableDates;
   }
 

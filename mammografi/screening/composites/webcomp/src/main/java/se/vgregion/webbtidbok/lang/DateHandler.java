@@ -198,4 +198,11 @@ public class DateHandler {
         cal.setTime(date);
         return cal;
     }
+    
+    public static Calendar cloneCalendar(Calendar cal) {
+        // Sloppy clone, but has to do for now.
+        Calendar newCal = Calendar.getInstance();
+        newCal.setTime(cal.getTime());
+        return newCal;
+    }
 }
