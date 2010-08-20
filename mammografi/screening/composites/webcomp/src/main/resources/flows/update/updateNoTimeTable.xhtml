@@ -35,19 +35,14 @@
 		<div id="boxcontainer" style="padding-bottom: 1em;">
 		<div id="boxleft" />
 		<div id="boxmiddle">
-			
-			<p/>
-			<br/>
-
-	REMOVE: UPDATE	 NO  TIME-TABLE 	
 		<p/>
 		<br/>
-		<h1>#{sectionMsg.updatepageHeader}</h1>
-		<h:form id="mainForm" style="display: inline; text-align: right; padding-left: 19em;" >
-			<div align="right">
+        <h:form id="mainForm" style="display: inline; text-align: right; padding-left: 19em;" >
+            <div align="right">
                 <sf:commandButton id="logout" value="Logga ut" processIds="*" action="logout" />
             </div>
-		</h:form>
+        </h:form>
+		<h1>#{sectionMsg.updatepageHeader}</h1>
 		<p/>
 				<br/><p>#{bundle.update_page_body_value_1}
 				</p>
@@ -57,47 +52,11 @@
 					<tr>
 						<td>			
 							<div id="boxleft1" style="width: 100%">				
-								<table>
-									<tr>
-										<td>
-											<p>
-												#{booking.patientName}
-											</p>
-										</td>
-										<td style="padding-left: 2em">
-											<p>
-												#{booking.patientId}
-											</p>
-										</td>			
-									</tr>
-									<p />
-									<tr>
-										<td align="top">
-											<p>
-												#{bundle.update_page_body_box_value_1}
-											</p>	
-										</td>
-										<td style="padding-left: 2em">
-											<p>
-												#{booking.surgery.fullAddress} 
-											</p>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											&nbsp;
-										</td>
-										<td style="padding-left: 2em">
-											<p>
-												#{booking.startTime}.
-											</p>
-										</td>
-									</tr>				
-									<tr>
-										<td></td>
-										<td style="padding-left: 2em"></td>
-									</tr>			
-								</table>
+                        <p><b>#{booking.patientName}</b></p>
+                        <p>#{booking.patientId}</p>
+                        <p><b><h:outputText value="#{baseMsg.updatepageOriginalTimeHeading}"/>:</b></p>
+                        <p>#{booking.surgery.fullAddress}</p>           
+                        <p><h:outputText value="#{booking.startTime}"><f:convertDateTime type="both" pattern="EEEE dd MMMM yyyy, HH:mm" locale="sv" /></h:outputText></p>
 							</div>
 						</td>
 					</tr>

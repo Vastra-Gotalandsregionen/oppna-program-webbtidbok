@@ -36,15 +36,14 @@
 <div id="boxcontainer" style="padding-bottom: 1em;">
 	<div id="boxleft" />
 	<div id="boxmiddle">
-			REMOVE: UPDATE
 		<p/>
 		<br/>
+        <h:form id="mainForm" style="display: inline; text-align: right; padding-left: 19em;" >
+            <div align="right">
+                <sf:commandButton id="logout" value="#{baseMsg.logoutButton}" processIds="*" action="logout" />
+            </div>
+        </h:form>
 		<h1>#{sectionMsg.updatepageHeader}</h1>
-		<h:form id="mainForm" style="display: inline; text-align: right; padding-left: 19em;" >
-		    <div align="right">
-			    <sf:commandButton id="logout" value="#{baseMsg.logoutButton}" processIds="*" action="logout" />
-			</div>
-		</h:form>
 		<p/>
 		<br/><p><h:outputText value="#{sectionMsg.updatepageIntroduction}" escape="false"/></p>
 		<p><h:outputText value="#{sectionMsg.updatepageRescheduleInfo}" escape="false"/></p>	
@@ -52,9 +51,9 @@
 			<tr>
 				<td>			
 					<div id="boxleft1" style="width: 100%">				
-						<p>#{booking.patientName}</p>
+						<p><b>#{booking.patientName}</b></p>
 						<p>#{booking.patientId}</p>
-						<p><h:outputText value="#{baseMsg.updatepageOriginalTimeHeading}"/>:</p>
+						<p><b><h:outputText value="#{baseMsg.updatepageOriginalTimeHeading}"/>:</b></p>
 						<p>#{booking.surgery.fullAddress}</p>			
 						<p><h:outputText value="#{booking.startTime}"><f:convertDateTime type="both" pattern="EEEE dd MMMM yyyy, HH:mm" locale="sv" /></h:outputText></p>
 					</div>
@@ -470,7 +469,6 @@
 			</h:form>
 			<tr>
 				<td>	
-					#{empty timeListLocal}
 					<div id="placediv_time" style="display:inline" >
 						<h:form style="display: inline; text-align: left;" >
 							<h:dataTable id="timeTable" columnClasses="col1, col2" style="width: 260px; " value="#{timeListLocal}" var="btl" rendered="#{!empty timeListLocal}">
@@ -489,7 +487,7 @@
 				</td>
 			</tr>
             <h:panelGroup rendered="#{empty timeListLocal}" layout="block">
-    					#{sectionMsg.update_page_body_no_avail_time_text_value}
+    					<h:outputText value="#{sectionMsg.update_page_body_no_avail_time_text_value}" escape="false"/>
             </h:panelGroup>
 			<tr>
                 <td>
