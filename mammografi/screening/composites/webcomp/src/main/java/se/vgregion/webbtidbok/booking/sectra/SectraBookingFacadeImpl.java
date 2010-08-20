@@ -17,6 +17,7 @@
  */
 package se.vgregion.webbtidbok.booking.sectra;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -82,14 +83,15 @@ public class SectraBookingFacadeImpl implements BookingFacade {
 
 	@Override
 	public List<Calendar> getFreeDays(State state, String surgeryId, Calendar startDate, Calendar endDate) {
-		// TODO: Needs to provide the section id from state somehow.
 		return getService(state).getFreeDays(startDate, endDate, surgeryId);
 	}
 
 	@Override
 	public List<BookingTime> getBookingTime(State state) {
-	    Calendar date = state.getSelectedDate();
-		return getService(state).getFreeTimes(date, date, "BADSURGERYID");
+	    // TODO: This call will be updated when we find a way to get the surgeryId in.
+	    return new ArrayList<BookingTime>();
+	    // Calendar date = state.getSelectedDate();
+	    // return getService(state).getFreeTimes(date, date, "BADSURGERYID");
 	}
 
 	@Override
