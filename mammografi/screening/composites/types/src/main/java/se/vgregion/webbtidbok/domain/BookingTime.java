@@ -23,14 +23,14 @@ import java.util.Date;
 public class BookingTime implements Serializable {
 
 	private static final long serialVersionUID = 5023666003372389346L;
-	private int bookingTimeId;
+	private String bookingTimeId;
 	private Date dateTime;
 
-	public void setBookingTimeId(int bookingTimeId) {
+	public void setBookingTimeId(String bookingTimeId) {
 		this.bookingTimeId = bookingTimeId;
 	}
 
-	public int getBookingTimeId() {
+	public String getBookingTimeId() {
 		return bookingTimeId;
 	}
 

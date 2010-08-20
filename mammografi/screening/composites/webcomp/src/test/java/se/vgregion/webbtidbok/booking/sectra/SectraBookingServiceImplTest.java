@@ -36,13 +36,17 @@ import org.junit.Test;
 
 import se.vgregion.webbtidbok.LogFactoryMock;
 import se.vgregion.webbtidbok.domain.Booking;
+import se.vgregion.webbtidbok.domain.BookingTime;
 import se.vgregion.webbtidbok.domain.Surgery;
 import se.vgregion.webbtidbok.ws.sectra.ArrayOfSection;
+import se.vgregion.webbtidbok.ws.sectra.ArrayOfTimeBlock;
 import se.vgregion.webbtidbok.ws.sectra.ArrayOfdateTime;
 import se.vgregion.webbtidbok.ws.sectra.BookingInfo;
 import se.vgregion.webbtidbok.ws.sectra.IRisRescheduleGetBookingInfoErrorInfoFaultFaultMessage;
 import se.vgregion.webbtidbok.ws.sectra.IRisRescheduleListFreeDaysErrorInfoFaultFaultMessage;
+import se.vgregion.webbtidbok.ws.sectra.IRisRescheduleListFreeTimesErrorInfoFaultFaultMessage;
 import se.vgregion.webbtidbok.ws.sectra.IRisRescheduleListSectionsErrorInfoFaultFaultMessage;
+import se.vgregion.webbtidbok.ws.sectra.TimeBlock;
 
 public class SectraBookingServiceImplTest {
 
@@ -139,12 +143,22 @@ public class SectraBookingServiceImplTest {
     assertEquals(7, cal.get(Calendar.MONTH));
     assertEquals(16, cal.get(Calendar.DAY_OF_MONTH));
   }
+  
+  @Test
+  public void testGetFreeTimes() {
+      List<BookingTime> times = service.getFreeTimes(calendarFor(2010, 8, 1), calendarFor(2010, 8, 31), sectionId);
+      assertNotNull(times);
+      assertEquals(examNr, testMock.examinationNr);
+      assertEquals(sectionId, testMock.sectionId);
+      
+  }
 
   class TestMock extends SectraEmptyWSMock {
 
     boolean throwException;
     String patientId;
     String examinationNr;
+    String sectionId;
 
     @Override
     public BookingInfo getBookingInfo(String patientId, String examinationNr) throws IRisRescheduleGetBookingInfoErrorInfoFaultFaultMessage {
@@ -175,6 +189,18 @@ public class SectraBookingServiceImplTest {
       resList.add(xmlCalendarFor(2010, 8, 16));
 
       return new ArrayOfdateTimeMock(resList);
+    }
+
+    @Override
+    public ArrayOfTimeBlock listFreeTimes(XMLGregorianCalendar startDate,
+            XMLGregorianCalendar endDate, String examinationNr,
+            String sectionId)
+            throws IRisRescheduleListFreeTimesErrorInfoFaultFaultMessage {
+      List<TimeBlock> resList = new ArrayList<TimeBlock>();
+      this.examinationNr = examinationNr;
+      this.sectionId = sectionId;
+      
+      return new ArrayOfTimeBlockMock(resList);
     }
 
   }

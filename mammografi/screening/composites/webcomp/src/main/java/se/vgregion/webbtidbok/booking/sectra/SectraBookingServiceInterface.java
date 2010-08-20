@@ -18,10 +18,10 @@
 package se.vgregion.webbtidbok.booking.sectra;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import se.vgregion.webbtidbok.domain.Booking;
+import se.vgregion.webbtidbok.domain.BookingTime;
 import se.vgregion.webbtidbok.domain.Surgery;
 
 /**
@@ -39,6 +39,9 @@ public interface SectraBookingServiceInterface {
     public abstract List<Surgery> getSurgeries();
 
     public abstract List<Calendar> getFreeDays(Calendar startDate,
+            Calendar endDate, String sectionId);
+
+    public abstract List<BookingTime> getFreeTimes(Calendar startDate,
             Calendar endDate, String sectionId);
     
 //	abstract public Booking reschedule(String examinationNr, String newTimeId,
