@@ -21,7 +21,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
@@ -31,8 +34,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import se.vgregion.webbtidbok.domain.Booking;
+import se.vgregion.webbtidbok.domain.BookingTime;
 import se.vgregion.webbtidbok.domain.Surgery;
-import se.vgregion.webbtidbok.ws.BookingTime;
+import se.vgregion.webbtidbok.lang.DateHandler;
 import se.vgregion.webbtidbok.ws.sectra.BookingInfo;
 import se.vgregion.webbtidbok.ws.sectra.ObjectFactory;
 import se.vgregion.webbtidbok.ws.sectra.Section;
@@ -58,7 +62,6 @@ public class BookingMapperSectraTest {
 	private ObjectFactory objectFactory;
 	private BookingInfo bookingInfo;
 	private XMLGregorianCalendar newXMLGregorianCalendar;
-	private BookingTime bookingTime;
 
 	@Before
 	public void setUp() throws Exception {
@@ -68,9 +71,6 @@ public class BookingMapperSectraTest {
 		TimeBlock timeBlock = new TimeBlock();
 		newXMLGregorianCalendar = DatatypeFactory.newInstance().newXMLGregorianCalendar();
 		Section section = new Section();
-		bookingTime = new BookingTime();
-		bookingTime.setAntal(ANTAL);
-		bookingTime.setDatum(newXMLGregorianCalendar);
 		// bookingTime.setKlocka(objectFactory
 		// .createString(newXMLGregorianCalendar.toGregorianCalendar()
 		// .toString()));
@@ -91,16 +91,6 @@ public class BookingMapperSectraTest {
 		bookingInfo.setBookedTime(objectFactory.createTimeBlock(timeBlock));
 
 	}
-
-	// @Test
-	// public void testBookingTimeMapping() {
-	// se.vgregion.webbtidbok.domain.BookingTime bookingTimeMapping = bookingMapperSectra
-	// .bookingTimeMapping(bookingTime);
-	// assertEquals(newXMLGregorianCalendar.toGregorianCalendar().getTime()
-	// .getTime(), bookingMapperSectra.bookingTimeMapping(bookingTime)
-	// .getTime().getTime().getTime());
-	//
-	// }
 
 	@Test
 	public void testBookingMapping() {
@@ -151,5 +141,25 @@ public class BookingMapperSectraTest {
 			fail("DatatypConfiguration incorrect");
 		}
 
+	}
+	
+	@Test
+	public void testBookingTimeMapping() {
+	    Section section = new Section();
+        section.setId(objectFactory.createString(ID));
+        section.setName(objectFactory.createString(NAME));
+        section.setAddress(objectFactory.createString(SURGERYADDRESS));
+	    
+	    TimeBlock timeBlock = new TimeBlock();
+	    timeBlock.setId(objectFactory.createString("blockid"));
+	    timeBlock.setLength(15);
+	    timeBlock.setSection(objectFactory.createSection(section));
+	    timeBlock.setStartTime(DateHandler.xmlCalendarFor(2010, 1, 1, 12, 30, 0));
+	    
+	    BookingTime booking = bookingMapperSectra.bookingTimeMapping(timeBlock);
+	    assertEquals("blockid", booking.getBookingTimeId());
+
+	    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z");
+	    assertEquals("2010-01-01 13:30:00 +0100", sdf.format(booking.getDateTime()));
 	}
 }

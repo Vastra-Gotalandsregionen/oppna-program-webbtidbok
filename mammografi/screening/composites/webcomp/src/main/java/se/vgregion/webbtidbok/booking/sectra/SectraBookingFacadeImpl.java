@@ -88,8 +88,8 @@ public class SectraBookingFacadeImpl implements BookingFacade {
 
 	@Override
 	public List<BookingTime> getBookingTime(State state) {
-		// TODO Auto-generated method stub
-		return null;
+	    Calendar date = state.getSelectedDate();
+		return getService(state).getFreeTimes(date, date, "BADSURGERYID");
 	}
 
 	@Override

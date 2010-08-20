@@ -27,8 +27,10 @@ import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 import se.vgregion.webbtidbok.domain.Booking;
+import se.vgregion.webbtidbok.domain.BookingTime;
 import se.vgregion.webbtidbok.domain.Surgery;
 import se.vgregion.webbtidbok.domain.sectra.BookingSectra;
+import se.vgregion.webbtidbok.domain.sectra.BookingTimeSectra;
 import se.vgregion.webbtidbok.ws.sectra.BookingInfo;
 import se.vgregion.webbtidbok.ws.sectra.Section;
 import se.vgregion.webbtidbok.ws.sectra.TimeBlock;
@@ -86,5 +88,14 @@ public class BookingMapperSectra {
 	public Calendar daysMapping(XMLGregorianCalendar time) {
 		return time.toGregorianCalendar();
 	}
+
+    public BookingTime bookingTimeMapping(TimeBlock time) {
+        BookingTimeSectra bookingTime = new BookingTimeSectra();
+        bookingTime.setBookingTimeId(getStringValue(time.getId()));
+        bookingTime.setDateTime(time.getStartTime().toGregorianCalendar().getTime());
+        bookingTime.setLength(time.getLength().intValue());
+        bookingTime.setSurgery(surgeryMapping(time.getSection().getValue()));
+        return bookingTime;
+    }
 
 }

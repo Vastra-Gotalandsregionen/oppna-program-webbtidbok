@@ -28,15 +28,19 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import se.vgregion.webbtidbok.domain.Booking;
+import se.vgregion.webbtidbok.domain.BookingTime;
 import se.vgregion.webbtidbok.domain.Surgery;
 import se.vgregion.webbtidbok.ws.sectra.ArrayOfSection;
+import se.vgregion.webbtidbok.ws.sectra.ArrayOfTimeBlock;
 import se.vgregion.webbtidbok.ws.sectra.ArrayOfdateTime;
 import se.vgregion.webbtidbok.ws.sectra.BookingInfo;
 import se.vgregion.webbtidbok.ws.sectra.IRisReschedule;
 import se.vgregion.webbtidbok.ws.sectra.IRisRescheduleGetBookingInfoErrorInfoFaultFaultMessage;
 import se.vgregion.webbtidbok.ws.sectra.IRisRescheduleListFreeDaysErrorInfoFaultFaultMessage;
+import se.vgregion.webbtidbok.ws.sectra.IRisRescheduleListFreeTimesErrorInfoFaultFaultMessage;
 import se.vgregion.webbtidbok.ws.sectra.IRisRescheduleListSectionsErrorInfoFaultFaultMessage;
 import se.vgregion.webbtidbok.ws.sectra.Section;
+import se.vgregion.webbtidbok.ws.sectra.TimeBlock;
 
 public class SectraBookingServiceImpl implements SectraBookingServiceInterface {
 
@@ -100,7 +104,8 @@ public class SectraBookingServiceImpl implements SectraBookingServiceInterface {
 
     ArrayOfdateTime times;
     try {
-      times = thePort.listFreeDays(bookingMapperSectra.dateToXmlCalendar(startDate), bookingMapperSectra.dateToXmlCalendar(endDate), examinationNr, sectionId);
+      times = thePort.listFreeDays(bookingMapperSectra.dateToXmlCalendar(startDate),
+              bookingMapperSectra.dateToXmlCalendar(endDate), examinationNr, sectionId);
       List<XMLGregorianCalendar> timesList = times.getDateTime();
       for (XMLGregorianCalendar time : timesList) {
         Calendar date = bookingMapperSectra.daysMapping(time);
@@ -110,6 +115,25 @@ public class SectraBookingServiceImpl implements SectraBookingServiceInterface {
     } catch (IRisRescheduleListFreeDaysErrorInfoFaultFaultMessage e) {
       log.error("Error response from web service when getting free days.", e);
       throw new RuntimeException("Error response from web service when getting free days.", e);
+    }
+  }
+
+  @Override
+  public List<BookingTime> getFreeTimes(Calendar startDate, Calendar endDate, String sectionId) {
+    List<BookingTime> bookingTimes = new ArrayList<BookingTime>();
+
+    try {
+      ArrayOfTimeBlock times = thePort.listFreeTimes(bookingMapperSectra.dateToXmlCalendar(startDate),
+              bookingMapperSectra.dateToXmlCalendar(endDate), examinationNr, sectionId);
+      List<TimeBlock> timesList = times.getTimeBlock();
+      for (TimeBlock time : timesList) {
+        BookingTime bookingTime = bookingMapperSectra.bookingTimeMapping(time);
+        bookingTimes.add(bookingTime);
+      }
+      return bookingTimes;
+    } catch (IRisRescheduleListFreeTimesErrorInfoFaultFaultMessage e) {
+      log.error("Error response from web service when getting free times.", e);
+      throw new RuntimeException("Error response from web service when getting free times.", e);
     }
   }
 
