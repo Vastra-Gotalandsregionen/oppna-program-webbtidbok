@@ -55,7 +55,7 @@
 			<table>
 				<tr>
 					<td valign="top" >
-						<p><h:outputText value="#{baseMsg.locationBoxWhere}"/>:</p>
+						<p><b><h:outputText value="#{baseMsg.locationBoxWhere}"/>:</b></p>
 					</td>
 					<td width="100%" valign="top">  
 						<p>#{booking.surgery.fullAddress}</p>
@@ -74,7 +74,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td valign="top"><p><h:outputText value="#{baseMsg.locationBoxWhen}"/>:</p></td>
+					<td valign="top"><p><b><h:outputText value="#{baseMsg.locationBoxWhen}"/>:</b></p></td>
 			    	<td valign="top"><p><h:outputText value="#{booking.startTime}"><f:convertDateTime type="both" pattern="EEEE dd MMMM yyyy, HH:mm" locale="sv" /></h:outputText></p></td>
 					<td style="text-align: right; padding-right: 1em;" valign="top">
 						<h:form id="deleteForm" >
