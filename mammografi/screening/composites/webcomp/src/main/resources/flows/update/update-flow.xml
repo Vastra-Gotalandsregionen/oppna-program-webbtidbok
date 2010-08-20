@@ -82,7 +82,7 @@
 	<action-state id="istimelistempty">
 		 <evaluate expression="calendarService.getTimeForChosenDate(state)" />
 		 <evaluate expression="bookingFacade.getBookingTime(state)" result="flowScope.timeListLocal" result-type="dataModel" /> 	 
-		 <evaluate expression="guiUtility.getIsTimeListEmpty(timeListLocal)" />	 
+<!--		 <evaluate expression="guiUtility.getIsTimeListEmpty(timeListLocal)" />	 -->
 	 	<transition on="yes" to="update">
 	 	</transition>
 		<transition on="no" to="update">

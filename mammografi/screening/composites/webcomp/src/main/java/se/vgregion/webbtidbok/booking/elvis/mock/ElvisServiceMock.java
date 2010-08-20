@@ -33,6 +33,7 @@ import se.vgregion.webbtidbok.ws.BookingPlace;
 import se.vgregion.webbtidbok.ws.BookingRequest;
 import se.vgregion.webbtidbok.ws.BookingResponse;
 import se.vgregion.webbtidbok.ws.BookingTime;
+import se.vgregion.webbtidbok.ws.Calendar;
 import se.vgregion.webbtidbok.ws.ICentralBookingWS;
 import se.vgregion.webbtidbok.ws.ICentralBookingWSCancelBookingICFaultFaultFaultMessage;
 import se.vgregion.webbtidbok.ws.ICentralBookingWSConfirmBookingICFaultFaultFaultMessage;
@@ -44,132 +45,149 @@ import se.vgregion.webbtidbok.ws.ObjectFactory;
 
 public class ElvisServiceMock implements ICentralBookingWS {
 
-	private Map<String, Object> elvisMockData;
-	private ObjectFactory objectFactory = new ObjectFactory();
+  private Map<String, Object> elvisMockData;
+  private ObjectFactory objectFactory = new ObjectFactory();
 
-	public ElvisServiceMock() {
-		try {
-			createMockData();
-		} catch (DatatypeConfigurationException e) {
-			throw new RuntimeException(e);
-		}
-	}
+  public ElvisServiceMock() {
+    try {
+      createMockData();
+    } catch (DatatypeConfigurationException e) {
+      throw new RuntimeException(e);
+    }
+  }
 
-	public void createMockData() throws DatatypeConfigurationException {
-		elvisMockData = new HashMap<String, Object>();
-		// Creagte bookings.
-		Map<String, BookingResponse> bookings = new HashMap<String, BookingResponse>();
-		XMLGregorianCalendar xmlGregorianCalendar = DatatypeFactory.newInstance().newXMLGregorianCalendar();
-		String pNR1 = "19700123-9297";
-		String pNR2 = "20100312-2222";
-		bookings.put(pNR1, createBookings(pNR1, "KALLE 1", "ADRESS 1", "MOTAGNING 1", xmlCalendarFor(2010, 8, 24, 11, 0, 0), 1));
-		bookings.put(pNR2, createBookings(pNR2, "KALLE 2", "ADRESS 2", "MOTAGNING 2", xmlCalendarFor(2010, 8, 26, 12, 0, 0), 2));
-		elvisMockData.put("bookings", bookings);
+  public void createMockData() throws DatatypeConfigurationException {
+    elvisMockData = new HashMap<String, Object>();
+    // Creagte bookings.
+    Map<String, BookingResponse> bookings = new HashMap<String, BookingResponse>();
+    XMLGregorianCalendar xmlGregorianCalendar = DatatypeFactory.newInstance().newXMLGregorianCalendar();
+    String pNR1 = "19700123-9297";
+    String pNR2 = "20100312-2222";
+    bookings.put(pNR1, createBookings(pNR1, "KALLE 1", "ADRESS 1", "MOTAGNING 1", xmlCalendarFor(2010, 8, 24, 11, 0, 0), 1));
+    bookings.put(pNR2, createBookings(pNR2, "KALLE 2", "ADRESS 2", "MOTAGNING 2", xmlCalendarFor(2010, 8, 26, 12, 0, 0), 2));
+    elvisMockData.put("bookings", bookings);
 
-		// Create bookingPlaces.
-		Map<String, ArrayOfBookingPlace> bookingPlaces = new HashMap<String, ArrayOfBookingPlace>();
-		ArrayOfBookingPlace arrayOfBookingPlace = new ArrayOfBookingPlace();
-		int centralTidbokID1 = 1;
-		int centralTidbokID2 = 2;
-		arrayOfBookingPlace.getBookingPlace().add(createBookingPlaces("Address 1", "Mottagning 1", centralTidbokID1));
-		arrayOfBookingPlace.getBookingPlace().add(createBookingPlaces("Address 2", "Mottagning 2", centralTidbokID2));
-		bookingPlaces.put(pNR1, arrayOfBookingPlace);
-		bookingPlaces.put(pNR2, arrayOfBookingPlace);
-		elvisMockData.put("bookingPlaces", bookingPlaces);
+    // Create bookingPlaces.
+    Map<String, ArrayOfBookingPlace> bookingPlaces = new HashMap<String, ArrayOfBookingPlace>();
+    ArrayOfBookingPlace arrayOfBookingPlace = new ArrayOfBookingPlace();
+    Integer centralTidbokID1 = 1;
+    Integer centralTidbokID2 = 2;
+    arrayOfBookingPlace.getBookingPlace().add(createBookingPlaces("Address 1", "Mottagning 1", centralTidbokID1));
+    arrayOfBookingPlace.getBookingPlace().add(createBookingPlaces("Address 2", "Mottagning 2", centralTidbokID2));
+    bookingPlaces.put(pNR1, arrayOfBookingPlace);
+    bookingPlaces.put(pNR2, arrayOfBookingPlace);
+    elvisMockData.put("bookingPlaces", bookingPlaces);
 
-		// Create bookingTimes
-		Map<Integer, ArrayOfBookingTime> bookingTimes = new HashMap<Integer, ArrayOfBookingTime>();
-		ArrayOfBookingTime arrayOfBookingTime = new ArrayOfBookingTime();
-		arrayOfBookingTime.getBookingTime().add(createBookingTime(xmlCalendarFor(2010, 8, 27, 11, 0, 0), "07:00"));
-		arrayOfBookingTime.getBookingTime().add(createBookingTime(xmlCalendarFor(2010, 8, 30, 11, 0, 0), "12:00"));
-		arrayOfBookingTime.getBookingTime().add(createBookingTime(xmlCalendarFor(2010, 8, 31, 11, 0, 0), "16:30"));
-		arrayOfBookingTime.getBookingTime().add(createBookingTime(xmlCalendarFor(2010, 9, 1, 11, 0, 0), "19:00"));
-		// Add bookingTimes for bookingPlaces.
-		bookingTimes.put(Integer.valueOf(centralTidbokID1), arrayOfBookingTime);
-		bookingTimes.put(Integer.valueOf(centralTidbokID2), arrayOfBookingTime);
-		elvisMockData.put("bookingTimes", bookingTimes);
-		// createXmlFromObjet("src/main/resources/elvisMockData.xml", elvisMockData);
+    // Create bookingTimes
+    Map<Integer, ArrayOfBookingTime> bookingTimes = new HashMap<Integer, ArrayOfBookingTime>();
+    ArrayOfBookingTime arrayOfBookingTime = new ArrayOfBookingTime();
+    arrayOfBookingTime.getBookingTime().add(createBookingTime(xmlCalendarFor(2010, 8, 27, 11, 0, 0), "07:00"));
+    arrayOfBookingTime.getBookingTime().add(createBookingTime(xmlCalendarFor(2010, 8, 30, 11, 0, 0), "12:00"));
+    arrayOfBookingTime.getBookingTime().add(createBookingTime(xmlCalendarFor(2010, 8, 31, 11, 0, 0), "16:30"));
+    arrayOfBookingTime.getBookingTime().add(createBookingTime(xmlCalendarFor(2010, 9, 1, 11, 0, 0), "19:00"));
+    // Add bookingTimes for bookingPlaces.
+    bookingTimes.put(centralTidbokID1, arrayOfBookingTime);
+    bookingTimes.put(centralTidbokID2, arrayOfBookingTime);
+    elvisMockData.put("bookingTimes", bookingTimes);
 
-	}
+    // Create Calendars
+    Map<Integer, ArrayOfCalendar> calendars = new HashMap<Integer, ArrayOfCalendar>();
+    ArrayOfCalendar arrayOfCalendar = new ArrayOfCalendar();
+    arrayOfCalendar.getCalendar().add(createCalendar(xmlCalendarFor(2010, 8, 31, 11, 0, 0)));
+    arrayOfCalendar.getCalendar().add(createCalendar(xmlCalendarFor(2010, 9, 1, 11, 0, 0)));
+    arrayOfCalendar.getCalendar().add(createCalendar(xmlCalendarFor(2010, 9, 3, 11, 0, 0)));
+    arrayOfCalendar.getCalendar().add(createCalendar(xmlCalendarFor(2010, 9, 15, 11, 0, 0)));
+    arrayOfCalendar.getCalendar().add(createCalendar(xmlCalendarFor(2010, 9, 30, 11, 0, 0)));
+    calendars.put(centralTidbokID1, arrayOfCalendar);
+    elvisMockData.put("calendars", calendars);
 
-	private BookingResponse createBookings(String PNR, String NAME, String ADDRESS, String MOTTAGNING,
-			XMLGregorianCalendar xmlGregorianCalendar, int centralTidbokID) {
-		BookingResponse bookingResponse = new BookingResponse();
-		bookingResponse.setPnr(objectFactory.createString(PNR));
-		bookingResponse.setNamn(objectFactory.createString(NAME));
-		bookingResponse.setAddress(objectFactory.createString(ADDRESS));
-		bookingResponse.setMottagning(objectFactory.createString(MOTTAGNING));
-		bookingResponse.setAntalOmbok(0);
-		bookingResponse.setMaxAntalOmbok(4);
-		bookingResponse.setCentralTidbokID(centralTidbokID);
-		bookingResponse.setBokadTid(xmlGregorianCalendar);
-		return bookingResponse;
-	}
+  }
 
-	private BookingTime createBookingTime(XMLGregorianCalendar date, String time) {
-		BookingTime bookingTime = new BookingTime();
-		bookingTime.setAntal(2);
-		bookingTime.setDatum(date);
-		bookingTime.setKlocka(objectFactory.createString(time));
-		return bookingTime;
-	}
+  private BookingResponse createBookings(String PNR, String NAME, String ADDRESS, String MOTTAGNING, XMLGregorianCalendar xmlGregorianCalendar, int centralTidbokID) {
+    BookingResponse bookingResponse = new BookingResponse();
+    bookingResponse.setPnr(objectFactory.createString(PNR));
+    bookingResponse.setNamn(objectFactory.createString(NAME));
+    bookingResponse.setAddress(objectFactory.createString(ADDRESS));
+    bookingResponse.setMottagning(objectFactory.createString(MOTTAGNING));
+    bookingResponse.setAntalOmbok(0);
+    bookingResponse.setMaxAntalOmbok(4);
+    bookingResponse.setCentralTidbokID(centralTidbokID);
+    bookingResponse.setBokadTid(xmlGregorianCalendar);
+    return bookingResponse;
+  }
 
-	private BookingPlace createBookingPlaces(String address, String mottagning, int centralTidbokID) {
-		BookingPlace bookingPlace = new BookingPlace();
-		bookingPlace.setAddress(objectFactory.createString(address));
-		bookingPlace.setCentralTidbokID(centralTidbokID);
-		bookingPlace.setMottagning(objectFactory.createString(mottagning));
-		return bookingPlace;
-	}
+  private BookingTime createBookingTime(XMLGregorianCalendar date, String time) {
+    BookingTime bookingTime = new BookingTime();
+    bookingTime.setAntal(2);
+    bookingTime.setDatum(date);
+    bookingTime.setKlocka(objectFactory.createString(time));
+    return bookingTime;
+  }
 
-	private BookingResponse getBookingResponseForBooking(String pnr) {
-		Map<String, BookingResponse> bookings = (Map<String, BookingResponse>) elvisMockData.get("bookings");
-		return bookings.get(pnr);
-	}
+  private BookingPlace createBookingPlaces(String address, String mottagning, int centralTidbokID) {
+    BookingPlace bookingPlace = new BookingPlace();
+    bookingPlace.setAddress(objectFactory.createString(address));
+    bookingPlace.setCentralTidbokID(centralTidbokID);
+    bookingPlace.setMottagning(objectFactory.createString(mottagning));
+    return bookingPlace;
+  }
 
-	private ArrayOfBookingPlace getBookingPlaces(String pnr) {
-		Map<String, ArrayOfBookingPlace> bookingPlaces = (Map<String, ArrayOfBookingPlace>) elvisMockData.get("bookingPlaces");
-		return bookingPlaces.get(pnr);
-	}
+  private Calendar createCalendar(XMLGregorianCalendar date) {
+    Calendar calendar = new Calendar();
+    calendar.setDatum(date);
+    return calendar;
+  }
 
-	private ArrayOfBookingTime getBookingTimes(Integer pnr) {
-		Map<Integer, ArrayOfBookingTime> bookingTimes = (Map<Integer, ArrayOfBookingTime>) elvisMockData.get("bookingTimes");
-		return bookingTimes.get(pnr);
-	}
+  private BookingResponse getBookingResponseForBooking(String pnr) {
+    Map<String, BookingResponse> bookings = (Map<String, BookingResponse>) elvisMockData.get("bookings");
+    return bookings.get(pnr);
+  }
 
-	@Override
-	public Boolean cancelBooking(BookingRequest request) throws ICentralBookingWSCancelBookingICFaultFaultFaultMessage {
-		// TODO Auto-generated method stub
-		return null;
-	}
+  private ArrayOfBookingPlace getBookingPlaces(String pnr) {
+    Map<String, ArrayOfBookingPlace> bookingPlaces = (Map<String, ArrayOfBookingPlace>) elvisMockData.get("bookingPlaces");
+    return bookingPlaces.get(pnr);
+  }
 
-	@Override
-	public BookingResponse confirmBooking(BookingRequest request) throws ICentralBookingWSConfirmBookingICFaultFaultFaultMessage {
-		// TODO Auto-generated method stub
-		return null;
-	}
+  private ArrayOfBookingTime getBookingTimes(Integer pnr) {
+    Map<Integer, ArrayOfBookingTime> bookingTimes = (Map<Integer, ArrayOfBookingTime>) elvisMockData.get("bookingTimes");
+    return bookingTimes.get(pnr);
+  }
 
-	@Override
-	public BookingResponse getBooking(BookingRequest request) throws ICentralBookingWSGetBookingICFaultFaultFaultMessage {
-		return getBookingResponseForBooking(request.getPnr().getValue());
-	}
+  private ArrayOfCalendar getCalendars(Integer id) {
+    Map<Integer, ArrayOfCalendar> calendars = (Map<Integer, ArrayOfCalendar>) elvisMockData.get("calendars");
+    return calendars.get(id);
+  }
 
-	@Override
-	public ArrayOfBookingPlace getBookingPlace(BookingRequest request)
-			throws ICentralBookingWSGetBookingPlaceICFaultFaultFaultMessage {
-		return getBookingPlaces(request.getPnr().getValue());
-	}
+  @Override
+  public Boolean cancelBooking(BookingRequest request) throws ICentralBookingWSCancelBookingICFaultFaultFaultMessage {
+    // TODO Auto-generated method stub
+    return null;
+  }
 
-	@Override
-	public ArrayOfBookingTime getBookingTime(BookingRequest request)
-			throws ICentralBookingWSGetBookingTimeICFaultFaultFaultMessage {
-		return getBookingTimes(request.getCentralTidbokID());
-	}
+  @Override
+  public BookingResponse confirmBooking(BookingRequest request) throws ICentralBookingWSConfirmBookingICFaultFaultFaultMessage {
+    // TODO Auto-generated method stub
+    return null;
+  }
 
-	@Override
-	public ArrayOfCalendar getCalandar(BookingRequest request) throws ICentralBookingWSGetCalandarICFaultFaultFaultMessage {
-		// TODO Auto-generated method stub
-		return null;
-	}
+  @Override
+  public BookingResponse getBooking(BookingRequest request) throws ICentralBookingWSGetBookingICFaultFaultFaultMessage {
+    return getBookingResponseForBooking(request.getPnr().getValue());
+  }
+
+  @Override
+  public ArrayOfBookingPlace getBookingPlace(BookingRequest request) throws ICentralBookingWSGetBookingPlaceICFaultFaultFaultMessage {
+    return getBookingPlaces(request.getPnr().getValue());
+  }
+
+  @Override
+  public ArrayOfBookingTime getBookingTime(BookingRequest request) throws ICentralBookingWSGetBookingTimeICFaultFaultFaultMessage {
+    return getBookingTimes(request.getCentralTidbokID());
+  }
+
+  @Override
+  public ArrayOfCalendar getCalandar(BookingRequest request) throws ICentralBookingWSGetCalandarICFaultFaultFaultMessage {
+    return getCalendars(Integer.valueOf(request.getCentralTidbokID()));
+  }
 
 }
