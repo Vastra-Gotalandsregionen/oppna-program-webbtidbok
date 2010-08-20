@@ -83,6 +83,8 @@
 		 <evaluate expression="calendarService.getTimeForChosenDate(state)" />
 		 <evaluate expression="bookingFacade.getBookingTime(state)" result="flowScope.timeListLocal" result-type="dataModel" /> 	 
 <!--		 <evaluate expression="guiUtility.getIsTimeListEmpty(timeListLocal)" />	 -->
+        <transition on="success" to="update">
+        </transition>
 	 	<transition on="yes" to="update">
 	 	</transition>
 		<transition on="no" to="update">
