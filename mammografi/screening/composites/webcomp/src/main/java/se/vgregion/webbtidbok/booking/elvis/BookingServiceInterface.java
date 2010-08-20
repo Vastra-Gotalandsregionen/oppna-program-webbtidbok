@@ -31,10 +31,6 @@ public interface BookingServiceInterface {
 
 	public abstract boolean isUpdated();
 
-	public abstract void setFirstPlacesBoolean(boolean b);
-
-	public abstract boolean isFirstPlaces();
-
 	public abstract Booking getBooking(State loginCredentials);
 
 	/**

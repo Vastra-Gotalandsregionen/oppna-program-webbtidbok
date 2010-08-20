@@ -61,8 +61,6 @@ public class BookingService implements BookingServiceInterface {
 
 	private final ObjectFactory objectFactory = new ObjectFactory();
 
-	public boolean isFirstPlaces = true;
-	private boolean isTimeListEmpty = true;
 	public boolean isUpdated = false;
 
 	// private String orderDate;
@@ -77,20 +75,6 @@ public class BookingService implements BookingServiceInterface {
 
 	public boolean isUpdated() {
 		return isUpdated;
-	}
-
-	public void setFirstPlacesBoolean(boolean b) {
-
-		isFirstPlaces = b;
-		// System.out.println("BookingServices.setFirstPlacesBoolean: " +
-		// isFirstPlaces);
-	}
-
-	public boolean isFirstPlaces() {
-		// System.out.println("BookingServices.isFirstBoolean: " +
-		// isFirstPlaces);
-
-		return isFirstPlaces;
 	}
 
 	public Booking getBooking(State loginCredentials) {
@@ -159,11 +143,6 @@ public class BookingService implements BookingServiceInterface {
 
 			try {
 				timeList = times.getBookingTime();
-				if (timeList.isEmpty()) {
-					isTimeListEmpty = true;
-				} else {
-					isTimeListEmpty = false;
-				}
 
 				int id = 1;
 				for (BookingTime b : timeList) {
@@ -185,7 +164,6 @@ public class BookingService implements BookingServiceInterface {
 					id++;
 				}
 			} catch (Exception e) {
-				isTimeListEmpty = true;
 			}
 		}
 		return bookingTimeArrayList;
