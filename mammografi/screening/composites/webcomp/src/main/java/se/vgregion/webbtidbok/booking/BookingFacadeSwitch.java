@@ -62,8 +62,8 @@ public class BookingFacadeSwitch implements BookingFacade {
 	}
 
 	@Override
-	public List<BookingTime> getBookingTime(State state) {
-		return getBookingFacadeForCurrentRequest(state).getBookingTime(state);
+	public List<BookingTime> getBookingTime(State state, String sectionId, Calendar selectedDate) {
+		return getBookingFacadeForCurrentRequest(state).getBookingTime(state, sectionId, selectedDate);
 	}
 
 	@Override

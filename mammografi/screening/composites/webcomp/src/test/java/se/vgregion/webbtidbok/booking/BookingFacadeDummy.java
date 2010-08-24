@@ -56,7 +56,7 @@ public class BookingFacadeDummy implements BookingFacade {
 	}
 
 	@Override
-	public List<BookingTime> getBookingTime(State state) {
+	public List<BookingTime> getBookingTime(State state, String sectionId, Calendar selectedDate) {
 		// TODO Auto-generated method stub
 		return null;
 	}

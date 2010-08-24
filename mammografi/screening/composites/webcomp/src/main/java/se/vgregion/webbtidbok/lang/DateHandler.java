@@ -198,7 +198,17 @@ public class DateHandler {
         cal.setTime(date);
         return cal;
     }
-    
+
+    public static XMLGregorianCalendar xmlCalendarFromDate(Date date) {
+        try {
+            GregorianCalendar cal = new GregorianCalendar();
+            cal.setTime(date);
+            return DatatypeFactory.newInstance().newXMLGregorianCalendar(cal);
+        } catch (DatatypeConfigurationException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public static Calendar cloneCalendar(Calendar cal) {
         // Sloppy clone, but has to do for now.
         Calendar newCal = Calendar.getInstance();

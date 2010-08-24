@@ -98,28 +98,13 @@ public class BookingTimeTest {
 
 		// List<BookingTime> timeList = time.getBookingTime();
 		List<se.vgregion.webbtidbok.domain.BookingTime> timeList = service
-				.getBookingTime(credentials);
+				.getBookingTime(credentials, "1", tCal);
 
-		if (timeList == null) {
-			Assert.assertFalse(true);
+		Assert.assertNotNull(timeList);
+		Assert.assertFalse(timeList.isEmpty());
 
-		} else {
-
-			if (timeList.isEmpty()) {
-				Assert.assertFalse(true);
-			} else {
-
-				for (se.vgregion.webbtidbok.domain.BookingTime bt : timeList) {
-					// System.out.println(bp.getAddress().getValue());
-					// System.out.println(bp.getCentralTidbokID());
-					// System.out.println(bp.getMottagning().getValue());
-					System.out.println("Antal: " + bt.toString());
-
-				}
-
-			}
-
-			Assert.assertTrue(true);
+		for (se.vgregion.webbtidbok.domain.BookingTime bt : timeList) {
+			System.out.println("Antal: " + bt.toString());
 		}
 
 	}
@@ -207,7 +192,8 @@ public class BookingTimeTest {
 				+ credentials.getCentralTidbokID());
 		// List<BookingTime> timeList = time.getBookingTime();
 		List<se.vgregion.webbtidbok.domain.BookingTime> timeList = service
-				.getBookingTime(credentials);
+				.getBookingTime(credentials, "1", credentials
+                        .getSelectedDate());
 
 		if (timeList == null) {
 			Assert.assertFalse(true);
@@ -272,7 +258,8 @@ public class BookingTimeTest {
 				+ credentials.getCentralTidbokID());
 		// List<BookingTime> timeList = time.getBookingTime();
 		List<se.vgregion.webbtidbok.domain.BookingTime> timeList = service
-				.getBookingTime(credentials);
+				.getBookingTime(credentials, Integer.toString(credentials.getCentralTidbokID()),
+				        credentials.getSelectedDate());
 
 		if (timeList == null) {
 			Assert.assertFalse(true);

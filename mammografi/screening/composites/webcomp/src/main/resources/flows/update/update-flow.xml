@@ -23,144 +23,49 @@
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
 
+
     <input name="state" />
     <input name="booking" />
-    
+
     <on-start>
         <evaluate expression="guiUtility.setStateSelectedDateFromBooking(state, booking)" />
         <evaluate expression="guiUtility.setupLocations(booking, state)"  result="flowScope.location"  />
-        <evaluate expression="calendarService.getCalendar(state, location.locationId)"  /> 
+        <evaluate expression="calendarService.createCalendarHolder(state, booking)" result="flowScope.calendarHolder" /> 
     </on-start>
 
 	<view-state id="update" view="/flows/update/update.xhtml">
-		
-	<on-render>
-		  <evaluate expression="calendarService.getCalendar(state, location.locationId)"  />
-		  <evaluate expression="calendarService.setSelectedDay(requestParameters.selectedDay)" />
-	</on-render>
-<!--	only want to do getTimeForChosenDate first time around AND when a NEW date is selected, now it's also done when click on < or >		  -->
-<!--		  <evaluate expression="calendarService.getTimeForChosenDate(state)" />-->
-<!--			  <evaluate expression="bookingService.getBookingTime(state)" result="flowScope.timeListLocal" result-type="dataModel" />
--->
-<!--
-			  <evaluate expression="calendarService.setSelectedDay(requestParameters.selectedDay)" />
-		</on-render>
--->
-
-		<transition on="showTimeCalendar">
-			<evaluate expression="calendarService.setSelectedDay(requestParameters.selectedDay)" />
-			<evaluate expression="calendarService.getTimeForChosenDate(state)" />
-		 	<evaluate expression="bookingFacade.getBookingTime(state)" result="flowScope.timeListLocal" result-type="dataModel" /> 
-		</transition>		
-		<transition on="displaytimes" to="isEmptyCalendar">
-		    <evaluate expression="guiUtility.setCentralTidbokIDfromLocation(state, location.locationId)" />
-		</transition>
-		<transition on="selecttime" to="ok"> 
-			<evaluate expression="calendarService.setSelectedDay(calendarService.selectedDay)" >
-			</evaluate>			
-			<set name="conversationScope.timeTable" value="timeListLocal.selectedRow"  />		 
-			<evaluate expression="bookingFacade.reschedule(conversationScope.timeTable, state)" >
-			</evaluate>		
-		</transition>
-		<transition on="prev" to="update2">
-			<evaluate expression="calendarService.setCalendarMonth(state, -1)" />
-			<render fragments="displayTimeForm:calendarFragment" />
-		</transition>	
-		<transition on="next" to="update2">
-			<evaluate expression="calendarService.setCalendarMonth(state, 1)" />
-			<render fragments="displayTimeForm:calendarFragment" />
-		</transition>	
-	</view-state>
-
-	<action-state id="isEmptyCalendar">
-			 <evaluate expression="calendarService.getCalendar(state, location.locationId)"  /> 
-			 <evaluate expression="calendarService.isEmptyCalendar()" />
-			 <transition on="yes" to="updateNoTimeTable"></transition>
-			 <transition on="no" to="istimelistempty"/>			
-	</action-state>
-		
-	<!--  should not be used-->	
-	<action-state id="istimelistempty">
-		 <evaluate expression="calendarService.getTimeForChosenDate(state)" />
-		 <evaluate expression="bookingFacade.getBookingTime(state)" result="flowScope.timeListLocal" result-type="dataModel" /> 	 
-<!--		 <evaluate expression="guiUtility.getIsTimeListEmpty(timeListLocal)" />	 -->
-        <transition on="success" to="update">
+        <!-- User selects an item in dropdown box. -->
+        <transition on="displaytimes">
+            <!-- location.locationId holds the id of the selected section. -->
+            
+            <!-- For backwards compatibility. CentralTidbokID should be phased out. -->
+            <evaluate expression="guiUtility.setCentralTidbokIDfromLocation(state, location.locationId)" />
+            <evaluate expression="calendarHolder.clearSelectedDate()" />
+            <evaluate expression="calendarService.switchLocation(state, calendarHolder, location.locationId)"  /> 
         </transition>
-	 	<transition on="yes" to="update">
-	 	</transition>
-		<transition on="no" to="update">
-		</transition>				
-	</action-state>
-	
-	<view-state id="updateNoTimeTable" view="/flows/update/updateNoTimeTable.xhtml">	
-		<on-render>
-			<evaluate expression="calendarService.setSelectedDay(requestParameters.selectedDay)" />
-			<evaluate expression="calendarService.getCalendar(state, location.locationId)" />
+        <!-- User has selected a date in the calendar. -->
+		<transition on="showTimeCalendar">
+			<evaluate expression="calendarHolder.setSelectedDate(requestParameters.selectedDay)" />
+            <!-- TODO: Should refactor calendar so these are on the holder object. -->
 			<evaluate expression="calendarService.getTimeForChosenDate(state)" />
-		</on-render>		
-		
-		<transition on="showTimeCalendar" to="istimelistempty">
-			<evaluate expression="calendarService.setSelectedDay(requestParameters.selectedDay)" />
-		</transition>	
-		
-		<transition on="displaytimes" to="isEmptyCalendar">
+		 	<evaluate expression="bookingFacade.getBookingTime(state, location.locationId, calendarHolder.selectedDate)"
+		 	        result="flowScope.timeListLocal" result-type="dataModel" /> 
 		</transition>
-		
-		<transition on="prev" to="update2">
-            <evaluate expression="calendarService.setCalendarMonth(state, -1)" />
-            <render fragments="displayTimeForm:calendarFragment" />
-        </transition>   
-        
-        <transition on="next" to="update2">
-            <evaluate expression="calendarService.setCalendarMonth(state, 1)" />
-            <render fragments="displayTimeForm:calendarFragment" />
-        </transition>	
-	</view-state>
-
-	
-	<action-state id="confirmupdateaction">
-		<evaluate expression="bookingService.isUpdated()" />
-		<transition on="yes" to="ok"></transition>
-		<transition on="no" to="loggedin"/>		
-	</action-state>
-
-	<!-- 	update2 is the same as update except there's no call to getBookingTime(state) AND getTimeForChosenDate(state)	 -->
-	<!--	this so that the time will not be provided as defualt before you've actually clicked on a specific date
--->
-	<view-state id="update2" view="/flows/update/update.xhtml">
-		<on-render >			  
-			  <evaluate expression="calendarService.getCalendar(state, location.locationId)"  />
-			  <evaluate expression="calendarService.getTimeForChosenDate(state)" />
-			  <evaluate expression="bookingFacade.getBookingTime(state)" result="flowScope.timeListLocal" result-type="dataModel" />		  
-		</on-render>	
-	
-		<transition on="showTimeCalendar" to="istimelistempty">
-			<set name="calendarService.selectedDay" value="requestParameters.selectedDay" />
-		</transition>				
-<!--		<transition on="showTimeCalendar" to="update">-->
-<!--			<set name="calendarService.selectedDay" value="requestParameters.selectedDay" />-->
-<!--		</transition>-->
-		<transition on="displaytimes" to="isEmptyCalendar">
-		</transition>	
-		<transition on="selecttime" to="ok">		
-			<evaluate expression="calendarService.setSelectedDay(calendarService.selectedDay)" >
-			</evaluate>		
-			<set name="conversationScope.timeTable" value="timeListLocal.selectedRow"  />		
-			<evaluate expression="bookingFacade.reschedule(conversationScope.timeTable, state)" >
-			</evaluate>	
-		</transition>	
-		<transition on="prev" to="update">
-			<evaluate expression="calendarService.setCalendarMonth(state, -1)" />
-			<evaluate expression="calendarService.getCalendar(state, location.locationId)" />
-		</transition>		
-		<transition on="prev" to="update2">
-			<evaluate expression="calendarService.setCalendarMonth(state, -1)" />
+		<!-- User has pressed ok on a time button, and wants the time booked. -->
+		<transition on="selecttime" to="ok">
+			<set name="flowScope.timeTable" value="timeListLocal.selectedRow" />
+			<!-- TODO: Elvis should validate the booking in this call. -->
+			<evaluate expression="bookingFacade.reschedule(flowScope.timeTable, state)" />
+		</transition>
+		<transition on="prev">
+			<evaluate expression="calendarService.showPreviousMonth(state, calendarHolder, location.locationId)" />
 			<render fragments="displayTimeForm:calendarFragment" />
 		</transition>	
-		<transition on="next" to="update2">
-			<evaluate expression="calendarService.setCalendarMonth(state, 1)" />
+		<transition on="next">
+			<evaluate expression="calendarService.showNextMonth(state, calendarHolder, location.locationId)" />
 			<render fragments="displayTimeForm:calendarFragment" />
-		</transition>		
+		</transition>	
+        <transition on="cancel" history="invalidate" to="cancel"/>
 	</view-state>
 
     <end-state id="ok"/>
@@ -168,10 +73,6 @@
     <end-state id="logout"/>
 
     <global-transitions>
-        <transition on="cancel" history="invalidate" to="cancel">
-            <!-- Do we really need these? -->
-            <evaluate expression="calendarService.setSelectedDay('')" />
-        </transition>
         <transition on="logout" history="invalidate" to="logout"/>
         <transition on-exception="java.lang.Error" history="invalidate" to="logout"/>
     </global-transitions>

@@ -19,8 +19,10 @@ package se.vgregion.webbtidbok.booking.sectra;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
+import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 import se.vgregion.webbtidbok.State;
@@ -29,9 +31,12 @@ import se.vgregion.webbtidbok.domain.Booking;
 import se.vgregion.webbtidbok.domain.BookingTime;
 import se.vgregion.webbtidbok.domain.Surgery;
 import se.vgregion.webbtidbok.domain.sectra.BookingSectra;
+import se.vgregion.webbtidbok.lang.DateHandler;
 
 public class SectraBookingFacadeImpl implements BookingFacade {
 
+    private static final String RESCHEDULE_COMMENT = "Ombokat via webbtidboken";
+    
 	private SectraBookingServiceFactory serviceFactory;
 
 	public void setServiceFactory(SectraBookingServiceFactory serviceFactory) {
@@ -71,11 +76,6 @@ public class SectraBookingFacadeImpl implements BookingFacade {
 		return booking;
 	}
 
-	public Booking reschedule(String examinationNr, String newTimeId, XMLGregorianCalendar startTime, Boolean printNewNotice,
-			String rescheduleComment) {
-		return null;
-	}
-
 	@Override
 	public List<Surgery> getAvailableSurgeries(State state) {
 		return getService(state).getSurgeries();
@@ -87,16 +87,22 @@ public class SectraBookingFacadeImpl implements BookingFacade {
 	}
 
 	@Override
-	public List<BookingTime> getBookingTime(State state) {
-	    // TODO: This call will be updated when we find a way to get the surgeryId in.
-	    return new ArrayList<BookingTime>();
-	    // Calendar date = state.getSelectedDate();
-	    // return getService(state).getFreeTimes(date, date, "BADSURGERYID");
+	public List<BookingTime> getBookingTime(State state, String sectionId, Calendar selectedDate) {
+	    Calendar startDate = DateHandler.cloneCalendar(selectedDate);
+	    startDate.set(Calendar.HOUR_OF_DAY, 0);
+        startDate.set(Calendar.MINUTE, 0);
+        startDate.set(Calendar.SECOND, 0);
+        Calendar endDate = DateHandler.cloneCalendar(selectedDate);
+        endDate.set(Calendar.HOUR_OF_DAY, 23);
+        endDate.set(Calendar.MINUTE, 59);
+        endDate.set(Calendar.SECOND, 59);
+	    return getService(state).getFreeTimes(startDate, endDate, sectionId);
 	}
 
 	@Override
 	public void reschedule(BookingTime bookingTime, State state) {
-		// TODO Auto-generated method stub
-
+	    getService(state).reschedule(state.getPasswd(), bookingTime.getBookingTimeId(),
+	            DateHandler.xmlCalendarFromDate(bookingTime.getDateTime()),
+	            true, RESCHEDULE_COMMENT);
 	}
 }

@@ -124,17 +124,15 @@ public class BookingService implements BookingServiceInterface {
 		return surgeries;
 	}
 
-	public List<se.vgregion.webbtidbok.domain.BookingTime> getBookingTime(State loginCredentials) {
+	public List<se.vgregion.webbtidbok.domain.BookingTime> getBookingTime(State loginCredentials, String sectionId, Calendar selectedDate) {
 		List<se.vgregion.webbtidbok.domain.BookingTime> bookingTimeArrayList = new ArrayList<se.vgregion.webbtidbok.domain.BookingTime>();
-		boolean theInThePastFlag = loginCredentials.getSelectedDate().before(Calendar.getInstance());
+		boolean theInThePastFlag = selectedDate.before(Calendar.getInstance());
 
 		if (loginCredentials.isLoggedIn() && !theInThePastFlag) {
-			Calendar selectedDate = loginCredentials.getSelectedDate();
-
 			String fromDate = DateHandler.setCalendarDateFormat(selectedDate);
 			JAXBElement<String> fromDat = objectFactory.createBookingRequestFromDat(fromDate);
 			request = helper.getQueryWSRequest(loginCredentials);
-			request.setCentralTidbokID(loginCredentials.getCentralTidbokID());
+			request.setCentralTidbokID(Integer.parseInt(sectionId));
 			request.setFromDat(fromDat);
 
 			ArrayOfBookingTime times = helper.getQueryWSRequestTime(request);
@@ -151,8 +149,6 @@ public class BookingService implements BookingServiceInterface {
 					dateCal.set(Calendar.YEAR, b.getDatum().getYear());
 					dateCal.set(Calendar.MONTH, b.getDatum().getMonth() - 1);
 					dateCal.set(Calendar.DATE, b.getDatum().getDay());
-
-					String day = DateHandler.setCalendarDateFormat(dateCal);
 
 					BookingTime pl = new BookingTime();
 					pl.setAntal(b.getAntal());
