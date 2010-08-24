@@ -34,9 +34,10 @@
 
 	<view-state id="update" view="/flows/update/update.xhtml">
 		
-<!--  		<on-render>
-			  <evaluate expression="calendarService.getCalendar(state, location.locationId)"  />
--->
+	<on-render>
+		  <evaluate expression="calendarService.getCalendar(state, location.locationId)"  />
+		  <evaluate expression="calendarService.setSelectedDay(requestParameters.selectedDay)" />
+	</on-render>
 <!--	only want to do getTimeForChosenDate first time around AND when a NEW date is selected, now it's also done when click on < or >		  -->
 <!--		  <evaluate expression="calendarService.getTimeForChosenDate(state)" />-->
 <!--			  <evaluate expression="bookingService.getBookingTime(state)" result="flowScope.timeListLocal" result-type="dataModel" />
@@ -115,7 +116,7 @@
             <render fragments="displayTimeForm:calendarFragment" />
         </transition>	
 	</view-state>
-	
+
 	
 	<action-state id="confirmupdateaction">
 		<evaluate expression="bookingService.isUpdated()" />
