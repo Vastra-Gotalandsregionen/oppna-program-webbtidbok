@@ -76,8 +76,8 @@ public class ElvisBookingFacadeImpl implements BookingFacade {
 	}
 
 	@Override
-	public List<BookingTime> getBookingTime(State state) {
-		return bookingService.getBookingTime(state);
+	public List<BookingTime> getBookingTime(State state, String sectionId, Calendar selectedDate) {
+		return bookingService.getBookingTime(state, sectionId, selectedDate);
 	}
 
 	@Override

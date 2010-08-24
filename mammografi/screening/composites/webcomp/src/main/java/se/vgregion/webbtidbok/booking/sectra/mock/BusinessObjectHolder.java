@@ -27,6 +27,7 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeConstants;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
@@ -204,7 +205,7 @@ public class BusinessObjectHolder {
         
         for (TimeBlock block : blocks) {
             XMLGregorianCalendar blockStart = block.getStartTime();
-            if (blockStart.compare(startDate) >= 0 && blockStart.compare(endDate) <= 0) {
+            if (blockStart.compare(startDate) == DatatypeConstants.GREATER && blockStart.compare(endDate) == DatatypeConstants.LESSER) {
                 blocksInSpan.add(block);
             }
         }

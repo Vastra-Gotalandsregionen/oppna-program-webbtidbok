@@ -91,12 +91,12 @@ public class BookingFacadeSwitchTest {
 	@Test
 	public void testGetBookingTime() throws Exception {
 		// Test sectra facade.
-		bookingFacadeSwitch.getBookingTime(state);
+		bookingFacadeSwitch.getBookingTime(state, null, null);
 		assertThatSectraFacadeWasCalled();
 		setUp();
 		// Test elvis facade
 		state.setService("BUKAORTA");
-		bookingFacadeSwitch.getBookingTime(state);
+		bookingFacadeSwitch.getBookingTime(state, null, null);
 		assertThatElvisFacadeWasCAlled();
 	}
 
@@ -146,7 +146,7 @@ public class BookingFacadeSwitchTest {
 		}
 
 		@Override
-		public List<BookingTime> getBookingTime(State state) {
+		public List<BookingTime> getBookingTime(State state, String sectionId, Calendar selectedDate) {
 			wasCalled = true;
 			return null;
 		}
@@ -188,7 +188,7 @@ public class BookingFacadeSwitchTest {
 		}
 
 		@Override
-		public List<BookingTime> getBookingTime(State state) {
+		public List<BookingTime> getBookingTime(State state, String sectionId, Calendar selectedDate) {
 			wasCalled = true;
 			return null;
 		}

@@ -18,46 +18,23 @@
 package se.vgregion.webbtidbok.calendar;
 
 import java.util.Calendar;
+import java.util.List;
 
 import se.vgregion.webbtidbok.State;
+import se.vgregion.webbtidbok.domain.Booking;
 
 public interface CalendarUtilInterface {
 
-  public abstract void setColor(String colorCode, int index);
+  // Our new set of methods start here
+  public abstract CalendarHolder createCalendarHolder(State state, Booking booking);
+  public abstract void switchLocation(State state, CalendarHolder holder, String currentLocation);
+  public abstract void showNextMonth(State state, CalendarHolder holder, String currentLocation);
+  public abstract void showPreviousMonth(State state, CalendarHolder holder, String currentLocation);
+    
+  public abstract List<Calendar> getAvailableDates(State state, String surgeryId, Calendar monthToDisplay);
 
-  // only here to avoid that the color array/list might return a null value
-  public abstract String getColor();
-
-  public abstract void setColor(String colorCode);
-
-  /**
-   * Returns the date for the current day
-   * 
-   * @return the day
-   */
-  public abstract String getDay();
-
-  /**
-   * Returns the date for the current day
-   * 
-   * @return the day
-   */
-  public abstract String getCommandLinkDay();
-
-  /**
-   * If the current day should have a link, return 1, else return 0.
-   * 
-   * @return the state associated with this day
-   */
-  public abstract int getIsLink();
-
-  /**
-   * If the current day should not have a link, return 1, else return 0.
-   * 
-   * @return the state associated with this day
-   */
-  public abstract int getIsNotLink();
-
+  // End new set of methods
+  
   /**
    * Returns the name of the current month
    * 

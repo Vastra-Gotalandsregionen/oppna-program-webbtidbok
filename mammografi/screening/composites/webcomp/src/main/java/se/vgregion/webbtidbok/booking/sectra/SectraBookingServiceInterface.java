@@ -20,6 +20,8 @@ package se.vgregion.webbtidbok.booking.sectra;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.xml.datatype.XMLGregorianCalendar;
+
 import se.vgregion.webbtidbok.domain.Booking;
 import se.vgregion.webbtidbok.domain.BookingTime;
 import se.vgregion.webbtidbok.domain.Surgery;
@@ -44,8 +46,7 @@ public interface SectraBookingServiceInterface {
     public abstract List<BookingTime> getFreeTimes(Calendar startDate,
             Calendar endDate, String sectionId);
     
-//	abstract public Booking reschedule(String examinationNr, String newTimeId,
-//			XMLGregorianCalendar startTime, Boolean printNewNotice,
-//			String rescheduleComment);
-	// more booking stuff here as we go
+	public abstract Booking reschedule(String examinationNr, String newTimeId,
+			XMLGregorianCalendar startTime, Boolean printNewNotice,
+			String rescheduleComment);
 }

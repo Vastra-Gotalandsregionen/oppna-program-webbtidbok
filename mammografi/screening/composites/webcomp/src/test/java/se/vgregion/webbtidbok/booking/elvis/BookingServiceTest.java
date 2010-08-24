@@ -83,11 +83,12 @@ public class BookingServiceTest {
 
 	@Test
 	public void testGetBookingTime() {
-		state.setSelectedDate(Calendar.getInstance());
-		List<BookingTime> bookingTime = bookingService.getBookingTime(state);
+	    Calendar cal = Calendar.getInstance();
+		//state.setSelectedDate(Calendar.getInstance());
+		List<BookingTime> bookingTime = bookingService.getBookingTime(state, "3", cal);
 		assertNotNull(bookingTime);
 		state.setLoggedIn(true);
-		bookingTime = bookingService.getBookingTime(state);
+		bookingTime = bookingService.getBookingTime(state, "3", cal);
 	}
 
 	class WebServiceHelperMock extends WebServiceHelper {

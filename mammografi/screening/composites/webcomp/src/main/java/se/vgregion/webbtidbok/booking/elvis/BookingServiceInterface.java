@@ -41,7 +41,7 @@ public interface BookingServiceInterface {
 	 */
 	public abstract boolean cancelBooking(State loginCredentials);
 
-	public abstract List<BookingTime> getBookingTime(State loginCredentials);
+	public abstract List<BookingTime> getBookingTime(State loginCredentials, String sectionId, Calendar selectedDate);
 
 	public abstract List<Surgery> getSurgeries(State state);
 

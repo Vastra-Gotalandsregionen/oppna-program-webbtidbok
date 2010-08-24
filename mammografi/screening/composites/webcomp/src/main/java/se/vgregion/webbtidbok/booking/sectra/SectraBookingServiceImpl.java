@@ -39,6 +39,7 @@ import se.vgregion.webbtidbok.ws.sectra.IRisRescheduleGetBookingInfoErrorInfoFau
 import se.vgregion.webbtidbok.ws.sectra.IRisRescheduleListFreeDaysErrorInfoFaultFaultMessage;
 import se.vgregion.webbtidbok.ws.sectra.IRisRescheduleListFreeTimesErrorInfoFaultFaultMessage;
 import se.vgregion.webbtidbok.ws.sectra.IRisRescheduleListSectionsErrorInfoFaultFaultMessage;
+import se.vgregion.webbtidbok.ws.sectra.IRisRescheduleRescheduleErrorInfoFaultFaultMessage;
 import se.vgregion.webbtidbok.ws.sectra.Section;
 import se.vgregion.webbtidbok.ws.sectra.TimeBlock;
 
@@ -134,6 +135,23 @@ public class SectraBookingServiceImpl implements SectraBookingServiceInterface {
     } catch (IRisRescheduleListFreeTimesErrorInfoFaultFaultMessage e) {
       log.error("Error response from web service when getting free times.", e);
       throw new RuntimeException("Error response from web service when getting free times.", e);
+    }
+  }
+
+  @Override
+  public Booking reschedule(String examinationNr, String newTimeId,
+          XMLGregorianCalendar startTime, Boolean printNewNotice,
+          String rescheduleComment) {
+    Booking booking;
+
+    try {
+      BookingInfo bi = thePort.reschedule(examinationNr, newTimeId, startTime,
+              printNewNotice, rescheduleComment);
+      booking = bookingMapperSectra.bookingMapping(bi);
+      return booking;
+    } catch (IRisRescheduleRescheduleErrorInfoFaultFaultMessage e) {
+      log.error("Error response from web service when rescheduling.", e);
+      throw new RuntimeException("Error response from web service when rescheduling.", e);
     }
   }
 
