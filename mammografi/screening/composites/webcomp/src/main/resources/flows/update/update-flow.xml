@@ -46,8 +46,6 @@
         <!-- User has selected a date in the calendar. -->
 		<transition on="showTimeCalendar">
 			<evaluate expression="calendarHolder.setSelectedDate(requestParameters.selectedDay)" />
-            <!-- TODO: Should refactor calendar so these are on the holder object. -->
-			<evaluate expression="calendarService.getTimeForChosenDate(state)" />
 		 	<evaluate expression="bookingFacade.getBookingTime(state, location.locationId, calendarHolder.selectedDate)"
 		 	        result="flowScope.timeListLocal" result-type="dataModel" /> 
 		</transition>

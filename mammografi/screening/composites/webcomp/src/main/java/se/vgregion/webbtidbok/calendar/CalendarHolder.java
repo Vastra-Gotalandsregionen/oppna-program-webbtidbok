@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.Set;
 
 import se.vgregion.webbtidbok.lang.DateHandler;
+import se.vgregion.webbtidbok.lang.StringHandler;
 
 /**
  * Acts as a backing bean for the calendar objects.
@@ -39,6 +40,9 @@ public class CalendarHolder implements Serializable {
     private static final String AVAILABLE_DAY_COLOR = "#fff";
     private static final String SELECTED_DAY_COLOR = "#fff";
 
+    private static final String MONTH_FORMAT = "MMMMM yyyy";
+    private static final String DAY_FORMAT = "EEEE d MMMMM yyyy";
+    
     
     private Calendar selectedDate;
     private Set<Integer> availableDatesForMonth;
@@ -57,6 +61,11 @@ public class CalendarHolder implements Serializable {
         selectedDate = DateHandler.cloneCalendar(date);
     }
 
+    public String getSelectedDateString() {
+        return StringHandler.toFirstLetterToUpperCase(
+                StringHandler.formatCalendar(DAY_FORMAT, selectedDate));
+    }
+    
     public Calendar getSelectedDate() {
         return DateHandler.cloneCalendar(selectedDate);
     }
@@ -73,6 +82,11 @@ public class CalendarHolder implements Serializable {
         Calendar cal = getCurrentMonth();
         cal.set(Calendar.DAY_OF_MONTH, Integer.parseInt(day));
         selectedDate = cal;
+    }
+
+    public String getCurrentMonthString() {
+        return StringHandler.toFirstLetterToUpperCase(
+                StringHandler.formatCalendar(MONTH_FORMAT, currentShowingMonth));
     }
     
     public Calendar getCurrentMonth() {

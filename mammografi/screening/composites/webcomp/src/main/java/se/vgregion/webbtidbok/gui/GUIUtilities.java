@@ -76,13 +76,6 @@ public class GUIUtilities {
 		}
 	}
 
-	// TODO: This is a fix method for backwards compatibility. Remove when possible.
-	public void setStateSelectedDateFromBooking(State state, Booking booking) {
-		if (booking != null && booking.getStartTime() != null) {
-			state.setSelectedDate(DateHandler.calendarFromDate(booking.getStartTime()));
-		}
-	}
-
 	public boolean cancelBooking(State state) {
 		bookingService = new BookingService();
 		bookingService.setHelper(new WebServiceHelper());
