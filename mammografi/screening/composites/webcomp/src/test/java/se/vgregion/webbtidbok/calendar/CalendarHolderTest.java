@@ -19,6 +19,7 @@ package se.vgregion.webbtidbok.calendar;
 
 import static org.junit.Assert.*;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -64,4 +65,17 @@ public class CalendarHolderTest {
         // The following day should be blank.
         assertEquals("", calendarContent.get(5).get(2).getDay());
     }
+    
+    @Test
+    public void testGetCurrentMonthString() {
+        holder.setCurrentShowingMonth(DateHandler.calendarFor(2010, 8, 1), new ArrayList<Calendar>());
+        assertEquals("Augusti 2010", holder.getCurrentMonthString());
+    }
+
+    @Test
+    public void testGetSelectedDateString() {
+        holder.setSelectedDate(DateHandler.calendarFor(2010, 8, 3));
+        assertEquals("Tisdag 3 augusti 2010", holder.getSelectedDateString());
+    }
+
 }
