@@ -71,4 +71,9 @@ public class BookingFacadeSwitch implements BookingFacade {
 		getBookingFacadeForCurrentRequest(state).reschedule(bookingTime, state);
 	}
 
+	@Override
+	public boolean cancelBooking(State state) {
+		return getBookingFacadeForCurrentRequest(state).cancelBooking(state);
+	}
+
 }

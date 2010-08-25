@@ -157,6 +157,12 @@ public class BookingFacadeSwitchTest {
 
 		}
 
+		@Override
+		public boolean cancelBooking(State state) {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
 	}
 
 	class BookingFacadeElvisMock implements BookingFacade {
@@ -197,6 +203,12 @@ public class BookingFacadeSwitchTest {
 		public void reschedule(BookingTime bookingTime, State state) {
 			// TODO Auto-generated method stub
 
+		}
+
+		@Override
+		public boolean cancelBooking(State state) {
+			wasCalled = true;
+			return false;
 		}
 
 	}

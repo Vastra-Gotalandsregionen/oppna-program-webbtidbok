@@ -177,6 +177,14 @@ public class ElvisServiceMock implements ICentralBookingWS {
 		return returnArr;
 	}
 
+	private boolean cancelBooking(String pnr, String pin) {
+		boolean value = false;
+		if (!pin.isEmpty() && !pnr.isEmpty()) {
+			value = true;
+		}
+		return value;
+	}
+
 	private ArrayOfCalendar getCalendars(Integer id) {
 		Map<Integer, ArrayOfCalendar> calendars = (Map<Integer, ArrayOfCalendar>) elvisMockData.get("calendars");
 		return calendars.get(id);
@@ -184,8 +192,7 @@ public class ElvisServiceMock implements ICentralBookingWS {
 
 	@Override
 	public Boolean cancelBooking(BookingRequest request) throws ICentralBookingWSCancelBookingICFaultFaultFaultMessage {
-		// TODO Auto-generated method stub
-		return null;
+		return cancelBooking(request.getPnr().getValue(), request.getPin().getValue());
 	}
 
 	@Override
