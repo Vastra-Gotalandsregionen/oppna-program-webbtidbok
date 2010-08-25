@@ -192,8 +192,6 @@ public class CalendarUtil implements CalendarUtilInterface {
 		// pin from state
 		int day;
 		Calendar selectedDate = Calendar.getInstance();
-		logger.debug("CalebdarUtil.getTimeForChosenDate(), " + state.getSelectedDate().getTime().toString());
-
 		if (!getSelectedDay().isEmpty()) {
 			day = Integer.valueOf(this.getSelectedDay());
 			selectedDate.set(masterCalendar.get(Calendar.YEAR), (masterCalendar.get(Calendar.MONTH)), day);
