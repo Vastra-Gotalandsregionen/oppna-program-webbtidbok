@@ -46,4 +46,6 @@ public interface BookingFacade {
 
 	List<BookingTime> getBookingTime(State state, String sectionId, Calendar selectedDate);
 
+	boolean cancelBooking(State state);
+
 }

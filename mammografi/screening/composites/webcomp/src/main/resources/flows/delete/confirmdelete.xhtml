@@ -23,7 +23,7 @@
 	  			xmlns:h="http://java.sun.com/jsf/html"
 	  			xmlns:f="http://java.sun.com/jsf/core"
 	  			xmlns:sf="http://www.springframework.org/tags/faces"	  			
-				template="/layouts/standard.xhtml">
+				template="/layouts/loggedInTemplate.xhtml">
 
 <ui:define name="content">
 
@@ -34,7 +34,7 @@
 		<div id="boxmiddle">
 			<p/>
 			<br />
-			<h1 style="display: inline">Din tid för undersökning av stora kroppspulsådern är avbokad</h1>
+			<h1 style="display: inline">#{sectionMsg.confirmcancelationpageHeader}</h1>
 				<h:form id="mainForm" style="display: inline; text-align: right; padding-left: 7em;" >
 					<div align="right">
 		                <sf:commandButton id="logout" value="Logga ut" processIds="*" action="logout" />
@@ -42,7 +42,7 @@
 				</h:form>
 				<p/>
 				<br/>
-				<p>Din tid är avbokad. </p>
+				<p><h:outputText value="#{sectionMsg.confirmcancelationpageInformation}" escape="false"/> </p>
 <!--				<h2>Bekräftelse via e-post</h2>-->
 <!--				<br/>			-->
 <!--				<p>-->

@@ -22,14 +22,15 @@
 <flow xmlns="http://www.springframework.org/schema/webflow"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
-
+      
     <var name="cancelbookingMessages" class="se.vgregion.webbtidbok.CancelBookingMessages" />
 
     <input name="state" />
-
-	<view-state id="delete" view="delete.xhtml">	  
+	<input name="booking" />
+	
+	<view-state id="delete" view="/flows/delete/delete.xhtml">	  
 		<on-render>
-			<evaluate expression="bookingService.getBooking(state)" result="flowScope.booking" />			
+			<evaluate expression="bookingFacade.getBookingInfo(state)" result="flowScope.booking" />			
 		</on-render>		
 		<transition on="logout" to="loggedout" history="invalidate"/>
 		<transition on="cancel" to="loggedin" />
@@ -38,14 +39,14 @@
 	</view-state>
 	
 	<action-state id="confirmdeletebooking">
-			<evaluate expression="bookingService.cancelBooking(state)"  />            
+			<evaluate expression="bookingFacade.cancelBooking(state)"  />            
 			<transition on="yes" to="confirmdelete" />
     		<transition on="no" to="loggedin">
     			<evaluate expression="cancelbookingMessages.setCancelBookingMessage()" />   	
     		</transition>
 	</action-state>
 	
-	<view-state id="confirmdelete" view="confirmdelete.xhtml">		
+	<view-state id="confirmdelete" view="/flows/delete/confirmdelete.xhtml">		
 		<transition on="logout" to="loggedout" history="invalidate"/>
 <!--		<transition on="send">-->
 <!--			<evaluate expression="sendMailService.sendMail(emailStringHandler)" />-->

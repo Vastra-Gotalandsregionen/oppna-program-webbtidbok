@@ -85,4 +85,9 @@ public class ElvisBookingFacadeImpl implements BookingFacade {
 		bookingService.reschedule(bookingTime, state);
 	}
 
+	@Override
+	public boolean cancelBooking(State state) {
+		return bookingService.cancelBooking(state);
+	}
+
 }

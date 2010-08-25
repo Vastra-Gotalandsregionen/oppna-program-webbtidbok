@@ -66,4 +66,10 @@ public class BookingFacadeDummy implements BookingFacade {
 		// TODO Auto-generated method stub
 
 	}
+
+	@Override
+	public boolean cancelBooking(State state) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

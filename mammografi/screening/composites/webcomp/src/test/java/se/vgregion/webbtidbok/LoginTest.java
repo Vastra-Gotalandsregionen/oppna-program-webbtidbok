@@ -17,7 +17,10 @@
  */
 package se.vgregion.webbtidbok;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Calendar;
 import java.util.List;
@@ -35,114 +38,126 @@ import se.vgregion.webbtidbok.servicedef.ServiceDefinition;
 
 public class LoginTest {
 
-  private static final String PWD = "pwd";
-  private static final String PNR = "20100820-2222";
-  private Login login;
-  private State state;
-  private BookingFacadeMock bookingFacadeMock;
-  private LookupServieMock lookupServieMock;
+	private static final String PWD = "pwd";
+	private static final String PNR = "20100820-2222";
+	private Login login;
+	private State state;
+	private BookingFacadeMock bookingFacadeMock;
+	private LookupServieMock lookupServieMock;
 
-  @Before
-  public void setUp() throws Exception {
-    login = new Login();
-    lookupServieMock = new LookupServieMock();
-    login.setLookupService(lookupServieMock);
-    state = new State();
-    state.setPnr(PNR);
-    state.setPasswd(PWD);
-    BookingFactory bookingFactory = new BookingFactory();
-    login.setBookingFactory(bookingFactory);
-    bookingFacadeMock = new BookingFacadeMock();
-  }
+	@Before
+	public void setUp() throws Exception {
+		login = new Login();
+		lookupServieMock = new LookupServieMock();
+		login.setLookupService(lookupServieMock);
+		state = new State();
+		state.setPnr(PNR);
+		state.setPasswd(PWD);
+		BookingFactory bookingFactory = new BookingFactory();
+		login.setBookingFactory(bookingFactory);
+		bookingFacadeMock = new BookingFacadeMock();
+	}
 
-  @Test
-  public void testLogout() {
-    state.setLoggedIn(true);
-    login.logout(state);
-    assertEquals("", state.getPnr());
-    assertEquals("", state.getPasswd());
-    assertFalse(state.isLoggedIn());
-    
-  }
+	@Test
+	public void testLogout() {
+		state.setLoggedIn(true);
+		login.logout(state);
+		assertEquals("", state.getPnr());
+		assertEquals("", state.getPasswd());
+		assertFalse(state.isLoggedIn());
 
-  @Test
-  public void testLoginTrue() throws Exception {
-    bookingFacadeMock.acceptLogin = true;
-    boolean loginResult = login.login(state);
-    assertTrue(loginResult);
-    assertTrue(state.isLoggedIn());
-  }
+	}
 
-  @Test
-  public void testLoginFalse() throws Exception {
-    boolean loginResult = login.login(state);
-    assertFalse(loginResult);
-    assertFalse(state.isLoggedIn());
-  }
+	@Test
+	public void testLoginTrue() throws Exception {
+		bookingFacadeMock.acceptLogin = true;
+		boolean loginResult = login.login(state);
+		assertTrue(loginResult);
+		assertTrue(state.isLoggedIn());
+	}
 
-  @Test
-  public void testLookupTrue() {
-    boolean lookup = login.lookup(state);
-    assertTrue(lookup);
-    assertEquals("ServiceID", state.getService());
-    assertEquals("MessageBundleBase", state.getMessageBundle());
-  }
+	@Test
+	public void testLoginFalse() throws Exception {
+		boolean loginResult = login.login(state);
+		assertFalse(loginResult);
+		assertFalse(state.isLoggedIn());
+	}
 
-  @Test
-  public void testLookupFalse() {
-    lookupServieMock.serviceDefinition = null;
-    boolean lookup = login.lookup(state);
-    assertFalse(lookup);
-    assertNull(state.getService());
-    assertEquals("", state.getMessageBundle());
-  }
+	@Test
+	public void testLookupTrue() {
+		boolean lookup = login.lookup(state);
+		assertTrue(lookup);
+		assertEquals("ServiceID", state.getService());
+		assertEquals("MessageBundleBase", state.getMessageBundle());
+	}
 
-  class BookingFactory implements se.vgregion.webbtidbok.booking.BookingFactory {
+	@Test
+	public void testLookupFalse() {
+		lookupServieMock.serviceDefinition = null;
+		boolean lookup = login.lookup(state);
+		assertFalse(lookup);
+		assertNull(state.getService());
+		assertEquals("", state.getMessageBundle());
+	}
 
-    @Override
-    public BookingFacade getService(State state) {
-      return bookingFacadeMock;
-    }
+	class BookingFactory implements se.vgregion.webbtidbok.booking.BookingFactory {
 
-    @Override
-    public BookingFacade getService(String serviceId) {
-      return bookingFacadeMock;
-    }
-  }
+		@Override
+		public BookingFacade getService(State state) {
+			return bookingFacadeMock;
+		}
+
+		@Override
+		public BookingFacade getService(String serviceId) {
+			return bookingFacadeMock;
+		}
+	}
 
   class BookingFacadeMock extends BookingFacadeDummy {
 
-    private boolean acceptLogin;
-    private State state;
+		private boolean acceptLogin;
+		private State state;
 
-    @Override
-    public boolean login(State state) {
-      this.state = state;
-      return acceptLogin;
-    }
-  }
+		@Override
+		public boolean login(State state) {
+			this.state = state;
+			return acceptLogin;
+		}
 
-  class LookupServieMock implements LookupService {
-    
-    private ServiceDefinition serviceDefinition = new ServiceDefinitionMock();
-    
-    @Override
-    public ServiceDefinition lookup(State state) {
-      return serviceDefinition;
-    }
+		@Override
+		public void reschedule(BookingTime bookingTime, State state) {
+			// TODO Auto-generated method stub
 
-  }
+		}
 
-  class ServiceDefinitionMock extends ServiceDefinition {
-    @Override
-    public String getServiceID() {
-      return "ServiceID";
-    }
+		@Override
+		public boolean cancelBooking(State state) {
+			// TODO Auto-generated method stub
+			return false;
+		}
+	}
 
-    @Override
-    public String getMessageBundleBase() {
-      return "MessageBundleBase";
-    }
-  }
+	class LookupServieMock implements LookupService {
+
+		private ServiceDefinition serviceDefinition = new ServiceDefinitionMock();
+
+		@Override
+		public ServiceDefinition lookup(State state) {
+			return serviceDefinition;
+		}
+
+	}
+
+	class ServiceDefinitionMock extends ServiceDefinition {
+		@Override
+		public String getServiceID() {
+			return "ServiceID";
+		}
+
+		@Override
+		public String getMessageBundleBase() {
+			return "MessageBundleBase";
+		}
+	}
 
 }
