@@ -91,10 +91,6 @@ public class CalendarUtil {
     List<Calendar> availableDates = bookingFacade.getFreeDays(state, surgeryId, startDate, endDate);
     //setEmptyCalendar(availableDates.isEmpty());
 
-    // TODO: For backwards compatibility only. Remove when possible.
-    state.setDefaultDate(false);
-    // End backwards compatibility.
-    
     return availableDates;
   }
   

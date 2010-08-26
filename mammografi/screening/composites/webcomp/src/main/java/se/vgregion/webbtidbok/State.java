@@ -35,7 +35,6 @@ public class State implements Serializable {
     private String passwd = "";
     private int centralTidbokID = 0;
     transient BookingResponse bookingResponse = null;
-    private boolean isDefaultDate = true;
     private boolean loggedIn = false;
     private boolean isFirst = true;
     private String messageBundle ="";
@@ -102,14 +101,6 @@ public class State implements Serializable {
 
 	public BookingResponse getBookingResponse() {
 		return bookingResponse;
-	}
-
-	public void setDefaultDate(boolean isDefaultDate) {
-		this.isDefaultDate = isDefaultDate;
-	}
-
-	public boolean isDefaultDate() {
-		return isDefaultDate;
 	}
 
 	public String toString() {
