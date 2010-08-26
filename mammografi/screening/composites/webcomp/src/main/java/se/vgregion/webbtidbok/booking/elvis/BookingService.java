@@ -172,19 +172,12 @@ public class BookingService implements BookingServiceInterface {
 	 */
 	@Override
 	public void reschedule(se.vgregion.webbtidbok.domain.BookingTime bookingTime, State credentials) {
-
-		Calendar date = GregorianCalendar.getInstance();
-		date.setTime(bookingTime.getDateTime());
-
-		// String[] hourMinute = hour.split(":");
-
 		GregorianCalendar cal = new GregorianCalendar();
-		cal.setTimeInMillis(credentials.getSelectedDate().getTime().getTime());
+		cal.setTime(bookingTime.getDateTime());
 
-		cal.set(Calendar.HOUR_OF_DAY, date.get(Calendar.HOUR_OF_DAY));
-		cal.set(Calendar.MINUTE, date.get(Calendar.MINUTE));
 		cal.set(Calendar.SECOND, 0);
-
+		cal.set(Calendar.MILLISECOND, 0);
+		
 		// update booking
 		if (credentials.isLoggedIn()) {
 
