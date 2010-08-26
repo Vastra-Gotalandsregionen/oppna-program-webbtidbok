@@ -199,11 +199,7 @@
 		<aop:aspect ref="loggingAdvice">
 			<aop:pointcut id="loggingBookingServ"
 				expression="execution(* se.vgregion.webbtidbok.booking.elvis.BookingService.*(..))" />
-			<aop:pointcut
-				expression="execution(* se.vgregion.webbtidbok.calendar.CalendarUtil.*(..))"
-				id="loggingCalUtil" />
 			<aop:around method="around" pointcut-ref="loggingBookingServ" />
-			<aop:around method="around" pointcut-ref="loggingCalUtil" />
 		</aop:aspect>
 	</aop:config>
 
