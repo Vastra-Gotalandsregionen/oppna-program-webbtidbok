@@ -41,7 +41,7 @@
 		<transition on="delete" to="delete" />
 	</view-state>
 
-    <subflow-state id="update" subflow="updatewrapper">
+    <subflow-state id="update" subflow="update">
         <input name="state" value="state" />
         <input name="booking" value="booking" />
         <transition on="cancel" to="welcome"/>

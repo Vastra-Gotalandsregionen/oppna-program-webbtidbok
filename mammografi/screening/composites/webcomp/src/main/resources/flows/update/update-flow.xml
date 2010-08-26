@@ -49,7 +49,7 @@
 		 	        result="flowScope.timeListLocal" result-type="dataModel" /> 
 		</transition>
 		<!-- User has pressed ok on a time button, and wants the time booked. -->
-		<transition on="selecttime" to="ok">
+		<transition on="selecttime" to="showConfirmation">
 			<set name="flowScope.timeTable" value="timeListLocal.selectedRow" />
 			<!-- TODO: Elvis should validate the booking in this call. -->
 			<evaluate expression="bookingFacade.reschedule(flowScope.timeTable, state)" />
@@ -65,7 +65,12 @@
         <transition on="cancel" history="invalidate" to="cancel"/>
 	</view-state>
 
-    <end-state id="ok"/>
+    <view-state id="showConfirmation" view="/flows/update/showUpdateConfirmation.xhtml">
+        <on-render >
+            <evaluate expression="bookingFacade.getBookingInfo(state)" result="flowScope.booking" /> 
+        </on-render>    
+    </view-state>
+
     <end-state id="cancel"/>
     <end-state id="logout"/>
 
