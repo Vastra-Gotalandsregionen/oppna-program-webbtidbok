@@ -28,7 +28,6 @@
     <input name="booking" />
 
     <on-start>
-        <evaluate expression="guiUtility.setStateSelectedDateFromBooking(state, booking)" />
         <evaluate expression="guiUtility.setupLocations(booking, state)"  result="flowScope.location"  />
         <evaluate expression="calendarService.createCalendarHolder(state, booking)" result="flowScope.calendarHolder" /> 
     </on-start>
