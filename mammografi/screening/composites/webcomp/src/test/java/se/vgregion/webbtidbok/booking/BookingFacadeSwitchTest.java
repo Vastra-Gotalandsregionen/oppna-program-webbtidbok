@@ -17,9 +17,13 @@
  */
 package se.vgregion.webbtidbok.booking;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -40,6 +44,7 @@ public class BookingFacadeSwitchTest {
 	private BookingFactoryMock bookingFactoryMock;
 	private BookingFacadeSectraMock bookingFacadeSectraMock;
 	private BookingFacadeElvisMock bookingFacadeElvisMock;
+    private SortTestMock bookingFacadeSortMock;
 
 	@Before
 	public void setUp() throws Exception {
@@ -48,7 +53,8 @@ public class BookingFacadeSwitchTest {
 		state.setService("MAMMO_SU");
 		bookingFacadeSectraMock = new BookingFacadeSectraMock();
 		bookingFacadeElvisMock = new BookingFacadeElvisMock();
-		bookingFactoryMock = new BookingFactoryMock(bookingFacadeSectraMock, bookingFacadeElvisMock);
+        bookingFacadeSortMock = new SortTestMock();
+		bookingFactoryMock = new BookingFactoryMock(bookingFacadeSectraMock, bookingFacadeElvisMock, bookingFacadeSortMock);
 		bookingFacadeSwitch.setBookingFactory(bookingFactoryMock);
 	}
 
@@ -115,6 +121,16 @@ public class BookingFacadeSwitchTest {
 		assertFalse(bookingFacadeSwitch.login(state));
 	}
 
+	@Test
+	public void testSortingBookingTimes() {
+	    state.setService("SORTTEST");
+	    List<BookingTime> list = bookingFacadeSwitch.getBookingTime(state, null, null);
+	    assertEquals("2", list.get(0).getBookingTimeId());
+        assertEquals("4", list.get(1).getBookingTimeId());
+        assertEquals("3", list.get(2).getBookingTimeId());
+        assertEquals("1", list.get(3).getBookingTimeId());
+	}
+	
 	class BookingFacadeSectraMock implements BookingFacade {
 
 		boolean wasCalled;
@@ -148,7 +164,7 @@ public class BookingFacadeSwitchTest {
 		@Override
 		public List<BookingTime> getBookingTime(State state, String sectionId, Calendar selectedDate) {
 			wasCalled = true;
-			return null;
+			return new ArrayList<BookingTime>();
 		}
 
 		@Override
@@ -196,7 +212,7 @@ public class BookingFacadeSwitchTest {
 		@Override
 		public List<BookingTime> getBookingTime(State state, String sectionId, Calendar selectedDate) {
 			wasCalled = true;
-			return null;
+            return new ArrayList<BookingTime>();
 		}
 
 		@Override
@@ -213,14 +229,41 @@ public class BookingFacadeSwitchTest {
 
 	}
 
+	class SortTestMock extends BookingFacadeDummy {
+        @Override
+        public List<BookingTime> getBookingTime(State state, String sectionId, Calendar selectedDate) {
+            ArrayList<BookingTime> list = new ArrayList<BookingTime>();
+            
+            list.add(bookingTimeFor("1", "2010-08-26T14:00"));
+            list.add(bookingTimeFor("2", "2010-08-26T08:15"));
+            list.add(bookingTimeFor("3", "2010-08-26T10:45"));
+            list.add(bookingTimeFor("4", "2010-08-26T10:30"));
+            return list;
+        }
+        
+        private BookingTime bookingTimeFor(String id, String time) {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm");
+            BookingTime book = new BookingTime();
+            book.setBookingTimeId(id);
+            try {
+                book.setDateTime(sdf.parse(time));
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
+            return book;
+        }
+	}
+
 	class BookingFactoryMock implements BookingFactory {
 
 		private BookingFacade sectraService;
 		private BookingFacade elvisService;
+        private BookingFacade sortService;
 
-		public BookingFactoryMock(BookingFacade sectraMock, BookingFacade elvisMock) {
+		public BookingFactoryMock(BookingFacade sectraMock, BookingFacade elvisMock, BookingFacade sortMock) {
 			sectraService = sectraMock;
 			elvisService = elvisMock;
+			sortService = sortMock;
 		}
 
 		@Override
@@ -234,6 +277,8 @@ public class BookingFacadeSwitchTest {
 				return sectraService;
 			} else if ("BUKAORTA".equals(serviceId)) {
 				return elvisService;
+            } else if ("SORTTEST".equals(serviceId)) {
+                return sortService;
 			} else {
 				throw new RuntimeException("Incorrect booking service.");
 			}

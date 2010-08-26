@@ -18,12 +18,15 @@
 package se.vgregion.webbtidbok.booking;
 
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import se.vgregion.webbtidbok.State;
 import se.vgregion.webbtidbok.domain.Booking;
 import se.vgregion.webbtidbok.domain.BookingTime;
 import se.vgregion.webbtidbok.domain.Surgery;
+import se.vgregion.webbtidbok.lang.DateHandler;
 
 /**
  * This class is used as a switch to choose between different {@link BookingFacade} depending on witch service that is used by the
@@ -63,7 +66,9 @@ public class BookingFacadeSwitch implements BookingFacade {
 
 	@Override
 	public List<BookingTime> getBookingTime(State state, String sectionId, Calendar selectedDate) {
-		return getBookingFacadeForCurrentRequest(state).getBookingTime(state, sectionId, selectedDate);
+	    List<BookingTime> times = getBookingFacadeForCurrentRequest(state).getBookingTime(state, sectionId, selectedDate);
+	    Collections.sort(times, new CompareBookingTime());
+	    return times;
 	}
 
 	@Override
@@ -76,4 +81,17 @@ public class BookingFacadeSwitch implements BookingFacade {
 		return getBookingFacadeForCurrentRequest(state).cancelBooking(state);
 	}
 
+	
+	private class CompareBookingTime implements Comparator<BookingTime> {
+
+        @Override
+        public int compare(BookingTime arg0, BookingTime arg1) {
+            Calendar c0 = DateHandler.calendarFromDate(arg0.getDateTime());
+            Calendar c1 = DateHandler.calendarFromDate(arg1.getDateTime());
+            return Integer.signum(100 * (c0.get(Calendar.HOUR_OF_DAY) - c1.get(Calendar.HOUR_OF_DAY)) +
+                    (c0.get(Calendar.MINUTE) - c1.get(Calendar.MINUTE)));
+        }
+	    
+	}
+	
 }
