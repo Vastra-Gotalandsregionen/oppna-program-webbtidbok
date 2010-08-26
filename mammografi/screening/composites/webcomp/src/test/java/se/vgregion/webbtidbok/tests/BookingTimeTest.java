@@ -40,6 +40,7 @@ import se.vgregion.webbtidbok.booking.elvis.BookingServiceInterface;
 import se.vgregion.webbtidbok.booking.elvis.WebServiceHelper;
 import se.vgregion.webbtidbok.domain.Booking;
 import se.vgregion.webbtidbok.lang.DateHandler;
+import se.vgregion.webbtidbok.lang.StringHandler;
 import se.vgregion.webbtidbok.ws.ArrayOfBookingTime;
 import se.vgregion.webbtidbok.ws.BookingRequest;
 import se.vgregion.webbtidbok.ws.BookingTime;
@@ -86,7 +87,6 @@ public class BookingTimeTest {
 		credentials.setPnr("19121212-1212");
 
 		credentials.setCentralTidbokID(1);
-		credentials.setSelectedDate(tCal);
 		credentials.setLoggedIn(true);
 
 		JAXBElement<String> fromDat = objectFactory
@@ -185,15 +185,13 @@ public class BookingTimeTest {
 		// request.setCentralTidbokID(1);
 
 		Booking bookingResponseLocal = service.getBooking(credentials);
-		System.out.println("bookingResponseLocal.state.calendardate: "
-				+ DateHandler.setCalendarDateFormat(credentials
-						.getSelectedDate()));
+		System.out.println("bookingResponseLocal.startTime: "
+				+ StringHandler.formatDate("yyyy-MM-dd", bookingResponseLocal.getStartTime()));
 		System.out.println("CentralTidBokId: "
 				+ credentials.getCentralTidbokID());
 		// List<BookingTime> timeList = time.getBookingTime();
 		List<se.vgregion.webbtidbok.domain.BookingTime> timeList = service
-				.getBookingTime(credentials, "1", credentials
-                        .getSelectedDate());
+				.getBookingTime(credentials, "1", tCal);
 
 		if (timeList == null) {
 			Assert.assertFalse(true);
@@ -251,15 +249,14 @@ public class BookingTimeTest {
 		// request.setCentralTidbokID(1);
 
 		Booking bookingResponseLocal = service.getBooking(credentials);
-		System.out.println("bookingResponseLocal.state.calendardate: "
-				+ DateHandler.setCalendarDateFormat(credentials
-						.getSelectedDate()));
+        System.out.println("bookingResponseLocal.startTime: "
+                + StringHandler.formatDate("yyyy-MM-dd", bookingResponseLocal.getStartTime()));
 		System.out.println("CentralTidBokId: "
 				+ credentials.getCentralTidbokID());
 		// List<BookingTime> timeList = time.getBookingTime();
 		List<se.vgregion.webbtidbok.domain.BookingTime> timeList = service
 				.getBookingTime(credentials, Integer.toString(credentials.getCentralTidbokID()),
-				        credentials.getSelectedDate());
+				        tCal);
 
 		if (timeList == null) {
 			Assert.assertFalse(true);
@@ -288,6 +285,7 @@ public class BookingTimeTest {
 	/**
 	 * @throws java.lang.Exception
 	 */
+	@Ignore
 	@Test
 	public void testBookingTime() {
 		State credentials = new State();

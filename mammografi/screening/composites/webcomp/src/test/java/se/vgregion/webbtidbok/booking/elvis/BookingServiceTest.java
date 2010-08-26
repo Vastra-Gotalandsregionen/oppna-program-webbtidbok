@@ -84,7 +84,6 @@ public class BookingServiceTest {
 	@Test
 	public void testGetBookingTime() {
 	    Calendar cal = Calendar.getInstance();
-		//state.setSelectedDate(Calendar.getInstance());
 		List<BookingTime> bookingTime = bookingService.getBookingTime(state, "3", cal);
 		assertNotNull(bookingTime);
 		state.setLoggedIn(true);
