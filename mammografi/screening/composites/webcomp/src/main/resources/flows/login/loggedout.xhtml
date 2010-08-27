@@ -24,7 +24,7 @@
 	  			xmlns:h="http://java.sun.com/jsf/html"
 	  			xmlns:f="http://java.sun.com/jsf/core"
 	  			xmlns:sf="http://www.springframework.org/tags/faces"
-				template="/layouts/standard2.xhtml">
+				template="/layouts/loggedOutTemplate.xhtml">
 
 <ui:define name="content">
 
@@ -34,8 +34,7 @@
 		<div id="boxleft" />
 		<div id="boxmiddle">
 			<h1>#{baseMsg.loggedOutPageHeading}</h1>
-		    <p>#{baseMsg.loggedOutPageFirstParagraph}</p>
-		    
+			<h:outputText value="#{baseMsg.loggedOutPageFirstParagraph}" escape="false" />
 		</div>			  
 		</div>
 	</ui:fragment>
