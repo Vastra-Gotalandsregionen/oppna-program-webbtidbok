@@ -66,11 +66,21 @@ public class CalendarHolderTest {
         // The following day should be blank.
         assertEquals("", calendarContent.get(5).get(2).getDay());
     }
+
+    @Test
+    public void testShowCalendarStartingNonSunday() {
+        holder.setCurrentShowingMonth(DateHandler.calendarFor(2010, 9, 1), new ArrayList<Calendar>());
+        List<List<CalendarHolder.DayItem>> calendarContent = holder.getCalendar();
+        assertEquals(5, calendarContent.size()); // September 2010 spans over 5 weeks.
+        assertEquals("", calendarContent.get(0).get(1).getDay());
+        assertEquals("1", calendarContent.get(0).get(2).getDay()); // The 1st is on a Tuesday.
+    }
     
     @Test
-    public void testGetCurrentMonthString() {
+    public void testGetCurrentMonth() {
         holder.setCurrentShowingMonth(DateHandler.calendarFor(2010, 8, 1), new ArrayList<Calendar>());
         assertEquals("Augusti 2010", holder.getCurrentMonthString());
+        assertCalendarDate(2010, 8, 1, holder.getCurrentMonth());
     }
 
     @Test
@@ -82,8 +92,7 @@ public class CalendarHolderTest {
     @Test
     public void testGettingAndSettingSelectedDate() {
         holder.setSelectedDate(DateHandler.calendarFor(2010, 9, 2));
-        assertEquals(StringHandler.formatCalendar("yyyy-MM-dd", DateHandler.calendarFor(2010, 9, 2)),
-                StringHandler.formatCalendar("yyyy-MM-dd", holder.getSelectedDate()));
+        assertCalendarDate(2010, 9, 2, holder.getSelectedDate());
         holder.clearSelectedDate();
         assertNull(holder.getSelectedDate());
         assertEquals("", holder.getSelectedDateString());
@@ -98,5 +107,23 @@ public class CalendarHolderTest {
         assertTrue(holder.getSelectedDateIsInCurrentMonth());
         holder.setSelectedDate(DateHandler.calendarFor(2010, 9, 2));
         assertFalse(holder.getSelectedDateIsInCurrentMonth());
+    }
+    
+    @Test
+    public void testSetSelectedDateByDay() {
+        holder.setCurrentShowingMonth(DateHandler.calendarFor(2010, 8, 1), new ArrayList<Calendar>());
+        holder.setSelectedDate("3");
+        assertCalendarDate(2010, 8, 3, holder.getSelectedDate());
+        holder.setSelectedDate("17");
+        assertCalendarDate(2010, 8, 17, holder.getSelectedDate());
+        holder.setCurrentShowingMonth(DateHandler.calendarFor(2010, 9, 1), new ArrayList<Calendar>());
+        holder.setSelectedDate("5");
+        assertCalendarDate(2010, 9, 5, holder.getSelectedDate());
+    }
+    
+    private void assertCalendarDate(int expectedYear, int expectedMonth, int expectedDay, Calendar actual) {
+        assertEquals(StringHandler.formatCalendar("yyyy-MM-dd",
+                DateHandler.calendarFor(expectedYear, expectedMonth, expectedDay)),
+                StringHandler.formatCalendar("yyyy-MM-dd", actual));
     }
 }
