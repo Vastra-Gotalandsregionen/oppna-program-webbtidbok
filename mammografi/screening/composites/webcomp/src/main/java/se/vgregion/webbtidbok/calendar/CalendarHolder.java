@@ -62,8 +62,12 @@ public class CalendarHolder implements Serializable {
     }
 
     public String getSelectedDateString() {
-        return StringHandler.toFirstLetterToUpperCase(
-                StringHandler.formatCalendar(DAY_FORMAT, selectedDate));
+        if (getHasSelectedDate()) {
+            return StringHandler.toFirstLetterToUpperCase(
+                    StringHandler.formatCalendar(DAY_FORMAT, selectedDate));
+        } else {
+            return "";
+        }
     }
     
     public Calendar getSelectedDate() {

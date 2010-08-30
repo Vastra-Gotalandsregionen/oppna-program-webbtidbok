@@ -54,11 +54,11 @@ public class StringHandler {
 	}
 	
 	public static String formatCalendar(String pattern, Calendar cal) {
-	    return formatDate(pattern, cal.getTime());
+	    return cal == null ? "" : formatDate(pattern, cal.getTime());
 	}
 	
 	public static String formatDate(String pattern, Date date) {
         SimpleDateFormat format = new SimpleDateFormat(pattern);
-        return format.format(date);
+        return date == null ? "" : format.format(date);
 	}
 }

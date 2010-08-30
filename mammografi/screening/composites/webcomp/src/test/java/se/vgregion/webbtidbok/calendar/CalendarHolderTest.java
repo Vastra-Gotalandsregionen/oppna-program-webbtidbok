@@ -28,6 +28,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import se.vgregion.webbtidbok.lang.DateHandler;
+import se.vgregion.webbtidbok.lang.StringHandler;
 
 public class CalendarHolderTest {
 
@@ -78,4 +79,24 @@ public class CalendarHolderTest {
         assertEquals("Tisdag 3 augusti 2010", holder.getSelectedDateString());
     }
 
+    @Test
+    public void testGettingAndSettingSelectedDate() {
+        holder.setSelectedDate(DateHandler.calendarFor(2010, 9, 2));
+        assertEquals(StringHandler.formatCalendar("yyyy-MM-dd", DateHandler.calendarFor(2010, 9, 2)),
+                StringHandler.formatCalendar("yyyy-MM-dd", holder.getSelectedDate()));
+        holder.clearSelectedDate();
+        assertNull(holder.getSelectedDate());
+        assertEquals("", holder.getSelectedDateString());
+    }
+    
+    @Test
+    public void testSelectedDateInCurrentMonth() {
+        holder.setCurrentShowingMonth(DateHandler.calendarFor(2010, 8, 1), new ArrayList<Calendar>());
+        holder.clearSelectedDate();
+        assertFalse(holder.getSelectedDateIsInCurrentMonth());
+        holder.setSelectedDate(DateHandler.calendarFor(2010, 8, 2));
+        assertTrue(holder.getSelectedDateIsInCurrentMonth());
+        holder.setSelectedDate(DateHandler.calendarFor(2010, 9, 2));
+        assertFalse(holder.getSelectedDateIsInCurrentMonth());
+    }
 }

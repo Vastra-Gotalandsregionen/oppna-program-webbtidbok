@@ -210,9 +210,13 @@ public class DateHandler {
     }
 
     public static Calendar cloneCalendar(Calendar cal) {
-        // Sloppy clone, but has to do for now.
-        Calendar newCal = Calendar.getInstance();
-        newCal.setTime(cal.getTime());
-        return newCal;
+        if (cal != null) {
+            // Sloppy clone, but has to do for now.
+            Calendar newCal = Calendar.getInstance();
+            newCal.setTime(cal.getTime());
+            return newCal;
+        } else {
+            return null;
+        }
     }
 }
