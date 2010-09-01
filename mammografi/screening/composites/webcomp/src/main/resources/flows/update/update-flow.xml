@@ -29,7 +29,11 @@
 
     <on-start>
         <evaluate expression="guiUtility.setupLocations(booking, state)"  result="flowScope.location"  />
-        <evaluate expression="calendarService.createCalendarHolder(state, booking)" result="flowScope.calendarHolder" /> 
+        <evaluate expression="calendarService.createCalendarHolder(state, booking)" result="flowScope.calendarHolder" />
+        <!-- This call is so we get any available times on the same day as the current booking listed automatically
+             when the page displays the first time. --> 
+        <evaluate expression="bookingFacade.getBookingTime(state, location.locationId, calendarHolder.selectedDate)"
+            result="flowScope.timeListLocal" result-type="dataModel" /> 
     </on-start>
 
 	<view-state id="update" view="/flows/update/update.xhtml">
