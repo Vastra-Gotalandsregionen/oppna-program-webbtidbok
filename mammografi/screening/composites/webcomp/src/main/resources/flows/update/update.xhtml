@@ -1,4 +1,4 @@
-
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <!--
 
     Copyright 2009 Vastra Gotalandsregionen
@@ -18,10 +18,6 @@
       Boston, MA 02111-1307  USA
 
 -->
-
-
-
-<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	    		xmlns:ui="http://java.sun.com/jsf/facelets"
 	  			xmlns:h="http://java.sun.com/jsf/html"
@@ -33,266 +29,114 @@
 
 <ui:fragment id="loginFragment">
 	
-<div id="boxcontainer" style="padding-bottom: 1em;">
+<div id="boxcontainer">
 	<div id="boxleft" />
 	<div id="boxmiddle">
-		<p/>
-		<br/>
-        <h:form id="mainForm" style="display: inline; text-align: right; padding-left: 19em;" >
-            <div align="right">
+        <div id="tb_logout">
+            <h:form id="mainForm">
                 <sf:commandButton id="logout" value="#{baseMsg.logoutButton}" processIds="*" action="logout" />
-            </div>
-        </h:form>
-		<h1>#{sectionMsg.updatepageHeader}</h1>
-		<p/>
-		<br/><p><h:outputText value="#{sectionMsg.updatepageIntroduction}" escape="false"/></p>
-		<p><h:outputText value="#{sectionMsg.updatepageRescheduleInfo}" escape="false"/></p>	
-		<table>
-			<tr>
-				<td>			
-					<div id="boxleft1" style="width: 100%">				
-						<p><b>#{booking.patientName}</b></p>
-						<p>#{booking.patientId}</p>
-						<p><b><h:outputText value="#{baseMsg.updatepageOriginalTimeHeading}"/>:</b></p>
-						<p>#{booking.surgery.fullAddress}</p>			
-						<p><h:outputText value="#{booking.startTime}"><f:convertDateTime type="both" pattern="EEEE dd MMMM yyyy, HH:mm" locale="sv" /></h:outputText></p>
-					</div>
-				</td>
-			</tr>
-			<tr>
-				<td>			
-					<br />	
-					<div id="placediv_place" style="display: inline;background-color:#f3f1f2;" >
-						<table>
-							<tr>
-								<td style="background-color:#f3f1f2;width: 800px" >
-									<table>
-								    	<tr>
-								        	<td style="width: 650px">
-								            	<h3 style="display: inline"><h:outputText value="#{baseMsg.updatepageChooseLocation}"/></h3>
-								                <h:form id="helpForm" style="display: inline; text-align: right;" >
-								                   	<div class="image_block" style="display: inline;text-align: right;">
-								                   	</div>
-								                </h:form> 
-                                            </td>
-                                            <td>
-                                                <a href="help" target="_new"><img src="../VGRImages/help.gif" /></a>
-                                            </td>
-                                        </tr>
-                                    </table>
-	        					</td>
-							</tr>
-						</table>       
-					</div>  <!-- placediv_place -->
-					<br/>
-		        </td>
-			</tr>
-			<tr>
-				<td>	                     
-			        <div id="" style="width: 100%;background-color:#ffffff">    
-			            <table>
-							<tr>
-								<td>
-									<f:view>
-										<h:form id="selectForm" action="displaytimes" style="display: inline; text-align: right; padding-right: 20em;" >
-											
-											<h:selectOneMenu rendered="true" id="places" value="#{location.locationId}"  onchange=""  style="width:320px">
-									       	    <f:selectItems value="#{location.selectItems}" /> 					
-											</h:selectOneMenu>
-											
-											<p />
-											<sf:commandButton id="displayButton" value="#{baseMsg.updatepageShowTimes}" processIds="*" action="displaytimes" style="width: 100px;" />
-										</h:form>
-									</f:view>
-								</td>
-						    </tr>
-					    	<tr>
-					    		<td style="display: inline; text-align: right;" >
-									<h:form id="cancelForm" style="display: inline; text-align: right;padding-left: 37.5em;" >
-										<sf:commandButton id="cancelButton" value="#{baseMsg.cancelButton}" processIds="*" action="cancel" style="width: 100px;" />
-									</h:form>
-								</td>
-					    	</tr>
-				    	</table> 
-			    	</div>
-		       	</td>
-			</tr>
-			<tr>
-				<td>
-					<div id="placediv_date" style="display:inline;inline;background-color:#f3f1f2;" >
-						<table>
-							<tr>
-								<td style="background-color:#f3f1f2;width: 800px" >   
-                                    <table>
-                                        <tr>                    
-                                            <td style="width: 650px">
-                                                <h3 style="display: inline"><h:outputText value="#{baseMsg.updatepageChooseDate}"/></h3>
-                                                <h:form id="helpForm" style="display: inline; text-align: right;" >
-                                                    <div class="image_block" style="display: inline;text-align: right;">
-                                                    </div>
-                                                </h:form> 
-                                            </td>
-                                            <td>
-                                                <a href="help" target="_new"><img src="../VGRImages/help.gif" /></a>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </td>
-							</tr>
-						</table>       
-					</div>   <!-- placediv_date -->
-					<table>
-						<tr>
-							<td>
-	                            <p>#{location.currentLocation.fullAddress}</p>
-							</td>
-						</tr>
-					</table>
-				</td>
-			</tr>
+            </h:form>
+        </div>
+    
+		<h1 class="tb_heading">#{sectionMsg.updatepageHeader}</h1>
+
+		<p><h:outputText value="#{sectionMsg.updatepageIntroduction}" escape="false"/></p>
+		<p><h:outputText value="#{sectionMsg.updatepageRescheduleInfo}" escape="false"/></p>
+
+        <ui:decorate template="/flows/bookinginfo-patientdata.xhtml">
+            <ui:param name="location_heading" value="#{baseMsg.updatepageOriginalTimeHeading}"/>
+        </ui:decorate>
+
+        <ui:decorate template="update_sectionheader.xhtml">
+            <ui:param name="section_heading" value="#{baseMsg.updatepageChooseLocation}"/>
+        </ui:decorate>
+        <div id="tb_selectlocation">    
+			<f:view>
+				<h:form id="selectForm" action="displaytimes">
+					<h:selectOneMenu rendered="true" id="places" value="#{location.locationId}"  onchange="">
+			       	    <f:selectItems value="#{location.selectItems}" /> 					
+					</h:selectOneMenu>
+					<br />
+					<sf:commandButton id="displayButton" value="#{baseMsg.updatepageShowTimes}" processIds="*" action="displaytimes"/>
+				</h:form>
+			</f:view>
+		</div>
+        <ui:decorate template="update_cancelbutton.xhtml" />
+
+        <ui:decorate template="update_sectionheader.xhtml">
+            <ui:param name="section_heading" value="#{baseMsg.updatepageChooseDate}"/>
+        </ui:decorate>
+        <p class="tb_surgery_address_header">#{location.currentLocation.fullAddress}</p>
 									
-			<tr>
-				<td>
-			
-					<table>
-						<tr>
-							<p />
-    						<td style="display: inline; text-align: right;" >
-							    <h:form id="displayDateForm" style="display: inline; text-align: right;padding-left: 37.5em;" >
 											
-								<ui:fragment id="calendarFragment">
-								    <div class="placediv_date" style="text-align: left; align: left">
-									   <div style="text-align: left; align: left; width: 14em;">
-											<!--		HEADER		-->
-											<!--	 <   April  >	 	-->
-										<table border="0" style="margin-left: auto; margin-right: auto">
-										    <tr>
-												<th style="width: 2em; text-align: left; background: #e6e6e6"><h:commandLink id="prev" value="&lt;" action="prev"/></th>
-												<th style="width: 10em; text-align: center; background: #e6e6e6"><h3 style="display: inline"><h:outputText value="#{calendarHolder.currentMonthString}" /></h3></th>
-												<th style="width: 2em; text-align: right; background: #e6e6e6"><h:commandLink id="next" value="&gt;" action="next"/></th>
-										    </tr>
-										</table>
+		<ui:fragment id="calendarFragment">
+		    <div class="placediv_date">
+		    <h:form id="displayDateForm" style="display: inline; text-align: right;padding-left: 37.5em;" >
+			<table class="tb_calendar">
+                <!--        HEADER      -->
+                <!--     <   April  >       -->
+			    <tr class="tb_calendar_heading">
+					<th><h:commandLink id="prev" value="&lt;" action="prev"/></th>
+					<th colspan="5"><h:outputText value="#{calendarHolder.currentMonthString}" /></th>
+					<th><h:commandLink id="next" value="&gt;" action="next"/></th>
+			    </tr>
+			    <!--		HEADER		-->
+                <!--    Må Ti On To Fr Lö Sö    -->
+		        <tr>
+			        <th>Må</th><th>Ti</th><th>On</th>
+			        <th>To</th><th>Fr</th><th>Lö</th><th>Sö</th>
+                </tr>
+                <ui:repeat value="#{calendarHolder.calendar}" var="weekRow">
+                    <tr>
+                        <ui:repeat value="#{weekRow}" var="dayCell">
+                            <td style="background: #{dayCell.color}">
+                                <ui:fragment rendered="#{dayCell.isLink}">
+                                    <h:commandLink escape="false" id="mon1" value="#{dayCell.day}" action="showTimeCalendar" >
+                                        <f:param name="selectedDay" value="#{dayCell.commandLinkDay}"></f:param>
+                                    </h:commandLink>
+                                </ui:fragment>
+                                <ui:fragment rendered="#{!dayCell.isLink}">#{dayCell.day}</ui:fragment>
+                            </td>
+                        </ui:repeat>
+                    </tr>
+                </ui:repeat>
+		    </table>
+            </h:form>
+			</div>
+        </ui:fragment>
 
-											<!--		HEADER		-->
-											<!--	Må Ti On To Fr Lö Sö	-->
-											<table border="0" style="text-align: right; width: 14em;">
-											    <tr>
-												    <th style="width: 2em;">Må</th><th style="width: 2em;">Ti</th><th style="width: 2em;">On</th>
-												    <th style="width: 2em;">To</th><th style="width: 2em;">Fr</th><th style="width: 2em;">Lö</th><th style="width: 2em;">Sö</th>
-                                                </tr>
-                                                <ui:repeat value="#{calendarHolder.calendar}" var="weekRow">
-                                                <tr>
-                                                  <ui:repeat value="#{weekRow}" var="dayCell">
-                                                    <td style="width: 2em;background: #{dayCell.color}">
-                                                      <ui:fragment rendered="#{dayCell.isLink}">
-                                                        <h:commandLink escape="false" id="mon1" value="#{dayCell.day}" action="showTimeCalendar" >
-                                                            <f:param name="selectedDay" value="#{dayCell.commandLinkDay}"></f:param>
-                                                        </h:commandLink>
-                                                      </ui:fragment>
-                                                      <ui:fragment rendered="#{!dayCell.isLink}">#{dayCell.day}</ui:fragment>
-                                                    </td>
-                                                  </ui:repeat>
-                                                </tr>
-                                                </ui:repeat>
+        <ui:decorate template="update_cancelbutton.xhtml" />
 
-												</table>
-										
-												</div>
-											</div>
-                            	</ui:fragment>
-							    </h:form>
-						    </td>
-    					</tr>
-    					<tr>
-    						<td style="display: inline; text-align: right;" >
-								<h:form id="cancelForm" style="display: inline; text-align: right;padding-left: 37.5em;" >
-									<sf:commandButton id="cancelButton" value="#{baseMsg.cancelButton}" processIds="*" action="cancel" style="width: 100px;" />
-								</h:form>
-							</td>
-    					</tr>
-    													
-    				</table>
-    				
-				</td>
-			</tr>
-			<!-- Only show timelist if not empty -->
+        <!-- Only show timelist if we have selected a date in the current month, and there
+             are empty slots for that date. -->
+        <!-- TODO: Make this work for empty timeListLocal -->
+        <ui:fragment rendered="#{calendarHolder.selectedDateIsInCurrentMonth}">         
+          <ui:fragment rendered="#{!empty timeListLocal}">         
+
+            <ui:decorate template="update_sectionheader.xhtml">
+                <ui:param name="section_heading" value="#{baseMsg.updatepageChooseTime}"/>
+            </ui:decorate>
+            <p class="tb_surgery_address_header">#{location.currentLocation.fullAddress}</p>
 			
-            <tr>
-                <td>
-                    <div id="placediv_time" style="display:inline;background-color:#f3f1f2;" >
-                        <table>
-                            <tr>
-                                <td style="background-color:#f3f1f2;width: 800px" >   
-                                    <table>
-                                        <tr>                    
-                                            <td style="width: 650px">
-                                                <h3 style="display: inline">#{baseMsg.updatepageChooseTime}</h3>
-                                                <h:form id="helpForm" style="display: inline; text-align: right;" >
-                                                    <div class="image_block" style="display: inline;text-align: right;">
-                                                    </div>
-                                                </h:form> 
-                                            </td>
-                                            <td>
-                                                <a href="help" target="_new"><img src="../VGRImages/help.gif" /></a>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
-                        </table> 
-                    </div>   <!-- placediv_time -->
-                </td>
-            </tr>
- 
-		</table>
-		<ui:fragment rendered="#{calendarHolder.selectedDateIsInCurrentMonth}">			
-		<table>
-			<tr>
-				<td>
-                    <p>#{location.currentLocation.fullAddress}</p>
-				</td>
-			</tr>
-			<h:form id="timeTable" style="display: inline; text-align: right;">
-				<table border="0">								
-					<th style="text-align: center; background: #e6e6e6; width: 260px;"><h3 style="display: inline"><h:outputText value="#{calendarHolder.selectedDateString}" /></h3></th>
-				</table>
-			</h:form>
-			<tr>
-				<td>	
-					<div id="placediv_time" style="display:inline" >
-						<h:form style="display: inline; text-align: left;" >
-							<h:dataTable id="timeTable" columnClasses="col1, col2" style="width: 260px; " value="#{timeListLocal}" var="btl" rendered="#{!empty timeListLocal}">
-								<h:column id="col1">
-    								<f:facet name="header" >
-	       								<p>Tid</p>
-			     					</f:facet>
-				    				<h:outputText value="#{btl.dateTime}"><f:convertDateTime type="time" pattern="HH:mm" locale="sv" timeZone="Europe/Stockholm"/></h:outputText>
-								</h:column>
-								<h:column id="col2">
-									<h:commandButton id="timeButton" value="Välj" style="width: 100px;" action="selecttime" processIds="*" immediate="true" />
-								</h:column>
-							</h:dataTable>
-						</h:form>
-					</div>   <!-- placediv_time -->
-				</td>
-			</tr>
-            <h:panelGroup rendered="#{empty timeListLocal}" layout="block">
-    					<h:outputText value="#{sectionMsg.update_page_body_no_avail_time_text_value}" escape="false"/>
-            </h:panelGroup>
-			<tr>
-                <td>
-                    <table>
-                        <tr>
-   					        <td style="display: inline; text-align: right;" >
-            			        <h:form id="cancelForm" style="display: inline;  align: right; text-align: right;padding-left: 37.5em;" >
-            						<sf:commandButton id="cancelButton" value="#{baseMsg.cancelButton}" processIds="*" action="cancel" style="width: 100px;" />
-            					</h:form>
-            				</td>
-                        </tr>
-                    </table>
-                </td>
-			</tr>
-		</table>
+
+			<div id="placediv_time">
+				<h:form id="timeForm">
+					<h:dataTable id="timeTable" columnClasses="col1, col2" value="#{timeListLocal}" var="btl" rendered="#{!empty timeListLocal}">
+					    <f:facet name="header">
+                            <div class="tb_time_datestring">#{calendarHolder.selectedDateString}</div>
+                        </f:facet>
+						<h:column id="col1">
+    						<f:facet name="header" ><div class="tb_time_header">Tid</div></f:facet>
+				    		<h:outputText value="#{btl.dateTime}"><f:convertDateTime type="time" pattern="HH:mm" locale="sv" timeZone="Europe/Stockholm"/></h:outputText>
+						</h:column>
+						<h:column id="col2">
+							<h:commandButton id="timeButton" value="Välj" action="selecttime" processIds="*" immediate="true" />
+						</h:column>
+					</h:dataTable>
+				</h:form>
+			</div>   <!-- placediv_time -->
+            <ui:decorate template="update_cancelbutton.xhtml" />
+          </ui:fragment>              
 		</ui:fragment>				
 	</div>	<!-- boxmiddle -->
 </div> <!-- boxcontainer -->
