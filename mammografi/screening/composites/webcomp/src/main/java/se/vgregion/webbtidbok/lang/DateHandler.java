@@ -164,9 +164,16 @@ public class DateHandler {
      * Create a new Calendar object for a given date.
      */
     public static Calendar calendarFor(int year, int month, int day) {
+        return calendarFor(year, month, day, 0, 0, 0);
+    }
+    
+    /**
+     * Create a new Calendar object for a given date.
+     */
+    public static Calendar calendarFor(int year, int month, int day, int hour, int minute, int second) {
         Calendar cal = Calendar.getInstance();
         cal.clear();
-        cal.set(year, month-1, day, 0, 0, 0);
+        cal.set(year, month-1, day, hour, minute, second);
         return cal;
     }
 
