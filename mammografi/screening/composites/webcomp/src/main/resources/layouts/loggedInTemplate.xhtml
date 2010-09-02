@@ -20,7 +20,9 @@
 -->
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:sf="http://www.springframework.org/tags/faces">
 
 <ui:composition template="baseTemplate.xhtml">
 
@@ -33,6 +35,20 @@
           .col1 { width: 230px; }
           .col2 { width: 30px; }
         </style>
+    </ui:define>
+
+    <ui:define name="templateContent">
+        <div id="boxcontainer">
+            <div id="boxleft" />
+            <div id="boxmiddle">
+                <div id="tb_logout">
+                    <h:form id="mainForm">
+                        <sf:commandButton id="logout" value="#{baseMsg.logoutButton}" processIds="*" action="logout" />
+                    </h:form>
+                </div>
+                <ui:insert name="content" />
+            </div>  <!-- boxmiddle -->
+        </div> <!-- boxcontainer -->
     </ui:define>
 
 </ui:composition>

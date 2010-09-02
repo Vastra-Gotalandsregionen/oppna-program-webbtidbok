@@ -27,16 +27,8 @@
 
 <ui:define name="content">
 
-<ui:fragment id="loginFragment">
+    <ui:fragment id="loginFragment">
 	
-<div id="boxcontainer">
-	<div id="boxleft" />
-	<div id="boxmiddle">
-        <div id="tb_logout">
-            <h:form id="mainForm">
-                <sf:commandButton id="logout" value="#{baseMsg.logoutButton}" processIds="*" action="logout" />
-            </h:form>
-        </div>
     
 		<h1 class="tb_heading">#{sectionMsg.updatepageHeader}</h1>
 
@@ -138,11 +130,8 @@
             <ui:decorate template="update_cancelbutton.xhtml" />
           </ui:fragment>              
 		</ui:fragment>				
-	</div>	<!-- boxmiddle -->
-</div> <!-- boxcontainer -->
-			
-		
-</ui:fragment>
+
+    </ui:fragment>
 </ui:define>
 
 
