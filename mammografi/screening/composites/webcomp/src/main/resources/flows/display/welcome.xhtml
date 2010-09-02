@@ -28,22 +28,10 @@
 <ui:define name="content">
 
 <ui:fragment id="loginFragment">
-	
-<div id="boxcontainer" style="padding-bottom: 1em;">
-	<div id="boxleft" />
-	<div id="boxmiddle">
-		<p/>
-		<br/>
 		<h1 style="display: inline"><h:outputFormat value="#{sectionMsg.welcomepageWelcomeNN}">
             <f:param value="#{booking.patientName}" /></h:outputFormat>
         </h1>
-		<h:form id="mainForm" style="display: inline; text-align: right; padding-left: 5em;" >
-		    <div align="right">
-			   <sf:commandButton id="logout" value="#{baseMsg.logoutButton}" processIds="*" action="logout"/>
-		    </div>
-		</h:form>
 		<p/>
-		<br/>
 		<p><h:outputText value="#{sectionMsg.welcomepageIntroductionMain}" escape="false"/><br/></p>
 		<p><h:outputText value="#{sectionMsg.welcomepageIntroductionContact}" escape="false"/></p>
 		<p><h:outputText value="#{sectionMsg.welcomepageIntroductionContact2}" escape="false"/></p>
@@ -88,8 +76,6 @@
 				</tr>
             </table>
 		</div>
-    </div>
-</div>
 
 </ui:fragment>
 </ui:define>

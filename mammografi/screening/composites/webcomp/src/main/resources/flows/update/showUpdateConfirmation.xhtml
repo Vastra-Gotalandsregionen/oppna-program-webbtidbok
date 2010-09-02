@@ -25,29 +25,15 @@
 	  			xmlns:h="http://java.sun.com/jsf/html"
 	  			xmlns:f="http://java.sun.com/jsf/core"
 	  			xmlns:sf="http://www.springframework.org/tags/faces"	  			
-				template="/layouts/standard.xhtml">
+				template="/layouts/loggedInTemplate.xhtml">
 
 <ui:define name="content">
 
 <ui:fragment id="loginFragment">
-	
-		<div id="boxcontainer" style="padding-bottom: 1em;">
-		<div id="boxleft" />
-		<div id="boxmiddle">
-			<p/>
-			<br />
 			<h1 style="display: inline">#{sectionMsg.updateconfirmationHeader}</h1>
-				<h:form id="mainForm" style="display: inline; text-align: right; padding-left: 16em;" >
-					<div align="right">
-		                <sf:commandButton id="logout" value="#{baseMsg.logoutButton}" processIds="*" action="logout" />
-		            </div>
-				</h:form>
-				<p/>
-				<br/>
-				<p><h:outputText value="#{sectionMsg.updateconfirmationRescheduleInfo}" escape="false"/></p><br/>
+			<p><h:outputText value="#{sectionMsg.updateconfirmationRescheduleInfo}" escape="false"/></p><br/>
 				
-				
-				<h3>#{sectionMsg.updateconfirmationRescheduledMessage}</h3>
+			<h3>#{sectionMsg.updateconfirmationRescheduledMessage}</h3>
 				<br />			
 				<div id="boxleft1" style="width: 100%">				
 				<table>
@@ -156,8 +142,6 @@
 <!--					</div>	-->
 					</ui:remove>
 					
-				</div>	
-				</div>
 						
 </ui:fragment>
 </ui:define>
