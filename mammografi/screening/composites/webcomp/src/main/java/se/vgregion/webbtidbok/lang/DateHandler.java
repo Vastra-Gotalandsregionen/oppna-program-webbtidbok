@@ -25,6 +25,7 @@ import javax.xml.datatype.*;
 
 public class DateHandler {
 
+    public static final String DEFAULT_TIMEZONE = "Europe/Stockholm"; 
 
 	public static String setLocaleDateFormat(Date date){
 		
@@ -174,6 +175,7 @@ public class DateHandler {
         Calendar cal = Calendar.getInstance();
         cal.clear();
         cal.set(year, month-1, day, hour, minute, second);
+        cal.setTimeZone(TimeZone.getTimeZone(DEFAULT_TIMEZONE));
         return cal;
     }
 
