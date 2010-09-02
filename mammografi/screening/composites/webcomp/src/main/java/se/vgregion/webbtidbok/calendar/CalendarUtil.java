@@ -78,15 +78,9 @@ public class CalendarUtil {
   
   // This is our keeper method! :)
   public List<Calendar> getAvailableDates(State state, String surgeryId, Calendar monthToDisplay) {
-    Calendar startDate = Calendar.getInstance();
-    startDate.set(Calendar.YEAR, monthToDisplay.get(Calendar.YEAR));
-    startDate.set(Calendar.MONTH, monthToDisplay.get(Calendar.MONTH));
-    startDate.set(Calendar.DATE, 1);
-    
-    Calendar endDate = Calendar.getInstance();
-    endDate.set(Calendar.YEAR, monthToDisplay.get(Calendar.YEAR));
-    endDate.set(Calendar.MONTH, monthToDisplay.get(Calendar.MONTH));
-    endDate.set(Calendar.DATE, monthToDisplay.getActualMaximum(Calendar.DAY_OF_MONTH));
+    Calendar startDate = DateHandler.calendarFor(monthToDisplay.get(Calendar.YEAR), monthToDisplay.get(Calendar.MONTH)+1, 1);
+    Calendar endDate = DateHandler.calendarFor(monthToDisplay.get(Calendar.YEAR), monthToDisplay.get(Calendar.MONTH)+1, 
+            monthToDisplay.getActualMaximum(Calendar.DAY_OF_MONTH), 23, 59, 59);
 
     List<Calendar> availableDates = bookingFacade.getFreeDays(state, surgeryId, startDate, endDate);
     //setEmptyCalendar(availableDates.isEmpty());
