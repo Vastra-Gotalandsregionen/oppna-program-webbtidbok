@@ -32,29 +32,30 @@
 		<on-render>
 			<evaluate expression="bookingFacade.getBookingInfo(state)" result="flowScope.booking" />			
 		</on-render>		
-		<transition on="logout" to="loggedout" history="invalidate"/>
-		<transition on="cancel" to="loggedin" />
+		<transition on="cancel" to="cancel" />
 		<transition on="confirmdelete" to="confirmdeletebooking">			
 		</transition>
 	</view-state>
 	
 	<action-state id="confirmdeletebooking">
 			<evaluate expression="bookingFacade.cancelBooking(state)"  />            
-			<transition on="yes" to="confirmdelete" />
+			<transition to="confirmdelete">
+				<evaluate expression="guiUtility.sendCancelationMail(state, booking)" />
+			</transition>
     		<transition on="no" to="loggedin">
     			<evaluate expression="cancelbookingMessages.setCancelBookingMessage()" />   	
     		</transition>
 	</action-state>
 	
-	<view-state id="confirmdelete" view="/flows/delete/confirmdelete.xhtml">		
-		<transition on="logout" to="loggedout" history="invalidate"/>
-<!--		<transition on="send">-->
-<!--			<evaluate expression="sendMailService.sendMail(emailStringHandler)" />-->
-<!--		</transition>	-->
+	<view-state id="confirmdelete" view="/flows/delete/confirmdelete.xhtml">
 	</view-state>
 	
-<!--	<action-state id="sendemail">-->
-<!--		<evaluate expression="sendMailService.sendMail(emailStringHandler)" />        -->
-<!--	</action-state>-->
+	<end-state id="cancel"/>
+	<end-state id="logout"/>
+
+	<global-transitions>
+        <transition on="logout" history="invalidate" to="logout"/>
+        <transition on-exception="java.lang.Error" history="invalidate" to="logout"/>
+    </global-transitions>
 
 </flow>
