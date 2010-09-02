@@ -22,6 +22,7 @@
 /* Styling for the box showing the current booking. */
 #tb_bookinginfo {
     background: #f3f1f2;
+    border: 0.1em solid #91ADB4;
     padding: 0.5em;
 }
 
