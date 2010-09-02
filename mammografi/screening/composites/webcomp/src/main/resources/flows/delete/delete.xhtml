@@ -80,7 +80,7 @@
                        			<p>
                          		<b>#{baseMsg.updatepageOriginalTimeHeading}</b><br />
                        			#{booking.surgery.fullAddress}<br />
-                      			#{booking.startTime}.<br />
+                      			<h:outputText value="#{booking.startTime}"><f:convertDateTime type="both" pattern="EEEE dd MMMM yyyy, HH:mm" locale="sv" timeZone="Europe/Stockholm" /></h:outputText><br />
                       			</p>
                        		</td>
                        		<td style="text-align: right; padding-right: 1em">
