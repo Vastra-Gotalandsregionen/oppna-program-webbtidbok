@@ -75,7 +75,7 @@
 				</tr>
 				<tr>
 					<td valign="top"><p><b><h:outputText value="#{baseMsg.locationBoxWhen}"/>:</b></p></td>
-			    	<td valign="top"><p><h:outputText value="#{booking.startTime}"><f:convertDateTime type="both" pattern="EEEE dd MMMM yyyy, HH:mm" locale="sv" /></h:outputText></p></td>
+			    	<td valign="top"><p><h:outputText value="#{booking.startTime}"><f:convertDateTime type="both" pattern="EEEE dd MMMM yyyy, HH:mm" locale="sv" timeZone="Europe/Stockholm" /></h:outputText></p></td>
 					<td style="text-align: right; padding-right: 1em;" valign="top">
 						<h:form id="deleteForm" >
 							<sf:commandButton id="deleteButton" value="#{baseMsg.locationBoxCancelButton}" processIds="*" action="delete" style="width: 100px;"  />
