@@ -19,12 +19,14 @@ package se.vgregion.webbtidbok.gui;
 
 import java.util.List;
 
+import javax.mail.internet.AddressException;
+
 import se.vgregion.webbtidbok.State;
 import se.vgregion.webbtidbok.booking.BookingFacade;
 import se.vgregion.webbtidbok.booking.elvis.BookingService;
 import se.vgregion.webbtidbok.booking.elvis.WebServiceHelper;
 import se.vgregion.webbtidbok.domain.Booking;
-import se.vgregion.webbtidbok.lang.DateHandler;
+import se.vgregion.webbtidbok.mail.MailSender;
 
 /**
  * This class is a temporary home for methods which previously were part of the booking service, but don't belong there. In order
@@ -83,4 +85,13 @@ public class GUIUtilities {
 		return value;
 	}
 
+	public void sendCancelationMail(State state, Booking booking) {
+
+		MailSender mailsender = new MailSender();
+		try {
+			mailsender.sendCancelationMail(state, booking);
+		} catch (AddressException e) {
+			e.printStackTrace();
+		}
+	}
 }
