@@ -71,6 +71,13 @@
         <ref bean="NU_s2_time_6"/>
         <ref bean="NU_s2_time_7"/>
         <ref bean="NU_s2_time_8"/>
+        <ref bean="NU_s2_time_9"/>
+        <ref bean="NU_s2_time_10"/>
+        <ref bean="NU_s2_time_11"/>
+        <ref bean="NU_s2_time_12"/>
+        <ref bean="NU_s2_time_13"/>
+        <ref bean="NU_s2_time_14"/>
+        <ref bean="NU_s2_time_15"/>
     </util:list>
 
     <util:map id="NU_s1_time_1">
@@ -170,7 +177,48 @@
         <entry key="time" value="2010-09-15T11:00:00"/>
         <entry key="length" value="15"/>
     </util:map>
-
+	<util:map id="NU_s2_time_9">
+        <entry key="id" value="NU_s2_time_9"/>
+        <entry key="section" value="NU_section_2"/>
+        <entry key="time" value="2010-09-20T11:00:00"/>
+        <entry key="length" value="15"/>
+    </util:map>
+    <util:map id="NU_s2_time_10">
+        <entry key="id" value="NU_s2_time_10"/>
+        <entry key="section" value="NU_section_2"/>
+        <entry key="time" value="2010-09-21T11:00:00"/>
+        <entry key="length" value="15"/>
+    </util:map>
+    <util:map id="NU_s2_time_11">
+        <entry key="id" value="NU_s2_time_11"/>
+        <entry key="section" value="NU_section_2"/>
+        <entry key="time" value="2010-09-21T12:00:00"/>
+        <entry key="length" value="15"/>
+    </util:map>
+    <util:map id="NU_s2_time_12">
+        <entry key="id" value="NU_s2_time_12"/>
+        <entry key="section" value="NU_section_2"/>
+        <entry key="time" value="2010-09-21T13:00:00"/>
+        <entry key="length" value="15"/>
+    </util:map>
+    <util:map id="NU_s2_time_13">
+        <entry key="id" value="NU_s2_time_13"/>
+        <entry key="section" value="NU_section_2"/>
+        <entry key="time" value="2010-09-30T09:00:00"/>
+        <entry key="length" value="15"/>
+    </util:map>
+    <util:map id="NU_s2_time_14">
+        <entry key="id" value="NU_s2_time_14"/>
+        <entry key="section" value="NU_section_2"/>
+        <entry key="time" value="2010-09-30T10:00:00"/>
+        <entry key="length" value="15"/>
+    </util:map>
+    <util:map id="NU_s2_time_15">
+        <entry key="id" value="NU_s2_time_15"/>
+        <entry key="section" value="NU_section_2"/>
+        <entry key="time" value="2010-09-30T11:00:00"/>
+        <entry key="length" value="15"/>
+    </util:map>
 
     <util:list id="NU_bookings">
         <ref bean="NU_booking_1"/>
