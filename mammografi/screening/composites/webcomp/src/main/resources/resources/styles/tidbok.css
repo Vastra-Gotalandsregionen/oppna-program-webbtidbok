@@ -34,6 +34,16 @@
     font-weight: bold;
 }
 
+div.tb_buttonFloat {
+    float: right;
+    margin-top: 30px;
+}
+
+div.tb_buttonFloat form {
+    margin-bottom: 15px;
+    margin-top: 15px;
+}
+
 /* Styling for section headers on the update page. */
 div.tb_sectionheading {
     background-color:#f3f1f2;
