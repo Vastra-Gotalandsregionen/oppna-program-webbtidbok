@@ -36,8 +36,8 @@
 
     <util:map id="NU_section_1">
         <entry key="id" value="NU_section_1"/>
-        <entry key="name" value="NU Mammografi 1"/>
-        <entry key="description" value="Mammografienhet 1 på NU"/>
+        <entry key="name" value="NU Mammografi"/>
+        <entry key="description" value="Uddevalla Sjukhus#"/>
         <entry key="address" value="Norra gatan 1"/>
         <entry key="mail" value="section1@nu.example.com"/>
         <entry key="phone" value="1230011"/>
@@ -45,9 +45,10 @@
 
     <util:map id="NU_section_2">
         <entry key="id" value="NU_section_2"/>
-        <entry key="name" value="NU Mammografi 2"/>
-        <entry key="description" value="Mammografienhet 2 på NU"/>
-        <entry key="address" value="Södra gatan 2"/>
+        <entry key="name" value="SCR ÅMÅL"/>
+        <entry key="description" value="Mammografivagnen, Åmål#"/>
+        <entry key="address" value="SCREENINGAVDELNING ÅMÅL&#xA;
+        Mammografivagnen är uppställd vid Åmåls simhall, Vilkerborgsplan (Töre Pedersons gata) i Åmål. Vagnen är vit och märkt Mammografi."/>
         <entry key="mail" value="section2@nu.example.com"/>
         <entry key="phone" value="1230012"/>
     </util:map>

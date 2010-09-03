@@ -18,7 +18,6 @@
 package se.vgregion.webbtidbok.booking.sectra;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 
 import javax.xml.bind.JAXBElement;
@@ -60,9 +59,29 @@ public class BookingMapperSectra {
 	public Surgery surgeryMapping(Section section) {
 		Surgery surgery = new Surgery();
 		surgery.setSurgeryId(getStringValue(section.getId()));
-		surgery.setSurgeryName(getStringValue(section.getName()));
+		surgery.setSurgeryName(parseDescriptionForSurgeryName(getStringValue(section.getDescription())));
 		surgery.setSurgeryAddress(getStringValue(section.getAddress()));
 		return surgery;
+	}
+	
+	/* Only use this with the getStringValue method below, or null pointers may occur.
+	 * 
+	 * This gets a usable surgery name from the section description.
+	 * Please note that if no #-sign exists in the description, then we
+	 * will not provide any name at all for this surgery.
+	 */
+	private String parseDescriptionForSurgeryName(String description) {
+	    String surgeryName = "";
+	    if (description.contains("#")) {
+	        String[] temp = description.split("#", 2);
+	        if (temp.length > 1) {
+	            surgeryName = temp[0];
+	        } else {
+	            // TODO: Log this failure, perhaps?
+	        }
+	    }
+	    
+	    return surgeryName;
 	}
 
 	private String getStringValue(JAXBElement<String> jaxbElement) {

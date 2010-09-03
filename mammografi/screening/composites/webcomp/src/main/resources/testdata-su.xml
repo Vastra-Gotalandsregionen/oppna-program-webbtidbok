@@ -37,7 +37,7 @@
     <util:map id="SU_section_1">
         <entry key="id" value="SU_section_1"/>
         <entry key="name" value="SU Mammografi 1"/>
-        <entry key="description" value="Mammografienhet 1 på SU"/>
+        <entry key="description" value="Mammografienhet 1 på SU#"/>
         <entry key="address" value="Gröna stråket 1"/>
         <entry key="mail" value="section1@su.example.com"/>
         <entry key="phone" value="1230001"/>
@@ -46,7 +46,7 @@
     <util:map id="SU_section_2">
         <entry key="id" value="SU_section_2"/>
         <entry key="name" value="SU Mammografi 2"/>
-        <entry key="description" value="Mammografienhet 2 på SU"/>
+        <entry key="description" value="Mammografienhet 2 på SU#"/>
         <entry key="address" value="Blå stråket 2"/>
         <entry key="mail" value="section2@su.example.com"/>
         <entry key="phone" value="1230002"/>

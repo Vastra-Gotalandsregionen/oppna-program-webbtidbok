@@ -90,7 +90,9 @@ public class SectraBookingServiceImpl implements SectraBookingServiceInterface {
       List<Section> sectionList = sections.getSection();
       for (Section section : sectionList) {
         Surgery surgery = bookingMapperSectra.surgeryMapping(section);
-        surgeries.add(surgery);
+        if (!"".equals(surgery.getSurgeryName())) {
+            surgeries.add(surgery);
+        }
       }
     } catch (IRisRescheduleListSectionsErrorInfoFaultFaultMessage e) {
       log.error("Error response from web service when getting surgeries.", e);

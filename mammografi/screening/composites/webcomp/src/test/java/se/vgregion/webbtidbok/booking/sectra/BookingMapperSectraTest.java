@@ -46,7 +46,8 @@ public class BookingMapperSectraTest {
 
 	private static final String TIME = "10:00";
 	private static final int ANTAL = 2;
-	private static final String SECTIONNAME = "Section name";
+	private static final String SECTIONNAME = "Weird section name";
+    private static final String REALSECTIONNAME = "Real section name";
 	private static final String SECTIONADDRESS = "Section address";
 	private static final String TIMEBLOCKID = "Time block id";
 	private static final String PATIENTNAME = "David B";
@@ -57,6 +58,7 @@ public class BookingMapperSectraTest {
 	private static final String EXAMNBR = "123";
 	private static final String SURGERYADDRESS = "address";
 	private static final String NAME = "name";
+    private static final String REALNAME = "realname";
 	private static final String ID = EXAMNBR;
 	private BookingMapperSectra bookingMapperSectra;
 	private ObjectFactory objectFactory;
@@ -78,6 +80,7 @@ public class BookingMapperSectraTest {
 
 		section.setAddress(objectFactory.createString(SECTIONADDRESS));
 		section.setName(objectFactory.createString(SECTIONNAME));
+        section.setDescription(objectFactory.createString(REALSECTIONNAME + "#Irrelevant description content"));
 
 		timeBlock.setId(objectFactory.createString(TIMEBLOCKID));
 		timeBlock.setSection(objectFactory.createSection(section));
@@ -99,7 +102,7 @@ public class BookingMapperSectraTest {
 		assertEquals(PATIENTNAME, bookingMapping.getPatientName());
 		assertEquals(PATIENTID, bookingMapping.getPatientId());
 		assertEquals(newXMLGregorianCalendar.toGregorianCalendar().getTime().getTime(), bookingMapping.getStartTime().getTime());
-		assertEquals(SECTIONNAME + ", " + SECTIONADDRESS, bookingMapping.getSurgery().getFullAddress());
+		assertEquals(REALSECTIONNAME + ", " + SECTIONADDRESS, bookingMapping.getSurgery().getFullAddress());
 
 	}
 
@@ -109,12 +112,23 @@ public class BookingMapperSectraTest {
 
 		section.setId(objectFactory.createString(ID));
 		section.setName(objectFactory.createString(NAME));
+        section.setDescription(objectFactory.createString(REALNAME + "#Irrelevant description"));
 		section.setAddress(objectFactory.createString(SURGERYADDRESS));
 
 		Surgery surgeryMapping = bookingMapperSectra.surgeryMapping(section);
 		assertEquals(ID, surgeryMapping.getSurgeryId());
-		assertEquals(NAME, surgeryMapping.getSurgeryName());
+		assertEquals(REALNAME, surgeryMapping.getSurgeryName());
 		assertEquals(SURGERYADDRESS, surgeryMapping.getSurgeryAddress());
+		
+		// Test with no hash - should be empty
+		section.setDescription(objectFactory.createString(REALNAME));
+        surgeryMapping = bookingMapperSectra.surgeryMapping(section);
+        assertEquals("", surgeryMapping.getSurgeryName());
+
+        // Test with only hash - should return a surgery name
+        section.setDescription(objectFactory.createString(REALNAME + "#"));
+        surgeryMapping = bookingMapperSectra.surgeryMapping(section);
+        assertEquals(REALNAME, surgeryMapping.getSurgeryName());
 	}
 
 	@Test
