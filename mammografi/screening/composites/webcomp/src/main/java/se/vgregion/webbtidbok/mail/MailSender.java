@@ -32,7 +32,7 @@ import javax.mail.internet.MimeMessage;
 import se.vgregion.webbtidbok.State;
 import se.vgregion.webbtidbok.domain.Booking;
 
-public class MailSender {
+public class MailSender implements Runnable {
 	MailSetup mailSetup = new MailSetup();
 
 	public Properties getMailProperties(State state) {
@@ -140,4 +140,8 @@ public class MailSender {
 		// return mailSentToSmtpServer;
 	}
 
+	@Override
+	public void run() {
+
+	}
 }
