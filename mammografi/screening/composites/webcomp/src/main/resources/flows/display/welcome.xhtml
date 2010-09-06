@@ -35,47 +35,28 @@
 		<p><h:outputText value="#{sectionMsg.welcomepageIntroductionMain}" escape="false"/><br/></p>
 		<p><h:outputText value="#{sectionMsg.welcomepageIntroductionContact}" escape="false"/></p>
 		<p><h:outputText value="#{sectionMsg.welcomepageIntroductionContact2}" escape="false"/></p>
-		
-		<div id="boxleft1" style="width: 100%">		
-		
-			<p><h:outputText value="#{sectionMsg.welcomepageExamInformation}" escape="false"/></p>
-			<h:outputLabel for="deleteButton"><p style="color:red; font-style: italic"> #{cancelbookingMessages.cancelBookingMessage}</p></h:outputLabel>
-			<table>
-				<tr>
-					<td valign="top" >
-						<p><b><h:outputText value="#{baseMsg.locationBoxWhere}"/>:</b></p>
-					</td>
-					<td width="100%" valign="top">  
-						<p>#{booking.surgery.fullAddress}</p>
-					</td>
-					<td style="text-align: right; padding-right: 1em;" valign="top">
-						<h:form id="updateForm" >
-							<sf:commandButton id="updateButton" value="#{baseMsg.locationBoxRescheduleButton}" processIds="*" action="update" disabled="#{!booking.updateable}" style="width: 100px;"  />
-						</h:form>
-					</td>
-				</tr>
-				<tr>
-					<td></td>
-					<td></td>
-					<td>
-						<h:outputText rendered="#{!booking.updateable}"><p style="text-align: left;color:red; font-style: italic"><h:outputText value="#{sectionMsg.locationBoxRescheduleCapped}"/></p></h:outputText>
-					</td>
-				</tr>
-				<tr>
-					<td valign="top"><p><b><h:outputText value="#{baseMsg.locationBoxWhen}"/>:</b></p></td>
-			    	<td valign="top"><p><h:outputText value="#{booking.startTime}"><f:convertDateTime type="both" pattern="EEEE dd MMMM yyyy, HH:mm" locale="sv" timeZone="Europe/Stockholm" /></h:outputText></p></td>
-					<td style="text-align: right; padding-right: 1em;" valign="top">
-						<h:form id="deleteForm" >
-							<sf:commandButton id="deleteButton" value="#{baseMsg.locationBoxCancelButton}" processIds="*" action="delete" style="width: 100px;"  />
-						</h:form>
-					</td>
-				</tr>
-				<tr>
-					<td></td>
-					<td colspan="2"><h:outputText value="#{sectionMsg.welcomepageExamLength}"/></td>
-				</tr>
-            </table>
-		</div>
+
+        <ui:decorate template="/flows/bookinginfo-wherewhen.xhtml">
+            <ui:define name="topInformationSection">
+                <p><h:outputText value="#{sectionMsg.welcomepageExamInformation}" escape="false"/></p>
+                <!-- This one should have a rendered attribute. -->
+                <h:outputLabel for="deleteButton"><p style="color:red; font-style: italic"> #{cancelbookingMessages.cancelBookingMessage}</p></h:outputLabel>
+                <h:outputText rendered="#{!booking.updateable}"><p style="text-align: left;color:red; font-style: italic"><h:outputText value="#{sectionMsg.locationBoxRescheduleCapped}"/></p></h:outputText>
+            </ui:define>
+            <ui:define name="buttonFloat">
+                <div class="tb_buttonFloat">
+                    <h:form id="updateForm" >
+                        <sf:commandButton id="updateButton" value="#{baseMsg.locationBoxRescheduleButton}" processIds="*" action="update" disabled="#{!booking.updateable}" style="width: 100px;"  />
+                    </h:form>
+                    <h:form id="deleteForm" >
+                        <sf:commandButton id="deleteButton" value="#{baseMsg.locationBoxCancelButton}" processIds="*" action="delete" style="width: 100px;"  />
+                    </h:form>
+                </div>
+            </ui:define>
+            <ui:define name="bottomInformationSection">
+                <p class="tb_booking_bread"><h:outputText value="#{sectionMsg.welcomepageExamLength}"/></p>
+            </ui:define>
+        </ui:decorate>
 
 </ui:fragment>
 </ui:define>

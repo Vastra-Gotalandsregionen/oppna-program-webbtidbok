@@ -34,14 +34,23 @@
     font-weight: bold;
 }
 
+#tb_bookinginfo p.tb_booking_bread {
+    margin-right: 128px;
+}
+
+div.tb_relcontainer {
+    position: relative;    
+}
+
 div.tb_buttonFloat {
-    float: right;
-    margin-top: 30px;
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
 }
 
 div.tb_buttonFloat form {
-    margin-bottom: 15px;
-    margin-top: 15px;
+    margin-bottom: 20px;
+    margin-right: 20px;
 }
 
 /* Styling for section headers on the update page. */
