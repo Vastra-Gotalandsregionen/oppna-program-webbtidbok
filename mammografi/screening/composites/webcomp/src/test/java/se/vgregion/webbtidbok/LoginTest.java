@@ -1,5 +1,5 @@
 /**
- * Copyright 2009 Vastra Gotalandsregionen
+ * Copyright 2010 Västra Götalandsregionen
  *
  *   This library is free software; you can redistribute it and/or modify
  *   it under the terms of version 2.1 of the GNU Lesser General Public
@@ -14,7 +14,9 @@
  *   License along with this library; if not, write to the
  *   Free Software Foundation, Inc., 59 Temple Place, Suite 330,
  *   Boston, MA 02111-1307  USA
+ *
  */
+
 package se.vgregion.webbtidbok;
 
 import static org.junit.Assert.assertEquals;
@@ -24,6 +26,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -85,19 +88,28 @@ public class LoginTest {
 
 	@Test
 	public void testLookupTrue() {
-		boolean lookup = login.lookup(state);
+	  LoginMessages loginMessages = new LoginMessages();
+		boolean lookup = login.lookup(state, loginMessages);
 		assertTrue(lookup);
 		assertEquals("ServiceID", state.getService());
 		assertEquals("MessageBundleBase", state.getMessageBundle());
+		assertNull(loginMessages.getErrorMessages());
 	}
 
 	@Test
 	public void testLookupFalse() {
 		lookupServieMock.serviceDefinition = null;
-		boolean lookup = login.lookup(state);
+		ResourceBundle bundle = ResourceBundle.getBundle("messages/BaseMessages");
+		String errorMessage = bundle.getString("loginpageErrorMessage");
+		String[] errorMessageList = errorMessage.split("\\|");
+		LoginMessages loginMessages = new LoginMessages();
+		login.setResourceBundle(bundle);
+		boolean lookup = login.lookup(state, loginMessages);
 		assertFalse(lookup);
 		assertNull(state.getService());
 		assertEquals("", state.getMessageBundle());
+		assertEquals(errorMessageList[0], loginMessages.getErrorMessages()[0]);
+		assertEquals(errorMessageList[1], loginMessages.getErrorMessages()[1]);
 	}
 
 	class BookingFactory implements se.vgregion.webbtidbok.booking.BookingFactory {
