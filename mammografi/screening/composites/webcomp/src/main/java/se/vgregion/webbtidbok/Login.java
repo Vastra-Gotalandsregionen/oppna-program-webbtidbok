@@ -17,6 +17,8 @@
  */
 package se.vgregion.webbtidbok;
 
+import java.util.ResourceBundle;
+
 import org.springframework.stereotype.Service;
 
 import se.vgregion.webbtidbok.booking.BookingFacade;
@@ -28,14 +30,18 @@ import se.vgregion.webbtidbok.servicedef.ServiceDefinition;
 public class Login {
   private BookingFactory bookingFactory;
   private LookupService lookupService;
+  private ResourceBundle resourceBundle;
 
+  public void setResourceBundle(ResourceBundle resourceBundle) {
+    this.resourceBundle = resourceBundle;
+  }
 
   public void setBookingFactory(BookingFactory bookingFactory) {
     this.bookingFactory = bookingFactory;
   }
-  
+
   public void setLookupService(LookupService lookupService) {
-      this.lookupService = lookupService;
+    this.lookupService = lookupService;
   }
 
   public void logout(State loginCredentials) {
@@ -55,15 +61,17 @@ public class Login {
     }
   }
 
-  public boolean lookup(State state) {
-      ServiceDefinition sd = lookupService.lookup(state);
-      if (sd != null) {
-          state.setService(sd.getServiceID());
-          state.setMessageBundle(sd.getMessageBundleBase());
-          return true;
-      } else {
-          return false;
-      }
+  public boolean lookup(State state, LoginMessages loginMessages) {
+    ServiceDefinition sd = lookupService.lookup(state);
+    if (sd != null) {
+      state.setService(sd.getServiceID());
+      state.setMessageBundle(sd.getMessageBundleBase());
+      return true;
+    } else {
+      String[] split = resourceBundle.getString("loginpageErrorMessage").split("\\|");
+      loginMessages.setErrorMessages(split);
+      return false;
+    }
   }
 
 }
