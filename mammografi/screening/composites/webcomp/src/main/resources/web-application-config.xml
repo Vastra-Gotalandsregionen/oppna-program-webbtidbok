@@ -68,6 +68,12 @@
 	<bean id="loginService" class="se.vgregion.webbtidbok.Login">
 		<property name="bookingFactory" ref="bookingFactory" />
 		<property name="lookupService" ref="lookupService" />
+		<property name="resourceBundle">
+			<bean id="messages" class="java.util.ResourceBundle"
+				factory-method="getBundle">
+				<constructor-arg value="messages/BaseMessages" />
+			</bean>
+		</property>
 	</bean>
 
 	<!--
@@ -125,10 +131,14 @@
 	<bean id="helper" class="se.vgregion.webbtidbok.booking.elvis.WebServiceHelper"
 		lazy-init="false">
 		<property name="encrypter" ref="stringEncrypter" />
-	
-<!--			<property name="elvisWebService"><bean factory-bean="elvisWebService"-->
-<!--			factory-method="getBasicHttpBindingICentralBookingWS"/></property>-->
-	
+
+		<!--
+			<property name="elvisWebService"><bean factory-bean="elvisWebService"
+		-->
+		<!--
+			factory-method="getBasicHttpBindingICentralBookingWS"/></property>
+		-->
+
 		<property name="elvisWebService" ref="elvisWebserviceMock" />
 	</bean>
 
@@ -189,7 +199,7 @@
 			value="a6c21dcdd9534d742aa1bd4afae16210_956e2a3a-b426-49f4-a107-72c603d2f58c" />
 		<property name="keyPassWord" value="asd" />
 	</bean>
-	
+
 	<bean id="calendarService" class="se.vgregion.webbtidbok.calendar.CalendarUtil">
 		<property name="bookingFacade" ref="bookingFacade" />
 	</bean>
@@ -204,10 +214,12 @@
 	</aop:config>
 
 
-    <!-- Utility bean for dumping methods we don't have a proper home for. -->
-    <bean id="guiUtility" class="se.vgregion.webbtidbok.gui.GUIUtilities">
-        <property name="bookingFacade" ref="bookingFacade" />
-    </bean>
+	<!--
+		Utility bean for dumping methods we don't have a proper home for.
+	-->
+	<bean id="guiUtility" class="se.vgregion.webbtidbok.gui.GUIUtilities">
+		<property name="bookingFacade" ref="bookingFacade" />
+	</bean>
 
 	<!-- Flow handler handling exceptions for the 'login' flow. -->
 	<bean name="login"
