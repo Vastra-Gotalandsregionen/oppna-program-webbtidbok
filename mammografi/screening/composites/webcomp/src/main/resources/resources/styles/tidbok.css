@@ -1,5 +1,5 @@
 /**
- * Copyright 2009 Vastra Gotalandsregionen
+ * Copyright 2010 Västra Götalandsregionen
  *
  *   This library is free software; you can redistribute it and/or modify
  *   it under the terms of version 2.1 of the GNU Lesser General Public
@@ -21,17 +21,17 @@
 
 /* Styling for the box showing the current booking. */
 #tb_bookinginfo {
-    background: #f3f1f2;
-    border: 0.1em solid #91ADB4;
-    padding: 0.5em;
+	background: #f3f1f2;
+	border: 0.1em solid #91ADB4;
+	padding: 0.5em;
 }
 
 #tb_bookinginfo p {
-    margin: 5px;
+	margin: 5px;
 }
 
 #tb_bookinginfo p.heading {
-    font-weight: bold;
+	font-weight: bold;
 }
 
 #tb_bookinginfo p.tb_booking_bread {
@@ -55,89 +55,102 @@ div.tb_buttonFloat form {
 
 /* Styling for section headers on the update page. */
 div.tb_sectionheading {
-    background-color:#f3f1f2;
-    margin-bottom:10px;
-    margin-top:20px;
-    padding:5px;
+	background-color: #f3f1f2;
+	margin-bottom: 10px;
+	margin-top: 20px;
+	padding: 5px;
 }
 
 div.tb_sectionheading h3 {
-    display: inline;
+	display: inline;
 }
 
 div.tb_sectionheading a {
-    float: right;
+	float: right;
 }
 
 /* Styling for the location selection on the update page. */
 #selectForm select {
-    display: block;
-    width: 320px;
+	display: block;
+	width: 320px;
 }
 
 #selectForm input {
-    display: block;
+	display: block;
 }
 
 /* Styling for the calendar on the update page. */
 table.tb_calendar td {
-    width: 2em;
+	width: 2em;
 }
 
 table.tb_calendar th {
-    text-align: center;
+	text-align: center;
 }
 
 table.tb_calendar tr.tb_calendar_heading th {
-    font-size: 1.25em;
-    background: #e6e6e6;
+	font-size: 1.25em;
+	background: #e6e6e6;
 }
 
 /* Styling for the table listing booking times on the update page. */
 #timeForm table {
-    width: 260px;
+	width: 260px;
 }
 
 table .tb_time_datestring {
-    font-size: 1.25em;
-    background: #e6e6e6;
+	font-size: 1.25em;
+	background: #e6e6e6;
 }
 
 table .tb_time_header {
-    font-weight: normal;
-    font-size: 1.1em;
-    text-align: left;
-    padding-top: 3px;
-    padding-bottom: 2px;
+	font-weight: normal;
+	font-size: 1.1em;
+	text-align: left;
+	padding-top: 3px;
+	padding-bottom: 2px;
 }
 
 /* Styling for the logout button. */
 #tb_logout {
-    margin-top: 1em;
-    margin-bottom: 1em;
+	margin-top: 1em;
+	margin-bottom: 1em;
 }
 
 #tb_logout input {
-    display: block;
-    margin-left: auto;
-    margin-right: 0px;
+	display: block;
+	margin-left: auto;
+	margin-right: 0px;
 }
 
 /* Styling for the cancel buttons. */
 div.tb_cancelform {
-    margin-top: 15px;
-    margin-bottom: 10px;
-    align: right;
+	margin-top: 15px;
+	margin-bottom: 10px;
+	align: right;
 }
 
 div.tb_cancelform input {
-    display: block;
-    margin-left: auto;
-    margin-right: 0px;
+	display: block;
+	margin-left: auto;
+	margin-right: 0px;
 }
 
 /* Style all input buttons to be the same width unless otherwise specified. */
 #boxmiddle input {
-    width: 100px;
+	width: 100px;
 }
-    
+
+div.error_message p {
+	color: red;
+	font-style: italic"
+}
+
+#error_message ul {
+	padding-left: 1em;
+}
+
+#error_message li {
+	list-style-image:none;
+}
+
