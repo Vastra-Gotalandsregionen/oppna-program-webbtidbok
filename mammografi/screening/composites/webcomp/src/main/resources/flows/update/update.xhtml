@@ -53,12 +53,19 @@
 				</h:form>
 			</f:view>
 		</div>
+
+		<p class="tb_update_new_location_header">
+		    <h:outputFormat value="#{baseMsg.updatepageDirectionHeader}">
+		        <f:param value="#{location.currentLocation.surgeryName}" />
+		    </h:outputFormat></p>
+		<p>#{location.currentLocation.surgeryAddress}</p>
+		
         <ui:decorate template="update_cancelbutton.xhtml" />
 
         <ui:decorate template="update_sectionheader.xhtml">
             <ui:param name="section_heading" value="#{baseMsg.updatepageChooseDate}"/>
         </ui:decorate>
-        <p class="tb_surgery_address_header">#{location.currentLocation.fullAddress}</p>
+        <p class="tb_surgery_address_header">#{location.currentLocation.surgeryName}</p>
 									
 											
 		<ui:fragment id="calendarFragment">
@@ -81,10 +88,10 @@
                 <ui:repeat value="#{calendarHolder.calendar}" var="weekRow">
                     <tr>
                         <ui:repeat value="#{weekRow}" var="dayCell">
-                            <td style="background: #{dayCell.color}">
+                            <td class="#{dayCell.style}">
                                 <ui:fragment rendered="#{dayCell.isLink}">
-                                    <h:commandLink escape="false" id="mon1" value="#{dayCell.day}" action="showTimeCalendar" >
-                                        <f:param name="selectedDay" value="#{dayCell.commandLinkDay}"></f:param>
+                                    <h:commandLink escape="false" id="cal#{dayCell.day}" value="#{dayCell.day}" action="showTimeCalendar" >
+                                        <f:param name="selectedDay" value="#{dayCell.day}"></f:param>
                                     </h:commandLink>
                                 </ui:fragment>
                                 <ui:fragment rendered="#{!dayCell.isLink}">#{dayCell.day}</ui:fragment>
@@ -108,7 +115,7 @@
             <ui:decorate template="update_sectionheader.xhtml">
                 <ui:param name="section_heading" value="#{baseMsg.updatepageChooseTime}"/>
             </ui:decorate>
-            <p class="tb_surgery_address_header">#{location.currentLocation.fullAddress}</p>
+            <p class="tb_surgery_address_header">#{location.currentLocation.surgeryName}</p>
 			
 
 			<div id="placediv_time">

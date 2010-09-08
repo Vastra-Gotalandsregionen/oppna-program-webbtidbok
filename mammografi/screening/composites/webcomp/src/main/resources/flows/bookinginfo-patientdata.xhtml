@@ -28,7 +28,8 @@
         <h3>#{booking.patientName}</h3>
         <p>#{booking.patientId}</p>
         <h3><h:outputText value="#{location_heading}"/>:</h3>
-        <p>#{booking.surgery.fullAddress}</p>           
+        <p>#{booking.surgery.surgeryName}</p>
+        <p>#{booking.surgery.surgeryAddress}</p>
         <p><h:outputText value="#{booking.startTime}"><f:convertDateTime type="both" pattern="EEEE dd MMMM yyyy, HH:mm" locale="sv" timeZone="Europe/Stockholm" /></h:outputText></p>
     </div>
 
