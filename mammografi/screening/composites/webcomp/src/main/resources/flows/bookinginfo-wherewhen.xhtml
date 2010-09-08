@@ -27,13 +27,13 @@
     <div id="tb_bookinginfo" class="tb_relcontainer">
         <ui:insert name="topInformationSection" />
         <ui:insert name="buttonFloat" />
-        <p class="heading">#{booking.patientName}</p>
+        <h3>#{booking.patientName}</h3>
         <p class="tb_booking_bread">#{booking.patientId}</p>
-        <p class="heading"><h:outputText value="#{baseMsg.locationBoxWhere}"/>:</p>
-        <p class="tb_booking_bread">#{booking.surgery.surgeryName}</p>           
-        <p class="tb_booking_bread">#{booking.surgery.surgeryAddress}</p>           
-        <p class="heading"><h:outputText value="#{baseMsg.locationBoxWhen}"/>:</p>
-        <p class="tb_booking_bread"><h:outputText value="#{booking.startTime}"><f:convertDateTime type="both" pattern="EEEE dd MMMM yyyy, HH:mm" locale="sv" timeZone="Europe/Stockholm" /></h:outputText></p>
+        <h3><h:outputText value="#{baseMsg.locationBoxWhere}"/>:</h3>
+        <p>#{booking.surgery.surgeryName}</p>           
+        <p>#{booking.surgery.surgeryAddress}</p>           
+        <h3><h:outputText value="#{baseMsg.locationBoxWhen}"/>:</h3>
+        <p><h:outputText value="#{booking.startTime}"><f:convertDateTime type="both" pattern="EEEE dd MMMM yyyy, HH:mm" locale="sv" timeZone="Europe/Stockholm" /></h:outputText></p>
         <ui:insert name="bottomInformationSection" />
     </div>
 
