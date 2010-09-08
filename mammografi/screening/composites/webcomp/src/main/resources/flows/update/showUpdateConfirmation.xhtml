@@ -37,6 +37,10 @@
 
     <ui:decorate template="/flows/bookinginfo-wherewhen.xhtml" />
 
+    <div id="print" class="print">
+    	<p><a href="#" onclick="window.print()">#{baseMsg.print} <img alt="#{baseMsg.print}" src="#{facesContext.externalContext.requestContextPath}/resources/VGRImages/printer.png"/></a></p>
+    </div>
+
 </ui:fragment>
 </ui:define>
 </ui:composition>
