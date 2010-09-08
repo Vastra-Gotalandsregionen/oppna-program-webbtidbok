@@ -45,11 +45,10 @@
         <div id="tb_selectlocation">    
 			<f:view>
 				<h:form id="selectForm" action="displaytimes">
-					<h:selectOneMenu rendered="true" id="places" value="#{location.locationId}"  onchange="">
+					<h:selectOneMenu rendered="true" id="places" value="#{location.locationId}"  onchange="submit()">
 			       	    <f:selectItems value="#{location.selectItems}" /> 					
 					</h:selectOneMenu>
 					<br />
-					<sf:commandButton id="displayButton" value="#{baseMsg.updatepageShowTimes}" processIds="*" action="displaytimes"/>
 				</h:form>
 			</f:view>
 		</div>
