@@ -159,11 +159,11 @@ public class CalendarHolder implements Serializable {
     }
 
     private DayItem createEmptyDayItem() {
-        return new DayItem("", INVISIBLE_DAY_COLOR, false, false);
+        return new DayItem("", DayState.EMPTY, false, false);
     }
 
     private DayItem createDayItem(int day, boolean hasAvailableTimes, boolean isHistoric) {
-        String color = getCellColor(hasAvailableTimes, isHistoric);
+        DayState color = getCellState(hasAvailableTimes, isHistoric);
         return new DayItem(Integer.toString(day), color, hasAvailableTimes, true);  
     }
     
@@ -176,13 +176,13 @@ public class CalendarHolder implements Serializable {
             date1.get(Calendar.MONTH) == date2.get(Calendar.MONTH);
     }
     
-    private String getCellColor(boolean hasAvailableTimes, boolean isHistoric) {
+    private DayState getCellState(boolean hasAvailableTimes, boolean isHistoric) {
         if (isHistoric) {
-            return PAST_DAY_COLOR;
+            return DayState.PAST;
         } else if (hasAvailableTimes) {
-            return AVAILABLE_DAY_COLOR;
+            return DayState.BOOKABLE;
         } else {
-            return EMPTY_DAY_COLOR;
+            return DayState.NO_TIMES;
         }
     }
 
@@ -194,26 +194,22 @@ public class CalendarHolder implements Serializable {
         private static final long serialVersionUID = 1L;
 
         String day;
-        String color;
+        DayState category;
         boolean isLink;
         boolean visible;
         
-        public DayItem(String day, String color, boolean isLink, boolean visible) {
+        public DayItem(String day, DayState category, boolean isLink, boolean visible) {
             this.day = day;
-            this.color = color;
+            this.category = category;
             this.isLink = isLink;
             this.visible = visible;
         }
         
-        public String getColor() {
-            return color;
+        public String getStyle() {
+            return "tb_cal_" + category.toString().toLowerCase();
         }
 
         public String getDay() {
-            return day;
-        }
-
-        public String getCommandLinkDay() {
             return day;
         }
 
@@ -221,13 +217,10 @@ public class CalendarHolder implements Serializable {
             return isLink;
         }
         
-        public boolean getIsNotLink() {
-            return !isLink;
-        }
-        
         public boolean getVisible() {
             return visible;
         }
     }
 
+    public enum DayState { EMPTY, BOOKABLE, NO_TIMES, PAST, TODAY };
 }

@@ -53,10 +53,11 @@ div.tb_buttonFloat form {
 
 /* Styling for section headers on the update page. */
 div.tb_sectionheading {
-	background-color: #f3f1f2;
-	margin-bottom: 10px;
-	margin-top: 20px;
-	padding: 5px;
+    background-color:#f3f1f2;
+    border: 0.1em solid #91ADB4;
+    margin-bottom:10px;
+    margin-top:20px;
+    padding:5px;
 }
 
 div.tb_sectionheading h3 {
@@ -77,18 +78,63 @@ div.tb_sectionheading a {
 	display: block;
 }
 
+.tb_update_new_location_header {
+    margin-top: 5px;
+}
+
 /* Styling for the calendar on the update page. */
+table.tb_calendar {
+    font-size: 1.1em;
+    border-spacing: 0px;
+    border-collapse: collapse;
+    border: 0.1em solid #91ADB4;
+}
+
+table.tb_calendar tr.tb_calendar_heading {
+    border: 0.1em solid #91ADB4;
+}
+
 table.tb_calendar td {
-	width: 2em;
+    width: 2.5em;
+    text-align: center;
+    border: 0.1em dotted #91ADB4;
+    padding-top: 4px;
+    padding-bottom: 4px;
 }
 
 table.tb_calendar th {
 	text-align: center;
+    border: 0.1em solid #91ADB4;
+    padding-top: 2px;
+    padding-bottom: 2px;
 }
 
 table.tb_calendar tr.tb_calendar_heading th {
 	font-size: 1.25em;
 	background: #e6e6e6;
+    border: none;
+    padding-top: 4px;
+    padding-bottom: 3px;
+}
+
+table.tb_calendar td.tb_cal_empty {
+    background: #ffffff;
+}
+
+table.tb_calendar td.tb_cal_bookable {
+    background: #e6e6e6;
+}
+
+table.tb_calendar td.tb_cal_no_times {
+    background: #ffffff;
+}
+
+table.tb_calendar td.tb_cal_today {
+    background: #66CCFF;
+}
+
+table.tb_calendar td a {
+    text-decoration: underline;
 }
 
 /* Styling for the table listing booking times on the update page. */
