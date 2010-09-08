@@ -195,5 +195,11 @@ div.error_message p {
 }
 
 #error_message li {
-	list-style-image: none;
+	list-style-image:none;
 }
+
+.print{
+	padding-top: 10px;	
+	text-align: right;
+}
+
