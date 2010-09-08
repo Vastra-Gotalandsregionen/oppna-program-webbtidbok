@@ -20,12 +20,14 @@ package se.vgregion.webbtidbok.lang;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class StringHandler {
 
 	private final static String NAMES_REGEX = "(?i)[a-zåäöÅÄÖ]+";
+	
 
 	public static String toFirstLetterToUpperCase(String s) {
 
@@ -58,7 +60,8 @@ public class StringHandler {
 	}
 	
 	public static String formatDate(String pattern, Date date) {
-        SimpleDateFormat format = new SimpleDateFormat(pattern);
+		Locale localeSweden = new Locale("sv", "SE");
+        SimpleDateFormat format = new SimpleDateFormat(pattern,localeSweden);
         return date == null ? "" : format.format(date);
 	}
 }
