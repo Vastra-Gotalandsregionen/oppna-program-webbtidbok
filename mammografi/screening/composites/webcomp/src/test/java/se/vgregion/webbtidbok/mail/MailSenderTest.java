@@ -38,6 +38,7 @@ import se.vgregion.webbtidbok.domain.sectra.BookingSectra;
 public class MailSenderTest {
 	private static MailSetup mailsetup;
 	private static MailSender mailsender;
+	private static CancellationMessageSetup messagesetup;;
 	private static Booking booking;
 	private static State state;
 	private static Properties props;
@@ -96,13 +97,13 @@ public class MailSenderTest {
 
 	@Test
 	public void testGetSession() {
-		session = mailsender.getSession(props);
+		session = mailsetup.getSession(props);
 		assertNotNull(session);
 	}
 
 	@Test
 	public void testGetToAddresses() {
-		InternetAddress[] ia = mailsender.getToAddresses(emailaddresses);
+		InternetAddress[] ia = messagesetup.getToAddresses(emailaddresses);
 		for (int i = 0; i < ia.length; i++) {
 
 			assertTrue(ia[i].toString().equals(emailaddresses[i]));

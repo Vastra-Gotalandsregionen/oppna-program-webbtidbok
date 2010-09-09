@@ -20,6 +20,9 @@ package se.vgregion.webbtidbok.mail;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+
 import se.vgregion.webbtidbok.State;
 
 /**
@@ -66,4 +69,23 @@ public class MailSetup {
 		return bundle;
 	}
 
+	public Session getSession(Properties mailproperties) {
+		final String user = mailproperties.getProperty("userName");
+		final String userKey = mailproperties.getProperty("userKey");
+
+		Session session = Session.getDefaultInstance(mailproperties, new javax.mail.Authenticator() {
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(user, userKey);
+			}
+		});
+
+		return session;
+	}
+
+	public static void main(String[] args) {
+		State state = new State();
+		state.setMessageBundle("MammografiMessagesNU");
+		MailSetup ms = new MailSetup();
+		ms.setUpMailResourceBunle(state);
+	}
 }
