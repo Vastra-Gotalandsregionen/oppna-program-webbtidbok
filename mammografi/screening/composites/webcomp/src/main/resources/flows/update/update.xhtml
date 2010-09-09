@@ -109,9 +109,9 @@
              are empty slots for that date. -->
         <!-- TODO: Make this work for empty timeListLocal -->
         <ui:fragment rendered="#{calendarHolder.selectedDateIsInCurrentMonth}">         
-          <ui:fragment rendered="#{!empty timeListLocal}">         
-
-            <ui:decorate template="update_sectionheader.xhtml">
+          <ui:fragment rendered="#{timeListLocal.rowCount > 0}">         
+				 
+				<ui:decorate template="update_sectionheader.xhtml">
                 <ui:param name="section_heading" value="#{baseMsg.updatepageChooseTime}"/>
             </ui:decorate>
             <p class="tb_surgery_address_header">#{location.currentLocation.surgeryName}</p>
