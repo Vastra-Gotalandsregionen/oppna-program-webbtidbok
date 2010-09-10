@@ -49,7 +49,7 @@ public class CancellationMessageSetup {
 
 			msg.setRecipients(Message.RecipientType.TO, getToAddress(cancelationAddress));
 			msg.setFrom(addressFrom);
-			msg.setSubject(bundle.getString("cancelationMailSubject") + " " + patientName + ", " + state.getPasswd());
+			msg.setSubject(bundle.getString("cancelationMailSubject") + patientName + ", " + state.getPasswd());
 			msg.setContent(bundle.getString("cancelationMailMailBody") + " " + patientName + ", " + state.getPasswd(),
 					"text/plain");
 

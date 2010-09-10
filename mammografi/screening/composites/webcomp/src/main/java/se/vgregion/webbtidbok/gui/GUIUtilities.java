@@ -91,12 +91,6 @@ public class GUIUtilities {
 
 		MailSender mailsender = new MailSender(state, booking);
 		mq.execute(mailsender);
-		// mq1.execute(mailsender);
-
-		// mq = new MailQueue(4, mailsender);
-		// mq.execute(mailsender);
-
-		// mailsender.sendCancellationMail();
 
 	}
 }
