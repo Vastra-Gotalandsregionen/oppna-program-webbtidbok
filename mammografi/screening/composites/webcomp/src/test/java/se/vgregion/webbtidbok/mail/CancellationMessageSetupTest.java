@@ -17,13 +17,16 @@
  */
 package se.vgregion.webbtidbok.mail;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.io.IOException;
 import java.util.Properties;
 
+import javax.mail.Message;
+import javax.mail.MessagingException;
 import javax.mail.Session;
-import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 
 import org.junit.Before;
@@ -34,7 +37,7 @@ import se.vgregion.webbtidbok.State;
 import se.vgregion.webbtidbok.domain.Booking;
 import se.vgregion.webbtidbok.domain.sectra.BookingSectra;
 
-public class MailSenderTest {
+public class CancellationMessageSetupTest {
 	private static MailSetup mailsetup;
 	private static MailSender mailsender;
 	private static CancellationMessageSetup messagesetup;;
@@ -42,15 +45,15 @@ public class MailSenderTest {
 	private static State state;
 	private static Properties props;
 	private Session session;
-	private String[] emailaddresses = { "apa@bepa.com", "trulyH4xx0r@arpa.net" };
+	private String[] emailaddresses = { "test1@email.com", "test2@email.com" };
 
 	final String SMTPHOSTNAME = "smtp.gmail.com";
 	final String SMTPPORT = "465";
 	final String USER = "test01.knowit@gmail.com";
 	final String PASS = "1234Pass";
 
-	final String CANCELATIONMAILSUBJECT = "this is the subject for NU ";
-	final String CANCELATIONMAILBODY = "this is the mailbody for NU";
+	final String CANCELATIONMAILSUBJECT = "this is the cancellation subject for NU ";
+	final String CANCELATIONMAILBODY = "this is the cancellation mail body for NU";
 	final String FROMEMAILADDRESS = "doNotReply@doNotReplyNU.se";
 	final String CANCELATIONTOEMAILADDRESS = "carl.stromhielm@knowit.se";
 	final String SWITCHTOEMAILADDRESS = "newBooking@SU.se";
@@ -58,50 +61,41 @@ public class MailSenderTest {
 
 	@Before
 	public void setUp() throws Exception {
+
 		state = new State();
 		state.setService("MAMMOGRAFI_NU");
 		state.setMessageBundle("messages/mammografi/MammografiMessagesNU");
-		state.setPasswd("webbtidbokspassw0rd");
+		state.setPasswd("SEMUDD000004");
 		booking = new BookingSectra();
 		booking.setPatientName("Patient X");
 		mailsetup = new MailSetup();
 		mailsender = new MailSender();
+		messagesetup = new CancellationMessageSetup();
 		props = mailsetup.setUpMailProperties(state);
+		session = mailsetup.getSession(props);
 	}
 
 	@Test
-	public void testGetMailProperties() {
-		props = mailsetup.setUpMailProperties(state);
-		assertNotNull(props);
-
-		assertTrue(props.getProperty("mail.smtp.host").equals(SMTPHOSTNAME));
-		assertTrue(props.getProperty("mail.smtp.port").equals(SMTPPORT));
-		assertTrue(props.getProperty("userName").equals(USER));
-		assertTrue(props.getProperty("userKey").equals(PASS));
-		assertTrue(props.getProperty("mail.debug").equals("true"));
-		assertTrue(props.getProperty("mail.smtp.socketFactory.port").equals(SMTPPORT));
-		assertTrue(props.getProperty("mail.smtp.socketFactory.class").equals(SOCKETFACTORYCLASS));
-		assertTrue(props.getProperty("mail.smtp.socketFactory").equals("false"));
+	public void testGetMessage() throws MessagingException, IOException {
+		Message message = messagesetup.getMessage(session, state, booking.getPatientName());
+		assertNotNull(message);
+		assertTrue((CANCELATIONMAILSUBJECT + booking.getPatientName() + ", " + state.getPasswd()).equals(message.getSubject()));
+		assertTrue(FROMEMAILADDRESS.equals(message.getFrom()[0].toString()));
+		assertTrue((CANCELATIONMAILBODY + " " + booking.getPatientName() + ", " + state.getPasswd()).equals(message.getContent()
+				.toString()));
 	}
 
-	@Test
-	public void testGetToAddresses() {
-		InternetAddress[] ia = messagesetup.getToAddresses(emailaddresses);
-		for (int i = 0; i < ia.length; i++) {
-
-			assertTrue(ia[i].toString().equals(emailaddresses[i]));
-		}
-	}
-
-	/**
-	 * don't really want to try and send mail to smtp server
-	 * 
-	 * @throws AddressException
-	 */
 	@Ignore
 	@Test
-	public void testSendMail() throws AddressException {
+	public void testGetToAddresses() {
+		InternetAddress[] toAddresses = messagesetup.getToAddresses(emailaddresses);
+	}
 
+	@Test
+	public void testGetToAddress() {
+		InternetAddress[] toAddress = messagesetup.getToAddress(emailaddresses[0]);
+		assertNotNull(toAddress);
+		assertEquals(emailaddresses[0], toAddress[0].toString());
 	}
 
 }
