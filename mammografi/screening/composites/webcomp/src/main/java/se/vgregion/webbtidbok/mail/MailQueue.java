@@ -28,7 +28,7 @@ import java.util.LinkedList;
 public class MailQueue {
 
 	private int nThreads = 0;
-	private final PoolWorker[] threads;
+	private PoolWorker[] threads;
 	private static LinkedList<Runnable> queue;
 
 	public MailQueue(int nThreads) {
@@ -37,6 +37,7 @@ public class MailQueue {
 		threads = new PoolWorker[nThreads];
 
 		for (int i = 0; i < nThreads; i++) {
+			threads[i] = new PoolWorker();
 			threads[i].start();
 		}
 	}
