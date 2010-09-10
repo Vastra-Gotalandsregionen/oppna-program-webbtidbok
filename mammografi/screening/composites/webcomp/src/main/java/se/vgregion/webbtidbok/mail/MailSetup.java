@@ -81,11 +81,4 @@ public class MailSetup {
 
 		return session;
 	}
-
-	public static void main(String[] args) {
-		State state = new State();
-		state.setMessageBundle("MammografiMessagesNU");
-		MailSetup ms = new MailSetup();
-		ms.setUpMailResourceBunle(state);
-	}
 }

@@ -18,7 +18,6 @@
 package se.vgregion.webbtidbok.mail;
 
 import java.util.LinkedList;
-import java.util.concurrent.ExecutorService;
 
 /**
  * This is a thread pool to reuse mailer threads for cancellation emails
@@ -31,7 +30,6 @@ public class MailQueue {
 	private int nThreads = 0;
 	private final PoolWorker[] threads;
 	private static LinkedList<Runnable> queue;
-	private static ExecutorService exec;
 
 	public MailQueue(int nThreads) {
 		this.nThreads = nThreads;
@@ -39,8 +37,6 @@ public class MailQueue {
 		threads = new PoolWorker[nThreads];
 
 		for (int i = 0; i < nThreads; i++) {
-			System.out.println("In for()");
-			threads[i] = new PoolWorker();
 			threads[i].start();
 		}
 	}
@@ -59,18 +55,14 @@ public class MailQueue {
 			Runnable job = null;
 			while (true) {
 				synchronized (queue) {
-					System.out.println("Q size is: " + queue.size());
 					while (queue.isEmpty()) {
 						try {
-							System.out.println("Q is empty");
 							queue.wait();
-
 						} catch (InterruptedException e) {
 							e.printStackTrace();
 						}
 					}
 					job = (Runnable) queue.removeFirst();
-
 				}
 				try {
 					job.run();
