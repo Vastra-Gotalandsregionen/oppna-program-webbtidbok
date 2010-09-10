@@ -23,6 +23,8 @@ import static org.junit.Assert.assertTrue;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
+import javax.mail.Session;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -32,7 +34,7 @@ public class MailSetupTest {
 
 	private MailSetup mailsetup;
 	private State state;
-
+	private Properties props;
 	final String SMTPHOSTNAME = "smtp.gmail.com";
 	final String SMTPPORT = "465";
 	final String USER = "test01.knowit@gmail.com";
@@ -45,38 +47,33 @@ public class MailSetupTest {
 		state = new State();
 		state.setService("MAMMOGRAFI_NU");
 		state.setMessageBundle("messages/mammografi/MammografiMessagesNU");
-
 		mailsetup = new MailSetup();
+		props = mailsetup.setUpMailProperties(state);
 	}
 
 	@Test
 	public void testSetUpMailProperties() {
-
-		Properties props;
-
-		props = mailsetup.setUpMailProperties(state);
-
 		assertNotNull(props);
 		System.out.println("props.getProperty(\"smtpHostName\"): " + props.getProperty("smtpHostName"));
-
 		assertTrue(props.getProperty("mail.smtp.host").equals(SMTPHOSTNAME));
 		assertTrue(props.getProperty("mail.smtp.port").equals(SMTPPORT));
 		assertTrue(props.getProperty("userName").equals(USER));
 		assertTrue(props.getProperty("userKey").equals(PASS));
-
 		assertTrue(props.getProperty("mail.debug").equals("true"));
 		assertTrue(props.getProperty("mail.smtp.socketFactory.port").equals(SMTPPORT));
 		assertTrue(props.getProperty("mail.smtp.socketFactory.class").equals(SOCKETFACTORYCLASS));
 		assertTrue(props.getProperty("mail.smtp.socketFactory").equals("false"));
-
 	}
 
 	@Test
 	public void testSetUpMailResourceBunle() {
-
 		ResourceBundle bundle = mailsetup.setUpMailResourceBunle(state);
 		assertNotNull(bundle);
-
 	}
 
+	@Test
+	public void testGetSession() {
+		Session session = mailsetup.getSession(props);
+		assertNotNull(session);
+	}
 }
