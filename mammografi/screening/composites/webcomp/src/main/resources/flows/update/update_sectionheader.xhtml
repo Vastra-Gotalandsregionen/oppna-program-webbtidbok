@@ -23,10 +23,10 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:sf="http://www.springframework.org/tags/faces">
-
+<h:form>
 <div class="tb_sectionheading">
     <h3><h:outputText value="#{section_heading}"/></h3>
-    <a href="help" target="_new"><img src="../resources/VGRImages/help.gif" alt="Help symbol"/></a>
+    <h:commandLink id="help" action="help" target="_new"><img src="../resources/VGRImages/help.gif" alt="Help symbol"/></h:commandLink> 
 </div>
-
+ </h:form>
 </ui:composition>

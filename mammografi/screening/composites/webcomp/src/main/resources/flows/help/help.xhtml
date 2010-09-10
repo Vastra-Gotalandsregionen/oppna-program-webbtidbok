@@ -24,30 +24,42 @@
 	  			xmlns:h="http://java.sun.com/jsf/html"
 	  			xmlns:f="http://java.sun.com/jsf/core"
 	  			xmlns:sf="http://www.springframework.org/tags/faces"
-				template="/layouts/loggedInTemplate.xhtml">
+				template="/layouts/baseTemplate.xhtml">
 
-<ui:define name="content">
+ <ui:define name="messageBundles">
+        <f:loadBundle basename="#{state.messageBundle}" var="sectionMsg"/>
+    </ui:define>
 
-	<ui:fragment id="helpFragment">
-		<div id="boxcontainer" style="padding-bottom: 1em;">
-		<div id="boxleft" />
-		<div id="boxmiddle">
-		
-		<div>
-		    <span class="errors">
-		       <h:messages globalOnly="true" />
-		    </span>
-		    <p />
-		    <br />
-		    <h1>#{sectionMsg.helppageHeader}</h1>
-		   	<br />
-		   	#{sectionMsg.helppageTextContent}	  
-		</div>
-		
-		</div>
-		</div>
-		
-	</ui:fragment>
+    <ui:define name="localStyles">
+        <style  type="text/css">
+          .col1 { width: 230px; }
+          .col2 { width: 30px; }
+        </style>
+    </ui:define>
 
-</ui:define>
+    <ui:define name="templateContent">
+        <div id="boxcontainer">
+            <div id="boxleft" />
+            <div id="boxmiddle">
+				<ui:fragment id="helpFragment">
+					<div id="boxcontainer" style="padding-bottom: 1em;">
+						<div id="boxleft" />
+							<div id="boxmiddle">
+								<div>
+							    <span class="errors">
+							       <h:messages globalOnly="true" />
+							    </span>
+							    <p />
+							    <br />
+							    <h1>#{sectionMsg.helppageHeader}</h1>
+							   	<br />
+							   	#{sectionMsg.helppageTextContent}	  
+							</div>
+						</div>
+					</div>
+				</ui:fragment>
+            </div>
+        </div> 
+    </ui:define>
+
 </ui:composition>
