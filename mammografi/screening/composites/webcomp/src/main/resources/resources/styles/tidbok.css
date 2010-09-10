@@ -32,10 +32,10 @@
 	color: #000000;
 }
 
-/*
-#tb_bookinginfo p.tb_booking_bread {
+#tb_bookinginfo p.tb_with_button_margin {
     margin-right: 128px;
-}*/
+}
+
 div.tb_relcontainer {
 	position: relative;
 }

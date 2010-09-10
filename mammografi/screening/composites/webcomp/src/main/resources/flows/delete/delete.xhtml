@@ -28,58 +28,31 @@
 <ui:define name="content">
 
 <ui:fragment id="loginFragment">
-			<h1 style="display: inline">#{sectionMsg.deletepageHeader}</h1>
-			<p><h:outputText value="#{sectionMsg.deletepageCancellationWarning}" escape="false"/></p>
-            <div id="centercontent">
-    			
-                    <h:outputText value="#{sectionMsg.deletepageListText}" escape="false" />
-
-            </div>
-			<p/>
+	<h1>#{sectionMsg.deletepageHeader}</h1>
+	<p><h:outputText value="#{sectionMsg.deletepageCancellationWarning}" escape="false"/></p>
+    <div id="centercontent">
+        <h:outputText value="#{sectionMsg.deletepageListText}" escape="false" />
+    </div>
 		
-			<ui:fragment id="listfragment" rendered="#{!empty sectionMsg.deletepageCancellationInfo}">
-				<p><h:outputText value="#{sectionMsg.deletepageCancellationInfo}" escape="false" /></p>
-			</ui:fragment>
-			
-				<div id="boxleft1" style="width: 100%">
-                    <table id="patientInfoTable">
-                   		<tr>
-                         	<td style="width: 100%">
-                         		<p>
-                         		<b>#{booking.patientName}</b><br />
-                         		#{booking.patientId}<br />
-                         		</p>
-                          </td>
-                          <td >
-                          </td>
-                       </tr>
-                       <tr>
-                       		<td style="width: 100%">
-                       		</td>
-                       		<td style="text-align: right; padding-right: 1em">
-                       		</td>
-                       </tr>
-                       <tr>
-                       		<td style="width: 100%" >
-                       			<p>
-                         		<b>#{baseMsg.updatepageOriginalTimeHeading}</b><br />
-                       			#{booking.surgery.fullAddress}<br />
-                      			<h:outputText value="#{booking.startTime}"><f:convertDateTime type="both" pattern="EEEE dd MMMM yyyy, HH:mm" locale="sv" timeZone="Europe/Stockholm" /></h:outputText><br />
-                      			</p>
-                       		</td>
-                       		<td style="text-align: right; padding-right: 1em">
-                       			<h:form id="cancelForm" style="display: inline; text-align: right;" >
-                                   <sf:commandButton id="cancelButton" value="Avbryt" processIds="*" style="width: 100px;" action="cancel" />
-                               </h:form>
-                               <p />
-                               <h:form id="confirmDeleteForm" style="display: inline; text-align: right;" >
-                                   <sf:commandButton id="confirmDeleteButton" value="Avboka tid" processIds="*" style="width: 100px;" onclick="text/javascript:disableButton('confirmDeleteButton')" action="confirmdelete" />
-                                </h:form>
-                       		
-                       		</td>
-                       </tr>
-                    </table>				
-				</div>	
+	<ui:fragment id="listfragment" rendered="#{!empty sectionMsg.deletepageCancellationInfo}">
+		<p><h:outputText value="#{sectionMsg.deletepageCancellationInfo}" escape="false" /></p>
+	</ui:fragment>
+
+    <ui:decorate template="/flows/bookinginfo-patientdata.xhtml">
+        <ui:param name="location_heading" value="#{baseMsg.updatepageOriginalTimeHeading}"/>
+        <ui:param name="paragraph_margin" value="tb_with_button_margin" />
+        <ui:define name="buttonFloat">
+            <div class="tb_buttonFloat">
+                <h:form id="cancelForm" >
+                    <sf:commandButton id="cancelButton" value="Avbryt" processIds="*" style="width: 100px;" action="cancel" />
+                </h:form>
+                <h:form id="confirmDeleteForm" >
+                    <sf:commandButton id="confirmDeleteButton" value="Avboka tid" processIds="*" style="width: 100px;" onclick="text/javascript:disableButton('confirmDeleteButton')" action="confirmdelete" />
+                </h:form>
+            </div>
+        </ui:define>
+    </ui:decorate>
+                
 </ui:fragment>
 </ui:define>
 </ui:composition>
