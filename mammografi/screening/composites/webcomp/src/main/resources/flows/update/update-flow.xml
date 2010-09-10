@@ -67,12 +67,16 @@
 			<render fragments="displayTimeForm:calendarFragment" />
 		</transition>	
         <transition on="cancel" history="invalidate" to="cancel"/>
+        <transition on="help" to="help"/>
 	</view-state>
-
+  
     <view-state id="showConfirmation" view="/flows/update/showUpdateConfirmation.xhtml">
         <on-render >
             <evaluate expression="bookingFacade.getBookingInfo(state)" result="flowScope.booking" /> 
         </on-render>    
+    </view-state>
+    
+    <view-state id="help" view="/flows/help/help.xhtml">
     </view-state>
 
     <end-state id="cancel"/>
