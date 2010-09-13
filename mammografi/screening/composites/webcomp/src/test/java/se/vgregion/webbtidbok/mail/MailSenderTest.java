@@ -37,12 +37,12 @@ import se.vgregion.webbtidbok.domain.sectra.BookingSectra;
 public class MailSenderTest {
 	private static MailSetup mailsetup;
 	private static MailSender mailsender;
-	private static CancellationMessageSetup messagesetup;;
+	private static CancellationMessageSetup messagesetup;
 	private static Booking booking;
 	private static State state;
 	private static Properties props;
 	private Session session;
-	private String[] emailaddresses = { "apa@bepa.com", "trulyH4xx0r@arpa.net" };
+	private String[] emailaddresses = { "carl.stromhielm@knowit.se", "yes@no.com" };
 
 	final String SMTPHOSTNAME = "smtp.gmail.com";
 	final String SMTPPORT = "465";
@@ -66,6 +66,7 @@ public class MailSenderTest {
 		booking.setPatientName("Patient X");
 		mailsetup = new MailSetup();
 		mailsender = new MailSender();
+		messagesetup = new CancellationMessageSetup();
 		props = mailsetup.setUpMailProperties(state);
 	}
 
@@ -86,10 +87,12 @@ public class MailSenderTest {
 
 	@Test
 	public void testGetToAddresses() {
-		InternetAddress[] ia = messagesetup.getToAddresses(emailaddresses);
+		InternetAddress[] ia = new InternetAddress[emailaddresses.length];
+		ia = messagesetup.getToAddresses(emailaddresses);
 		for (int i = 0; i < ia.length; i++) {
 
-			assertTrue(ia[i].toString().equals(emailaddresses[i]));
+			assertTrue(ia[i].toString().equals(emailaddresses[i].toString()));
+
 		}
 	}
 
