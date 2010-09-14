@@ -38,28 +38,21 @@
     </ui:define>
 
     <ui:define name="templateContent">
-        <div id="boxcontainer">
-            <div id="boxleft" />
-            <div id="boxmiddle">
-				<ui:fragment id="helpFragment">
-					<div id="boxcontainer" style="padding-bottom: 1em;">
-						<div id="boxleft" />
-							<div id="boxmiddle">
-								<div>
-							    <span class="errors">
-							       <h:messages globalOnly="true" />
-							    </span>
-							    <p />
-							    <br />
-							    <h1>#{sectionMsg.helppageHeader}</h1>
-							   	<br />
-							   	#{sectionMsg.helppageTextContent}	  
-							</div>
-						</div>
-					</div>
-				</ui:fragment>
-            </div>
-        </div> 
+		<div id="boxcontainer">
+			<div id="boxleft" />
+			<div id="boxmiddle">
+				<div>
+				    <span class="errors">
+				       <h:messages globalOnly="true" />
+				    </span>
+				    <p />
+				    <br />
+				    <h1>#{sectionMsg.helppageHeader}</h1>
+				   	<br />
+				   	<h:outputText value="#{sectionMsg.helppageTextContent}" escape="false"/>
+				</div>
+			</div>
+		</div>
     </ui:define>
 
 </ui:composition>
