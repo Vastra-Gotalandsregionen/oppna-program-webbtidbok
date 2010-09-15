@@ -26,7 +26,8 @@ import java.util.regex.Pattern;
 
 public class StringHandler {
 
-	private final static String NAMES_REGEX = "(?i)[a-zåäöÅÄÖ]+";
+    // Swedish characters as unicode literals, to prevent matching problems caused by bad compiles.
+	private final static String NAMES_REGEX = "(?i)[a-z\u00E5\u00E4\u00F6\u00C5\u00C4\u00D6]+";
 	
 
 	public static String toFirstLetterToUpperCase(String s) {
