@@ -40,6 +40,7 @@ public class MailSender implements Runnable {
 
 	private State state;
 	private Booking booking;
+	boolean mailSentToServer = false;
 
 	public MailSender() {
 
@@ -79,10 +80,20 @@ public class MailSender implements Runnable {
 			try {
 
 				Transport.send(messageToSend);
+				mailSentToServer = true;
 
 			} catch (MessagingException e) {
 				e.printStackTrace();
+				mailSentToServer = false;
 			}
 		}
+	}
+
+	public void setState(State state) {
+		this.state = state;
+	}
+
+	public void setBooking(Booking booking) {
+		this.booking = booking;
 	}
 }

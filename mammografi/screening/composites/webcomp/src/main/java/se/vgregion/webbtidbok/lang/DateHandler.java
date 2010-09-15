@@ -17,215 +17,92 @@
  */
 package se.vgregion.webbtidbok.lang;
 
-import java.lang.*;
-import java.text.*;
-import java.util.*;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.TimeZone;
 
-import javax.xml.datatype.*;
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
 
 public class DateHandler {
 
-    public static final String DEFAULT_TIMEZONE = "Europe/Stockholm"; 
+	public static final String DEFAULT_TIMEZONE = "Europe/Stockholm";
 
-	public static String setLocaleDateFormat(Date date){
-		
-		Locale locale = new Locale("sv","SE");
-		SimpleDateFormat simpleFormat = new SimpleDateFormat("",locale);
-		//DateFormat dateFormat = new DateFormat("",locale);
-		
-		return simpleFormat.format(date);
-	}
-	
-	
-	public static String setCalendarDateFormat(Calendar selectedCalendar){
-		
+	public static String setCalendarDateFormat(Calendar selectedCalendar) {
+
 		String pattern = "yyyy-MM-dd";
-	    SimpleDateFormat format = new SimpleDateFormat(pattern);
-	    String formattedDate = format.format(selectedCalendar.getTime());
-	    return formattedDate;
+		SimpleDateFormat format = new SimpleDateFormat(pattern);
+		String formattedDate = format.format(selectedCalendar.getTime());
+		return formattedDate;
 	}
-	
-	public static Calendar setCalendarFromGregorianCalendar(XMLGregorianCalendar c){
-		
-		System.out.println("XMLGregorianCalendar: " + c.toString());
-		
-		
-		
-		Calendar tmpCalendar = Calendar.getInstance();
-		tmpCalendar.set(Calendar.YEAR, c.getYear());
-		tmpCalendar.set(Calendar.MONTH, c.getMonth() - 1);
-		tmpCalendar.set(Calendar.DATE, c.getDay());
-		tmpCalendar.set(Calendar.HOUR, c.getHour());
-		tmpCalendar.set(Calendar.MINUTE, c.getMinute());
-		
-		return tmpCalendar;
-	}
-	
-	
-	public static String setCalendarDateFormat(String selectedDate){
-		try{
-			
-		
-			String pattern = "yyyy-MM-dd";
-			SimpleDateFormat format = new SimpleDateFormat(pattern);
-			Date toBeFormatted = format.parse(selectedDate);
-			String strFormatted = format.format(toBeFormatted.getTime());
-			return strFormatted;
-	    
-		}catch(ParseException e){
-			e.printStackTrace();
-		}
-		
-		return "";
-	}
-
-	
-	public static String setCalendarTimeFormat(Calendar selectedCalendar){
-		
-		String pattern = "HH:mm";
-	    SimpleDateFormat format = new SimpleDateFormat(pattern);
-	    String toBeFormatted = format.format(selectedCalendar.getTime());
-	    return toBeFormatted;
-	}
-	
-	public static Date setCalendarTimeFormat(String selectedTime){
-		try{
-			
-			
-			String pattern = "HH:mm";
-			SimpleDateFormat format = new SimpleDateFormat(pattern);
-			Date toBeFormatted = format.parse(selectedTime);
-			
-			
-			return toBeFormatted;
-	    
-		}catch(ParseException e){
-			e.printStackTrace();
-		}
-		
-		return new Date();
-	}
-	
-	public static Date setLocaleDate(Date date){
-		
-		Locale locale = new Locale("sv","SE");
-		//SimpleDateFormat simpleFormat = new SimpleDateFormat("yyyy-MM-dd-hh.mm.ss",locale);
-		
-		DateFormat simpleFormat = new SimpleDateFormat("EEEE d MMMM yyyy HH:mm:ss Z",locale);
-		try{
-			
-			System.out.println("setLocaleDate: " + date.toString());
-			
-			System.out.println("parsa date" + simpleFormat.format(date));
-			
-			String formatString = simpleFormat.format(date);
-			Date newObject = simpleFormat.parse(formatString);
-				
-			System.out.println("new Object " + newObject.toString());
-			
-			return simpleFormat.parse(simpleFormat.format(date));
-			
-		}catch(ParseException pe){
-			pe.printStackTrace();
-			return null;
-		}
-	}
-	
-	public static String setLocaleString(Date date) {
-		
-		Locale locale = new Locale("sv","SE");
-		//SimpleDateFormat simpleFormat = new SimpleDateFormat("yyyy-MM-dd-hh.mm.ss",locale);
-		
-		DateFormat simpleFormat = new SimpleDateFormat("EEEE d MMMM yyyy', klockan ' HH:mm", locale);
-		try {
-			
-			
-			String formatString = simpleFormat.format(date);
-			Date newObject = simpleFormat.parse(formatString);
-			
-			System.out.println("new Object " + newObject.toString());
-			
-			return simpleFormat.format(date);
-			
-		} catch(ParseException pe) {
-			pe.printStackTrace();
-			return null;
-		}	
-	}
-	
 
 	/**
-	 * Create a new Date object for a given date.
+	 * Create a new Calendar object for a given date.
 	 */
-    public static Date dateFor(int year, int month, int day) {
-        return calendarFor(year, month, day).getTime();
-    }
+	public static Calendar calendarFor(int year, int month, int day) {
+		return calendarFor(year, month, day, 0, 0, 0);
+	}
 
-    /**
-     * Create a new Calendar object for a given date.
-     */
-    public static Calendar calendarFor(int year, int month, int day) {
-        return calendarFor(year, month, day, 0, 0, 0);
-    }
-    
-    /**
-     * Create a new Calendar object for a given date.
-     */
-    public static Calendar calendarFor(int year, int month, int day, int hour, int minute, int second) {
-        Calendar cal = Calendar.getInstance();
-        cal.clear();
-        cal.set(year, month-1, day, hour, minute, second);
-        cal.setTimeZone(TimeZone.getTimeZone(DEFAULT_TIMEZONE));
-        return cal;
-    }
+	/**
+	 * Create a new Calendar object for a given date.
+	 */
+	public static Calendar calendarFor(int year, int month, int day, int hour, int minute, int second) {
+		Calendar cal = Calendar.getInstance();
+		cal.clear();
+		cal.set(year, month - 1, day, hour, minute, second);
+		cal.setTimeZone(TimeZone.getTimeZone(DEFAULT_TIMEZONE));
+		return cal;
+	}
 
+	/**
+	 * Create a new XMLGregorianCalendar for a given date.
+	 */
+	public static XMLGregorianCalendar xmlCalendarFor(int year, int month, int day) {
+		try {
+			return DatatypeFactory.newInstance().newXMLGregorianCalendarDate(year, month, day, 0);
+		} catch (DatatypeConfigurationException e) {
+			throw new RuntimeException(e);
+		}
+	}
 
-    /**
-     * Create a new XMLGregorianCalendar for a given date.
-     */
-    public static XMLGregorianCalendar xmlCalendarFor(int year, int month, int day) {
-        try {
-            return DatatypeFactory.newInstance().newXMLGregorianCalendarDate(year, month, day, 0);
-        } catch (DatatypeConfigurationException e) {
-            throw new RuntimeException(e);
-        }
-    }
-	
-    /**
-     * Create a new XMLGregorianCalendar for a given date.
-     */
-    public static XMLGregorianCalendar xmlCalendarFor(int year, int month, int day, int hour, int minute, int second) {
-        try {
-            return DatatypeFactory.newInstance().newXMLGregorianCalendar(year, month, day, hour, minute, second, 0, 0);
-        } catch (DatatypeConfigurationException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    
-    public static Calendar calendarFromDate(Date date) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-        return cal;
-    }
+	/**
+	 * Create a new XMLGregorianCalendar for a given date.
+	 */
+	public static XMLGregorianCalendar xmlCalendarFor(int year, int month, int day, int hour, int minute, int second) {
+		try {
+			return DatatypeFactory.newInstance().newXMLGregorianCalendar(year, month, day, hour, minute, second, 0, 0);
+		} catch (DatatypeConfigurationException e) {
+			throw new RuntimeException(e);
+		}
+	}
 
-    public static XMLGregorianCalendar xmlCalendarFromDate(Date date) {
-        try {
-            GregorianCalendar cal = new GregorianCalendar();
-            cal.setTime(date);
-            return DatatypeFactory.newInstance().newXMLGregorianCalendar(cal);
-        } catch (DatatypeConfigurationException e) {
-            throw new RuntimeException(e);
-        }
-    }
+	public static Calendar calendarFromDate(Date date) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		return cal;
+	}
 
-    public static Calendar cloneCalendar(Calendar cal) {
-        if (cal != null) {
-            // Sloppy clone, but has to do for now.
-            Calendar newCal = Calendar.getInstance();
-            newCal.setTime(cal.getTime());
-            return newCal;
-        } else {
-            return null;
-        }
-    }
+	public static XMLGregorianCalendar xmlCalendarFromDate(Date date) {
+		try {
+			GregorianCalendar cal = new GregorianCalendar();
+			cal.setTime(date);
+			return DatatypeFactory.newInstance().newXMLGregorianCalendar(cal);
+		} catch (DatatypeConfigurationException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public static Calendar cloneCalendar(Calendar cal) {
+		if (cal != null) {
+			// Sloppy clone, but has to do for now.
+			Calendar newCal = Calendar.getInstance();
+			newCal.setTime(cal.getTime());
+			return newCal;
+		} else {
+			return null;
+		}
+	}
 }

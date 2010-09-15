@@ -72,7 +72,15 @@ public class MailSenderTest {
 
 	@Test
 	public void testGetMailProperties() {
+		Properties props = new Properties();
+		props = mailsender.getMailProperties(state);
+		assertNotNull(props);
+	}
+
+	@Test
+	public void testSetUpMailProperties() {
 		props = mailsetup.setUpMailProperties(state);
+
 		assertNotNull(props);
 
 		assertTrue(props.getProperty("mail.smtp.host").equals(SMTPHOSTNAME));
@@ -97,14 +105,17 @@ public class MailSenderTest {
 	}
 
 	/**
-	 * don't really want to try and send mail to smtp server
+	 * don't really want to try and send mail to smtp server. it's tested implicitly through other tests if however you want to
+	 * increase test coverage remove @Ignore annotaion
 	 * 
 	 * @throws AddressException
 	 */
 	@Ignore
 	@Test
 	public void testSendMail() throws AddressException {
-
+		mailsender.setState(state);
+		mailsender.setBooking(booking);
+		mailsender.sendCancellationMail();
+		assertTrue(mailsender.mailSentToServer);
 	}
-
 }

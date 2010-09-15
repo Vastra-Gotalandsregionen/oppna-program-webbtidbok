@@ -27,6 +27,7 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -43,7 +44,7 @@ import se.vgregion.webbtidbok.ws.BookingResponse;
 import se.vgregion.webbtidbok.ws.ObjectFactory;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "/se/vgregion/webbtidbok/booking/web-application-config.xml"})
+@ContextConfiguration(locations = { "/se/vgregion/webbtidbok/booking/web-application-config.xml" })
 public class BookingServiceTest {
 
 	private BookingService bookingService;
@@ -55,7 +56,7 @@ public class BookingServiceTest {
 		bookingService = new BookingService();
 		bookingService.setHelper(new WebServiceHelperMock());
 		bookingService.setMapping(new BookingMapperElvis());
-		//bookingService.setHelper(webServiceHelper);
+		// bookingService.setHelper(webServiceHelper);
 		objectFactory = new ObjectFactory();
 		objectFactory.createString("test");
 		state = new State();
@@ -83,20 +84,34 @@ public class BookingServiceTest {
 
 	@Test
 	public void testGetBookingTime() {
-	    Calendar cal = Calendar.getInstance();
+		Calendar cal = Calendar.getInstance();
+		cal.add(cal.DAY_OF_MONTH, +3);
 		List<BookingTime> bookingTime = bookingService.getBookingTime(state, "3", cal);
 		assertNotNull(bookingTime);
 		state.setLoggedIn(true);
 		bookingTime = bookingService.getBookingTime(state, "3", cal);
 	}
 
+	@Ignore
+	@Test
+	public void testGetFreeDays() {
+		state.setPasswd("4YL7CXnp");
+		state.setPnr("19121212-1212");
+		int tidbokID = 3;
+		Calendar startDate = Calendar.getInstance();
+		Calendar endDate = Calendar.getInstance();
+		endDate.add(endDate.MONTH, +1);
+		List<Calendar> freeDays = bookingService.getFreeDays(state, tidbokID, startDate, endDate);
+		assertNotNull(freeDays);
+	}
+
 	class WebServiceHelperMock extends WebServiceHelper {
 
-	  @Override
-	  public ArrayOfBookingTime getQueryWSRequestTime(BookingRequest request) {
-	    return new ArrayOfBookingTime();
-	  }
-	  
+		@Override
+		public ArrayOfBookingTime getQueryWSRequestTime(BookingRequest request) {
+			return new ArrayOfBookingTime();
+		}
+
 		@Override
 		public BookingRequest getQueryWSRequest(State loginCredentials) {
 			BookingRequest bookingRequest = new BookingRequest();
@@ -104,8 +119,7 @@ public class BookingServiceTest {
 		}
 
 		@Override
-		public ArrayOfBookingPlace getQueryWSRequestPlaces(
-				BookingRequest request) {
+		public ArrayOfBookingPlace getQueryWSRequestPlaces(BookingRequest request) {
 			se.vgregion.webbtidbok.ws.BookingPlace bookingPlace = new se.vgregion.webbtidbok.ws.BookingPlace();
 			ArrayOfBookingPlace arrayOfBookingPlace = new ArrayOfBookingPlace();
 			arrayOfBookingPlace.getBookingPlace().add(bookingPlace);
@@ -125,8 +139,7 @@ public class BookingServiceTest {
 			bookingResponse.setCentralTidbokID(3);
 
 			try {
-				bookingResponse.setBokadTid(DatatypeFactory.newInstance()
-						.newXMLGregorianCalendar());
+				bookingResponse.setBokadTid(DatatypeFactory.newInstance().newXMLGregorianCalendar());
 			} catch (DatatypeConfigurationException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
