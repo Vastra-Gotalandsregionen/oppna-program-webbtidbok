@@ -53,12 +53,17 @@
 			</f:view>
 		</div>
 
-		<p class="tb_update_new_location_header">
-		    <h:outputFormat value="#{baseMsg.updatepageDirectionHeader}">
-		        <f:param value="#{location.currentLocation.surgeryName}" />
-		    </h:outputFormat></p>
-		<p>#{location.currentLocation.surgeryAddress}</p>
 		
+
+<p class="tb_update_new_location_header"><h:outputFormat value="#{baseMsg.updatepageDirectionHeader}">
+	<f:param value="#{location.currentLocation.surgeryName}"></f:param>
+</h:outputFormat></p>
+
+<ui:fragment id="directionFragment" render="#{!empty location.currentLocation.surgeryAddress}">
+<p>#{sectionMsg.updatepageLocationDirection}#{location.currentLocation.surgeryAddress}</p>
+
+</ui:fragment>
+		 
         <ui:decorate template="update_cancelbutton.xhtml" />
 
         <ui:decorate template="update_sectionheader.xhtml">
