@@ -40,7 +40,7 @@
 	<action-state id="confirmdeletebooking">
 			<evaluate expression="bookingFacade.cancelBooking(state)"  />            
 			<transition to="confirmdelete">
-				<evaluate expression="guiUtility.sendCancelationMail(state, booking)" />
+				<evaluate expression="guiUtility.sendCancelationMail(state, booking, mailQueue)" />
 			</transition>
     		<transition on="no" to="loggedin">
     			<evaluate expression="cancelbookingMessages.setCancelBookingMessage()" />   	

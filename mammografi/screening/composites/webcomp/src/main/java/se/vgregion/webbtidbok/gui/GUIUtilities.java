@@ -18,13 +18,13 @@
 package se.vgregion.webbtidbok.gui;
 
 import java.util.List;
+import java.util.concurrent.ThreadPoolExecutor;
 
 import se.vgregion.webbtidbok.State;
 import se.vgregion.webbtidbok.booking.BookingFacade;
 import se.vgregion.webbtidbok.booking.elvis.BookingService;
 import se.vgregion.webbtidbok.booking.elvis.WebServiceHelper;
 import se.vgregion.webbtidbok.domain.Booking;
-import se.vgregion.webbtidbok.mail.MailQueue;
 import se.vgregion.webbtidbok.mail.MailSender;
 
 /**
@@ -39,9 +39,6 @@ public class GUIUtilities {
 
 	private BookingFacade bookingFacade;
 	private BookingService bookingService;
-	static MailQueue mq = new MailQueue(4);
-
-	// static MailQueue mq1 = new MailQueue();
 
 	public void setBookingService(BookingService bookingService) {
 		this.bookingService = bookingService;
@@ -87,10 +84,8 @@ public class GUIUtilities {
 		return value;
 	}
 
-	public void sendCancelationMail(State state, Booking booking) {
-
+	public void sendCancelationMail(State state, Booking booking, ThreadPoolExecutor mailQueue) {
 		MailSender mailsender = new MailSender(state, booking);
-		mq.execute(mailsender);
-
+		mailQueue.execute(mailsender);
 	}
 }

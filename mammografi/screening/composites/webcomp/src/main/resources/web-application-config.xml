@@ -213,6 +213,15 @@
 		</aop:aspect>
 	</aop:config>
 
+    <bean id="mailQueue" class="java.util.concurrent.ThreadPoolExecutor">
+        <constructor-arg index="0" type="int" value="1"/> <!-- Minimum threads -->
+        <constructor-arg index="1" type="int" value="4"/> <!-- Maximum threads -->
+        <constructor-arg index="2" type="long" value="30"/> <!-- Surplus thread keep-alive time, in seconds (see below) -->
+        <constructor-arg index="3" type="java.util.concurrent.TimeUnit" value="SECONDS"/>
+        <constructor-arg index="4"> <!-- We use a linked list queue, which should be unbounded. -->
+            <bean class="java.util.concurrent.LinkedBlockingQueue" />
+        </constructor-arg>
+    </bean>
 
 	<!--
 		Utility bean for dumping methods we don't have a proper home for.
