@@ -38,7 +38,7 @@ public abstract class Booking implements Serializable {
 	}
 
 	public Date getStartTime() {
-		return (Date) startTime.clone();
+		return startTime != null ? (Date) startTime.clone() : null;
 	}
 
 	public void setStartTime(Date startTime) {
@@ -58,7 +58,7 @@ public abstract class Booking implements Serializable {
 	/**
 	 * The firstname and lastname of the patient.
 	 * 
-	 * @return {@link String} of fisrtname and lastname.
+	 * @return {@link String} of firstname and lastname.
 	 */
 	public String getPatientName() {
 		return patientName;
@@ -67,7 +67,7 @@ public abstract class Booking implements Serializable {
 	/**
 	 * 
 	 * @param patientName
-	 *            Fisrtname ond lastname.
+	 *            Firstname and lastname.
 	 */
 	public void setPatientName(String patientName) {
 		this.patientName = patientName;

@@ -41,7 +41,7 @@ public class BookingTime implements Serializable {
 	}
 
 	public Date getDateTime() {
-	      return (Date) dateTime.clone();
+	    return  dateTime != null ? (Date) dateTime.clone() : null;
 	}
 
 }
