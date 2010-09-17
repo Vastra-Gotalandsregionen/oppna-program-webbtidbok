@@ -35,11 +35,13 @@ public class BookingTime implements Serializable {
 	}
 
 	public void setDateTime(Date dateTime) {
-		this.dateTime = dateTime;
+        if (dateTime != null) {
+            this.dateTime = (Date) dateTime.clone();
+        }
 	}
 
 	public Date getDateTime() {
-		return dateTime;
+	      return (Date) dateTime.clone();
 	}
 
 }
