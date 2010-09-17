@@ -108,7 +108,7 @@ public class BusinessObjectHolder {
             XMLGregorianCalendar dayStart = datatypeFactory.newXMLGregorianCalendar(
                     blockStart.getYear(), blockStart.getMonth(), blockStart.getDay(), 0, 0, 0, 0,
                     blockStart.getTimezone());
-            freeDays.put(new Long(dayStart.toGregorianCalendar().getTimeInMillis()), dayStart);
+            freeDays.put(Long.valueOf(dayStart.toGregorianCalendar().getTimeInMillis()), dayStart);
         }
         
         return new ArrayList<XMLGregorianCalendar>(freeDays.values());
@@ -163,23 +163,23 @@ public class BusinessObjectHolder {
 
     // Exception classes.
     
-    public class InvalidExamNoException extends Exception {
+    public static class InvalidExamNoException extends Exception {
         private static final long serialVersionUID = 1L;
     }
 
-    public class InvalidSectionIdException extends Exception {
+    public static class InvalidSectionIdException extends Exception {
         private static final long serialVersionUID = 1L;
     }
 
-    public class InvalidTimeIdException extends Exception {
+    public static class InvalidTimeIdException extends Exception {
         private static final long serialVersionUID = 1L;
     }
 
-    public class TimeAlreadyBookedException extends Exception {
+    public static class TimeAlreadyBookedException extends Exception {
         private static final long serialVersionUID = 1L;
     }
 
-    public class UnknownFailureException extends Exception {
+    public static class UnknownFailureException extends Exception {
         private static final long serialVersionUID = 1L;
     }
 

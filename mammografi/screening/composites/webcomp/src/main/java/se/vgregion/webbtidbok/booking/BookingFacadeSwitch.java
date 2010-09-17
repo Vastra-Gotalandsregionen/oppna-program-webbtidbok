@@ -82,7 +82,7 @@ public class BookingFacadeSwitch implements BookingFacade {
 	}
 
 	
-	private class CompareBookingTime implements Comparator<BookingTime> {
+	private static class CompareBookingTime implements Comparator<BookingTime> {
 
         @Override
         public int compare(BookingTime arg0, BookingTime arg1) {
