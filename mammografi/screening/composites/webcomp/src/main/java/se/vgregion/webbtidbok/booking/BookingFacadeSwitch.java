@@ -17,6 +17,7 @@
  */
 package se.vgregion.webbtidbok.booking;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
@@ -82,7 +83,7 @@ public class BookingFacadeSwitch implements BookingFacade {
 	}
 
 	
-	private static class CompareBookingTime implements Comparator<BookingTime> {
+	private static class CompareBookingTime implements Comparator<BookingTime>, Serializable {
 
         @Override
         public int compare(BookingTime arg0, BookingTime arg1) {
