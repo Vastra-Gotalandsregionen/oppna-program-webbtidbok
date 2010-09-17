@@ -62,7 +62,6 @@ public class ElvisServiceMock implements ICentralBookingWS {
 		elvisMockData = new HashMap<String, Object>();
 		// Creagte bookings.
 		Map<String, BookingResponse> bookings = new HashMap<String, BookingResponse>();
-		XMLGregorianCalendar xmlGregorianCalendar = DatatypeFactory.newInstance().newXMLGregorianCalendar();
 		String pNR1 = "19700123-9297";
 		String pNR2 = "20100312-2222";
 		bookings.put(pNR1, createBookings(pNR1, "KALLE 1", "ADRESS 1", "MOTAGNING 1", xmlCalendarFor(2010, 8, 24, 11, 0, 0), 1));

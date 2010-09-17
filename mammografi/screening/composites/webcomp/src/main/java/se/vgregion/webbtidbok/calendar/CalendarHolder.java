@@ -107,7 +107,7 @@ public class CalendarHolder implements Serializable {
     private Set<Integer> convertAvailableDates(List<Calendar> dates) {
         Set<Integer> days = new HashSet<Integer>();
         for (Calendar cal : dates) {
-            days.add(new Integer(cal.get(Calendar.DAY_OF_MONTH)));
+            days.add(Integer.valueOf(cal.get(Calendar.DAY_OF_MONTH)));
         }
         return days;
     }
@@ -142,7 +142,7 @@ public class CalendarHolder implements Serializable {
         }
 
         for (int dayIndex = 1; dayIndex <= monthLength; dayIndex++) {
-            currentRow.add(createDayItem(dayIndex, availableDatesForMonth.contains(new Integer(dayIndex)),
+            currentRow.add(createDayItem(dayIndex, availableDatesForMonth.contains(Integer.valueOf(dayIndex)),
                     isToday(today, currentShowingMonth, dayIndex)));
             if (currentRow.size() >= 7) {
                 currentRow = new ArrayList<DayItem>();
@@ -189,7 +189,7 @@ public class CalendarHolder implements Serializable {
     /**
      * This class is returned to the GUI in the showCalendar call.
      */
-    public class DayItem implements Serializable {
+    public static class DayItem implements Serializable {
         
         private static final long serialVersionUID = 1L;
 
