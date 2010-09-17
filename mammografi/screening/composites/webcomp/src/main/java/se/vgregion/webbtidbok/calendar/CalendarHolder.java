@@ -45,7 +45,7 @@ public class CalendarHolder implements Serializable {
     
     
     private Calendar selectedDate;
-    private Set<Integer> availableDatesForMonth;
+    private HashSet<Integer> availableDatesForMonth;
     private Calendar currentShowingMonth;
     private List<List<DayItem>> dayItems;
     
@@ -104,8 +104,8 @@ public class CalendarHolder implements Serializable {
         dayItems = updateCalendar(Calendar.getInstance());
     }
     
-    private Set<Integer> convertAvailableDates(List<Calendar> dates) {
-        Set<Integer> days = new HashSet<Integer>();
+    private HashSet<Integer> convertAvailableDates(List<Calendar> dates) {
+        HashSet<Integer> days = new HashSet<Integer>();
         for (Calendar cal : dates) {
             days.add(Integer.valueOf(cal.get(Calendar.DAY_OF_MONTH)));
         }
