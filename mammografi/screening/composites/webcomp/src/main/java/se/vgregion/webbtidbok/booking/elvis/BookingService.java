@@ -43,7 +43,6 @@ import se.vgregion.webbtidbok.ws.ObjectFactory;
 
 public class BookingService implements BookingServiceInterface {
 
-	int testIndex;
 	BookingResponse response;
 	BookingRequest request;
 	WebServiceHelper helper;
