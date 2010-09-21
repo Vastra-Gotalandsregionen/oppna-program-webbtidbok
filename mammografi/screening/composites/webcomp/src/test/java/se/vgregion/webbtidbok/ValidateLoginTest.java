@@ -59,6 +59,9 @@ public class ValidateLoginTest {
         assertNull(val.getCanonicalPnr("080101555", refDate));
         assertNull(val.getCanonicalPnr("20080101555", refDate));
         assertNull(val.getCanonicalPnr("2008010-5555", refDate));
+
+        assertEquals("19421212-K876", val.getCanonicalPnr("19421212K876", refDate));
+        assertNull(val.getCanonicalPnr("19421212-9K76", refDate));
 	}
 
 	@Test
@@ -73,6 +76,7 @@ public class ValidateLoginTest {
         validationAsserts(val, "080101-5555", "apa", "20080101-5555", true, "", "");
         validationAsserts(val, "080101+5555", "apa", "19080101-5555", true, "", "");
         validationAsserts(val, "080101-555", "apa", "080101-555", false, ValidationLogin.MALFORMED_PATIENT_ID, "");
+        validationAsserts(val, "19421212K321", "apa", "19421212-K321", true, "", "");
 	}
 
 	// This is a helper method to assert a bunch of facts about logins.

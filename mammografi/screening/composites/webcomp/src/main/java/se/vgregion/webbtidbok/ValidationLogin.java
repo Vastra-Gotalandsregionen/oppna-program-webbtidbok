@@ -44,11 +44,11 @@ public class ValidationLogin {
         logger = Logger.getLogger("se.vgregion.webbtidbok.services");
 
         // Matches full numbers - eg. yyyymmdd-xxxx and yyyymmddxxxx.
-        pnrFullPattern = Pattern.compile("^([0-9]{8})-?([0-9]{4})$");
+        pnrFullPattern = Pattern.compile("^([0-9]{8})-?([a-zA-Z0-9][0-9]{3})$");
         // Matches short numbers with dash - eg. yymmdd-xxxx and yymmdd+xxxx.
-        pnrWithDashPattern = Pattern.compile("^([0-9]{2})([0-9]{4})([+-])([0-9]{4})$");
+        pnrWithDashPattern = Pattern.compile("^([0-9]{2})([0-9]{4})([+-])([a-zA-Z0-9][0-9]{3})$");
         // Matches short numbers without dash - eg. yymmddxxxx. Assumed to be less than 100 years old.
-        pnrWithoutDashPattern = Pattern.compile("^([0-9]{2})([0-9]{4})([0-9]{4})$");
+        pnrWithoutDashPattern = Pattern.compile("^([0-9]{2})([0-9]{4})([a-zA-Z0-9][0-9]{3})$");
     }
     
 	public boolean validateLogin(State st, LoginMessages lm){
