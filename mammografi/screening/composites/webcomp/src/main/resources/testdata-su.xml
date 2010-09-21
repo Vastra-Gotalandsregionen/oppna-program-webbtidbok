@@ -177,6 +177,7 @@
         <ref bean="SU_booking_2"/>
         <ref bean="SU_booking_3"/>
         <ref bean="SU_booking_4"/>
+        <ref bean="SU_booking_5"/>
     </util:list>
 
     <util:map id="SU_booking_1">
@@ -219,4 +220,13 @@
         <entry key="laterality" value="S"/>
     </util:map>
 
+    <util:map id="SU_booking_5">
+        <entry key="examNo" value="SEMSUS000005"/>
+        <entry key="type" value="Mammografi"/>
+        <entry key="code" value="MAM"/>
+        <entry key="patientId" value="19770707-K087"/>
+        <entry key="name" value="Alga Rosen"/>
+        <entry key="time" value="SU_s2_time_8"/>
+        <entry key="laterality" value="S"/>
+    </util:map>
 </beans>
