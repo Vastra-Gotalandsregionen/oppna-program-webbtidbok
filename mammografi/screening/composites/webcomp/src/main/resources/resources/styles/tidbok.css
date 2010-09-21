@@ -122,7 +122,7 @@ table.tb_calendar td.tb_cal_empty {
 }
 
 table.tb_calendar td.tb_cal_bookable {
-    background: #e6e6e6;
+    background: #66CCFF;
 }
 
 table.tb_calendar td.tb_cal_no_times {
@@ -134,7 +134,7 @@ table.tb_calendar td.tb_cal_today {
 }
 
 table.tb_calendar td a {
-    text-decoration: underline;
+    font-weight: bold;
 }
 
 /* Styling for the table listing booking times on the update page. */
