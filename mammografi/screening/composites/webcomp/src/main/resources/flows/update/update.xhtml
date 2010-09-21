@@ -64,8 +64,6 @@
 
 </ui:fragment>
 		 
-        <ui:decorate template="update_cancelbutton.xhtml" />
-
         <ui:decorate template="update_sectionheader.xhtml">
             <ui:param name="section_heading" value="#{baseMsg.updatepageChooseDate}"/>
         </ui:decorate>
@@ -108,8 +106,6 @@
 			</div>
         </ui:fragment>
 
-        <ui:decorate template="update_cancelbutton.xhtml" />
-
         <!-- Only show timelist if we have selected a date in the current month, and there
              are empty slots for that date. -->
         <!-- TODO: Make this work for empty timeListLocal -->
@@ -138,9 +134,10 @@
 					</h:dataTable>
 				</h:form>
 			</div>   <!-- placediv_time -->
-            <ui:decorate template="update_cancelbutton.xhtml" />
           </ui:fragment>              
 		</ui:fragment>				
+
+        <ui:decorate template="update_cancelbutton.xhtml" />
 
     </ui:fragment>
 </ui:define>
