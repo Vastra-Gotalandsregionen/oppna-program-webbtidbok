@@ -82,6 +82,10 @@ div.tb_sectionheading a {
     margin-top: 5px;
 }
 
+#tb_location_switch_warning strong {
+    font-weight: bold;
+}
+
 /* Styling for the calendar on the update page. */
 table.tb_calendar {
     font-size: 1.1em;
