@@ -31,8 +31,9 @@ public class Surgery implements Serializable {
 	private String surgeryId;
 	private String surgeryName;
 	private String surgeryAddress;
+	private String surgeryPhone;
 
-	public String getSurgeryId() {
+    public String getSurgeryId() {
 		return surgeryId;
 	}
 
@@ -65,4 +66,13 @@ public class Surgery implements Serializable {
 		}
 		return returnValue;
 	}
+
+    public String getSurgeryPhone() {
+        return surgeryPhone;
+    }
+
+    public void setSurgeryPhone(String surgeryPhone) {
+        this.surgeryPhone = surgeryPhone;
+    }
+
 }
