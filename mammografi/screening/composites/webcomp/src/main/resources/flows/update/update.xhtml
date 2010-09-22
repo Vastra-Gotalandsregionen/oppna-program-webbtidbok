@@ -68,7 +68,10 @@
             <ui:param name="section_heading" value="#{baseMsg.updatepageChooseDate}"/>
         </ui:decorate>
         <p class="tb_surgery_address_header">#{location.currentLocation.surgeryName}</p>
-									
+
+		<ui:fragment rendered="#{booking.surgery.surgeryId != location.currentLocation.surgeryId}">
+		    <p id="tb_location_switch_warning"><h:outputText value="#{baseMsg.updatepageSwitchedLocationWarning}" escape="false" /></p>
+		</ui:fragment>
 											
 		<ui:fragment id="calendarFragment">
 		    <div class="placediv_date">
