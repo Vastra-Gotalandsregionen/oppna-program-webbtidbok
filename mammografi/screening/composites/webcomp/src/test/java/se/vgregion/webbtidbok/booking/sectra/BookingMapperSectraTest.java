@@ -57,6 +57,7 @@ public class BookingMapperSectraTest {
 	private static final String EXAMTYPE = "Exam type";
 	private static final String EXAMNBR = "123";
 	private static final String SURGERYADDRESS = "address";
+    private static final String SURGERYPHONE = "031-123456";
 	private static final String NAME = "name";
     private static final String REALNAME = "realname";
 	private static final String ID = EXAMNBR;
@@ -114,11 +115,13 @@ public class BookingMapperSectraTest {
 		section.setName(objectFactory.createString(NAME));
         section.setDescription(objectFactory.createString(REALNAME + "#Irrelevant description"));
 		section.setAddress(objectFactory.createString(SURGERYADDRESS));
+        section.setPhone(objectFactory.createString(SURGERYPHONE));
 
 		Surgery surgeryMapping = bookingMapperSectra.surgeryMapping(section);
 		assertEquals(ID, surgeryMapping.getSurgeryId());
 		assertEquals(REALNAME, surgeryMapping.getSurgeryName());
 		assertEquals(SURGERYADDRESS, surgeryMapping.getSurgeryAddress());
+        assertEquals(SURGERYPHONE, surgeryMapping.getSurgeryPhone());
 		
 		// Test with no hash - should be empty
 		section.setDescription(objectFactory.createString(REALNAME));

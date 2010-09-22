@@ -58,6 +58,9 @@ public class BookingMapperElvis {
 		}
 		surgery.setSurgeryName(getStringValueFromBooking(bookingResponse.getMottagning()));
 		surgery.setSurgeryAddress(getStringValueFromBooking(bookingResponse.getAddress()));
+		// TODO: Shall this be used on Elvis bookings? Currently setting blank.
+        // surgery.setSurgeryPhone(getStringValueFromBooking(bookingResponse.getMobilTel()));
+        surgery.setSurgeryPhone("");
 		booking.setSurgery(surgery);
 		booking.setPatientId(getStringValueFromBooking(bookingResponse.getPnr()));
 		booking.setStartTime(getDateFromCalendar(bookingResponse.getBokadTid()));
