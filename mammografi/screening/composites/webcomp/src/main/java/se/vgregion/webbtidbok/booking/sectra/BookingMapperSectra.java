@@ -61,6 +61,7 @@ public class BookingMapperSectra {
 		surgery.setSurgeryId(getStringValue(section.getId()));
 		surgery.setSurgeryName(parseDescriptionForSurgeryName(getStringValue(section.getDescription())));
 		surgery.setSurgeryAddress(getStringValue(section.getAddress()));
+        surgery.setSurgeryPhone(getStringValue(section.getPhone()));
 		return surgery;
 	}
 	
