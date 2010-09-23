@@ -33,7 +33,9 @@
         </h1>
 		<p/>
 		<p><h:outputText value="#{sectionMsg.welcomepageIntroductionMain}" escape="false"/><br/></p>
-		<p><h:outputText value="#{sectionMsg.welcomepageIntroductionContact}" escape="false"/></p>
+		<p><h:outputFormat value="#{sectionMsg.welcomepageIntroductionContact}" escape="false">
+		    <f:param value="#{booking.surgery.surgeryPhone}" /></h:outputFormat>
+		</p>
 		<p><h:outputText value="#{sectionMsg.welcomepageIntroductionContact2}" escape="false"/></p>
 
         <ui:decorate template="/flows/bookinginfo-wherewhen.xhtml">

@@ -31,7 +31,8 @@
 
 <ui:fragment id="loginFragment">
 	<h1>#{sectionMsg.updateconfirmationHeader}</h1>
-	<p><h:outputText value="#{sectionMsg.updateconfirmationRescheduleInfo}" escape="false"/></p><br/>
+	<p><h:outputFormat value="#{sectionMsg.updateconfirmationRescheduleInfo}" escape="false">
+            <f:param value="#{booking.surgery.surgeryPhone}" /></h:outputFormat></p><br/>
 				
 	<h3>#{sectionMsg.updateconfirmationRescheduledMessage}</h3>
 
