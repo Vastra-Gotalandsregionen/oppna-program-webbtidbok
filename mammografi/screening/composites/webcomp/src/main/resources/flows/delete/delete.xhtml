@@ -29,7 +29,8 @@
 
 <ui:fragment id="loginFragment">
 	<h1>#{sectionMsg.deletepageHeader}</h1>
-	<p><h:outputText value="#{sectionMsg.deletepageCancellationWarning}" escape="false"/></p>
+	<p><h:outputFormat value="#{sectionMsg.deletepageCancellationWarning}" escape="false">
+            <f:param value="#{booking.surgery.surgeryPhone}" /></h:outputFormat></p>
     <div id="centercontent">
         <h:outputText value="#{sectionMsg.deletepageListText}" escape="false" />
     </div>

@@ -33,7 +33,8 @@
 		<h1 class="tb_heading">#{sectionMsg.updatepageHeader}</h1>
 
 		<p><h:outputText value="#{sectionMsg.updatepageIntroduction}" escape="false"/></p>
-		<p><h:outputText value="#{sectionMsg.updatepageRescheduleInfo}" escape="false"/></p>
+		<p><h:outputFormat value="#{sectionMsg.updatepageRescheduleInfo}" escape="false">
+            <f:param value="#{booking.surgery.surgeryPhone}" /></h:outputFormat></p>
 
         <ui:decorate template="/flows/bookinginfo-patientdata.xhtml">
             <ui:param name="location_heading" value="#{baseMsg.updatepageOriginalTimeHeading}"/>
