@@ -16,11 +16,11 @@
  *   Boston, MA 02111-1307  USA
  */
 
-<script type="text/javascript">
-    <![CDATA[
-		function disableButton(buttonId){
-		var btn = document.getElementById(buttonId);
-		btn.disabled=true;
-		}
-	]]>
-</script>
+function disableButton(buttonId){
+    var btn = document.getElementById(buttonId);
+    btn.disabled=true;
+}
+		
+function triggerButton(buttonId) {
+    document.getElementById(buttonId).click();
+}

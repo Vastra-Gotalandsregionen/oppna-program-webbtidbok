@@ -46,10 +46,12 @@
         <div id="tb_selectlocation">    
 			<f:view>
 				<h:form id="selectForm" action="displaytimes">
-					<h:selectOneMenu rendered="true" id="places" value="#{location.locationId}"  onchange="submit()">
-			       	    <f:selectItems value="#{location.selectItems}" /> 					
+					<h:selectOneMenu rendered="true" id="places" value="#{location.locationId}"
+					       onchange="triggerButton('selectForm:displayButton');">
+			       	    <f:selectItems value="#{location.selectItems}" />
 					</h:selectOneMenu>
 					<br />
+					<sf:commandButton id="displayButton" value="#{baseMsg.updatepageShowTimes}" processIds="*" action="displaytimes"/>
 				</h:form>
 			</f:view>
 		</div>
@@ -124,7 +126,7 @@
 
 			<div id="placediv_time">
 				<h:form id="timeForm">
-					<h:dataTable id="timeTable" columnClasses="col1, col2" value="#{timeListLocal}" var="btl" rendered="#{!empty timeListLocal}">
+					<h:dataTable id="timeTable" columnClasses="col1,col2" rowClasses="oddRow,evenRow" value="#{timeListLocal}" var="btl" rendered="#{!empty timeListLocal}">
 					    <f:facet name="header">
                             <div class="tb_time_datestring">#{calendarHolder.selectedDateString}</div>
                         </f:facet>

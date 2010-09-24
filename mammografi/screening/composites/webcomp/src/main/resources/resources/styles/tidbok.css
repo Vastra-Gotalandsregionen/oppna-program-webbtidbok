@@ -75,7 +75,7 @@ div.tb_sectionheading a {
 }
 
 #selectForm input {
-	display: block;
+	display: none;
 }
 
 .tb_update_new_location_header {
