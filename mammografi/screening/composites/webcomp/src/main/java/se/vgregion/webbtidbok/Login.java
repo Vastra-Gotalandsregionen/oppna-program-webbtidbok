@@ -19,6 +19,8 @@ package se.vgregion.webbtidbok;
 
 import java.util.ResourceBundle;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import se.vgregion.webbtidbok.booking.BookingFacade;
@@ -31,6 +33,12 @@ public class Login {
   private BookingFactory bookingFactory;
   private LookupService lookupService;
   private ResourceBundle resourceBundle;
+  
+  private Logger logger;
+  
+  public Login() {
+      logger = LoggerFactory.getLogger("se.vgregion.webbtidbok");
+  }
 
   public void setResourceBundle(ResourceBundle resourceBundle) {
     this.resourceBundle = resourceBundle;
@@ -45,6 +53,7 @@ public class Login {
   }
 
   public void logout(State loginCredentials) {
+    logger.info("Logging out user {}.", loginCredentials.getPnr());
     loginCredentials.setPnr("");
     loginCredentials.setPasswd("");
     loginCredentials.setLoggedIn(false);
@@ -54,9 +63,11 @@ public class Login {
     BookingFacade bookingService = bookingFactory.getService(loginCredentials);
     if (bookingService.login(loginCredentials)) {
       loginCredentials.setLoggedIn(true);
+      logger.info("Logging in user {}.", loginCredentials.getPnr());
       return true;
     } else {
       loginCredentials.setLoggedIn(false);
+      logger.info("Login failed for user {}.", loginCredentials.getPnr());
       return false;
     }
   }
@@ -66,8 +77,10 @@ public class Login {
     if (sd != null) {
       state.setService(sd.getServiceID());
       state.setMessageBundle(sd.getMessageBundleBase());
+      logger.debug("Service lookup succeeded for user {}: service is {}.", state.getPnr(), state.getService());
       return true;
     } else {
+      logger.debug("Service lookup failed for user {}.", state.getPnr());
       String[] split = resourceBundle.getString("loginpageErrorMessage").split("\\|");
       loginMessages.setErrorMessages(split);
       return false;

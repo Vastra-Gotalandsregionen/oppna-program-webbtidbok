@@ -1,6 +1,6 @@
 <!--
 
-    Copyright 2010 Västra Götalandsregionen
+    Copyright 2009 Vastra Gotalandsregionen
 
       This library is free software; you can redistribute it and/or modify
       it under the terms of version 2.1 of the GNU Lesser General Public
@@ -16,9 +16,7 @@
       Free Software Foundation, Inc., 59 Temple Place, Suite 330,
       Boston, MA 02111-1307  USA
 
-
 -->
-
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <!--
 
@@ -67,14 +65,14 @@
 				<h:form id="mainForm" class="centerContent">
 				<h2><h:outputText value="#{baseMsg.loginpageSubHeaderLogin}"/></h2>
 				<br />
-				<h:outputLabel for="pnr"><p><h:outputText value="#{baseMsg.loginpagePasswordInstruction}"/></p><p style="color: red; font-style: italic"> #{loginmessages.logMessagePnr}</p></h:outputLabel>
+				<h:outputLabel for="pnr"><p><h:outputText value="#{baseMsg.loginpagePasswordInstruction}"/></p></h:outputLabel>
 				<div style="width: 10em;float:left;" >
 					<div class="input">
 	                    <h:inputText id="pnr" value="#{state.pnr}"/>
 	                </div>
 					<p></p>
 					<div class="label">
-	                    <h:outputLabel for="passwd"><p><h:outputText value="#{baseMsg.loginpagePasswordLabel}"/></p><p style="color:red; font-style: italic"> #{loginmessages.logMessagePassword}</p></h:outputLabel>
+	                    <h:outputLabel for="passwd"><p><h:outputText value="#{baseMsg.loginpagePasswordLabel}"/></p></h:outputLabel>
 					</div>
 					<div class="input">
 				         <h:inputSecret id="passwd" value="#{state.passwd}" />
@@ -86,12 +84,11 @@
                 
 				
                	<div id="error_message" style="float: right;width: 27em;list-style-image: none;">
-               		<ui:fragment rendered="#{!empty loginmessages.errorMessages}">      
-               			<p>Inloggningen misslyckades</p>
+               		<ui:fragment rendered="#{failedLogin}">      
+               			<p><h:outputText value="#{baseMsg.loginpageErrorLoginFailed}"/></p>
                			<ul>
-               			<ui:repeat value="#{loginmessages.errorMessages}" var="errorMessage">
-               				<li>#{errorMessage}</li>
-						</ui:repeat>	
+               				<li><h:outputText value="#{baseMsg.loginpageErrorLoginFailedAdvice1}"/></li>
+                            <li><h:outputText value="#{baseMsg.loginpageErrorLoginFailedAdvice2}"/></li>
 						</ul>
 					</ui:fragment>
 				</div>
