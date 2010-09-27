@@ -22,55 +22,52 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:sf="http://www.springframework.org/tags/faces">
 
-<ui:composition template="baseTemplate.xhtml">
+<ui:composition template="tidbokBaseTemplate.xhtml">
 
-    <ui:define name="localStyles">
-        <style  type="text/css">
-          .col1 {background-color: red;}
-          .col2 {background-color: #f3f1f2;}
-        </style>
+    <!-- Part of official VGR layout. -->
+    <ui:define name="headerLanguages">
+        <ul>
+            <li><a href="http://vard.vgregion.se/sv/Other-languages/">Other languages</a>&nbsp; | &nbsp;</li>
+            <li><a href="http://vard.vgregion.se/sv/Teckenspraksfilmer/">Teckenspråk</a></li>
+            <li>&nbsp; | &nbsp;<a href="http://spoxy4.insipio.com/generator/se/vard.vgregion.se/sv/Mina-tjanster/?id=359548&amp;epslanguage=sv" title="Lyssna på denna sida" class="lyssnaIkon" accesskey="L">Lyssna</a></li>
+        </ul>
     </ui:define>
 
-    <ui:define name="stylesheetIncludes">
-        <sf:resource path="/styles/style.css" />
-    </ui:define>
-
-    <ui:define name="pagehHeaderIncludes">
+    <!-- Part of official VGR layout. -->
+    <ui:define name="headerSearch">
         <form action="http://vard.vgregion.se/sv/Sok1/" method="get">
-        <div id="pageHeaderSearch">
-            <div class="headerlinks">
-                <ul>
-                    <li><a href="http://vard.vgregion.se/sv/Other-languages/">Other languages</a>&nbsp; | &nbsp;</li>
-                    <li><a href="http://vard.vgregion.se/sv/Teckenspraksfilmer/">Teckenspråk</a></li>
-                    <li>  |  <a href="http://spoxy4.insipio.com/generator/se/hittavard.vgregion.se/hriv/HRIV.Search.searchunit-flow.flow?startpage=1" title="Lyssna" class="lyssnaIkon">Lyssna</a>
-                    </li>                   
-                </ul>
-                <input name="quicksearchquery" id="SearchText" accesskey="4" title="Snabbsökning" class="topSearch" type="text" />
-                <input name="Search" value="Sök" id="Search" class="standardButton marginTopFive" type="submit" />
-            </div>
-        </div>
+            <div class="search-text-lft"><input name="quicksearchquery" class="search-text" accesskey="4" /></div>
+            <input name="Search" class="search-btn" value="Sök" type="submit" />
         </form>
     </ui:define>
 
-    <ui:define name="menuContainerInclude">
-        <div id="menucontainer">
-            <ul>
-                <li><a class="first" href="http://vard.vgregion.se/sv/Startsidan/"> Startsidan</a></li>
-                <li><a href="http://vard.vgregion.se/sv/Sjukdomar-och-besvar/">Sjukdomar och besvär</a></li>
-                <li><a href="http://vard.vgregion.se/sv/Undersokningar--behandlingar/">Undersökningar och behandlingar</a></li>
-                <li><a href="http://hittavard.vgregion.se/hriv">Hitta rätt i vården</a></li>
-                <li><a href="http://vard.vgregion.se/sv/Regler-och-rattigheter/">Regler och rättigheter</a></li>
-                <li><a href="http://vard.vgregion.se/sv/Mina-tjanster/">Mina tjänster</a></li>
-            </ul>
+    <!-- Part of official VGR layout. -->
+    <ui:define name="headerMenu">
+        <div id="nav" class="rounded">
+            <div class="rounded-bot-lft"></div>
+            <div class="rounded-bot-rt"></div>
+            <div class="rounded-bot-center">
+                <ul>
+                    <li class="sel first"><a href="http://vard.vgregion.se/sv/" title="Startsidan">Startsidan</a></li>
+                    <li><a href="http://vard.vgregion.se/sv/Sjukdomar-och-besvar/" title="Sjukdomar och besvär">Sjukdomar och besvär</a></li>
+                    <li><a href="http://vard.vgregion.se/sv/Undersokningar--behandlingar/" title="Undersökningar och behandlingar">Undersökningar och behandlingar</a></li>
+                    <li><a href="http://hittavard.vgregion.se/hriv/" title="Hitta rätt i vården">Hitta rätt i vården</a></li>
+                    <li><a href="http://vard.vgregion.se/sv/Regler-och-rattigheter/" title="Regler och rättigheter">Regler och rättigheter</a></li>
+                    <li><a href="http://vard.vgregion.se/sv/Mina-tjanster/" title="Mina tjänster">Mina tjänster</a></li>
+                </ul>
+            </div>
         </div>
     </ui:define>
 
+    <!-- Have a small element to adapt the layout when not having a logout button. -->
     <ui:define name="templateContent">
+        <div id="tb_logout_replacement" />
         <ui:insert name="content" />
     </ui:define>
 
-    <ui:define name="footerInclude">
-        <ui:include src="footerContent.xhtml"/>
+    <!-- Part of official VGR layout. -->
+    <ui:define name="footerInformationOfficer">
+        <span>Informationsansvarig: <a href="mailto:vardredaktion@vgregion.se">Margreth Jonson.</a> Denna sida är en del av <a href="http://www.vgregion.se/">www.vgregion.se</a></span>
     </ui:define>
 
 </ui:composition>
