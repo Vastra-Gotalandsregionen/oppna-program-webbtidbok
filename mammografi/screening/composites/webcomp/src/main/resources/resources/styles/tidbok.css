@@ -18,16 +18,41 @@
  * This file is for css specific to the webbtidbok project.
  */ /* Styling for the box showing the current booking. */
 
+/* Remove a border which should not be on the page as we don't have
+   the same footer as the standard VGR style.
+   Also make sure we have correct, white background.
+   Finally, make some space at the bottom of the box. */
+div#bd {
+    border-bottom: none !important;
+    background: #FFFFFF !important;
+    padding-bottom: 20px;
+}
+
+/* Position our stuff in a nice place in the VGR page. */
+div#tb_wrapper {
+    background-color: #FFFFFF;
+    font: 90% Arial,Verdana,Helvetica,sans-serif;
+}
+
+div#tb_content {
+    margin-left: auto;
+    margin-right: auto;
+    width: 43em;
+}
+
+/* Adjust distance between header and main content box
+   when header is removed at login. */
+#tb_missing_menu_replacement {
+    height: 20px;
+}
+
+/* Style the booking information box. */
 #tb_bookinginfo {
 	background: #f3f1f2;
 	border: 0.1em solid #91ADB4;
 	padding-left: 1em;
 }
 
-/*
-#tb_bookinginfo p {
-	margin: 5px;
-}*/
 #tb_bookinginfo h3 {
 	color: #000000;
 }
@@ -62,6 +87,7 @@ div.tb_sectionheading {
 
 div.tb_sectionheading h3 {
 	display: inline;
+	font-size: 1.25em;
 }
 
 div.tb_sectionheading a {
@@ -96,8 +122,13 @@ table.tb_calendar {
 
 table.tb_calendar tr.tb_calendar_heading {
     border: 0.1em solid #91ADB4;
+    font-weight: bold;
 }
 
+table.tb_calendar tr.tb_calendar_heading a {
+    color: #000000;
+}
+    
 table.tb_calendar td {
     width: 2.5em;
     text-align: center;
@@ -139,6 +170,7 @@ table.tb_calendar td.tb_cal_today {
 
 table.tb_calendar td a {
     font-weight: bold;
+    color: #000000;
 }
 
 /* Styling for the table listing booking times on the update page. */
@@ -148,7 +180,9 @@ table.tb_calendar td a {
 
 table .tb_time_datestring {
 	font-size: 1.25em;
+	font-weight: bold;
 	background: #e6e6e6;
+	text-align: center;
 }
 
 table .tb_time_header {
@@ -157,6 +191,10 @@ table .tb_time_header {
 	text-align: left;
 	padding-top: 3px;
 	padding-bottom: 2px;
+}
+
+#tb_logout_replacement {
+    height: 2em;    
 }
 
 /* Styling for the logout button. */
@@ -185,13 +223,13 @@ div.tb_cancelform input {
 }
 
 /* Style all input buttons to be the same width unless otherwise specified. */
-#boxmiddle input {
+#tb_content input {
 	width: 100px;
 }
 
 div.error_message p {
 	color: red;
-	font-style: italic "
+	font-style: italic;
 }
 
 #error_message ul {
@@ -202,8 +240,58 @@ div.error_message p {
 	list-style-image:none;
 }
 
-.print{
+#tb_content .print{
 	padding-top: 10px;	
 	text-align: right;
+}
+
+/* Styling for the login screen. */
+div.error_message p {
+    font-weight: bold;
+}
+
+
+/* Styling for the login box on login screen. */
+#header-input-field-container {
+    float: left;
+    margin: 0em;
+    background: #F3F1F2;
+    border: 0.095em solid #91ADB4;
+    width: 100%;
+}
+
+#header-input-field-container span {
+    display: block;
+}
+
+#header-input-field-container div {
+    text-align: left;
+}
+
+#forms-container {
+    font-weight: bold;
+    background-color: #F3F1F2;
+    width: auto;
+    padding: 0em 0em 0em 1em;
+}
+
+#forms-container h2 {
+    margin: 1em 0 0 0;
+    color: #333333;
+    line-height: normal;
+}
+
+#forms-container h3 {
+    color: #333333;
+    width: 18em;
+    line-height: normal;
+    margin: 1.1em 0 2px 0;
+}
+
+#forms-container p {
+    margin-bottom: 10px;
+    font-size: 1.1em;
+    font-weight: normal;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
 }
 

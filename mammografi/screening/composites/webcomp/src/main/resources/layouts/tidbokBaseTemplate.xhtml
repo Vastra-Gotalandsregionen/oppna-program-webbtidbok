@@ -21,30 +21,44 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html"
       xmlns:sf="http://www.springframework.org/tags/faces">
 
-<ui:composition template="tidbokBaseTemplate.xhtml">
+<ui:composition template="VGRTemplate.xhtml">
 
-    <ui:define name="localMessageBundles">
-        <f:loadBundle basename="#{state.messageBundle}" var="sectionMsg"/>
+    <ui:define name="messageBundles">
+        <f:loadBundle basename="messages/BaseMessages" var="baseMsg"/>
+        <ui:insert name="localMessageBundles"/>
     </ui:define>
 
-    <!-- This is an adaptation so layout doesn't look cramped when we
-         remove the menu from the VGR header. -->
-    <ui:define name="headerMenu">
-        <div id="tb_missing_menu_replacement"/>
+    <ui:define name="pageTitle">
+        <title>Webbtidbok</title>
     </ui:define>
 
-    <ui:define name="templateContent">
-        <div id="tb_logout">
-            <h:form id="mainForm">
-                 <sf:commandButton id="logout" value="#{baseMsg.logoutButton}" processIds="*" action="logout" />
-            </h:form>
+    <ui:define name="localJS">
+        <sf:resourceGroup>
+            <sf:resource path="dojo/dojo.js" />
+            <sf:resource path="spring/Spring.js" />
+            <sf:resource path="spring/Spring-Dojo.js" />
+        </sf:resourceGroup>
+        <sf:includeStyles />
+        <sf:resource path="/JS/JSResources.js" />
+    </ui:define>
+
+    <ui:define name="localStyles">
+        <sf:resource path="/styles/tidbok.css" />
+        <style  type="text/css">
+          .col1 { width: 230px; }
+          .col2 { width: 30px; }
+        </style>
+    </ui:define>
+
+    <ui:define name="tidbokBaseWrapper">
+        <div id="tb_wrapper">
+            <div id="tb_content">
+                <ui:insert name="templateContent" />
+            </div>
         </div>
-        <ui:insert name="content" />
     </ui:define>
 
 </ui:composition>
-
 </html>

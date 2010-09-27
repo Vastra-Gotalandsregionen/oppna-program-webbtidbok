@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--
+
+    Copyright 2009 Vastra Gotalandsregionen
+
+      This library is free software; you can redistribute it and/or modify
+      it under the terms of version 2.1 of the GNU Lesser General Public
+      License as published by the Free Software Foundation.
+
+      This library is distributed in the hope that it will be useful,
+      but WITHOUT ANY WARRANTY; without even the implied warranty of
+      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+      GNU Lesser General Public License for more details.
+
+      You should have received a copy of the GNU Lesser General Public
+      License along with this library; if not, write to the
+      Free Software Foundation, Inc., 59 Temple Place, Suite 330,
+      Boston, MA 02111-1307  USA
+
+-->
+<html lang="sv-SE" xml:lang="sv-SE"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:c="http://java.sun.com/jstl/core"
+    xmlns:sf="http://www.springframework.org/tags/faces">
+    <f:view contentType="text/html" encoding="UTF-8" />
+    <ui:insert name="messageBundles"/>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <ui:insert name="pageTitle"/>
+        <ui:insert name="localJS"/>
+        <sf:resource path="css/reset-fonts-grids.css" media="screen" />
+        <sf:resource path="css/vgr-nuvarande-stilmall.css" media="screen" /> 
+        <sf:resource path="css/style.css" media="screen" /> 
+        <!-- sf:resource path="css/print.css" media="print" / -->
+        <ui:insert name="localStyles"/>
+        
+        <!--[if IE 7]>
+            <sf:resource path="css/ie7fix.css" media="screen" /> 
+        <![endif]-->
+        
+        <!--[if IE 6]>
+            <sf:resource path="css/ie6fix.css" media="screen" /> 
+        <![endif]-->
+
+    </head>
+    <body>
+        <div id="doc4" class="yui-t2">
+          
+            <div id="top-nav">
+                <ui:insert name="headerLanguages" />
+            </div>
+          
+            <div id="hd">
+                <div id="logo">
+                    <a href="#">&nbsp;</a>
+                </div>
+                <div id="top-search">
+                    <ui:insert name="headerSearch" />
+                </div>
+            </div>    
+
+            <ui:insert name="headerMenu" />
+            
+            <div class="rounded">
+                <div class="rounded-top-lft"></div>
+                <div class="rounded-top-rt"></div>
+                <div class="rounded-top-center"></div>
+            </div>
+          
+            <div id="bd">
+                <ui:insert name="tidbokBaseWrapper" />
+            </div>
+
+            <div class="rounded rounded-bot">
+                <div class="rounded-bot-lft"></div>
+                <div class="rounded-bot-rt"></div>
+                <div class="rounded-bot-center"></div>
+            </div>
+            
+            <div id="ft-bot">
+                <img src="#{facesContext.externalContext.requestContextPath}/resources/images/logo-small.png" width="162" height="33" alt=""></img>
+                <ui:insert name="footerInformationOfficer" />
+            </div>
+            
+        </div>
+    </body>
+</html>

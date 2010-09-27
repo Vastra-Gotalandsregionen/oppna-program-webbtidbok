@@ -48,19 +48,13 @@
 <ui:define name="content">
 
 	<ui:fragment id="loginFragment">
-
-		<div id="boxcontainer" style="padding-bottom: 1em;">
-		<div id="boxleft"></div>
-		<div id="boxmiddle">
-			<p/>
-			<br/>
 		    <h1><h:outputText value="#{baseMsg.loginpageMainHeader}"/></h1>
 		    <p><h:outputText value="#{baseMsg.loginpageIntroMsg1}"/></p>
 		    <p><h:outputText value="#{baseMsg.loginpageIntroMsg2}"/></p>
 		    <p><a href="screeningInfo" target="_new"><h:outputText value="#{baseMsg.loginpageIntroInfoLink}"/></a></p>
 		    <p><a href="help" target="_new"><h:outputText value="#{baseMsg.loginpageIntroHelpLink}"/></a></p>
 			
-			<div id="header-input-field-container" style="width: 100%;">
+			<div id="header-input-field-container">
 			<div id="forms-container">
 				<h:form id="mainForm" class="centerContent">
 				<h2><h:outputText value="#{baseMsg.loginpageSubHeaderLogin}"/></h2>
@@ -96,8 +90,6 @@
 			</h:form>
 			</div>
 			</div>
-			</div>			  
-		</div>
 	</ui:fragment>
 
 </ui:define>
