@@ -37,6 +37,7 @@
 				<ref bean="serviceDefinitionMammografiSU" />
 				<ref bean="serviceDefinitionMammografiNU" />
 				<ref bean="serviceDefinitionBukAorta" />
+				<ref bean="serviceDefinitionGyn" />
 			</list>
 		</property>
 	</bean>
@@ -60,6 +61,13 @@
 	<bean id="serviceDefinitionBukAorta" class="se.vgregion.webbtidbok.servicedef.ServiceDefinition">
 		<property name="serviceID" value="BUKAORTA" />
 		<property name="messageBundleBase" value="messages/bukaorta/BukAortaMessages" />
+		<property name="bookingService" ref="elvisBookingService" />
+	</bean>
+
+	<!-- A service definition for gyn, using Elvis. -->
+	<bean id="serviceDefinitionGyn" class="se.vgregion.webbtidbok.servicedef.ServiceDefinition">
+		<property name="serviceID" value="GYN" />
+		<property name="messageBundleBase" value="messages/gynekologi/GynekologiMessages" />
 		<property name="bookingService" ref="elvisBookingService" />
 	</bean>
 
@@ -94,6 +102,7 @@
 				<ref bean="lookupServiceSU" />
 				<ref bean="lookupServiceNU" />
 				<ref bean="elvisLookupService" />
+				<ref bean="elvisLookupServiceGyn" />
 			</list>
 		</property>
 	</bean>
@@ -114,6 +123,10 @@
 	<bean id="elvisLookupService" class="se.vgregion.webbtidbok.servicedef.LoginLookupService">
 		<property name="serviceDefinition" ref="serviceDefinitionBukAorta" />
 	</bean>
+	
+		<bean id="elvisLookupServiceGyn" class="se.vgregion.webbtidbok.servicedef.LoginLookupService">
+		<property name="serviceDefinition" ref="serviceDefinitionGyn" />
+	</bean>
 
 	<!-- New style booking facade implementation for Elvis. -->
 	<bean id="elvisBookingService"
@@ -131,14 +144,6 @@
 	<bean id="helper" class="se.vgregion.webbtidbok.booking.elvis.WebServiceHelper"
 		lazy-init="false">
 		<property name="encrypter" ref="stringEncrypter" />
-
-		<!--
-			<property name="elvisWebService"><bean factory-bean="elvisWebService"
-		-->
-		<!--
-			factory-method="getBasicHttpBindingICentralBookingWS"/></property>
-		-->
-
 		<property name="elvisWebService" ref="elvisWebserviceMock" />
 	</bean>
 

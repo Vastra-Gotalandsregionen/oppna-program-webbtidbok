@@ -40,7 +40,7 @@
         <entry key="description" value="Uddevalla Sjukhus#"/>
         <entry key="address" value="Norra gatan 1"/>
         <entry key="mail" value="section1@nu.example.com"/>
-        <entry key="phone" value="1230011"/>
+         <entry key="phone" value="1230002, måndag-torsdag 08.00-12.00, 13.00-16.00, fredag 08.00-12.00"/>
     </util:map>
 
     <util:map id="NU_section_2">
@@ -50,7 +50,7 @@
         <entry key="address" value="SCREENINGAVDELNING ÅMÅL&#xA;
         Mammografivagnen är uppställd vid Åmåls simhall, Vilkerborgsplan (Töre Pedersons gata) i Åmål. Vagnen är vit och märkt Mammografi."/>
         <entry key="mail" value="section2@nu.example.com"/>
-        <entry key="phone" value="1230012"/>
+         <entry key="phone" value="1230002, måndag-torsdag 08.00-12.00, 13.00-16.00, fredag 08.00-12.00"/>
     </util:map>
 
 
