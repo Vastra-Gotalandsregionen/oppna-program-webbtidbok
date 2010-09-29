@@ -24,7 +24,7 @@
 	  			xmlns:h="http://java.sun.com/jsf/html"
 	  			xmlns:f="http://java.sun.com/jsf/core"
 	  			xmlns:sf="http://www.springframework.org/tags/faces"
-				template="/layouts/baseTemplate.xhtml">
+				template="/layouts/loggedInTemplate.xhtml">
 
  <ui:define name="messageBundles">
         <f:loadBundle basename="#{state.messageBundle}" var="sectionMsg"/>
@@ -38,20 +38,15 @@
     </ui:define>
 
     <ui:define name="templateContent">
-		<div id="boxcontainer">
-			<div id="boxleft" />
-			<div id="boxmiddle">
-				<div>
-				    <span class="errors">
-				       <h:messages globalOnly="true" />
-				    </span>
-				    <p />
-				    <br />
-				    <h1>#{sectionMsg.helppageHeader}</h1>
-				   	<br />
-				   	<h:outputText value="#{sectionMsg.helppageTextContent}" escape="false"/>
-				</div>
-			</div>
+		<div>
+		    <span class="errors">
+		       <h:messages globalOnly="true" />
+		    </span>
+		    <p />
+		    <br />
+		    <h1>#{sectionMsg.helppageHeader}</h1>
+		   	<br />
+		   	<h:outputText value="#{sectionMsg.helppageTextContent}" escape="false"/>
 		</div>
     </ui:define>
 
