@@ -17,8 +17,8 @@
  */
 package se.vgregion.webbtidbok.booking;
 
-import java.util.List;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import se.vgregion.webbtidbok.State;
@@ -26,27 +26,32 @@ import se.vgregion.webbtidbok.servicedef.ServiceDefinition;
 
 public class BookingFactoryImpl implements BookingFactory {
 
-    private Map<String, ServiceDefinition> serviceDefinitions;
-    
-    public void setServiceDefinitions(List<ServiceDefinition> serviceDefinitionsList) {
-        serviceDefinitions = new HashMap<String, ServiceDefinition>();
-        for(ServiceDefinition sd : serviceDefinitionsList) {
-            serviceDefinitions.put(sd.getServiceID(), sd);
-        }
-    }
+	Map<String, ServiceDefinition> serviceDefinitions;
 
-    @Override
-    public BookingFacade getService(State loginCredentials) {
-        return getService(loginCredentials.getService());
-    }
-    
-    @Override
-    public BookingFacade getService(String serviceId) {
-        if(serviceDefinitions.containsKey(serviceId)) {
-            return serviceDefinitions.get(serviceId).getBookingService();
-        } else {
-            throw new RuntimeException("Trying to acquire unknown service definition: " + serviceId);
-        }
-    }
+	public void setServiceDefinitions(List<ServiceDefinition> serviceDefinitionsList) {
+		serviceDefinitions = new HashMap<String, ServiceDefinition>();
+		for (ServiceDefinition sd : serviceDefinitionsList) {
+			serviceDefinitions.put(sd.getServiceID(), sd);
+		}
+	}
+
+	@Override
+	public BookingFacade getService(State loginCredentials) {
+		return getService(loginCredentials.getService());
+	}
+
+	@Override
+	public BookingFacade getService(String serviceId) {
+		if (serviceDefinitions.containsKey(serviceId)) {
+			return serviceDefinitions.get(serviceId).getBookingService();
+		} else {
+			throw new RuntimeException("Trying to acquire unknown service definition: " + serviceId);
+		}
+	}
+
+	@Override
+	public Map<String, ServiceDefinition> getService() {
+		return serviceDefinitions;
+	}
 
 }

@@ -17,13 +17,8 @@
  */
 package se.vgregion.webbtidbok.booking.sectra;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.List;
-
-import javax.xml.datatype.DatatypeFactory;
-import javax.xml.datatype.XMLGregorianCalendar;
 
 import se.vgregion.webbtidbok.State;
 import se.vgregion.webbtidbok.booking.BookingFacade;
@@ -35,8 +30,8 @@ import se.vgregion.webbtidbok.lang.DateHandler;
 
 public class SectraBookingFacadeImpl implements BookingFacade {
 
-    private static final String RESCHEDULE_COMMENT = "Ombokat via webbtidboken";
-    
+	private static final String RESCHEDULE_COMMENT = "Ombokat via webbtidboken";
+
 	private SectraBookingServiceFactory serviceFactory;
 
 	public void setServiceFactory(SectraBookingServiceFactory serviceFactory) {
@@ -88,24 +83,22 @@ public class SectraBookingFacadeImpl implements BookingFacade {
 
 	@Override
 	public List<BookingTime> getBookingTime(State state, String sectionId, Calendar selectedDate) {
-	    Calendar startDate = DateHandler.cloneCalendar(selectedDate);
-	    startDate.set(Calendar.HOUR_OF_DAY, 0);
-        startDate.set(Calendar.MINUTE, 0);
-        startDate.set(Calendar.SECOND, 0);
-        Calendar endDate = DateHandler.cloneCalendar(selectedDate);
-        endDate.set(Calendar.HOUR_OF_DAY, 23);
-        endDate.set(Calendar.MINUTE, 59);
-        endDate.set(Calendar.SECOND, 59);
-	    return getService(state).getFreeTimes(startDate, endDate, sectionId);
+		Calendar startDate = DateHandler.cloneCalendar(selectedDate);
+		startDate.set(Calendar.HOUR_OF_DAY, 0);
+		startDate.set(Calendar.MINUTE, 0);
+		startDate.set(Calendar.SECOND, 0);
+		Calendar endDate = DateHandler.cloneCalendar(selectedDate);
+		endDate.set(Calendar.HOUR_OF_DAY, 23);
+		endDate.set(Calendar.MINUTE, 59);
+		endDate.set(Calendar.SECOND, 59);
+		return getService(state).getFreeTimes(startDate, endDate, sectionId);
 	}
 
 	@Override
 	public void reschedule(BookingTime bookingTime, State state) {
-	    getService(state).reschedule(state.getPasswd(), bookingTime.getBookingTimeId(),
-	            DateHandler.xmlCalendarFromDate(bookingTime.getDateTime()),
-	            true, RESCHEDULE_COMMENT);
+		getService(state).reschedule(state.getPasswd(), bookingTime.getBookingTimeId(),
+				DateHandler.xmlCalendarFromDate(bookingTime.getDateTime()), true, RESCHEDULE_COMMENT);
 	}
-
 
 	@Override
 	public boolean cancelBooking(State state) {

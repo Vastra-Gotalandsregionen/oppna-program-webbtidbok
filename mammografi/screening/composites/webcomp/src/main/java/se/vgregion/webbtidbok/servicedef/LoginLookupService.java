@@ -22,25 +22,28 @@ import se.vgregion.webbtidbok.booking.BookingFacade;
 
 public class LoginLookupService implements LookupService {
 
-    private ServiceDefinition serviceDefinition = null;
+	private ServiceDefinition serviceDefinition = null;
 
-    public void setServiceDefinition(ServiceDefinition def) {
-        serviceDefinition = def;
-    }
-    
-    @Override
-    public ServiceDefinition lookup(State state) {
-        BookingFacade booking = serviceDefinition.getBookingService();
-        State tmpState = copyStateLoginProps(state);
-        
-        return booking.login(tmpState) ? serviceDefinition : null;
-    }
+	public void setServiceDefinition(ServiceDefinition def) {
+		serviceDefinition = def;
+	}
 
-    private State copyStateLoginProps(State state) {
-        State newState = new State();
-        newState.setPnr(state.getPnr());
-        newState.setPasswd(state.getPasswd());
-        
-        return newState;
-    }
+	/**
+	 * tmpState only used during lookup phase. A new tmpState is created each service mapping attempt
+	 */
+	@Override
+	public ServiceDefinition lookup(State state) {
+		BookingFacade booking = serviceDefinition.getBookingService();
+		State tmpState = copyStateLoginProps(state);
+
+		return booking.login(tmpState) ? serviceDefinition : null;
+	}
+
+	private State copyStateLoginProps(State state) {
+		State newState = new State();
+		newState.setPnr(state.getPnr());
+		newState.setPasswd(state.getPasswd());
+
+		return newState;
+	}
 }
