@@ -40,7 +40,7 @@
         <entry key="description" value="Mammografienhet 1 på SU#"/>
         <entry key="address" value="Gröna stråket 1"/>
         <entry key="mail" value="section1@su.example.com"/>
-        <entry key="phone" value="1230001"/>
+        <entry key="phone" value="1230001, måndag-torsdag 08.00-12.00, 13.00-16.00, fredag 08.00-12.00"/>
     </util:map>
 
     <util:map id="SU_section_2">
@@ -49,7 +49,7 @@
         <entry key="description" value="Mammografienhet 2 på SU#"/>
         <entry key="address" value="Blå stråket 2"/>
         <entry key="mail" value="section2@su.example.com"/>
-        <entry key="phone" value="1230002"/>
+        <entry key="phone" value="1230002, måndag-torsdag 08.00-12.00, 13.00-16.00, fredag 08.00-12.00"/>
     </util:map>
 
 
