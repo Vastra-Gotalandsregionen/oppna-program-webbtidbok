@@ -61,6 +61,11 @@ div#tb_content {
     margin-right: 128px;
 }
 
+#tb_bookinginfo p.tb_informationHeading {
+    margin-top: 1em;
+    font-weight: bold;
+}
+
 div.tb_relcontainer {
 	position: relative;
 }
@@ -183,6 +188,9 @@ table .tb_time_datestring {
 	font-weight: bold;
 	background: #e6e6e6;
 	text-align: center;
+    padding-top: 3px;
+    padding-bottom: 2px;
+    border: 0.1em solid #91ADB4;
 }
 
 table .tb_time_header {
@@ -191,6 +199,13 @@ table .tb_time_header {
 	text-align: left;
 	padding-top: 3px;
 	padding-bottom: 2px;
+}
+
+#placediv_time tr.oddRow {
+    background: #e6e6e6;    
+}
+
+#placediv_time tr.evenRow {
 }
 
 #tb_logout_replacement {
@@ -227,7 +242,7 @@ div.tb_cancelform input {
 	width: 100px;
 }
 
-div.error_message p {
+div#error_message p {
 	color: red;
 	font-style: italic;
 }
