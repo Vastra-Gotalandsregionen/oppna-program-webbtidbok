@@ -22,5 +22,14 @@ import se.vgregion.webbtidbok.domain.Booking;
 public class BookingElvis extends Booking {
 
 	private static final long serialVersionUID = 264968078716906828L;
+	private String elvisExaminationType;
+
+	public String getElvisExaminationType() {
+		return elvisExaminationType;
+	}
+
+	public void setElvisExaminationType(String elvisExaminationType) {
+		this.elvisExaminationType = elvisExaminationType;
+	}
 
 }
