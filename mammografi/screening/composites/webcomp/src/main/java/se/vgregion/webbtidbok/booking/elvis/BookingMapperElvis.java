@@ -66,6 +66,9 @@ public class BookingMapperElvis {
 		booking.setStartTime(getDateFromCalendar(bookingResponse.getBokadTid()));
 		booking.setUpdateable(isUpdateable(bookingResponse));
 
+		// this is only to emulate future bookingResponse.getExaminationType() or similar to cater for distinction between exam
+		// types gyn and bukaorta
+		booking.setElvisExaminationType(getStringValueFromBooking(bookingResponse.getNamn()));
 		return booking;
 	}
 

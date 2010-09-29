@@ -17,6 +17,7 @@
  */
 package se.vgregion.webbtidbok;
 
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import org.slf4j.Logger;
@@ -30,61 +31,84 @@ import se.vgregion.webbtidbok.servicedef.ServiceDefinition;
 
 @Service
 public class Login {
-  private BookingFactory bookingFactory;
-  private LookupService lookupService;
-  private ResourceBundle resourceBundle;
+	private BookingFactory bookingFactory;
+	private LookupService lookupService;
+	private ResourceBundle resourceBundle;
+	
+	private Logger logger;
   
-  private Logger logger;
-  
-  public Login() {
-      logger = LoggerFactory.getLogger("se.vgregion.webbtidbok");
-  }
+	public Login() {
+		logger = LoggerFactory.getLogger("se.vgregion.webbtidbok");
+	}
+	
+	ServiceDefinition sd = new ServiceDefinition();
 
-  public void setResourceBundle(ResourceBundle resourceBundle) {
-    this.resourceBundle = resourceBundle;
-  }
+	public void setResourceBundle(ResourceBundle resourceBundle) {
+		this.resourceBundle = resourceBundle;
+	}
 
-  public void setBookingFactory(BookingFactory bookingFactory) {
-    this.bookingFactory = bookingFactory;
-  }
+	public void setBookingFactory(BookingFactory bookingFactory) {
+		this.bookingFactory = bookingFactory;
+	}
 
-  public void setLookupService(LookupService lookupService) {
-    this.lookupService = lookupService;
-  }
+	public void setLookupService(LookupService lookupService) {
+		this.lookupService = lookupService;
+	}
 
-  public void logout(State loginCredentials) {
-    logger.info("Logging out user {}.", loginCredentials.getPnr());
-    loginCredentials.setPnr("");
-    loginCredentials.setPasswd("");
-    loginCredentials.setLoggedIn(false);
-  }
+	public void logout(State loginCredentials) {
+	    logger.info("Logging out user {}.", loginCredentials.getPnr());
+		loginCredentials.setPnr("");
+		loginCredentials.setPasswd("");
+		loginCredentials.setLoggedIn(false);
+	}
 
-  public boolean login(State loginCredentials) throws Exception {
-    BookingFacade bookingService = bookingFactory.getService(loginCredentials);
-    if (bookingService.login(loginCredentials)) {
-      loginCredentials.setLoggedIn(true);
-      logger.info("Logging in user {}.", loginCredentials.getPnr());
-      return true;
-    } else {
-      loginCredentials.setLoggedIn(false);
-      logger.info("Login failed for user {}.", loginCredentials.getPnr());
-      return false;
-    }
-  }
+	public boolean login(State loginCredentials) throws Exception {
+		BookingFacade bookingService = bookingFactory.getService(loginCredentials);
+		if (bookingService.login(loginCredentials)) {
+			// getNamn() is stand in for the real future field which will enable us to determine which message bundle to load, Gyn
+			// or Bukaorta
+			String value = "";
+			if (loginCredentials.getBookingResponse() != null) {
+				value = loginCredentials.getBookingResponse().getNamn().getValue();
+			}
 
-  public boolean lookup(State state, LoginMessages loginMessages) {
-    ServiceDefinition sd = lookupService.lookup(state);
-    if (sd != null) {
-      state.setService(sd.getServiceID());
-      state.setMessageBundle(sd.getMessageBundleBase());
-      logger.debug("Service lookup succeeded for user {}: service is {}.", state.getPnr(), state.getService());
-      return true;
-    } else {
-      logger.debug("Service lookup failed for user {}.", state.getPnr());
-      String[] split = resourceBundle.getString("loginpageErrorMessage").split("\\|");
-      loginMessages.setErrorMessages(split);
-      return false;
-    }
-  }
+			if (value.equalsIgnoreCase("Kalle 1")) {
+				// gyn
+				Map<String, ServiceDefinition> serviceMap = bookingFactory.getService();
+				ServiceDefinition serviceDefinition = serviceMap.get("GYN");
+				setMessageBundle(loginCredentials, serviceDefinition);
+			} else {
+				// bukaorta
+				setMessageBundle(loginCredentials, sd);
+			}
+			loginCredentials.setLoggedIn(true);
+			logger.info("Logging in user {}.", loginCredentials.getPnr());
+			return true;
+		} else {
+			loginCredentials.setLoggedIn(false);
+			logger.info("Login failed for user {}.", loginCredentials.getPnr());
+			return false;
+		}
+	}
 
+	public boolean lookup(State state, LoginMessages loginMessages) {
+		sd = lookupService.lookup(state);
+		if (sd != null) {
+			state.setService(sd.getServiceID());
+			if (!sd.getServiceID().equalsIgnoreCase("BUKAORTA")) {
+				setMessageBundle(state, sd);
+			}
+			logger.debug("Service lookup succeeded for user {}: service is {}.", state.getPnr(), state.getService());
+			return true;
+		} else {
+			logger.debug("Service lookup failed for user {}.", state.getPnr());
+			String[] split = resourceBundle.getString("loginpageErrorMessage").split("\\|");
+			loginMessages.setErrorMessages(split);
+			return false;
+		}
+	}
+
+	public void setMessageBundle(State state, ServiceDefinition sd) {
+		state.setMessageBundle(sd.getMessageBundleBase());
+	}
 }

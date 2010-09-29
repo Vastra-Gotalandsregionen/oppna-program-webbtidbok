@@ -22,71 +22,77 @@ import java.util.Calendar;
 
 import se.vgregion.webbtidbok.ws.BookingResponse;
 
-
 /**
  * This bean stores the user credentials
  */
 
 public class State implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
 
-    private String pnr = "";
-    private String passwd = "";
-    private int centralTidbokID = 0;
-    transient BookingResponse bookingResponse = null;
-    private boolean loggedIn = false;
-    private boolean isFirst = true;
-    private String messageBundle ="";
-    private String service = null;
-    
-    public State() {
+	private String pnr = "";
+	private String passwd = "";
+	private int centralTidbokID = 0;
+	transient BookingResponse bookingResponse = null;
+	private boolean loggedIn = false;
+	private boolean isFirst = true;
+	private String messageBundle = "";
+	private String service = null;
+	private String elvisExaminationType;
+
+	public State() {
 		super();
 		System.out.println("*** in State constructor!");
 	}
-     
-    
-    public String getPnr() {
-    	return pnr;
-    }
-    
-    public String getPasswd() {
-    	return passwd;
-    }
-    
-    public void setPnr(String pnr) {
-    	this.pnr = pnr;
-    }
-    
-    public void setPasswd(String passwd) {
-    	this.passwd = passwd;
-    }
-    
-    public void setFirst(boolean first){
-    	this.isFirst = first;
-    }
-    
-    public boolean isFirst(){
-    	return isFirst;
-    }
-    
-    public String getService() {
-        return service;
-    }
-    
-    public void setService(String def) {
-        service = def;
-    }
-    
-    public void setLoggedIn(boolean loggedIn){
-    	this.loggedIn = loggedIn;
-    }
-    
-    
-    public boolean isLoggedIn(){
-    	return loggedIn;
-    }
- 
+
+	public String getElvisExaminationType() {
+		return elvisExaminationType;
+	}
+
+	public void setElvisExaminationType(String elvisExaminationType) {
+		this.elvisExaminationType = elvisExaminationType;
+	}
+
+	public String getPnr() {
+		return pnr;
+	}
+
+	public String getPasswd() {
+		return passwd;
+	}
+
+	public void setPnr(String pnr) {
+		this.pnr = pnr;
+	}
+
+	public void setPasswd(String passwd) {
+		this.passwd = passwd;
+	}
+
+	public void setFirst(boolean first) {
+		this.isFirst = first;
+	}
+
+	public boolean isFirst() {
+		return isFirst;
+	}
+
+	public String getService() {
+		return service;
+	}
+
+	public void setService(String def) {
+		service = def;
+	}
+
+	public void setLoggedIn(boolean loggedIn) {
+		this.loggedIn = loggedIn;
+	}
+
+	public boolean isLoggedIn() {
+		return loggedIn;
+	}
+
 	public void setCentralTidbokID(int centralTidbokID) {
 		this.centralTidbokID = centralTidbokID;
 	}
@@ -94,7 +100,7 @@ public class State implements Serializable {
 	public int getCentralTidbokID() {
 		return centralTidbokID;
 	}
-    
+
 	public void setBookingResponse(BookingResponse bookingResponse) {
 		this.bookingResponse = bookingResponse;
 	}
@@ -104,8 +110,8 @@ public class State implements Serializable {
 	}
 
 	public String toString() {
-    	return "[User Credentials: Personnummer = " + pnr + ", Password = " + passwd + "]";
-    }
+		return "[User Credentials: Personnummer = " + pnr + ", Password = " + passwd + "]";
+	}
 
 	public void setMessageBundle(String messageBundle) {
 		this.messageBundle = messageBundle;

@@ -17,22 +17,30 @@
  */
 package se.vgregion.webbtidbok.booking;
 
+import java.util.Map;
+
 import se.vgregion.webbtidbok.State;
+import se.vgregion.webbtidbok.servicedef.ServiceDefinition;
 
 public interface BookingFactory {
 
-    /**
-     * Get a BookingFacade for a given service, using state information.
-     * @param state The state used to look up service information.
-     * @return A facade for the booking system.
-     */
-    public BookingFacade getService(State state);
-    
-    /**
-     * Get a BookingFacade for a given service, using a service id.
-     * @param serviceId The designated service id of the booking system.
-     * @return A facade for the booking system.
-     */
-    public BookingFacade getService(String serviceId);
+	/**
+	 * Get a BookingFacade for a given service, using state information.
+	 * 
+	 * @param state
+	 *            The state used to look up service information.
+	 * @return A facade for the booking system.
+	 */
+	public BookingFacade getService(State state);
 
+	/**
+	 * Get a BookingFacade for a given service, using a service id.
+	 * 
+	 * @param serviceId
+	 *            The designated service id of the booking system.
+	 * @return A facade for the booking system.
+	 */
+	public BookingFacade getService(String serviceId);
+
+	public Map<String, ServiceDefinition> getService();
 }
