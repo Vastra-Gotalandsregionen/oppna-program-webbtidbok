@@ -51,6 +51,8 @@ div#tb_content {
 	background: #f3f1f2;
 	border: 0.1em solid #91ADB4;
 	padding-left: 1em;
+	border-radius: 5px;
+    -moz-border-radius: 5px;
 }
 
 #tb_bookinginfo h3 {
@@ -88,6 +90,8 @@ div.tb_sectionheading {
     margin-bottom:10px;
     margin-top:20px;
     padding:5px;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
 }
 
 div.tb_sectionheading h3 {
@@ -273,6 +277,8 @@ div.error_message p {
     background: #F3F1F2;
     border: 0.095em solid #91ADB4;
     width: 100%;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
 }
 
 #header-input-field-container span {
