@@ -1,5 +1,5 @@
 /**
- * Copyright 2010 Västra Götalandsregionen
+ * Copyright 2009 Vastra Gotalandsregionen
  *
  *   This library is free software; you can redistribute it and/or modify
  *   it under the terms of version 2.1 of the GNU Lesser General Public
@@ -14,9 +14,7 @@
  *   License along with this library; if not, write to the
  *   Free Software Foundation, Inc., 59 Temple Place, Suite 330,
  *   Boston, MA 02111-1307  USA
- *
  */
-
 package se.vgregion.webbtidbok;
 
 import static org.junit.Assert.assertEquals;
@@ -24,8 +22,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import java.util.Calendar;
-import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import org.junit.Before;
@@ -33,9 +30,7 @@ import org.junit.Test;
 
 import se.vgregion.webbtidbok.booking.BookingFacade;
 import se.vgregion.webbtidbok.booking.BookingFacadeDummy;
-import se.vgregion.webbtidbok.domain.Booking;
 import se.vgregion.webbtidbok.domain.BookingTime;
-import se.vgregion.webbtidbok.domain.Surgery;
 import se.vgregion.webbtidbok.servicedef.LookupService;
 import se.vgregion.webbtidbok.servicedef.ServiceDefinition;
 
@@ -47,10 +42,12 @@ public class LoginTest {
 	private State state;
 	private BookingFacadeMock bookingFacadeMock;
 	private LookupServieMock lookupServieMock;
+	static ServiceDefinition sd;
 
 	@Before
 	public void setUp() throws Exception {
 		login = new Login();
+
 		lookupServieMock = new LookupServieMock();
 		login.setLookupService(lookupServieMock);
 		state = new State();
@@ -59,6 +56,8 @@ public class LoginTest {
 		BookingFactory bookingFactory = new BookingFactory();
 		login.setBookingFactory(bookingFactory);
 		bookingFacadeMock = new BookingFacadeMock();
+		sd = new ServiceDefinition();
+		sd.setMessageBundleBase("test");
 	}
 
 	@Test
@@ -88,7 +87,7 @@ public class LoginTest {
 
 	@Test
 	public void testLookupTrue() {
-	  LoginMessages loginMessages = new LoginMessages();
+		LoginMessages loginMessages = new LoginMessages();
 		boolean lookup = login.lookup(state, loginMessages);
 		assertTrue(lookup);
 		assertEquals("ServiceID", state.getService());
@@ -123,9 +122,14 @@ public class LoginTest {
 		public BookingFacade getService(String serviceId) {
 			return bookingFacadeMock;
 		}
+
+		@Override
+		public Map<String, ServiceDefinition> getService() {
+			return null;
+		}
 	}
 
-  class BookingFacadeMock extends BookingFacadeDummy {
+	class BookingFacadeMock extends BookingFacadeDummy {
 
 		private boolean acceptLogin;
 		private State state;

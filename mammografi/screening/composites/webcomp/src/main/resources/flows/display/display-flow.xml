@@ -49,6 +49,7 @@
 
     <subflow-state id="delete" subflow="delete">
         <input name="state" value="state" />
+        <input name="booking" value="booking" />
         <transition on="cancel" to="welcome"/>
     </subflow-state>
 

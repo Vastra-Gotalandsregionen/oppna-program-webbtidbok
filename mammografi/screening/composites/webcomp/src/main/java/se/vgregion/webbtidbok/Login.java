@@ -34,13 +34,13 @@ public class Login {
 	private BookingFactory bookingFactory;
 	private LookupService lookupService;
 	private ResourceBundle resourceBundle;
-	
+
 	private Logger logger;
-  
+
 	public Login() {
 		logger = LoggerFactory.getLogger("se.vgregion.webbtidbok");
 	}
-	
+
 	ServiceDefinition sd = new ServiceDefinition();
 
 	public void setResourceBundle(ResourceBundle resourceBundle) {
@@ -56,7 +56,7 @@ public class Login {
 	}
 
 	public void logout(State loginCredentials) {
-	    logger.info("Logging out user {}.", loginCredentials.getPnr());
+		logger.info("Logging out user {}.", loginCredentials.getPnr());
 		loginCredentials.setPnr("");
 		loginCredentials.setPasswd("");
 		loginCredentials.setLoggedIn(false);
@@ -65,13 +65,13 @@ public class Login {
 	public boolean login(State loginCredentials) throws Exception {
 		BookingFacade bookingService = bookingFactory.getService(loginCredentials);
 		if (bookingService.login(loginCredentials)) {
-			// getNamn() is stand in for the real future field which will enable us to determine which message bundle to load, Gyn
+			// #### getNamn() is stand in for the real future field which will enable us to determine which message bundle to
+			// load, Gyn
 			// or Bukaorta
 			String value = "";
 			if (loginCredentials.getBookingResponse() != null) {
 				value = loginCredentials.getBookingResponse().getNamn().getValue();
 			}
-
 			if (value.equalsIgnoreCase("Kalle 1")) {
 				// gyn
 				Map<String, ServiceDefinition> serviceMap = bookingFactory.getService();
