@@ -41,9 +41,6 @@
         <ui:decorate template="/flows/bookinginfo-wherewhen.xhtml">
             <ui:define name="topInformationSection">
                 <p class="tb_informationHeading"><h:outputText value="#{sectionMsg.welcomepageExamInformation}" escape="false"/></p>
-                <ui:fragment rendered="#{!empty sectionMsg.welcomepageExamInformationAdditional}">
-                    <p><h:outputText value="#{sectionMsg.welcomepageExamInformationAdditional}" escape="false"/></p>
-                </ui:fragment>
                 
                 <!-- This one should have a rendered attribute. -->
                 <h:outputLabel for="deleteButton"><p style="color:red; font-style: italic"> #{cancelbookingMessages.cancelBookingMessage}</p></h:outputLabel>

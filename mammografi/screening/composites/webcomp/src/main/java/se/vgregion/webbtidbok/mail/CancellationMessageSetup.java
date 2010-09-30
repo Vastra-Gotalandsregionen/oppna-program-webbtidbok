@@ -27,10 +27,14 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import se.vgregion.webbtidbok.State;
+import se.vgregion.webbtidbok.domain.Booking;
 
 public class CancellationMessageSetup {
 
-	public Message getMessage(Session session, State state, String patientName) {
+	public Message getMessage(Session session, State state, String patientName, Booking booking) {
+
+		String bookedTime = booking.getStartTime().toString();
+
 		MailSetup mailSetup = new MailSetup();
 		ResourceBundle bundle = mailSetup.setUpMailResourceBunle(state);
 		Message msg = new MimeMessage(session);
@@ -50,8 +54,9 @@ public class CancellationMessageSetup {
 			msg.setRecipients(Message.RecipientType.TO, getToAddress(cancelationAddress));
 			msg.setFrom(addressFrom);
 			msg.setSubject(bundle.getString("cancelationMailSubject") + patientName + ", " + state.getPasswd());
-			msg.setContent(bundle.getString("cancelationMailMailBody") + " " + patientName + ", " + state.getPasswd(),
-					"text/plain");
+			msg.setContent(bundle.getString("cancelationMailMailBodyPart1") + " " + patientName
+					+ "\n\n Undersökningsnummer: \n\n" + state.getPasswd() + "\n\n Tid som avbokats: \n\n" + bookedTime
+					+ "\n\n\n" + bundle.getString("cancelationMailMailBodyPart2"), "text/plain");
 
 		} catch (MessagingException e) {
 			e.printStackTrace();

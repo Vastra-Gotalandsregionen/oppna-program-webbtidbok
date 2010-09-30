@@ -75,7 +75,7 @@ public class MailSender implements Runnable {
 			Properties mailProperties = getMailProperties(state);
 			Session session = mailSetup.getSession(mailProperties);
 			session.setDebug(debug);
-			Message messageToSend = messageSetup.getMessage(session, state, patientName);
+			Message messageToSend = messageSetup.getMessage(session, state, patientName, booking);
 
 			try {
 

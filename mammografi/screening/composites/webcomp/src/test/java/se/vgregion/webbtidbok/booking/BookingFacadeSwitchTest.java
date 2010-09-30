@@ -25,7 +25,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -36,6 +38,7 @@ import se.vgregion.webbtidbok.domain.BookingTime;
 import se.vgregion.webbtidbok.domain.Surgery;
 import se.vgregion.webbtidbok.domain.elvis.BookingElvis;
 import se.vgregion.webbtidbok.domain.sectra.BookingSectra;
+import se.vgregion.webbtidbok.servicedef.ServiceDefinition;
 
 public class BookingFacadeSwitchTest {
 
@@ -44,7 +47,8 @@ public class BookingFacadeSwitchTest {
 	private BookingFactoryMock bookingFactoryMock;
 	private BookingFacadeSectraMock bookingFacadeSectraMock;
 	private BookingFacadeElvisMock bookingFacadeElvisMock;
-    private SortTestMock bookingFacadeSortMock;
+	private SortTestMock bookingFacadeSortMock;
+	private Map<String, ServiceDefinition> sdMap;
 
 	@Before
 	public void setUp() throws Exception {
@@ -53,9 +57,10 @@ public class BookingFacadeSwitchTest {
 		state.setService("MAMMO_SU");
 		bookingFacadeSectraMock = new BookingFacadeSectraMock();
 		bookingFacadeElvisMock = new BookingFacadeElvisMock();
-        bookingFacadeSortMock = new SortTestMock();
+		bookingFacadeSortMock = new SortTestMock();
 		bookingFactoryMock = new BookingFactoryMock(bookingFacadeSectraMock, bookingFacadeElvisMock, bookingFacadeSortMock);
 		bookingFacadeSwitch.setBookingFactory(bookingFactoryMock);
+		sdMap = new HashMap<String, ServiceDefinition>();
 	}
 
 	@Test
@@ -123,14 +128,14 @@ public class BookingFacadeSwitchTest {
 
 	@Test
 	public void testSortingBookingTimes() {
-	    state.setService("SORTTEST");
-	    List<BookingTime> list = bookingFacadeSwitch.getBookingTime(state, null, null);
-	    assertEquals("2", list.get(0).getBookingTimeId());
-        assertEquals("4", list.get(1).getBookingTimeId());
-        assertEquals("3", list.get(2).getBookingTimeId());
-        assertEquals("1", list.get(3).getBookingTimeId());
+		state.setService("SORTTEST");
+		List<BookingTime> list = bookingFacadeSwitch.getBookingTime(state, null, null);
+		assertEquals("2", list.get(0).getBookingTimeId());
+		assertEquals("4", list.get(1).getBookingTimeId());
+		assertEquals("3", list.get(2).getBookingTimeId());
+		assertEquals("1", list.get(3).getBookingTimeId());
 	}
-	
+
 	class BookingFacadeSectraMock implements BookingFacade {
 
 		boolean wasCalled;
@@ -212,7 +217,7 @@ public class BookingFacadeSwitchTest {
 		@Override
 		public List<BookingTime> getBookingTime(State state, String sectionId, Calendar selectedDate) {
 			wasCalled = true;
-            return new ArrayList<BookingTime>();
+			return new ArrayList<BookingTime>();
 		}
 
 		@Override
@@ -230,35 +235,35 @@ public class BookingFacadeSwitchTest {
 	}
 
 	class SortTestMock extends BookingFacadeDummy {
-        @Override
-        public List<BookingTime> getBookingTime(State state, String sectionId, Calendar selectedDate) {
-            ArrayList<BookingTime> list = new ArrayList<BookingTime>();
-            
-            list.add(bookingTimeFor("1", "2010-08-26T14:00"));
-            list.add(bookingTimeFor("2", "2010-08-26T08:15"));
-            list.add(bookingTimeFor("3", "2010-08-26T10:45"));
-            list.add(bookingTimeFor("4", "2010-08-26T10:30"));
-            return list;
-        }
-        
-        private BookingTime bookingTimeFor(String id, String time) {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm");
-            BookingTime book = new BookingTime();
-            book.setBookingTimeId(id);
-            try {
-                book.setDateTime(sdf.parse(time));
-            } catch (ParseException e) {
-                throw new RuntimeException(e);
-            }
-            return book;
-        }
+		@Override
+		public List<BookingTime> getBookingTime(State state, String sectionId, Calendar selectedDate) {
+			ArrayList<BookingTime> list = new ArrayList<BookingTime>();
+
+			list.add(bookingTimeFor("1", "2010-08-26T14:00"));
+			list.add(bookingTimeFor("2", "2010-08-26T08:15"));
+			list.add(bookingTimeFor("3", "2010-08-26T10:45"));
+			list.add(bookingTimeFor("4", "2010-08-26T10:30"));
+			return list;
+		}
+
+		private BookingTime bookingTimeFor(String id, String time) {
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm");
+			BookingTime book = new BookingTime();
+			book.setBookingTimeId(id);
+			try {
+				book.setDateTime(sdf.parse(time));
+			} catch (ParseException e) {
+				throw new RuntimeException(e);
+			}
+			return book;
+		}
 	}
 
 	class BookingFactoryMock implements BookingFactory {
 
 		private BookingFacade sectraService;
 		private BookingFacade elvisService;
-        private BookingFacade sortService;
+		private BookingFacade sortService;
 
 		public BookingFactoryMock(BookingFacade sectraMock, BookingFacade elvisMock, BookingFacade sortMock) {
 			sectraService = sectraMock;
@@ -277,11 +282,17 @@ public class BookingFacadeSwitchTest {
 				return sectraService;
 			} else if ("BUKAORTA".equals(serviceId)) {
 				return elvisService;
-            } else if ("SORTTEST".equals(serviceId)) {
-                return sortService;
+			} else if ("SORTTEST".equals(serviceId)) {
+				return sortService;
 			} else {
 				throw new RuntimeException("Incorrect booking service.");
 			}
+		}
+
+		@Override
+		public Map<String, ServiceDefinition> getService() {
+
+			return null;
 		}
 
 	}
