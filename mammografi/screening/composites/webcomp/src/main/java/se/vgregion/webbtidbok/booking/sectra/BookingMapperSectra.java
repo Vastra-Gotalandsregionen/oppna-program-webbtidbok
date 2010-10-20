@@ -34,6 +34,13 @@ import se.vgregion.webbtidbok.ws.sectra.BookingInfo;
 import se.vgregion.webbtidbok.ws.sectra.Section;
 import se.vgregion.webbtidbok.ws.sectra.TimeBlock;
 
+/**
+ * This class is used to map various SectraRIS specific values into the more general {@link se.vgregion.webbtidbok.Booking} class'
+ * elements. Works in the same way as {@link BookingMapperElvis}.
+ * 
+ * @author carstm
+ * 
+ */
 public class BookingMapperSectra {
 
 	public Booking bookingMapping(BookingInfo bookingInfo) {
@@ -49,8 +56,7 @@ public class BookingMapperSectra {
 			TimeBlock value = bookingInfo.getBookedTime().getValue();
 			XMLGregorianCalendar startTime = value.getStartTime();
 			booking.setStartTime(startTime.toGregorianCalendar().getTime());
-			JAXBElement<Section> section = bookingInfo.getBookedTime()
-					.getValue().getSection();
+			JAXBElement<Section> section = bookingInfo.getBookedTime().getValue().getSection();
 			booking.setSurgery(surgeryMapping(section.getValue()));
 		}
 		return booking;
@@ -61,28 +67,29 @@ public class BookingMapperSectra {
 		surgery.setSurgeryId(getStringValue(section.getId()));
 		surgery.setSurgeryName(parseDescriptionForSurgeryName(getStringValue(section.getDescription())));
 		surgery.setSurgeryAddress(getStringValue(section.getAddress()));
-        surgery.setSurgeryPhone(getStringValue(section.getPhone()));
+		surgery.setSurgeryPhone(getStringValue(section.getPhone()));
+		surgery.setSurgeryEmail(getStringValue(section.getMail()));
 		return surgery;
 	}
-	
-	/* Only use this with the getStringValue method below, or null pointers may occur.
+
+	/*
+	 * Only use this with the getStringValue method below, or null pointers may occur.
 	 * 
-	 * This gets a usable surgery name from the section description.
-	 * Please note that if no #-sign exists in the description, then we
-	 * will not provide any name at all for this surgery.
+	 * This gets a usable surgery name from the section description. Please note that if no #-sign exists in the description, then
+	 * we will not provide any name at all for this surgery.
 	 */
 	private String parseDescriptionForSurgeryName(String description) {
-	    String surgeryName = "";
-	    if (description.contains("#")) {
-	        String[] temp = description.split("#", 2);
-	        if (temp.length > 1) {
-	            surgeryName = temp[0];
-	        } else {
-	            // TODO: Log this failure, perhaps?
-	        }
-	    }
-	    
-	    return surgeryName;
+		String surgeryName = "";
+		if (description.contains("#")) {
+			String[] temp = description.split("#", 2);
+			if (temp.length > 1) {
+				surgeryName = temp[0];
+			} else {
+				// TODO: Log this failure, perhaps?
+			}
+		}
+
+		return surgeryName;
 	}
 
 	private String getStringValue(JAXBElement<String> jaxbElement) {
@@ -94,14 +101,13 @@ public class BookingMapperSectra {
 	}
 
 	public XMLGregorianCalendar dateToXmlCalendar(Calendar date) {
-	    GregorianCalendar c = new GregorianCalendar();
-	    c.setTime(date.getTime());
+		GregorianCalendar c = new GregorianCalendar();
+		c.setTime(date.getTime());
 		try {
 			return DatatypeFactory.newInstance().newXMLGregorianCalendar(c);
 		} catch (DatatypeConfigurationException e) {
 			e.printStackTrace();
-			throw new RuntimeException("Could not create XMLGregorianCalendar",
-					e);
+			throw new RuntimeException("Could not create XMLGregorianCalendar", e);
 		}
 	}
 
@@ -109,13 +115,13 @@ public class BookingMapperSectra {
 		return time.toGregorianCalendar();
 	}
 
-    public BookingTime bookingTimeMapping(TimeBlock time) {
-        BookingTimeSectra bookingTime = new BookingTimeSectra();
-        bookingTime.setBookingTimeId(getStringValue(time.getId()));
-        bookingTime.setDateTime(time.getStartTime().toGregorianCalendar().getTime());
-        bookingTime.setLength(time.getLength().intValue());
-        bookingTime.setSurgery(surgeryMapping(time.getSection().getValue()));
-        return bookingTime;
-    }
+	public BookingTime bookingTimeMapping(TimeBlock time) {
+		BookingTimeSectra bookingTime = new BookingTimeSectra();
+		bookingTime.setBookingTimeId(getStringValue(time.getId()));
+		bookingTime.setDateTime(time.getStartTime().toGregorianCalendar().getTime());
+		bookingTime.setLength(time.getLength().intValue());
+		bookingTime.setSurgery(surgeryMapping(time.getSection().getValue()));
+		return bookingTime;
+	}
 
 }

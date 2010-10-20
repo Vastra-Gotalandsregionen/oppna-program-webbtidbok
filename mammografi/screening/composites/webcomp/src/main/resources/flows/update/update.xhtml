@@ -35,14 +35,15 @@
 		<p><h:outputText value="#{sectionMsg.updatepageIntroduction}" escape="false"/></p>
 		<p><h:outputFormat value="#{sectionMsg.updatepageRescheduleInfo}" escape="false">
             <f:param value="#{booking.surgery.surgeryPhone}" /></h:outputFormat></p>
-
-        <ui:decorate template="/flows/bookinginfo-patientdata.xhtml">
-            <ui:param name="location_heading" value="#{baseMsg.updatepageOriginalTimeHeading}"/>
-        </ui:decorate>
+		
+				<ui:decorate template="/flows/bookinginfo-patientdata.xhtml">
+		        	<ui:param name="location_heading" value="#{baseMsg.updatepageOriginalTimeHeading}"/>
+		        </ui:decorate>
 
         <ui:decorate template="update_sectionheader.xhtml">
             <ui:param name="section_heading" value="#{baseMsg.updatepageChooseLocation}"/>
         </ui:decorate>
+        
         <div id="tb_selectlocation">    
 			<f:view>
 				<h:form id="selectForm" action="displaytimes">
@@ -56,17 +57,21 @@
 			</f:view>
 		</div>
 
-		
-
 <p class="tb_update_new_location_header"><h:outputFormat value="#{baseMsg.updatepageDirectionHeader}">
 	<f:param value="#{location.currentLocation.surgeryName}"></f:param>
 </h:outputFormat></p>
 
 <ui:fragment id="directionFragment" render="#{!empty location.currentLocation.surgeryAddress}">
-<p>#{sectionMsg.updatepageLocationDirection}#{location.currentLocation.surgeryAddress}</p>
-
+	<p>#{sectionMsg.updatepageLocationDirection}#{location.currentLocation.surgeryAddress}</p>
 </ui:fragment>
-		 
+<ui:fragment id="switchFragment" render="#{!empty sectionMsg.updatepageSwitchLocationLink}">
+		<div id="link_switchlocation">
+			<h:form>
+				<h:commandLink id="switch" action="switch" value="#{sectionMsg.updatepageSwitchLocationLink}" /> 
+			</h:form>
+		</div>
+</ui:fragment>
+				 
         <ui:decorate template="update_sectionheader.xhtml">
             <ui:param name="section_heading" value="#{baseMsg.updatepageChooseDate}"/>
         </ui:decorate>

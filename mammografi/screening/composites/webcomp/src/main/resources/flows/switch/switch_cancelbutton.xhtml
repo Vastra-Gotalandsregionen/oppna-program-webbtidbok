@@ -18,29 +18,16 @@
       Boston, MA 02111-1307  USA
 
 -->
-
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	    		xmlns:ui="http://java.sun.com/jsf/facelets"
-	  			xmlns:h="http://java.sun.com/jsf/html"
-	  			xmlns:f="http://java.sun.com/jsf/core"
-	  			xmlns:sf="http://www.springframework.org/tags/faces"
-				template="/layouts/loggedInTemplate.xhtml">
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:sf="http://www.springframework.org/tags/faces">
 
-	<ui:define name="messageBundles">
-        <f:loadBundle basename="#{state.messageBundle}" var="sectionMsg"/>
-    </ui:define>
-
-    <ui:define name="templateContent">
-		<div>
-		    <span class="errors">
-		       <h:messages globalOnly="true" />
-		    </span>
-		    <p />
-		    <br />
-		    <h1>#{sectionMsg.helppageHeader}</h1>
-		   	<br />
-		   	<h:outputText value="#{sectionMsg.helppageTextContent}" escape="false"/>
-		</div>
-    </ui:define>
+<div class="tb_cancelform">
+    <h:form>
+        <sf:commandButton id="cancelButton" value="#{baseMsg.cancelButton}" processIds="*" action="cancel2" />
+    </h:form>
+</div>
 
 </ui:composition>

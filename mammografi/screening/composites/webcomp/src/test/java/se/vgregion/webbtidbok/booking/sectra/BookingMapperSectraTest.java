@@ -21,10 +21,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
-import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Locale;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
@@ -36,6 +34,7 @@ import org.junit.Test;
 import se.vgregion.webbtidbok.domain.Booking;
 import se.vgregion.webbtidbok.domain.BookingTime;
 import se.vgregion.webbtidbok.domain.Surgery;
+import se.vgregion.webbtidbok.domain.sectra.BookingSectra;
 import se.vgregion.webbtidbok.lang.DateHandler;
 import se.vgregion.webbtidbok.ws.sectra.BookingInfo;
 import se.vgregion.webbtidbok.ws.sectra.ObjectFactory;
@@ -47,7 +46,7 @@ public class BookingMapperSectraTest {
 	private static final String TIME = "10:00";
 	private static final int ANTAL = 2;
 	private static final String SECTIONNAME = "Weird section name";
-    private static final String REALSECTIONNAME = "Real section name";
+	private static final String REALSECTIONNAME = "Real section name";
 	private static final String SECTIONADDRESS = "Section address";
 	private static final String TIMEBLOCKID = "Time block id";
 	private static final String PATIENTNAME = "David B";
@@ -57,14 +56,16 @@ public class BookingMapperSectraTest {
 	private static final String EXAMTYPE = "Exam type";
 	private static final String EXAMNBR = "123";
 	private static final String SURGERYADDRESS = "address";
-    private static final String SURGERYPHONE = "031-123456";
+	private static final String SURGERYPHONE = "031-123456";
 	private static final String NAME = "name";
-    private static final String REALNAME = "realname";
+	private static final String REALNAME = "realname";
 	private static final String ID = EXAMNBR;
+	private static final String EMAIL = "section.email@email.com";
 	private BookingMapperSectra bookingMapperSectra;
 	private ObjectFactory objectFactory;
 	private BookingInfo bookingInfo;
 	private XMLGregorianCalendar newXMLGregorianCalendar;
+	private Section section;
 
 	@Before
 	public void setUp() throws Exception {
@@ -73,7 +74,7 @@ public class BookingMapperSectraTest {
 		bookingInfo = new BookingInfo();
 		TimeBlock timeBlock = new TimeBlock();
 		newXMLGregorianCalendar = DatatypeFactory.newInstance().newXMLGregorianCalendar();
-		Section section = new Section();
+		section = new Section();
 		// bookingTime.setKlocka(objectFactory
 		// .createString(newXMLGregorianCalendar.toGregorianCalendar()
 		// .toString()));
@@ -81,11 +82,13 @@ public class BookingMapperSectraTest {
 
 		section.setAddress(objectFactory.createString(SECTIONADDRESS));
 		section.setName(objectFactory.createString(SECTIONNAME));
-        section.setDescription(objectFactory.createString(REALSECTIONNAME + "#Irrelevant description content"));
+		section.setDescription(objectFactory.createString(REALSECTIONNAME + "#Irrelevant description content"));
+		section.setMail(objectFactory.createString(EMAIL));
 
 		timeBlock.setId(objectFactory.createString(TIMEBLOCKID));
 		timeBlock.setSection(objectFactory.createSection(section));
 		timeBlock.setStartTime(newXMLGregorianCalendar);
+
 		bookingInfo.setExamNo(objectFactory.createString(EXAMNBR));
 		bookingInfo.setExamType(objectFactory.createString(EXAMTYPE));
 		bookingInfo.setExamTypeCode(objectFactory.createString(EXAMTYPECODE));
@@ -93,45 +96,45 @@ public class BookingMapperSectraTest {
 		bookingInfo.setPatientId(objectFactory.createString(PATIENTID));
 		bookingInfo.setPatientName(objectFactory.createString(PATIENTNAME));
 		bookingInfo.setBookedTime(objectFactory.createTimeBlock(timeBlock));
-
 	}
 
 	@Test
 	public void testBookingMapping() {
-		Booking bookingMapping = bookingMapperSectra.bookingMapping(bookingInfo);
-
-		assertEquals(PATIENTNAME, bookingMapping.getPatientName());
-		assertEquals(PATIENTID, bookingMapping.getPatientId());
-		assertEquals(newXMLGregorianCalendar.toGregorianCalendar().getTime().getTime(), bookingMapping.getStartTime().getTime());
-		assertEquals(REALSECTIONNAME + ", " + SECTIONADDRESS, bookingMapping.getSurgery().getFullAddress());
+		Booking booking = new BookingSectra();
+		booking = bookingMapperSectra.bookingMapping(bookingInfo);
+		assertEquals(PATIENTNAME, booking.getPatientName());
+		assertEquals(PATIENTID, booking.getPatientId());
+		assertEquals(newXMLGregorianCalendar.toGregorianCalendar().getTime().getTime(), booking.getStartTime().getTime());
+		assertEquals(REALSECTIONNAME + ", " + SECTIONADDRESS, booking.getSurgery().getFullAddress());
 
 	}
 
 	@Test
 	public void testSurgeryMapping() {
-		Section section = new Section();
+		// Section section = new Section();
 
 		section.setId(objectFactory.createString(ID));
 		section.setName(objectFactory.createString(NAME));
-        section.setDescription(objectFactory.createString(REALNAME + "#Irrelevant description"));
+		section.setDescription(objectFactory.createString(REALNAME + "#Irrelevant description"));
 		section.setAddress(objectFactory.createString(SURGERYADDRESS));
-        section.setPhone(objectFactory.createString(SURGERYPHONE));
+		section.setPhone(objectFactory.createString(SURGERYPHONE));
 
-		Surgery surgeryMapping = bookingMapperSectra.surgeryMapping(section);
-		assertEquals(ID, surgeryMapping.getSurgeryId());
-		assertEquals(REALNAME, surgeryMapping.getSurgeryName());
-		assertEquals(SURGERYADDRESS, surgeryMapping.getSurgeryAddress());
-        assertEquals(SURGERYPHONE, surgeryMapping.getSurgeryPhone());
-		
+		Surgery surgery = new Surgery();
+		surgery = bookingMapperSectra.surgeryMapping(section);
+		assertEquals(ID, surgery.getSurgeryId());
+		assertEquals(REALNAME, surgery.getSurgeryName());
+		assertEquals(SURGERYADDRESS, surgery.getSurgeryAddress());
+		assertEquals(SURGERYPHONE, surgery.getSurgeryPhone());
+
 		// Test with no hash - should be empty
 		section.setDescription(objectFactory.createString(REALNAME));
-        surgeryMapping = bookingMapperSectra.surgeryMapping(section);
-        assertEquals("", surgeryMapping.getSurgeryName());
+		surgery = bookingMapperSectra.surgeryMapping(section);
+		assertEquals("", surgery.getSurgeryName());
 
-        // Test with only hash - should return a surgery name
-        section.setDescription(objectFactory.createString(REALNAME + "#"));
-        surgeryMapping = bookingMapperSectra.surgeryMapping(section);
-        assertEquals(REALNAME, surgeryMapping.getSurgeryName());
+		// Test with only hash - should return a surgery name
+		section.setDescription(objectFactory.createString(REALNAME + "#"));
+		surgery = bookingMapperSectra.surgeryMapping(section);
+		assertEquals(REALNAME, surgery.getSurgeryName());
 	}
 
 	@Test
@@ -159,24 +162,24 @@ public class BookingMapperSectraTest {
 		}
 
 	}
-	
+
 	@Test
 	public void testBookingTimeMapping() {
-	    Section section = new Section();
-        section.setId(objectFactory.createString(ID));
-        section.setName(objectFactory.createString(NAME));
-        section.setAddress(objectFactory.createString(SURGERYADDRESS));
-	    
-	    TimeBlock timeBlock = new TimeBlock();
-	    timeBlock.setId(objectFactory.createString("blockid"));
-	    timeBlock.setLength(15);
-	    timeBlock.setSection(objectFactory.createSection(section));
-	    timeBlock.setStartTime(DateHandler.xmlCalendarFor(2010, 1, 1, 12, 30, 0));
-	    
-	    BookingTime booking = bookingMapperSectra.bookingTimeMapping(timeBlock);
-	    assertEquals("blockid", booking.getBookingTimeId());
+		Section section = new Section();
+		section.setId(objectFactory.createString(ID));
+		section.setName(objectFactory.createString(NAME));
+		section.setAddress(objectFactory.createString(SURGERYADDRESS));
 
-	    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z");
-	    assertEquals("2010-01-01 13:30:00 +0100", sdf.format(booking.getDateTime()));
+		TimeBlock timeBlock = new TimeBlock();
+		timeBlock.setId(objectFactory.createString("blockid"));
+		timeBlock.setLength(15);
+		timeBlock.setSection(objectFactory.createSection(section));
+		timeBlock.setStartTime(DateHandler.xmlCalendarFor(2010, 1, 1, 12, 30, 0));
+
+		BookingTime booking = bookingMapperSectra.bookingTimeMapping(timeBlock);
+		assertEquals("blockid", booking.getBookingTimeId());
+
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z");
+		assertEquals("2010-01-01 13:30:00 +0100", sdf.format(booking.getDateTime()));
 	}
 }

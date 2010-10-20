@@ -39,7 +39,8 @@
         <entry key="name" value="NU Mammografi"/>
         <entry key="description" value="Uddevalla Sjukhus#"/>
         <entry key="address" value="Norra gatan 1"/>
-        <entry key="mail" value="section1@nu.example.com"/>
+<!--        <entry key="mail" value="section1@nu.example.com"/>-->
+     	<entry key="mail" value="halsokontrollnu@gmail.com"/>
          <entry key="phone" value="1230001, måndag-torsdag 08.00-12.00, 13.00-16.00, fredag 08.00-12.00"/>
     </util:map>
 
@@ -47,12 +48,10 @@
         <entry key="id" value="NU_section_2"/>
         <entry key="name" value="SCR ÅMÅL"/>
         <entry key="description" value="Mammografivagnen, Åmål#"/>
-        <entry key="address" value="SCREENINGAVDELNING ÅMÅL&#xA;
-        Mammografivagnen är uppställd vid Åmåls simhall, Vilkerborgsplan (Töre Pedersons gata) i Åmål. Vagnen är vit och märkt Mammografi."/>
-        <entry key="mail" value="section2@nu.example.com"/>
+        <entry key="address" value="Mammografivagnen är uppställd vid Åmåls simhall, Vilkerborgsplan (Töre Pedersons gata) i Åmål. Vagnen är vit och märkt Mammografi."/>
+       <entry key="mail" value="halsokontrollnu@gmail.com"/>
          <entry key="phone" value="1230002, måndag-torsdag 08.00-12.00, 13.00-16.00, fredag 08.00-12.00"/>
     </util:map>
-
 
     <util:list id="NU_timeblocks">
         <ref bean="NU_s1_time_1"/>

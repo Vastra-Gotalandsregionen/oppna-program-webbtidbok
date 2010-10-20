@@ -1,4 +1,3 @@
-<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <!--
 
     Copyright 2009 Vastra Gotalandsregionen
@@ -18,7 +17,6 @@
       Boston, MA 02111-1307  USA
 
 -->
-
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	    		xmlns:ui="http://java.sun.com/jsf/facelets"
 	  			xmlns:h="http://java.sun.com/jsf/html"
@@ -26,21 +24,18 @@
 	  			xmlns:sf="http://www.springframework.org/tags/faces"
 				template="/layouts/loggedInTemplate.xhtml">
 
-	<ui:define name="messageBundles">
-        <f:loadBundle basename="#{state.messageBundle}" var="sectionMsg"/>
-    </ui:define>
+<ui:define name="content">
+<ui:fragment id="loginFragment">
 
-    <ui:define name="templateContent">
-		<div>
-		    <span class="errors">
-		       <h:messages globalOnly="true" />
-		    </span>
-		    <p />
-		    <br />
-		    <h1>#{sectionMsg.helppageHeader}</h1>
-		   	<br />
-		   	<h:outputText value="#{sectionMsg.helppageTextContent}" escape="false"/>
-		</div>
-    </ui:define>
-
+	<h1><h:outputText value="#{sectionMsg.confirmswitchlocationpageHeader}"/></h1>
+	<p />
+	<h:outputText value="#{sectionMsg.confirmswitchlocationpagBody1}"/>
+	<p />
+    <ui:decorate template="/flows/bookinginfo-switchlocation-wherewhen.xhtml">
+        <ui:param name="location_heading" value="#{baseMsg.locationBoxWhen}"/>
+    </ui:decorate>
+    <p />
+	<h:outputText value="#{sectionMsg.confirmswitchlocationpagBody2}" escape="false" />
+</ui:fragment>
+</ui:define>
 </ui:composition>

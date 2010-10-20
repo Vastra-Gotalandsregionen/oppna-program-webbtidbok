@@ -68,6 +68,7 @@
 		</transition>	
         <transition on="cancel" history="invalidate" to="cancel"/>
         <transition on="help" to="help"/>
+        <transition on="switch" to="switch"/>
 	</view-state>
   
     <view-state id="showConfirmation" view="/flows/update/showUpdateConfirmation.xhtml">
@@ -78,6 +79,12 @@
     
     <view-state id="help" view="/flows/help/help.xhtml">
     </view-state>
+    
+    <subflow-state id="switch" subflow="switch">
+          <input name="state" value="state" />
+          <input name="booking" value="booking" />
+        <transition on="cancel" to="cancel"/>
+    </subflow-state>
 
     <end-state id="cancel"/>
     <end-state id="logout"/>
