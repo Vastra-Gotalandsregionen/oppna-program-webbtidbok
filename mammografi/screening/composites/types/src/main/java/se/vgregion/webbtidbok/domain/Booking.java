@@ -20,6 +20,12 @@ package se.vgregion.webbtidbok.domain;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * This class aggregates what makes up a booking for any type of examination.
+ * 
+ * @author carstm
+ * 
+ */
 public abstract class Booking implements Serializable {
 
 	private static final long serialVersionUID = 7686724985905225950L;
@@ -28,7 +34,15 @@ public abstract class Booking implements Serializable {
 	private String patientId;
 	private Date startTime;
 	private boolean updateable;
+	private boolean switchedSurgery = false;
+	private Surgery switchToSurgery;
 
+	/**
+	 * Is used to determine whether the patients booking is updateable or not. Specifically used when there is a limit on how many
+	 * times a patient may re schedule an appointment.
+	 * 
+	 * @return {@link boolean} updateable
+	 */
 	public boolean isUpdateable() {
 		return updateable;
 	}
@@ -88,6 +102,22 @@ public abstract class Booking implements Serializable {
 	 */
 	public void setSurgery(Surgery surgery) {
 		this.surgery = surgery;
+	}
+
+	public boolean isSwitchedSurgery() {
+		return switchedSurgery;
+	}
+
+	public void setSwitchedSurgery(boolean switchedSurgery) {
+		this.switchedSurgery = switchedSurgery;
+	}
+
+	public Surgery getSwitchToSurgery() {
+		return switchToSurgery;
+	}
+
+	public void setSwitchToSurgery(Surgery switchToSurgery) {
+		this.switchToSurgery = switchToSurgery;
 	}
 
 }

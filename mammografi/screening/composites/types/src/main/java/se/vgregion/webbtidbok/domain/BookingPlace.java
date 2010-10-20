@@ -19,6 +19,12 @@ package se.vgregion.webbtidbok.domain;
 
 import java.io.Serializable;
 
+/**
+ * A BookingPlace is a physical examination unit.
+ * 
+ * @author carstm
+ * 
+ */
 public class BookingPlace implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -30,6 +36,14 @@ public class BookingPlace implements Serializable {
 		centralTimeBookingId = id;
 	}
 
+	/**
+	 * The CentralTidBookId identifies the Time Book which the current BookingPlace has. This id is used to retrieve dates and
+	 * times available for booking appointments.
+	 * 
+	 * CentralTidBookId is mainly an Elvis specific concern.
+	 * 
+	 * @return centralTimeBookingId the id of the Time Book tied to the specific BookingPlace.
+	 */
 	public int getCentralTimeBookId() {
 		return centralTimeBookingId;
 	}
@@ -51,9 +65,7 @@ public class BookingPlace implements Serializable {
 	}
 
 	public String toString() {
-		return "centralTimeBookingId: "
-				+ Integer.toString(this.getCentralTimeBookId()) + " Address: "
-				+ this.getAddress() + " Mottagning: " + this.getClinic();
+		return "centralTimeBookingId: " + Integer.toString(this.getCentralTimeBookId()) + " Address: " + this.getAddress()
+				+ " Mottagning: " + this.getClinic();
 	}
-
 }
