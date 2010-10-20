@@ -17,7 +17,6 @@
  */
 package se.vgregion.webbtidbok;
 
-import java.util.Map;
 import java.util.ResourceBundle;
 
 import org.slf4j.Logger;
@@ -62,35 +61,56 @@ public class Login {
 		loginCredentials.setLoggedIn(false);
 	}
 
-	public boolean login(State loginCredentials) throws Exception {
-		BookingFacade bookingService = bookingFactory.getService(loginCredentials);
-		if (bookingService.login(loginCredentials)) {
-			// #### getNamn() is stand in for the real future field which will enable us to determine which message bundle to
+	/**
+	 * Gets the correct {@link BookingFacade} for the current user and if the user is logged in the setMessageBundle method is
+	 * called
+	 * 
+	 * @param stateLoginCredentials
+	 *            {@link State}
+	 * @return
+	 * @throws Exception
+	 */
+	public boolean login(State stateLoginCredentials) throws Exception {
+		BookingFacade bookingService = bookingFactory.getService(stateLoginCredentials);
+		if (bookingService.login(stateLoginCredentials)) {
+			// TODO: #### getNamn() is stand in for the real future field which will enable us to determine which message bundle
+			// to
 			// load, Gyn
 			// or Bukaorta
-			String value = "";
-			if (loginCredentials.getBookingResponse() != null) {
-				value = loginCredentials.getBookingResponse().getNamn().getValue();
-			}
-			if (value.equalsIgnoreCase("Kalle 1")) {
-				// gyn
-				Map<String, ServiceDefinition> serviceMap = bookingFactory.getService();
-				ServiceDefinition serviceDefinition = serviceMap.get("GYN");
-				setMessageBundle(loginCredentials, serviceDefinition);
-			} else {
-				// bukaorta
-				setMessageBundle(loginCredentials, sd);
-			}
-			loginCredentials.setLoggedIn(true);
-			logger.info("Logging in user {}.", loginCredentials.getPnr());
+			// String serviceType = "";
+			// if (loginCredentials.getBookingResponse() != null) {
+			// serviceType = loginCredentials.getBookingResponse().getNamn().getValue();
+			// }
+			// setMessageBundle(loginCredentials, sd);
+			// if (serviceType.equalsIgnoreCase("Näf, Björn") || serviceType.equalsIgnoreCase("Kalle 1")) {
+			// // gyn
+			// Map<String, ServiceDefinition> serviceMap = bookingFactory.getService();
+			// ServiceDefinition serviceDefinition = serviceMap.get("GYN");
+			// setMessageBundle(loginCredentials, serviceDefinition);
+			// } else {
+			// bukaorta
+			setMessageBundle(stateLoginCredentials, sd);
+			// }
+			stateLoginCredentials.setLoggedIn(true);
+			logger.info("Logging in user {}.", stateLoginCredentials.getPnr());
 			return true;
 		} else {
-			loginCredentials.setLoggedIn(false);
-			logger.info("Login failed for user {}.", loginCredentials.getPnr());
+			stateLoginCredentials.setLoggedIn(false);
+			logger.info("Login failed for user {}.", stateLoginCredentials.getPnr());
 			return false;
 		}
 	}
 
+	/**
+	 * Looks up which Service Definition is appropriate for the current user and sets the correct Service's ID into the
+	 * {@link State} And unles the service id just set in the state equals "BUKAORTA" the setMessageBundle method is called.
+	 * 
+	 * @param state
+	 *            {@link State}
+	 * @param loginMessages
+	 *            {@link LoginMessages}
+	 * @return
+	 */
 	public boolean lookup(State state, LoginMessages loginMessages) {
 		sd = lookupService.lookup(state);
 		if (sd != null) {
@@ -108,6 +128,14 @@ public class Login {
 		}
 	}
 
+	/**
+	 * This method sets the appropriate message bundle for the current user, example: resources/messages/bukaorta/BukAortaMessages
+	 * 
+	 * @param state
+	 *            {@link State}
+	 * @param sd
+	 *            {@link ServiceDefiniton}
+	 */
 	public void setMessageBundle(State state, ServiceDefinition sd) {
 		state.setMessageBundle(sd.getMessageBundleBase());
 	}

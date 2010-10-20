@@ -28,17 +28,22 @@
 <ui:define name="content">
 
 <ui:fragment id="loginFragment">
+
 	<h1>#{sectionMsg.deletepageHeader}</h1>
+
 	<p><h:outputFormat value="#{sectionMsg.deletepageCancellationWarning}" escape="false">
             <f:param value="#{booking.surgery.surgeryPhone}" /></h:outputFormat></p>
+  
     <ui:fragment id="list" rendered="#{!empty sectionMsg.deletepageListText}">
+    	<div id="boxmiddle">
     		<div id="centercontent">
      		   <h:outputText value="#{sectionMsg.deletepageListText}" escape="false" />
  			</div>
+    	</div>
     </ui:fragment>
-		
+    
 	<ui:fragment id="listfragment" rendered="#{!empty sectionMsg.deletepageCancellationInfo}">
-		<h:outputText value="#{sectionMsg.deletepageCancellationInfo}" escape="false" />
+		<p><h:outputText value="#{sectionMsg.deletepageCancellationInfo}" escape="false" /></p>
 	</ui:fragment>
 
     <ui:decorate template="/flows/bookinginfo-patientdata.xhtml">

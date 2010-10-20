@@ -156,7 +156,10 @@ public class ElvisServiceMock implements ICentralBookingWS {
 	}
 
 	private ArrayOfBookingTime getBookingTimes(BookingRequest request) throws DatatypeConfigurationException {
-		XMLGregorianCalendar fromDate = DatatypeFactory.newInstance().newXMLGregorianCalendar(request.getFromDat().getValue());
+		String value = request.getFromDat().getValue().trim();
+		// Tue Oct 19 14:25:28 CEST 2010 illegal incoming value format
+		// 2000-03-04T20:00:00Z legal format for value
+		XMLGregorianCalendar fromDate = DatatypeFactory.newInstance().newXMLGregorianCalendar(value);
 		Map<Integer, ArrayOfBookingTime> bookingTimes = (Map<Integer, ArrayOfBookingTime>) elvisMockData.get("bookingTimes");
 		XMLGregorianCalendar compareDate = DatatypeFactory.newInstance().newXMLGregorianCalendar();
 		Integer ctid = request.getCentralTidbokID();

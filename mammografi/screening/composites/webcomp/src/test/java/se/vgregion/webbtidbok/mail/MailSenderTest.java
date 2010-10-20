@@ -37,7 +37,7 @@ import se.vgregion.webbtidbok.domain.sectra.BookingSectra;
 public class MailSenderTest {
 	private static MailSetup mailsetup;
 	private static MailSender mailsender;
-	private static CancellationMessageSetup messagesetup;
+	private static MessageSetup messagesetup;
 	private static Booking booking;
 	private static State state;
 	private static Properties props;
@@ -66,7 +66,7 @@ public class MailSenderTest {
 		booking.setPatientName("Patient X");
 		mailsetup = new MailSetup();
 		mailsender = new MailSender();
-		messagesetup = new CancellationMessageSetup();
+		messagesetup = new MessageSetup();
 		props = mailsetup.setUpMailProperties(state);
 	}
 

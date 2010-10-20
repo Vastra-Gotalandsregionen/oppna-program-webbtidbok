@@ -1,4 +1,3 @@
-<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <!--
 
     Copyright 2009 Vastra Gotalandsregionen
@@ -18,17 +17,26 @@
       Boston, MA 02111-1307  USA
 
 -->
+
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:sf="http://www.springframework.org/tags/faces">
-<h:form>
-<div class="tb_sectionheading">
-	
-    <h3><h:outputText value="#{section_heading}"/></h3>
-    <h:outputLink id="help" value="#{sectionMsg.helppageLink}" target="_blank"><img src="../resources/VGRImages/help.gif" alt="Help symbol"/></h:outputLink>
 
-</div>
- </h:form>
+    <div id="tb_bookinginfo" class="tb_relcontainer">
+        <ui:insert name="topInformationSection" />
+        <ui:insert name="buttonFloat" />
+        <div class="tb_relcontaincerContent">
+        	<h3>#{booking.patientName}</h3>
+        	<p class="tb_booking_bread">#{booking.patientId}</p>
+       		<h3><h:outputText value="#{baseMsg.locationBoxWhere}"/>:</h3>
+	        <p>#{booking.switchToSurgery.surgeryName}</p>           
+	        <h3><h:outputText value="#{baseMsg.locationBoxWhen}"/>:</h3>
+	        <p>#{sectionMsg.confirmswtichlocationpageWhen}</p>
+	        <ui:insert name="bottomInformationSection" />
+        </div>
+        
+    </div>
+
 </ui:composition>

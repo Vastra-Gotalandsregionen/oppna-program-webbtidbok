@@ -20,6 +20,13 @@ package se.vgregion.webbtidbok.servicedef;
 import se.vgregion.webbtidbok.State;
 import se.vgregion.webbtidbok.booking.BookingFacade;
 
+/**
+ * This class is used for look up of what Service Definition a user should be matched to. The Service Definition is a package of
+ * information which declares what Message Bundle etc. that is associated with a certain Service (like Bukaorta, Mamografi etc.)
+ * 
+ * @author carstm
+ * 
+ */
 public class LoginLookupService implements LookupService {
 
 	private ServiceDefinition serviceDefinition = null;
@@ -29,7 +36,8 @@ public class LoginLookupService implements LookupService {
 	}
 
 	/**
-	 * tmpState only used during lookup phase. A new tmpState is created each service mapping attempt
+	 * tmpState only used during lookup phase. A new tmpState is created each service mapping attempt so that it won't be
+	 * "tainted" with unnecessary data from previous attempts.
 	 */
 	@Override
 	public ServiceDefinition lookup(State state) {

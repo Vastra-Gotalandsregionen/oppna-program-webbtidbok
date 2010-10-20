@@ -40,7 +40,7 @@ import se.vgregion.webbtidbok.domain.sectra.BookingSectra;
 public class CancellationMessageSetupTest {
 	private static MailSetup mailsetup;
 	private static MailSender mailsender;
-	private static CancellationMessageSetup messagesetup;;
+	private static MessageSetup messagesetup;;
 	private static Booking booking;
 	private static State state;
 	private static Properties props;
@@ -70,7 +70,7 @@ public class CancellationMessageSetupTest {
 		booking.setPatientName("Patient X");
 		mailsetup = new MailSetup();
 		mailsender = new MailSender();
-		messagesetup = new CancellationMessageSetup();
+		messagesetup = new MessageSetup();
 		props = mailsetup.setUpMailProperties(state);
 		session = mailsetup.getSession(props);
 	}
@@ -78,7 +78,7 @@ public class CancellationMessageSetupTest {
 	@Ignore
 	@Test
 	public void testGetMessage() throws MessagingException, IOException {
-		Message message = messagesetup.getMessage(session, state, booking.getPatientName(), booking);
+		Message message = messagesetup.getCancellationMessage(session, state, booking.getPatientName(), booking);
 		assertNotNull(message);
 		assertTrue((CANCELATIONMAILSUBJECT + booking.getPatientName() + ", " + state.getPasswd()).equals(message.getSubject()));
 		assertTrue(FROMEMAILADDRESS.equals(message.getFrom()[0].toString()));
@@ -86,6 +86,9 @@ public class CancellationMessageSetupTest {
 				.toString()));
 	}
 
+	/*
+	 * This is IGNORED, numerous to addresses will not be used.
+	 */
 	@Ignore
 	@Test
 	public void testGetToAddresses() {

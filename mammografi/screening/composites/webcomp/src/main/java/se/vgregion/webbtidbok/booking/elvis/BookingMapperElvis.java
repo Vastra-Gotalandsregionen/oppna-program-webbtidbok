@@ -32,8 +32,24 @@ import se.vgregion.webbtidbok.ws.BookingPlace;
 import se.vgregion.webbtidbok.ws.BookingResponse;
 import se.vgregion.webbtidbok.ws.BookingTime;
 
+/**
+ * This class is used to map various Elvis specific values into the more general {@link se.vgregion.webbtidbok.Booking} class'
+ * elements.
+ * 
+ * @author carstm
+ * 
+ */
 public class BookingMapperElvis {
+	private boolean forTest = true;
 
+	/**
+	 * Converts or maps Elvis specific BookingTime {@link se.vgregion.webbtidbok.ws.BookingTime} to this applications domain
+	 * object {@link se.vgregion.webbtidbok.domain.BookingTime}
+	 * 
+	 * @param bookingTime
+	 *            {@link se.vgregion.webbtidbok.ws.BookingTime}
+	 * @return bookTime {@link se.vgregion.webbtidbok.domain.BookingTime}
+	 */
 	public se.vgregion.webbtidbok.domain.BookingTime bookingTimeMapping(BookingTime bookingTime) {
 		se.vgregion.webbtidbok.domain.BookingTime bookTime = new se.vgregion.webbtidbok.domain.BookingTime();
 		XMLGregorianCalendar date = bookingTime.getDatum();
@@ -48,6 +64,14 @@ public class BookingMapperElvis {
 		return bookTime;
 	}
 
+	/**
+	 * Converts Elvis specific {@link se.vgregion.webbtidbok.ws.BookingResponse} to this applications domain object
+	 * {@link se.vgregion.webbtidbok.domain.Booking}
+	 * 
+	 * @param bookingResponse
+	 *            {@link BookingResponse}
+	 * @return booking {@link se.vgregion.webbtidbok.Booking}
+	 */
 	public Booking bookingMapping(BookingResponse bookingResponse) {
 		BookingElvis booking = new BookingElvis();
 		booking.setPatientName(changePatientNameStructure(getStringValueFromBooking(bookingResponse.getNamn())));
@@ -59,8 +83,8 @@ public class BookingMapperElvis {
 		surgery.setSurgeryName(getStringValueFromBooking(bookingResponse.getMottagning()));
 		surgery.setSurgeryAddress(getStringValueFromBooking(bookingResponse.getAddress()));
 		// TODO: Shall this be used on Elvis bookings? Currently setting blank.
-        // surgery.setSurgeryPhone(getStringValueFromBooking(bookingResponse.getMobilTel()));
-        surgery.setSurgeryPhone("");
+		// surgery.setSurgeryPhone(getStringValueFromBooking(bookingResponse.getMobilTel()));
+		surgery.setSurgeryPhone("");
 		booking.setSurgery(surgery);
 		booking.setPatientId(getStringValueFromBooking(bookingResponse.getPnr()));
 		booking.setStartTime(getDateFromCalendar(bookingResponse.getBokadTid()));
@@ -88,14 +112,34 @@ public class BookingMapperElvis {
 		return value;
 	}
 
+	/**
+	 * This determines whether the patient can reschedule for a new appointment or not. If bookingResponse.getAntalOmbok() <=
+	 * bookingResponse.getMaxAntalOmbok() = true, then the patient can till reschedule.
+	 * 
+	 * @param bookingResponse
+	 *            {@link se.vgregion.webbtidbok.ws.BookingResponse}
+	 * @return value {@link Boolean} whether the patient can reschedule appointment or not.
+	 */
 	private boolean isUpdateable(BookingResponse bookingResponse) {
 		boolean value = false;
 		if (bookingResponse.getAntalOmbok() != null && bookingResponse.getMaxAntalOmbok() != null) {
-			value = bookingResponse.getAntalOmbok() <= bookingResponse.getMaxAntalOmbok();
+			if (forTest) {
+				value = true;
+			} else if (!forTest) {
+				value = bookingResponse.getAntalOmbok() <= bookingResponse.getMaxAntalOmbok();
+			}
 		}
 		return value;
 	}
 
+	/**
+	 * The name retrieved from the Elvis Webservice has the structure "SURNAME, MIDDLE NAME, NAME", this method returns
+	 * "Name Middlename Surname"
+	 * 
+	 * @param name
+	 *            "SURNAME, MIDDLE NAME, NAME"
+	 * @return name returns "Name Middlename Surname"
+	 */
 	private String changePatientNameStructure(String name) {
 		name = StringHandler.capitalizeName(name);
 		String theNames[] = name.split(",");
@@ -105,6 +149,14 @@ public class BookingMapperElvis {
 		return name;
 	}
 
+	/**
+	 * Converts an Elvis specific {@link se.vgregion.webbtidbok.ws.BookingPlace} to this application's domain object
+	 * {@link Surgery}
+	 * 
+	 * @param bookingPlace
+	 *            {@link se.vgregion.webbtidbok.ws.BookingPlace}
+	 * @return surgery {@link Surgery}
+	 */
 	public Surgery bookingPlaceMapping(BookingPlace bookingPlace) {
 		Surgery surgery = new Surgery();
 		surgery.setSurgeryAddress(getStringValueFromBooking(bookingPlace.getAddress()));
@@ -118,4 +170,13 @@ public class BookingMapperElvis {
 	public Calendar daysMapping(se.vgregion.webbtidbok.ws.Calendar wrapCal) {
 		return wrapCal.getDatum().toGregorianCalendar();
 	}
+
+	public boolean isForTest() {
+		return forTest;
+	}
+
+	public void setForTest(boolean forTest) {
+		this.forTest = forTest;
+	}
+
 }

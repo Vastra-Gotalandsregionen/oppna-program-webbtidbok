@@ -72,10 +72,15 @@ div.tb_relcontainer {
 	position: relative;
 }
 
+div.tb_relcontaincerContent {
+	width: 30em;
+}
+
 div.tb_buttonFloat {
 	position: absolute;
 	right: 0px;
 	bottom: 0px;
+	
 }
 
 div.tb_buttonFloat form {
@@ -111,6 +116,15 @@ div.tb_sectionheading a {
 
 #selectForm input {
 	display: none;
+}
+
+/* Styling for the static location selection on the switch location page. */
+#selectFormStaticLoction select {
+	width: 320px;
+}
+
+#selectFormStaticLoction input {
+	float: right;
 }
 
 .tb_update_new_location_header {
@@ -316,3 +330,16 @@ div.error_message p {
     font-family: Verdana, Arial, Helvetica, sans-serif;
 }
 
+/* To add support for the "punktlistepunkt-red.gif w/o using boxmiddle class */
+#centercontentlist ul li {
+	margin:0;
+	padding:0;
+	line-height:1.3;
+	list-style-type:circle;
+	list-style-image: url(images/punktlistepunkt-red.gif);
+}
+
+/* To override the a class provided by vgr to undeline links */
+a {
+	text-decoration: underline;	
+}

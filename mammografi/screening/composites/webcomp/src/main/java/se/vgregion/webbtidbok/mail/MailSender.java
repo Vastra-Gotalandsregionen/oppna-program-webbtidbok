@@ -30,7 +30,7 @@ import se.vgregion.webbtidbok.domain.Booking;
 public class MailSender implements Runnable {
 
 	/**
-	 * Fetches the message subjuect and body from current used message bundle completes the mail subject and mail body with the
+	 * Fetches the message subject and body from current used message bundle completes the mail subject and mail body with the
 	 * users name from the state
 	 * 
 	 * @param session
@@ -52,12 +52,11 @@ public class MailSender implements Runnable {
 	}
 
 	MailSetup mailSetup = new MailSetup();
-	CancellationMessageSetup messageSetup = new CancellationMessageSetup();
+	MessageSetup messageSetup = new MessageSetup();
 
 	public Properties getMailProperties(State state) {
 
 		Properties properties = mailSetup.setUpMailProperties(state);
-
 		return properties;
 	}
 
@@ -65,6 +64,10 @@ public class MailSender implements Runnable {
 		run();
 	}
 
+	/**
+	 * If isSwitched is set to true in the Booking object the mail sent is a Switch Location Mail. If isSwitched is set to default
+	 * value false in the Booking object corresponding to current user the Cancellation Mail will be sent.
+	 */
 	@Override
 	public void run() {
 
@@ -75,10 +78,13 @@ public class MailSender implements Runnable {
 			Properties mailProperties = getMailProperties(state);
 			Session session = mailSetup.getSession(mailProperties);
 			session.setDebug(debug);
-			Message messageToSend = messageSetup.getMessage(session, state, patientName, booking);
-
+			Message messageToSend = null;
+			if (booking.isSwitchedSurgery()) {
+				messageToSend = messageSetup.getSwitchLocationMessage(session, state, patientName, booking);
+			} else if (!booking.isSwitchedSurgery()) {
+				messageToSend = messageSetup.getCancellationMessage(session, state, patientName, booking);
+			}
 			try {
-
 				Transport.send(messageToSend);
 				mailSentToServer = true;
 

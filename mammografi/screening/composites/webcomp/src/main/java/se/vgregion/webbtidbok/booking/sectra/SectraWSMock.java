@@ -46,7 +46,12 @@ import se.vgregion.webbtidbok.ws.sectra.TimeBlock;
 public class SectraWSMock implements IRisReschedule {
 
 	private BusinessObjectHolder businessObjectHolder;
-	
+	private BusinessObjectHolder businessObjectHolderStatic;
+
+	public void setBusinessObjectHolderStatic(BusinessObjectHolder businessObjectHolderStatic) {
+		this.businessObjectHolderStatic = businessObjectHolderStatic;
+	}
+
 	public void setBusinessObjectHolder(BusinessObjectHolder businessObjectHolder) {
 		this.businessObjectHolder = businessObjectHolder;
 	}
@@ -58,19 +63,17 @@ public class SectraWSMock implements IRisReschedule {
 	}
 
 	@Override
-	public ArrayOfBookingInfo getBookings(String patientId)
-			throws IRisRescheduleGetBookingsErrorInfoFaultFaultMessage {
-		 List<BookingInfo> bookings = businessObjectHolder.getBookings(patientId);
-		 ArrayOfBookingInfo arrayOfBookingInfo = new ArrayOfBookingInfo();
-		 arrayOfBookingInfo.getBookingInfo().addAll(bookings);
-		 return arrayOfBookingInfo;
+	public ArrayOfBookingInfo getBookings(String patientId) throws IRisRescheduleGetBookingsErrorInfoFaultFaultMessage {
+		List<BookingInfo> bookings = businessObjectHolder.getBookings(patientId);
+		ArrayOfBookingInfo arrayOfBookingInfo = new ArrayOfBookingInfo();
+		arrayOfBookingInfo.getBookingInfo().addAll(bookings);
+		return arrayOfBookingInfo;
 	}
 
 	@Override
-	public ArrayOfdateTime listFreeDays(XMLGregorianCalendar startDate,
-			XMLGregorianCalendar endDate, String examinationNr, String sectionId)
-			throws IRisRescheduleListFreeDaysErrorInfoFaultFaultMessage {
-		 List<XMLGregorianCalendar> listFreeDays = new ArrayList<XMLGregorianCalendar>();
+	public ArrayOfdateTime listFreeDays(XMLGregorianCalendar startDate, XMLGregorianCalendar endDate, String examinationNr,
+			String sectionId) throws IRisRescheduleListFreeDaysErrorInfoFaultFaultMessage {
+		List<XMLGregorianCalendar> listFreeDays = new ArrayList<XMLGregorianCalendar>();
 		try {
 			listFreeDays = businessObjectHolder.listFreeDays(startDate, endDate, examinationNr, sectionId);
 		} catch (InvalidExamNoException e) {
@@ -78,15 +81,14 @@ public class SectraWSMock implements IRisReschedule {
 		} catch (InvalidSectionIdException e) {
 			e.printStackTrace();
 		}
-		 ArrayOfdateTime arrayOfdateTime = new ArrayOfdateTime();
-		 arrayOfdateTime.getDateTime().addAll(listFreeDays);
-		 return arrayOfdateTime;
+		ArrayOfdateTime arrayOfdateTime = new ArrayOfdateTime();
+		arrayOfdateTime.getDateTime().addAll(listFreeDays);
+		return arrayOfdateTime;
 	}
 
 	@Override
-	public ArrayOfTimeBlock listFreeTimes(XMLGregorianCalendar startDate,
-			XMLGregorianCalendar endDate, String examinationNr, String sectionId)
-			throws IRisRescheduleListFreeTimesErrorInfoFaultFaultMessage {
+	public ArrayOfTimeBlock listFreeTimes(XMLGregorianCalendar startDate, XMLGregorianCalendar endDate, String examinationNr,
+			String sectionId) throws IRisRescheduleListFreeTimesErrorInfoFaultFaultMessage {
 		List<TimeBlock> listFreeTimes = new ArrayList<TimeBlock>();
 		try {
 			listFreeTimes = businessObjectHolder.listFreeTimes(startDate, endDate, examinationNr, sectionId);
@@ -97,13 +99,12 @@ public class SectraWSMock implements IRisReschedule {
 		}
 		ArrayOfTimeBlock arrayOfTimeBlock = new ArrayOfTimeBlock();
 		arrayOfTimeBlock.getTimeBlock().addAll(listFreeTimes);
-		
+
 		return arrayOfTimeBlock;
 	}
 
 	@Override
-	public ArrayOfSection listSections(String examinationNr)
-			throws IRisRescheduleListSectionsErrorInfoFaultFaultMessage {
+	public ArrayOfSection listSections(String examinationNr) throws IRisRescheduleListSectionsErrorInfoFaultFaultMessage {
 		List<Section> listSections = new ArrayList<Section>();
 		try {
 			listSections = businessObjectHolder.listSections(examinationNr);
@@ -116,10 +117,8 @@ public class SectraWSMock implements IRisReschedule {
 	}
 
 	@Override
-	public BookingInfo reschedule(String examinationNr, String newTimeId,
-			XMLGregorianCalendar startTime, Boolean printNewNotice,
-			String rescheduleComment)
-			throws IRisRescheduleRescheduleErrorInfoFaultFaultMessage {
+	public BookingInfo reschedule(String examinationNr, String newTimeId, XMLGregorianCalendar startTime, Boolean printNewNotice,
+			String rescheduleComment) throws IRisRescheduleRescheduleErrorInfoFaultFaultMessage {
 		BookingInfo reschedule = null;
 		try {
 			reschedule = businessObjectHolder.reschedule(examinationNr, newTimeId, startTime);
@@ -134,7 +133,5 @@ public class SectraWSMock implements IRisReschedule {
 		}
 		return reschedule;
 	}
-
-
 
 }

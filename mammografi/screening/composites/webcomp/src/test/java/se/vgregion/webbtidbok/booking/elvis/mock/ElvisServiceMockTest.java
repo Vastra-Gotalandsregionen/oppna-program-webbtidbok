@@ -20,6 +20,11 @@ package se.vgregion.webbtidbok.booking.elvis.mock;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import java.util.GregorianCalendar;
+
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
+
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -39,15 +44,25 @@ public class ElvisServiceMockTest {
 	private ObjectFactory objectFactory = new ObjectFactory();
 	private BookingRequest bookingRequest;
 	private String pNR1 = "19700123-9297";
+	private GregorianCalendar cal;
+
+	private XMLGregorianCalendar xmlCal;
 
 	@Before
 	public void setUp() throws Exception {
+
+		cal = new GregorianCalendar();
+		cal.getTime().toString();
+		xmlCal = DatatypeFactory.newInstance().newXMLGregorianCalendar(cal);
+		xmlCal.normalize().toString();
+
 		elvisServiceMock = new ElvisServiceMock();
 		elvisServiceMock.createMockData();
+
 		bookingRequest = new BookingRequest();
 		bookingRequest.setPnr(objectFactory.createString(pNR1));
 		bookingRequest.setCentralTidbokID(Integer.valueOf(1));
-
+		bookingRequest.setFromDat(objectFactory.createString(xmlCal.normalize().toString()));
 	}
 
 	@Test
@@ -73,10 +88,13 @@ public class ElvisServiceMockTest {
 		assertEquals("Mottagning 1", bookingPlace.getBookingPlace().get(0).getMottagning().getValue());
 	}
 
+	// IGNORED! Doesn't seem to test anything but the mock's getBookingTime anyway.
 	// This test needs refinement - must supply proper fromDat.
 	@Ignore
 	@Test
 	public void testGetBookingTime() throws ICentralBookingWSGetBookingTimeICFaultFaultFaultMessage {
+		// Tue Oct 19 14:25:28 CEST 2010 illegal format in bookingRequest. IllegalArgumentException.
+		// 2000-03-04T20:00:00Z legal format for bookingRequest
 		ArrayOfBookingTime bookingTime = elvisServiceMock.getBookingTime(bookingRequest);
 		assertEquals("16:30", bookingTime.getBookingTime().get(2).getKlocka().getValue());
 	}

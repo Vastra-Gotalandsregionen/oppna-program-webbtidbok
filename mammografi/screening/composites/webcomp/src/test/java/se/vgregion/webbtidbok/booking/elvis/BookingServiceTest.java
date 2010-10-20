@@ -92,11 +92,20 @@ public class BookingServiceTest {
 		bookingTime = bookingService.getBookingTime(state, "3", cal);
 	}
 
+	/*
+	 * This test is IGNORED since one cannot control whether there will be free days in the given interval or not. it is thus not
+	 * guaranteed to be repeateable.
+	 * 
+	 * This test may be ignored in case the test user doesn't work and there isn't any other credentials to use as alternative.
+	 * 19420213-8014 kzxpQlLb
+	 */
 	@Ignore
 	@Test
 	public void testGetFreeDays() {
-		state.setPasswd("4YL7CXnp");
-		state.setPnr("19121212-1212");
+		// state.setPasswd("4YL7CXnp");
+		// state.setPnr("19121212-1212");
+		state.setPasswd("kzxpQlLb");
+		state.setPnr("19420213-8014");
 		int tidbokID = 3;
 		Calendar startDate = Calendar.getInstance();
 		Calendar endDate = Calendar.getInstance();
