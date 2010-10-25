@@ -55,7 +55,7 @@ public class StringEncrypterTest {
         stringEncrypter.setKeyAlias(alias);
         stringEncrypter.setKeyPassWord("asd");
         defaultResourceLoader = new DefaultResourceLoader();
-        resource = defaultResourceLoader.getResource("classpath:asd.pfx");
+        resource = defaultResourceLoader.getResource("classpath:asdtest.pfx");
         stringEncrypter.setKeyStoreFile(resource);
     }
 
