@@ -20,6 +20,16 @@ package se.vgregion.webbtidbok.domain;
 import java.io.Serializable;
 import java.util.Date;
 
+import se.vgregion.webbtidbok.domain.elvis.BookingTimeElvis;
+import se.vgregion.webbtidbok.domain.sectra.BookingTimeSectra;
+
+/**
+ * This class is the application's domain object for booking time. {@link BookingTimeElvis} and {@link BookingTimeSectra} are both
+ * mapped into this domain class through {@link BookingMapperElvis} and {@BookingMapperSectra}.
+ * 
+ * @author carstm
+ * 
+ */
 public class BookingTime implements Serializable {
 
 	private static final long serialVersionUID = 5023666003372389346L;
@@ -35,13 +45,13 @@ public class BookingTime implements Serializable {
 	}
 
 	public void setDateTime(Date dateTime) {
-        if (dateTime != null) {
-            this.dateTime = (Date) dateTime.clone();
-        }
+		if (dateTime != null) {
+			this.dateTime = (Date) dateTime.clone();
+		}
 	}
 
 	public Date getDateTime() {
-	    return  dateTime != null ? (Date) dateTime.clone() : null;
+		return dateTime != null ? (Date) dateTime.clone() : null;
 	}
 
 }

@@ -20,6 +20,9 @@ package se.vgregion.webbtidbok.domain;
 import java.io.Serializable;
 
 /**
+ * This is a domain object which is used in the Webbtidbok application. A Surgery instance is put together from data in a
+ * WebService response in {@link BookingMapperElvis} and {@link BookingMapperSectra}. The properties in this class are seen as
+ * common between surgeries / locations no matter what Web Service is used.
  * 
  * @author David & Carl. Class used for surgery description.
  * 
@@ -28,6 +31,9 @@ public class Surgery implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * Common properties for surgeries ({@link Surgery}) / locations independent of what Web Service is being used.
+	 */
 	private String surgeryId;
 	private String surgeryName;
 	private String surgeryAddress;

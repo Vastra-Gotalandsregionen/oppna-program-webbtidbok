@@ -19,6 +19,15 @@ package se.vgregion.webbtidbok.domain.elvis;
 
 import se.vgregion.webbtidbok.domain.Booking;
 
+/**
+ * Elvis Examination Type is not yet (as of 2010-10-21) fully implemented in the Elvis back end. What this will facilitate is to
+ * differentiate between different kinds of examinations which are using the same time booking system (Elvis). Elvis can for
+ * example hold time books for both Bukaorta screenings and Gynekology screenings and retrieving examination type enables to
+ * differentiate between them and to set the correct message bundle(s).
+ * 
+ * @author carstm
+ * 
+ */
 public class BookingElvis extends Booking {
 
 	private static final long serialVersionUID = 264968078716906828L;
