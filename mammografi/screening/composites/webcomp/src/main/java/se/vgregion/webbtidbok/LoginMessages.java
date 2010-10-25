@@ -17,96 +17,99 @@
  */
 package se.vgregion.webbtidbok;
 
-import java.io.*;
+import java.io.Serializable;
 
 public class LoginMessages implements Serializable {
 
-  private String logMessagePnr = "";
-  private String logMessagePassword = "";
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private String logMessagePnr = "";
+	private String logMessagePassword = "";
 
-  /*
-   * -1 General Allmänt fel, ej specificerat -1002 Not found Posten kunde ej hittas -1008 Pwd Error Pinkoden felaktig -2014 Anulled Posten ar avbokad -1036 CertInvalid Certifierings fel -1119 PnrError
-   * Felaktigt personnummer -10175 OmbokMax Max antal bokning uppnådda -2002 Inparamter saknas -2001 Invalid paramter
-   */
+	/*
+	 * -1 General Allmänt fel, ej specificerat -1002 Not found Posten kunde ej hittas -1008 Pwd Error Pinkoden felaktig -2014
+	 * Anulled Posten ar avbokad -1036 CertInvalid Certifierings fel -1119 PnrError Felaktigt personnummer -10175 OmbokMax Max
+	 * antal bokning uppnådda -2002 Inparamter saknas -2001 Invalid paramter
+	 */
 
-  public int exceptionMessage = -1;
-  public String exceptionMessageString = "Allmänt fel, ej specificerat";
-  public static final String LOGIN_ERROR_MESSAGE = "Inloggningen misslyckades Kontrollera att du skrivit personnumret rätt Skriv lösenordet som det står i kallelsen, tänk på att skilja mellan stora och små bokstäve";
-  public String[] errorMessages;
+	public int exceptionMessage = -1;
+	public String exceptionMessageString = "Allmänt fel, ej specificerat";
+	public static final String LOGIN_ERROR_MESSAGE = "Inloggningen misslyckades Kontrollera att du skrivit personnumret rätt Skriv lösenordet som det står i kallelsen, tänk på att skilja mellan stora och små bokstäve";
+	public String[] errorMessages;
 
+	public void setErrorMessages(String[] errorMessages) {
+		this.errorMessages = errorMessages;
+	}
 
-  public void setErrorMessages(String[] errorMessages) {
-    this.errorMessages = errorMessages;
-  }
+	public String getLogMessagePnr() {
 
-  public String getLogMessagePnr() {
+		return logMessagePnr;
+	}
 
-    return logMessagePnr;
-  }
+	public void setLogMessagePnr(String s) {
 
-  public void setLogMessagePnr(String s) {
+		logMessagePnr = s;
+	}
 
-    logMessagePnr = s;
-  }
+	public String getLogMessagePassword() {
+		return logMessagePassword;
+	}
 
-  public String getLogMessagePassword() {
-    return logMessagePassword;
-  }
+	public void setLogMessagePassword(String s) {
+		logMessagePassword = s;
+	}
 
-  public void setLogMessagePassword(String s) {
-    logMessagePassword = s;
-  }
+	public String[] getErrorMessages() {
+		return errorMessages;
+	}
 
+	public void setBadLogin() {
+		logMessagePnr = "Fyll i ditt personnummer med ÅÅÅÅMMDD-XXXX";
+		logMessagePassword = "Ange det lösenord som står i kallelsen, tänk på att skilja mellan små och stora bokstäver";
+	}
 
-  public String[] getErrorMessages() {
-    return errorMessages;
-  }
+	public void clear() {
+		logMessagePnr = logMessagePassword = "";
+		errorMessages = null;
+	}
 
-  public void setBadLogin() {
-    logMessagePnr = "Fyll i ditt personnummer med ÅÅÅÅMMDD-XXXX";
-    logMessagePassword = "Ange det lösenord som står i kallelsen, tänk på att skilja mellan små och stora bokstäver";
-  }
+	public void setExceptionMessage(int id) {
+		exceptionMessage = id;
 
-  public void clear() {
-    logMessagePnr = logMessagePassword = "";
-    errorMessages = null;
-  }
+		switch (exceptionMessage) {
+		case -1:
+			exceptionMessageString = "Allmänt fel, ej specificerat";
+			break;
+		case -1002:
+			exceptionMessageString = "Posten kunde ej hittas";
+			break;
+		case -1008:
+			exceptionMessageString = "Pinkoden felaktig";
+			break;
+		case -2014:
+			exceptionMessageString = "Posten ar avbokad";
+			break;
+		case -1036:
+			exceptionMessageString = "Certifierings fel";
+			break;
 
-  public void setExceptionMessage(int id) {
-    exceptionMessage = id;
+		case -1119:
+			exceptionMessageString = "Felaktigt personnummer";
+			break;
+		case -10175:
+			exceptionMessageString = "Max antal bokning uppnådda";
+			break;
+		case -2002:
+			exceptionMessageString = "Inparameter saknas";
+			break;
+		case -2001:
+			exceptionMessageString = "Invalid parameter";
+			break;
 
-    switch (exceptionMessage) {
-      case -1:
-        exceptionMessageString = "Allmänt fel, ej specificerat";
-        break;
-      case -1002:
-        exceptionMessageString = "Posten kunde ej hittas";
-        break;
-      case -1008:
-        exceptionMessageString = "Pinkoden felaktig";
-        break;
-      case -2014:
-        exceptionMessageString = "Posten ar avbokad";
-        break;
-      case -1036:
-        exceptionMessageString = "Certifierings fel";
-        break;
+		}
 
-      case -1119:
-        exceptionMessageString = "Felaktigt personnummer";
-        break;
-      case -10175:
-        exceptionMessageString = "Max antal bokning uppnådda";
-        break;
-      case -2002:
-        exceptionMessageString = "Inparameter saknas";
-        break;
-      case -2001:
-        exceptionMessageString = "Invalid parameter";
-        break;
-
-    }
-
-  }
+	}
 
 }

@@ -28,6 +28,16 @@ import se.vgregion.webbtidbok.booking.BookingFactory;
 import se.vgregion.webbtidbok.servicedef.LookupService;
 import se.vgregion.webbtidbok.servicedef.ServiceDefinition;
 
+/**
+ * As the name of this class suggests it caters for the logging in of the user. It also provides logging out functionality.
+ * 
+ * Loggin in is not really what the user does. The user's credentials are sent as a request through a look up service and the
+ * first webservice that matches and returns usable information is then used further on. Some of this information is then set into
+ * a {@link State} which follows the user.
+ * 
+ * @author carstm
+ * 
+ */
 @Service
 public class Login {
 	private BookingFactory bookingFactory;

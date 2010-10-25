@@ -18,12 +18,11 @@
 package se.vgregion.webbtidbok;
 
 import java.io.Serializable;
-import java.util.Calendar;
 
 import se.vgregion.webbtidbok.ws.BookingResponse;
 
 /**
- * This bean stores the user credentials
+ * This bean stores the user's credentials.
  */
 
 public class State implements Serializable {
@@ -32,12 +31,19 @@ public class State implements Serializable {
 
 	private String pnr = "";
 	private String passwd = "";
+	/**
+	 * centralTidBokID is used in Elvis as an identifier for a specific time book
+	 */
 	private int centralTidbokID = 0;
 	transient BookingResponse bookingResponse = null;
 	private boolean loggedIn = false;
 	private boolean isFirst = true;
 	private String messageBundle = "";
 	private String service = null;
+	/**
+	 * elvisExaminationType is used to determine the type of examination since Elvis may cater for time books for several
+	 * different types of examinations.
+	 */
 	private String elvisExaminationType;
 
 	public State() {
