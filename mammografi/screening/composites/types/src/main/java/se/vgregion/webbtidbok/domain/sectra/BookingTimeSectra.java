@@ -20,27 +20,33 @@ package se.vgregion.webbtidbok.domain.sectra;
 import se.vgregion.webbtidbok.domain.BookingTime;
 import se.vgregion.webbtidbok.domain.Surgery;
 
+/**
+ * This constitutes the term Booking Time for a Surgery that has it's time book held within Sectra RIS.
+ * 
+ * @author carstm
+ * 
+ */
 public class BookingTimeSectra extends BookingTime {
 
-    private static final long serialVersionUID = 1L;
-    
-    private int length;
-    private Surgery surgery;
+	private static final long serialVersionUID = 1L;
 
-    public int getLength() {
-        return length;
-    }
+	private int length;
+	private Surgery surgery;
 
-    public void setLength(int length) {
-        this.length = length;
-    }
+	public int getLength() {
+		return length;
+	}
 
-    public Surgery getSurgery() {
-        return surgery;
-    }
+	public void setLength(int length) {
+		this.length = length;
+	}
 
-    public void setSurgery(Surgery surgery) {
-        this.surgery = surgery;
-    }
+	public Surgery getSurgery() {
+		return surgery;
+	}
+
+	public void setSurgery(Surgery surgery) {
+		this.surgery = surgery;
+	}
 
 }

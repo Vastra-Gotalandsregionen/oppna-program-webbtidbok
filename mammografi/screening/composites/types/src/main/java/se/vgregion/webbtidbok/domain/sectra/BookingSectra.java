@@ -19,6 +19,12 @@ package se.vgregion.webbtidbok.domain.sectra;
 
 import se.vgregion.webbtidbok.domain.Booking;
 
+/**
+ * This class represents the properties which together constitutes a booking in Sectra RIS time booking system.
+ * 
+ * @author carstm
+ * 
+ */
 public class BookingSectra extends Booking {
 
 	private static final long serialVersionUID = -6192104522671789695L;
