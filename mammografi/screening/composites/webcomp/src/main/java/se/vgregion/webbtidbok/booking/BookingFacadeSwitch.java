@@ -67,9 +67,9 @@ public class BookingFacadeSwitch implements BookingFacade {
 
 	@Override
 	public List<BookingTime> getBookingTime(State state, String sectionId, Calendar selectedDate) {
-	    List<BookingTime> times = getBookingFacadeForCurrentRequest(state).getBookingTime(state, sectionId, selectedDate);
-	    Collections.sort(times, new CompareBookingTime());
-	    return times;
+		List<BookingTime> times = getBookingFacadeForCurrentRequest(state).getBookingTime(state, sectionId, selectedDate);
+		Collections.sort(times, new CompareBookingTime());
+		return times;
 	}
 
 	@Override
@@ -82,17 +82,21 @@ public class BookingFacadeSwitch implements BookingFacade {
 		return getBookingFacadeForCurrentRequest(state).cancelBooking(state);
 	}
 
-	
 	private static class CompareBookingTime implements Comparator<BookingTime>, Serializable {
 
-        @Override
-        public int compare(BookingTime arg0, BookingTime arg1) {
-            Calendar c0 = DateHandler.calendarFromDate(arg0.getDateTime());
-            Calendar c1 = DateHandler.calendarFromDate(arg1.getDateTime());
-            return Integer.signum(100 * (c0.get(Calendar.HOUR_OF_DAY) - c1.get(Calendar.HOUR_OF_DAY)) +
-                    (c0.get(Calendar.MINUTE) - c1.get(Calendar.MINUTE)));
-        }
-	    
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		public int compare(BookingTime arg0, BookingTime arg1) {
+			Calendar c0 = DateHandler.calendarFromDate(arg0.getDateTime());
+			Calendar c1 = DateHandler.calendarFromDate(arg1.getDateTime());
+			return Integer.signum(100 * (c0.get(Calendar.HOUR_OF_DAY) - c1.get(Calendar.HOUR_OF_DAY))
+					+ (c0.get(Calendar.MINUTE) - c1.get(Calendar.MINUTE)));
+		}
+
 	}
-	
+
 }

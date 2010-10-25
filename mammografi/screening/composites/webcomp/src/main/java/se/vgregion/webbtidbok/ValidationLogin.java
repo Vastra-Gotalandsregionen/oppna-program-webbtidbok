@@ -17,107 +17,113 @@
  */
 package se.vgregion.webbtidbok;
 
-
-import java.util.*;
-import java.io.*;
-import java.lang.*;
-import java.text.*;
-import java.util.regex.*;
+import java.util.Calendar;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.log4j.Logger;
 
-import se.vgregion.webbtidbok.*;
-
+/**
+ * Parses and validates the user's personnummer in several different ways so that the user can type in his/her's pnr in convenient
+ * ways.
+ * 
+ * @author carstm
+ * 
+ */
 public class ValidationLogin {
 
-    public static final String ENTER_PATIENT_ID = "Fyll i ditt personnummer med ÅÅÅÅMMDD-XXXX";
-    public static final String ENTER_PASSWORD = "Du måste fylla i lösenord";
-    public static final String MALFORMED_PATIENT_ID = "Fyll i ditt personnummer med ÅÅÅÅMMDD-XXXX";
-    
-    private Logger logger;
-    
-    private Pattern pnrFullPattern;
-    private Pattern pnrWithDashPattern;
-    private Pattern pnrWithoutDashPattern;
-    
-    public ValidationLogin() {
-        logger = Logger.getLogger("se.vgregion.webbtidbok.services");
+	public static final String ENTER_PATIENT_ID = "Fyll i ditt personnummer med ÅÅÅÅMMDD-XXXX";
+	public static final String ENTER_PASSWORD = "Du måste fylla i lösenord";
+	public static final String MALFORMED_PATIENT_ID = "Fyll i ditt personnummer med ÅÅÅÅMMDD-XXXX";
 
-        // Matches full numbers - eg. yyyymmdd-xxxx and yyyymmddxxxx.
-        pnrFullPattern = Pattern.compile("^([0-9]{8})-?([a-zA-Z0-9][0-9]{3})$");
-        // Matches short numbers with dash - eg. yymmdd-xxxx and yymmdd+xxxx.
-        pnrWithDashPattern = Pattern.compile("^([0-9]{2})([0-9]{4})([+-])([a-zA-Z0-9][0-9]{3})$");
-        // Matches short numbers without dash - eg. yymmddxxxx. Assumed to be less than 100 years old.
-        pnrWithoutDashPattern = Pattern.compile("^([0-9]{2})([0-9]{4})([a-zA-Z0-9][0-9]{3})$");
-    }
-    
-	public boolean validateLogin(State st, LoginMessages lm){
-		
-        logger.debug("Validated login start, state pnr is: " + st.getPnr() + ", state passw is: " + st.getPasswd());
-		String pnr  = st.getPnr();
+	private Logger logger;
+
+	private Pattern pnrFullPattern;
+	private Pattern pnrWithDashPattern;
+	private Pattern pnrWithoutDashPattern;
+
+	public ValidationLogin() {
+		logger = Logger.getLogger("se.vgregion.webbtidbok.services");
+
+		// Matches full numbers - eg. yyyymmdd-xxxx and yyyymmddxxxx.
+		pnrFullPattern = Pattern.compile("^([0-9]{8})-?([a-zA-Z0-9][0-9]{3})$");
+		// Matches short numbers with dash - eg. yymmdd-xxxx and yymmdd+xxxx.
+		pnrWithDashPattern = Pattern.compile("^([0-9]{2})([0-9]{4})([+-])([a-zA-Z0-9][0-9]{3})$");
+		// Matches short numbers without dash - eg. yymmddxxxx. Assumed to be less than 100 years old.
+		pnrWithoutDashPattern = Pattern.compile("^([0-9]{2})([0-9]{4})([a-zA-Z0-9][0-9]{3})$");
+	}
+
+	public boolean validateLogin(State st, LoginMessages lm) {
+
+		logger.debug("Validated login start, state pnr is: " + st.getPnr() + ", state passw is: " + st.getPasswd());
+		String pnr = st.getPnr();
 		String password = st.getPasswd();
-		
+
 		lm.clear();
-		if(pnr.length() == 0){
+		if (pnr.length() == 0) {
 			lm.setLogMessagePnr(ENTER_PATIENT_ID);
 		}
-		if(password.length() == 0){
+		if (password.length() == 0) {
 			lm.setLogMessagePassword(ENTER_PASSWORD);
 		}
-		if(pnr.length() == 0 || password.length() == 0){
+		if (pnr.length() == 0 || password.length() == 0) {
 			return false;
 		}
-		
+
 		String canonicalPnr = getCanonicalPnr(pnr, Calendar.getInstance());
 		if (canonicalPnr == null) {
-            lm.setLogMessagePnr(MALFORMED_PATIENT_ID);
-            return false;
+			lm.setLogMessagePnr(MALFORMED_PATIENT_ID);
+			return false;
 		} else {
-		    st.setPnr(canonicalPnr);
+			st.setPnr(canonicalPnr);
 		}
 
 		logger.debug("Validated login end, state pnr is: " + st.getPnr() + ", state passw is: " + st.getPasswd());
 		return true;
 	}
-	
-	String getCanonicalPnr(String validateString, Calendar refDate){
-        String trimmed = validateString.trim();
 
-        Matcher pnr = pnrFullPattern.matcher(trimmed);
-	    if (pnr.matches() && pnr.groupCount() == 2) {
-	        return pnr.group(1) + "-" + pnr.group(2);
-	    }
-	    pnr = pnrWithDashPattern.matcher(trimmed);
-	    if (pnr.matches() && pnr.groupCount() == 4) {
-	        int year = getYearBefore(refDate, pnr.group(1), pnr.group(3).equals("+"));
-	        return Integer.toString(year) + pnr.group(2) + "-" + pnr.group(4);
-	    }
-        pnr = pnrWithoutDashPattern.matcher(trimmed);
-	    if (pnr.matches() && pnr.groupCount() == 3) {
-            int year = getYearBefore(refDate, pnr.group(1), false);
-            return Integer.toString(year) + pnr.group(2) + "-" + pnr.group(3);
-	    }
-		return null;	
+	String getCanonicalPnr(String validateString, Calendar refDate) {
+		String trimmed = validateString.trim();
+
+		Matcher pnr = pnrFullPattern.matcher(trimmed);
+		if (pnr.matches() && pnr.groupCount() == 2) {
+			return pnr.group(1) + "-" + pnr.group(2);
+		}
+		pnr = pnrWithDashPattern.matcher(trimmed);
+		if (pnr.matches() && pnr.groupCount() == 4) {
+			int year = getYearBefore(refDate, pnr.group(1), pnr.group(3).equals("+"));
+			return Integer.toString(year) + pnr.group(2) + "-" + pnr.group(4);
+		}
+		pnr = pnrWithoutDashPattern.matcher(trimmed);
+		if (pnr.matches() && pnr.groupCount() == 3) {
+			int year = getYearBefore(refDate, pnr.group(1), false);
+			return Integer.toString(year) + pnr.group(2) + "-" + pnr.group(3);
+		}
+		return null;
 	}
 
 	/**
 	 * Gets the latest year which preceeds or matches the reference date.
-	 * @param refDate The reference date. Only year part is used.
-	 * @param yeardigits The year digits to match against the reference date.
-	 * @param hundredYearsOld If this is true, year should preceed refDate with at least one hundred years.
+	 * 
+	 * @param refDate
+	 *            The reference date. Only year part is used.
+	 * @param yeardigits
+	 *            The year digits to match against the reference date.
+	 * @param hundredYearsOld
+	 *            If this is true, year should preceed refDate with at least one hundred years.
 	 * @return The year the year digits should be interpreted as.
 	 */
 	int getYearBefore(Calendar refDate, String yeardigits, boolean hundredYearsOld) {
-	    int refYear = refDate.get(Calendar.YEAR) - (hundredYearsOld ? 100 : 0);
+		int refYear = refDate.get(Calendar.YEAR) - (hundredYearsOld ? 100 : 0);
 
-	    // This parse should always succeed, as we have verified the digits using a regexp above.
-	    int year = 1800 + Integer.parseInt(yeardigits, 10);
+		// This parse should always succeed, as we have verified the digits using a regexp above.
+		int year = 1800 + Integer.parseInt(yeardigits, 10);
 
-        while (year + 100 <= refYear) {
-            year += 100;
-        }
+		while (year + 100 <= refYear) {
+			year += 100;
+		}
 
-        return year;
-    }
+		return year;
+	}
 
 }
