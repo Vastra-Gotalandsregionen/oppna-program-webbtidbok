@@ -50,6 +50,11 @@
             
             <ui:define name="buttonFloat">
                 <div class="tb_buttonFloat">
+                <!-- enable for DEV only 
+                    <h:form id="updateForm" >
+                        <sf:commandButton id="updateButton" value="#{baseMsg.locationBoxRescheduleButton}" processIds="*" action="update" disabled="#{booking.updateable}" style="width: 100px;"  />
+                    </h:form>
+                  -->
                     <h:form id="updateForm" >
                         <sf:commandButton id="updateButton" value="#{baseMsg.locationBoxRescheduleButton}" processIds="*" action="update" disabled="#{!booking.updateable}" style="width: 100px;"  />
                     </h:form>
@@ -62,6 +67,9 @@
                 <p class="tb_booking_bread"><h:outputText value="#{sectionMsg.welcomepageExamLength}"/></p>
             </ui:define>
         </ui:decorate>
+        <p />
+        
+ <!--        <ui:decorate template="/flows/sms-reminder-form.xhtml" />   -->
 
 </ui:fragment>
 </ui:define>

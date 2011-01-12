@@ -32,7 +32,6 @@ import se.vgregion.webbtidbok.ws.ArrayOfCalendar;
 import se.vgregion.webbtidbok.ws.BookingRequest;
 import se.vgregion.webbtidbok.ws.BookingResponse;
 import se.vgregion.webbtidbok.ws.BookingTime;
-import se.vgregion.webbtidbok.ws.CentralBookingWS;
 import se.vgregion.webbtidbok.ws.ICentralBookingWS;
 import se.vgregion.webbtidbok.ws.ICentralBookingWSCancelBookingICFaultFaultFaultMessage;
 import se.vgregion.webbtidbok.ws.ICentralBookingWSConfirmBookingICFaultFaultFaultMessage;
@@ -42,244 +41,319 @@ import se.vgregion.webbtidbok.ws.ICentralBookingWSGetBookingTimeICFaultFaultFaul
 import se.vgregion.webbtidbok.ws.ICentralBookingWSGetCalandarICFaultFaultFaultMessage;
 import se.vgregion.webbtidbok.ws.ObjectFactory;
 
+/**
+ * This class is used to map java classes to XML which are put into the WS SOAP requests. The methods below are better documented
+ * in the "CentralBookingWS Användardokumentation -utkast" specification from Insieme Consulting AB, author Anna Engelin. Creates
+ * JAXBelements and request {@link BookingRequest} thru {@link ObjectFactory}.
+ * 
+ * @author carstm
+ * 
+ */
 public class WebServiceHelper {
 
-  private final Log log = LogFactory.getLog(WebServiceHelper.class);
-  private final ObjectFactory objectFactory = new ObjectFactory();
-  private ICentralBookingWS elvisWebService;
-  private StringEncrypter encrypter;
+	private final Log log = LogFactory.getLog(WebServiceHelper.class);
+	private final ObjectFactory objectFactory = new ObjectFactory();
+	private ICentralBookingWS elvisWebService;
+	private StringEncrypter encrypter;
 
-  public void setElvisWebService(ICentralBookingWS elvisWebService) {
-    this.elvisWebService = elvisWebService;
-  }
+	public void setElvisWebService(ICentralBookingWS elvisWebService) {
+		this.elvisWebService = elvisWebService;
+	}
 
-  public void setEncrypter(StringEncrypter encrypter) {
-    this.encrypter = encrypter;
-  }
+	public void setEncrypter(StringEncrypter encrypter) {
+		this.encrypter = encrypter;
+	}
 
-  // make web service call
-//  CentralBookingWS centralBookingWS = new CentralBookingWS();
-//  ICentralBookingWS ws = centralBookingWS.getBasicHttpBindingICentralBookingWS();
+	// make web service call
+	// CentralBookingWS centralBookingWS = new CentralBookingWS();
+	// ICentralBookingWS ws = centralBookingWS.getBasicHttpBindingICentralBookingWS();
 
-  public byte[] pinSigner(String passwd) {
-    byte[] signedPasswd = encrypter.signString(passwd);
-    return signedPasswd;
-  }
+	public byte[] pinSigner(String passwd) {
+		byte[] signedPasswd = encrypter.signString(passwd);
+		return signedPasswd;
+	}
 
-  public String encoder(byte[] signedPasswd) {
-    String encoded = encrypter.encodeToBase64(signedPasswd);
-    return encoded;
-  }
+	public String encoder(byte[] signedPasswd) {
+		String encoded = encrypter.encodeToBase64(signedPasswd);
+		return encoded;
+	}
 
-  // used to send whatever request, response depends on what ws-method was
-  // called
-  public BookingRequest getQueryWSRequest(State loginCredentials) {
+	/**
+	 * Used to send whatever request, response depends on what ws-method was called
+	 * 
+	 * @param loginCredentials
+	 *            {@link State}
+	 * @return request {@link BookingRequest}
+	 */
 
-    JAXBElement<String> pnr = objectFactory.createBookingRequestPnr(loginCredentials.getPnr());
-    JAXBElement<String> pin = objectFactory.createBookingRequestPin(loginCredentials.getPasswd());
-    JAXBElement<String> key = objectFactory.createBookingRequestKey(loginCredentials.getPasswd());
-    JAXBElement<String> cryptedKey = objectFactory.createBookingRequestCryptedKey(encoder(pinSigner(loginCredentials.getPasswd())));
-    JAXBElement<String> cert = objectFactory.createBookingRequestCert("YES");
+	public BookingRequest getQueryWSRequest(State loginCredentials) {
 
-    // create request object
-    BookingRequest request = objectFactory.createBookingRequest();
+		JAXBElement<String> pnr = objectFactory.createBookingRequestPnr(loginCredentials.getPnr());
+		JAXBElement<String> pin = objectFactory.createBookingRequestPin(loginCredentials.getPasswd());
+		JAXBElement<String> key = objectFactory.createBookingRequestKey(loginCredentials.getPasswd());
+		JAXBElement<String> cryptedKey = objectFactory.createBookingRequestCryptedKey(encoder(pinSigner(loginCredentials
+				.getPasswd())));
+		JAXBElement<String> cert = objectFactory.createBookingRequestCert("YES");
 
-    // setup request object
-    request.setPnr(pnr);
-    request.setPin(pin);
-    request.setKey(key);
-    request.setCryptedKey(cryptedKey);
-    request.setCert(cert);
+		// create request object
+		BookingRequest request = objectFactory.createBookingRequest();
 
-    return request;
+		// setup request object
+		request.setPnr(pnr);
+		request.setPin(pin);
+		request.setKey(key);
+		request.setCryptedKey(cryptedKey);
+		request.setCert(cert);
 
-  }
+		return request;
 
-  public BookingRequest getQueryWSRequest(State loginCredentials, int centralTimeBookingId, String fromDatString, String toDatString) {
+	}
 
-    JAXBElement<String> pnr = objectFactory.createBookingRequestPnr(loginCredentials.getPnr());
-    JAXBElement<String> pin = objectFactory.createBookingRequestPin(loginCredentials.getPasswd());
-    JAXBElement<String> key = objectFactory.createBookingRequestKey(loginCredentials.getPasswd());
-    JAXBElement<String> cryptedKey = objectFactory.createBookingRequestCryptedKey(encoder(pinSigner(loginCredentials.getPasswd())));
-    JAXBElement<String> cert = objectFactory.createBookingRequestCert("YES");
-    JAXBElement<String> fromDat = objectFactory.createBookingRequestFromDat(fromDatString);
-    JAXBElement<String> toDat = objectFactory.createBookingRequestToDat(toDatString);
+	/**
+	 * Used make a request for available times to book within a certain date interval and for a certain tidbok (time book).
+	 * 
+	 * @param loginCredentials
+	 *            {@link State}
+	 * @param centralTimeBookingId
+	 *            - an int denoting the id of a certain tidbok (time book)
+	 * @param fromDatString
+	 *            - the date from which you're looking for available appointments
+	 * @param toDatString
+	 *            - the date to which you're looking for available appointments
+	 * @return request {@link BookingRequest}
+	 */
+	public BookingRequest getQueryWSRequest(State loginCredentials, int centralTimeBookingId, String fromDatString,
+			String toDatString) {
 
-    // create request object
-    BookingRequest request = objectFactory.createBookingRequest();
+		JAXBElement<String> pnr = objectFactory.createBookingRequestPnr(loginCredentials.getPnr());
+		JAXBElement<String> pin = objectFactory.createBookingRequestPin(loginCredentials.getPasswd());
+		JAXBElement<String> key = objectFactory.createBookingRequestKey(loginCredentials.getPasswd());
+		JAXBElement<String> cryptedKey = objectFactory.createBookingRequestCryptedKey(encoder(pinSigner(loginCredentials
+				.getPasswd())));
+		JAXBElement<String> cert = objectFactory.createBookingRequestCert("YES");
+		JAXBElement<String> fromDat = objectFactory.createBookingRequestFromDat(fromDatString);
+		JAXBElement<String> toDat = objectFactory.createBookingRequestToDat(toDatString);
 
-    // setup request object
-    request.setPnr(pnr);
-    request.setPin(pin);
-    request.setKey(key);
-    request.setCryptedKey(cryptedKey);
-    request.setCert(cert);
-    // set values for getting calendars
-    request.setFromDat(fromDat);
-    request.setToDat(toDat);
-    request.setCentralTidbokID(centralTimeBookingId);
+		// create request object
+		BookingRequest request = objectFactory.createBookingRequest();
 
-    return request;
+		// setup request object
+		request.setPnr(pnr);
+		request.setPin(pin);
+		request.setKey(key);
+		request.setCryptedKey(cryptedKey);
+		request.setCert(cert);
+		// set values for getting calendars
+		request.setFromDat(fromDat);
+		request.setToDat(toDat);
+		request.setCentralTidbokID(centralTimeBookingId);
 
-  }
+		return request;
 
-  public ArrayOfBookingTime getQueryWSRequestBookingTime(BookingRequest request) {
+	}
 
-//    CentralBookingWS centralBookingWS = new CentralBookingWS();
-//    ICentralBookingWS ws = centralBookingWS.getBasicHttpBindingICentralBookingWS();
+	/**
+	 * Used to retrieve a certain {@link BookingTime} by the help of a ready made request which is provided as method parameter.
+	 * 
+	 * @param request
+	 *            {@link BookingRequest}
+	 * @return {@link ArrayOfBookingTime}
+	 */
+	public ArrayOfBookingTime getQueryWSRequestBookingTime(BookingRequest request) {
 
-    try {
+		// CentralBookingWS centralBookingWS = new CentralBookingWS();
+		// ICentralBookingWS ws = centralBookingWS.getBasicHttpBindingICentralBookingWS();
 
-      return elvisWebService.getBookingTime(request);
-      //return ws.getBookingTime(request);
+		try {
 
-    } catch (ICentralBookingWSGetBookingTimeICFaultFaultFaultMessage ex) {
-      log.error(ex.getMessage(), ex);
-      return null;
-    }
-  }
+			return elvisWebService.getBookingTime(request);
+			// return ws.getBookingTime(request);
 
-  public ArrayOfBookingPlace getQueryWSRequestPlaces(BookingRequest request) {
+		} catch (ICentralBookingWSGetBookingTimeICFaultFaultFaultMessage ex) {
+			log.error(ex.getMessage(), ex);
+			return null;
+		}
+	}
 
-    // make web service call
-//    CentralBookingWS centralBookingWS = new CentralBookingWS();
-//    ICentralBookingWS ws = centralBookingWS.getBasicHttpBindingICentralBookingWS();
+	/**
+	 * Used to retrieve a certain {@link BookingPlace} by the help of a ready made request which is provided as method parameter.
+	 * 
+	 * @param request
+	 *            {@link BookingRequest}
+	 * @return {@link ArrayOfBookingPlace}
+	 */
+	public ArrayOfBookingPlace getQueryWSRequestPlaces(BookingRequest request) {
 
-    try {
-      return elvisWebService.getBookingPlace(request);
-//      return ws.getBookingPlace(request);
+		// make web service call
+		// CentralBookingWS centralBookingWS = new CentralBookingWS();
+		// ICentralBookingWS ws = centralBookingWS.getBasicHttpBindingICentralBookingWS();
 
-    } catch (ICentralBookingWSGetBookingPlaceICFaultFaultFaultMessage ex) {
-      log.error(ex.getMessage(), ex);
-      return null;
+		try {
+			return elvisWebService.getBookingPlace(request);
+			// return ws.getBookingPlace(request);
 
-    }
+		} catch (ICentralBookingWSGetBookingPlaceICFaultFaultFaultMessage ex) {
+			log.error(ex.getMessage(), ex);
+			return null;
 
-  }
+		}
 
-  public ArrayOfCalendar getQueryWSRequestCalendar(BookingRequest request) {
+	}
 
-    // make web service call
-//    CentralBookingWS centralBookingWS = new CentralBookingWS();
-//    ICentralBookingWS ws = centralBookingWS.getBasicHttpBindingICentralBookingWS();
+	/**
+	 * Retrieves the calendar using a ready made request {@link BookingRequest}
+	 * 
+	 * @param request
+	 *            {@link BookingRequest}
+	 * @return {@ArrayOfCalendar}
+	 */
+	public ArrayOfCalendar getQueryWSRequestCalendar(BookingRequest request) {
 
-    try {
+		// make web service call
+		// CentralBookingWS centralBookingWS = new CentralBookingWS();
+		// ICentralBookingWS ws = centralBookingWS.getBasicHttpBindingICentralBookingWS();
 
-      return elvisWebService.getCalandar(request);
-      //return ws.getCalandar(request);
+		try {
 
-    } catch (ICentralBookingWSGetCalandarICFaultFaultFaultMessage ex) {
-      log.error(ex.getMessage(), ex);
-      return null;
-    }
-  }
+			return elvisWebService.getCalandar(request);
+			// return ws.getCalandar(request);
 
-  public ArrayOfBookingTime getQueryWSRequestTime(BookingRequest request) {
+		} catch (ICentralBookingWSGetCalandarICFaultFaultFaultMessage ex) {
+			log.error(ex.getMessage(), ex);
+			return null;
+		}
+	}
 
-    // make web service call
-//    CentralBookingWS centralBookingWS = new CentralBookingWS();
-//    ICentralBookingWS ws = centralBookingWS.getBasicHttpBindingICentralBookingWS();
+	/**
+	 * Retrieves an {@link ArrayOfBookingTime} by providing a {@link BookingRequest} as a parameter.
+	 * 
+	 * @param request
+	 *            {@link BookingRequest}
+	 * @return {@link ArrayOfBookingTime}
+	 */
+	public ArrayOfBookingTime getQueryWSRequestTime(BookingRequest request) {
 
-    try {
+		// make web service call
+		// CentralBookingWS centralBookingWS = new CentralBookingWS();
+		// ICentralBookingWS ws = centralBookingWS.getBasicHttpBindingICentralBookingWS();
 
-      //ArrayOfBookingTime arrays = ws.getBookingTime(request);
-      // loginCredentials.setBookingResponse(response);
-      ArrayOfBookingTime arrays = elvisWebService.getBookingTime(request);
-      List<BookingTime> list = arrays.getBookingTime();
-      for (BookingTime bt : list) {
-        log.debug("BookingTime Month: " + bt.getDatum().getMonth());
-      }
+		try {
 
-      return arrays;
+			// ArrayOfBookingTime arrays = ws.getBookingTime(request);
+			// loginCredentials.setBookingResponse(response);
+			ArrayOfBookingTime arrays = elvisWebService.getBookingTime(request);
+			List<BookingTime> list = arrays.getBookingTime();
+			for (BookingTime bt : list) {
+				log.debug("BookingTime Month: " + bt.getDatum().getMonth());
+			}
 
-    } catch (ICentralBookingWSGetBookingTimeICFaultFaultFaultMessage ex) {
-      ex.printStackTrace();
-      log.error(ex.getMessage(), ex);
+			return arrays;
 
-      return null;
+		} catch (ICentralBookingWSGetBookingTimeICFaultFaultFaultMessage ex) {
+			ex.printStackTrace();
+			log.error(ex.getMessage(), ex);
 
-    }
-  }
+			return null;
 
-  // This to get the place of the visit for Screening, ie: Example-hospital AB
-  public ArrayOfBookingPlace getBookingPlaceFromWS(BookingRequest request) {
-    ArrayOfBookingPlace bookingArr = null;
-    try {
-      
-      
-      bookingArr = elvisWebService.getBookingPlace(request);
-      //bookingArr = ws.getBookingPlace(request);
-    } catch (ICentralBookingWSGetBookingPlaceICFaultFaultFaultMessage e) {
-      log.error(e.getMessage(), e);
-      bookingArr = new ArrayOfBookingPlace();
-    }
-    return bookingArr;
-  }
+		}
+	}
 
-  // Info concerning the booking, time, place, location, pnr, name etc
-  public BookingResponse getQueryWS(BookingRequest request) {
+	/**
+	 * This to get the place of the visit for Screening, ie: Example-hospital AB
+	 * 
+	 * @param request
+	 *            {@link BookingRequest}
+	 * @return bookingArr {@link ArrayOfBookingPlace}
+	 */
+	public ArrayOfBookingPlace getBookingPlaceFromWS(BookingRequest request) {
+		ArrayOfBookingPlace bookingArr = null;
+		try {
 
-    try {
+			bookingArr = elvisWebService.getBookingPlace(request);
+			// bookingArr = ws.getBookingPlace(request);
+		} catch (ICentralBookingWSGetBookingPlaceICFaultFaultFaultMessage e) {
+			log.error(e.getMessage(), e);
+			bookingArr = new ArrayOfBookingPlace();
+		}
+		return bookingArr;
+	}
 
-      return elvisWebService.getBooking(request);
-   //   return ws.getBooking(request);
-      // loginCredentials.setBookingResponse(response);
+	/**
+	 * Info concerning the booking, time, place, location, pnr, name etc
+	 * 
+	 * @param request
+	 *            {@link BookingRequest}
+	 * @return {@link BookingResponse}
+	 */
+	public BookingResponse getQueryWS(BookingRequest request) {
 
-    } catch (ICentralBookingWSGetBookingICFaultFaultFaultMessage ex) {
-      log.error(ex.getMessage(), ex);
-      return null;
+		try {
 
-    }
-  }
+			return elvisWebService.getBooking(request);
+			// return ws.getBooking(request);
+			// loginCredentials.setBookingResponse(response);
 
-  // Info concerning the booking, time, place, location, pnr, name etc
-  /***
-   * method update booking
-   * 
-   */
-  public BookingResponse setBookingUpdate(BookingRequest request) {
+		} catch (ICentralBookingWSGetBookingICFaultFaultFaultMessage ex) {
+			log.error(ex.getMessage(), ex);
+			return null;
 
-    try {
-      
-      
-      log.debug("---------XXXXXXXXXXXXXX-----------");
+		}
+	}
 
-      log.debug(request.getBokadTid().getDay() + " " + request.getBokadTid().getMonth() + " " + request.getBokadTid().getYear() + " " + request.getBokadTid().getHour()
-          + request.getBokadTid().getMinute());
-      log.debug(request.getCentralTidbokID());
-      log.debug(request.getPin());
-      log.debug(request.getPnr());
-      // System.out.println(request.getFromDat().getValue());
-      // System.out.println(request.getToDat().getValue());
+	/***
+	 * 
+	 * Used to update a booking by providing a ready made {@link BookingRequest}
+	 * 
+	 * @parameter request {@link BookingRequest}
+	 * @return {@link BookingResponse}
+	 */
+	public BookingResponse setBookingUpdate(BookingRequest request) {
 
-      return elvisWebService.confirmBooking(request);
-      //return ws.confirmBooking(request);
-      // loginCredentials.setBookingResponse(response);
+		try {
 
-    } catch (ICentralBookingWSConfirmBookingICFaultFaultFaultMessage ex) {
-      log.error(ex.getMessage(), ex);
-      return null;
-    }
-  }
+			log.debug("---------XXXXXXXXXXXXXX-----------");
 
-  /*
-   * method cancel booking
-   * 
-   * @input parameter request
-   */
-  public boolean getQueryWSCancelBooking(BookingRequest request) {
+			log
+					.debug(request.getBokadTid().getDay() + " " + request.getBokadTid().getMonth() + " "
+							+ request.getBokadTid().getYear() + " " + request.getBokadTid().getHour()
+							+ request.getBokadTid().getMinute());
+			log.debug(request.getCentralTidbokID());
+			log.debug(request.getPin());
+			log.debug(request.getPnr());
+			// System.out.println(request.getFromDat().getValue());
+			// System.out.println(request.getToDat().getValue());
 
-    try {
+			return elvisWebService.confirmBooking(request);
+			// return ws.confirmBooking(request);
+			// loginCredentials.setBookingResponse(response);
 
-      // return ws.getBooking(request);
-      // loginCredentials.setBookingResponse(response);
-      return elvisWebService.cancelBooking(request);
-      //return ws.cancelBooking(request);
+		} catch (ICentralBookingWSConfirmBookingICFaultFaultFaultMessage ex) {
+			log.error(ex.getMessage(), ex);
+			return null;
+		}
+	}
 
-    } catch (ICentralBookingWSCancelBookingICFaultFaultFaultMessage ex) {
-      log.error(ex.getMessage(), ex);
-      return false;
-    }
-  }
+	/**
+	 * Used to cancel a booking by sending a ready made {@link BookingRequest}. Returns true or false depending on how the
+	 * cancellation went.
+	 * 
+	 * @param request
+	 *            {@link BookingRequest}
+	 * @return {@link Boolean}
+	 */
+	public boolean getQueryWSCancelBooking(BookingRequest request) {
+
+		try {
+
+			// return ws.getBooking(request);
+			// loginCredentials.setBookingResponse(response);
+			return elvisWebService.cancelBooking(request);
+			// return ws.cancelBooking(request);
+
+		} catch (ICentralBookingWSCancelBookingICFaultFaultFaultMessage ex) {
+			log.error(ex.getMessage(), ex);
+			return false;
+		}
+	}
 
 }

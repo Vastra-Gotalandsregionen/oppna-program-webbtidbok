@@ -123,7 +123,8 @@ public class BookingService implements BookingServiceInterface {
 		return surgeries;
 	}
 
-	public List<se.vgregion.webbtidbok.domain.BookingTime> getBookingTime(State loginCredentials, String sectionId, Calendar selectedDate) {
+	public List<se.vgregion.webbtidbok.domain.BookingTime> getBookingTime(State loginCredentials, String sectionId,
+			Calendar selectedDate) {
 		List<se.vgregion.webbtidbok.domain.BookingTime> bookingTimeArrayList = new ArrayList<se.vgregion.webbtidbok.domain.BookingTime>();
 		boolean theInThePastFlag = selectedDate.before(Calendar.getInstance());
 
@@ -176,7 +177,7 @@ public class BookingService implements BookingServiceInterface {
 
 		cal.set(Calendar.SECOND, 0);
 		cal.set(Calendar.MILLISECOND, 0);
-		
+
 		// update booking
 		if (credentials.isLoggedIn()) {
 
@@ -225,7 +226,7 @@ public class BookingService implements BookingServiceInterface {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		String from = format.format(startDate.getTime());
 		JAXBElement<String> fromDat = objectFactory.createBookingRequestFromDat(from);
-		String to = format.format(startDate.getTime());
+		String to = format.format(endDate.getTime());
 		JAXBElement<String> toDat = objectFactory.createBookingRequestToDat(to);
 
 		BookingRequest request = helper.getQueryWSRequest(state);

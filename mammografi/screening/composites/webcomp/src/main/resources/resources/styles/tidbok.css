@@ -113,9 +113,18 @@ div.tb_sectionheading a {
 	display: block;
 	width: 320px;
 }
-
+/*Selecting location with JS
 #selectForm input {
-	display: none;
+	visibility: hidden;
+}
+*/
+#displayButtonScript input {
+	visibility: hidden;	
+	width: 50px;
+}
+/*Selecting location w/o JS*/
+#selectFormNoScript{
+	visibility: visible;
 }
 
 /* Styling for the static location selection on the switch location page. */
@@ -342,4 +351,8 @@ div.error_message p {
 /* To override the a class provided by vgr to undeline links */
 a {
 	text-decoration: underline;	
+}
+
+div.mobNbrDiv input {
+
 }

@@ -56,9 +56,12 @@
 					<dependency>
 						<groupId>com.sun.xml.ws</groupId>
 						<artifactId>jaxws-tools</artifactId>
-						<version>2.2.1</version>
+						<!-- This version is used due to a known bug http://java.net/jira/browse/JAX_WS-864 which creates faulty CentralBookingWS for HTTPS connections
+						which fails build since previous 2.2.1 renders HTTPS WSDL URL's as a a local file resource in CentralBookingWS.-->
+						<version>2.2.2-promoted-b04</version>
 					</dependency>
 				</dependencies>
+		
 				<executions>
 					<!--  Signicat -->
 					<execution>
@@ -67,22 +70,28 @@
 							<goal>wsimport</goal>
 						</goals>
 						<configuration>
-
+<!--  							
 							<wsdlUrls>
-
-								<!-- REAL WS, for PRODUCTION USE ONL! -->
-								<!--
-									<wsdlUrl>http://elviswebb.vgregion.se/CentralBooking/CentralBookingWS.svc?wsdl</wsdlUrl>
-								-->
-
-								<!-- encrypted WS -->
-								<wsdlUrl>http://demo.insieme.se/IC/CentralBooking/CentralBookingWS/CentralBookingWS.svc?wsdl</wsdlUrl>
-
-								<!-- NON encrypted WS -->
-								<!--
-									<wsdlUrl>http://demo.insieme.se/CentralBookingWSSetup/CentralBookingWS.svc?wsdl</wsdlUrl>
-								-->
+-->
+								<!-- DEMO WS for Dev purposes, for DMZ & local  		
+								 <wsdlUrl>http://demo.insieme.se/CentralBookingWS/CentralBookingWS.svc?wsdl</wsdlUrl> 
+								 <wsdlUrl>https://demo.insieme.se/IC/CentralBooking/CentralBookingWS/CentralBookingWS.svc?wsdl</wsdlUrl>	-->							
+													
+								<!-- PROD WS. Most current 
+								<wsdlUrl>https://webtidbokws.vgregion.se/IC/CentralBooking/CentralBookingWS/CentralBookingWS.svc?wsdl</wsdlUrl>-->
+								<!-- <wsdlUrl>https://vgwb0090.vgregion.se/IC/CentralBooking/CentralBookingWS/CentralBookingWS.svc?wsdl</wsdlUrl>   -->
+<!--
 							</wsdlUrls>
+-->												
+							<wsdlDirectory>${basedir}/src/main/resources/wsdl/demoElvis/</wsdlDirectory>		
+
+							<!-- toggle Elvis here 	
+							<wsdlLocation>https://webtidbokws.vgregion.se/IC/CentralBooking/CentralBookingWS/CentralBookingWS.svc?wsdl</wsdlLocation>-->
+							<wsdlLocation>https://demo.insieme.se/IC/CentralBooking/CentralBookingWS/CentralBookingWS.svc?wsdl</wsdlLocation>
+							<wsdlFiles>
+								<wsdlFile>CentralBookingWS_1.wsdl</wsdlFile>
+							</wsdlFiles>
+						
 							<packageName>se.vgregion.webbtidbok.ws</packageName>
 							<sourceDestDir>${project.build.directory}/generated-sources/jaxws</sourceDestDir>
 							<staleFile>${project.build.directory}/generated-sources/jaxws/stale/.staleFlagSignicat</staleFile>
@@ -96,18 +105,26 @@
 						<goals>
 							<goal>wsimport</goal>
 						</goals>
+
 						<configuration>
 							<packageName>se.vgregion.webbtidbok.ws.sectra</packageName>
 							<sourceDestDir>${project.build.directory}/generated-sources/jaxws</sourceDestDir>
 							<staleFile>${project.build.directory}/generated-sources/jaxws/stale/.staleFlagSectra</staleFile>
-
-							<wsdlDirectory>src/main/resources/wsdl</wsdlDirectory>
-							<!-- wsdlLocation>WEB-INF/wsdl/Service.wsdl</wsdlLocation -->
+							
+							<wsdlDirectory>src/main/resources/wsdl/mockSectra</wsdlDirectory> 
 							<wsdlFiles>
 								<wsdlFile>SectraBookingService.wsdl</wsdlFile>
 							</wsdlFiles>
+							
+							<!-- toggle Sectra here 
+							<wsdlUrls>
+								<wsdlLocation>http://webtidbokws.vgregion.se/RISReschedule/Service.svc?wsdl</wsdlLocation>
+							</wsdlUrls>
+							 -->
+				
 							<target>2.1</target>
 						</configuration>
+
 					</execution>
 
 				</executions>
