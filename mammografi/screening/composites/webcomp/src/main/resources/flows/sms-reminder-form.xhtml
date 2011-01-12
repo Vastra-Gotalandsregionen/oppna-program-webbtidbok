@@ -1,0 +1,71 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--
+
+    Copyright 2009 Vastra Gotalandsregionen
+
+      This library is free software; you can redistribute it and/or modify
+      it under the terms of version 2.1 of the GNU Lesser General Public
+      License as published by the Free Software Foundation.
+
+      This library is distributed in the hope that it will be useful,
+      but WITHOUT ANY WARRANTY; without even the implied warranty of
+      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+      GNU Lesser General Public License for more details.
+
+      You should have received a copy of the GNU Lesser General Public
+      License along with this library; if not, write to the
+      Free Software Foundation, Inc., 59 Temple Place, Suite 330,
+      Boston, MA 02111-1307  USA
+
+-->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:sf="http://www.springframework.org/tags/faces">
+                
+                
+     <div id="tb_bookinginfo" class="tb_relcontainer">
+       
+        <ui:insert name="topInformationSection" />
+        <ui:insert name="buttonFloat" />
+       
+        <h3><h:outputText value="#{baseMsg.smsBoxHeading}"/></h3>          
+        <p><h:outputText value="#{baseMsg.smsBoxBody}" escape="false"></h:outputText></p>
+        
+        <ui:insert name="bottomInformationSection" />
+
+        <h:form id="smsForm">
+        	<h3><h:outputText value="#{baseMsg.smsInputFormHeader}"/></h3>
+        	<div id="mobNbrDiv">
+	        	<h:inputText id="telephone" value="#{state.mobileNumber}"/>
+	        	<sf:commandButton id="okButton" value="#{baseMsg.smsReminderOkButton}" action="ok" processIds="*" />      	
+	        </div>			      
+        </h:form>
+	
+        <p />
+         
+       	result <h:outputText value="#{state.mobileNumber}" />
+       	
+        <div id="error_message" style="float: right;width: 27em;list-style-image: none;">
+ 			<ui:fragment rendered="#{okMobNbr}">      
+             	<p><h:outputText value="#{baseMsg.smsNumberFormatSuccessMessageHeader}"/></p>
+             	<ul>
+             		<li><h:outputText value="#{baseMsg.smsNumberFormatSuccessMessage}"/></li>
+				</ul>
+			</ui:fragment>
+          
+            <ui:fragment rendered="#{failedMobNbr}">      
+             	<p><h:outputText value="#{baseMsg.smsNumberFormatErrorMessageHeader}"/></p>
+             	<ul>
+             		<li><h:outputText value="#{baseMsg.smsNumberFormatErrorMessage}"/></li>
+				</ul>
+			</ui:fragment>
+ 			
+
+			
+		</div>   
+    </div>
+
+</ui:composition>

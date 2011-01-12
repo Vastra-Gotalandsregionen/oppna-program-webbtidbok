@@ -171,19 +171,30 @@
 <!--		<property name="elvisWebService" ref="elvisWebserviceMock" />-->
 
 <!-- for using the elwis ws specified in the current pom-->
-		<property name="elvisWebService"><bean factory-bean="elvisWebService" factory-method="getBasicHttpBindingICentralBookingWS"/></property>
+		<property name="elvisWebService">
+			<bean factory-bean="elvisWebService" factory-method="getBasicHttpBindingICentralBookingWS"/>
+		</property>
 	</bean>
 
 	<bean id="elvisWebService" class="se.vgregion.webbtidbok.ws.CentralBookingWS" />
 	
 	<!-- END Elvis facade -->
 
-	<!-- New style booking facade for Sectra -->
+	<!-- New style Sectra booking facade -->
 	<bean id="sectraBookingService"
 		class="se.vgregion.webbtidbok.booking.sectra.SectraBookingFacadeImpl">
 		<property name="serviceFactory" ref="sectraBookingServiceFactory" />
 	</bean>
-	
+
+<!-- toggle Sectra HERE  1/2	
+	<bean id="sectraBookingServiceImpl" class="se.vgregion.webbtidbok.booking.sectra.SectraBookingServiceImpl" >
+		<property name="thePort"  ref="sectraRealService">	
+		</property>
+	</bean>	
+ 	
+	<bean id="sectraRealService" factory-bean="sectraClientFactory" factory-method="getBasicHttpBindingIRisReschedule" />	
+	<bean id="sectraClientFactory" class="se.vgregion.webbtidbok.ws.sectra.RISReschedule"/>
+-->
 	<!--
 	 Creates Sectra web service connections.
 	 This class should not know anything about State - all actions here
@@ -191,12 +202,18 @@
 	 If Sectra services should diverge for any reason (versions etc), this is
 	the place to differentiate between services.
 	-->
+	
 	<bean id="sectraBookingServiceFactory"
 		class="se.vgregion.webbtidbok.booking.sectra.SectraBookingServiceFactory">
 		<property name="portMap">
 			<map>
+		 <!-- toggle Sectra HERE 2/2
+				<entry key="MAMMO_NU" value-ref="sectraRealService" />
+				<entry key="MAMMO_SU" value-ref="sectraRealService" />
+		-->
 				<entry key="MAMMO_NU" value-ref="sectraMockServiceNU" />
 				<entry key="MAMMO_SU" value-ref="sectraMockServiceSU" />
+				
 			</map>
 		</property>
 		<property name="bookingMapperSectra">
@@ -204,6 +221,8 @@
 		</property>
 	</bean>
 
+
+	<!-- MOCK service beans -->
 	<bean id="sectraMockServiceNU" class="se.vgregion.webbtidbok.booking.sectra.SectraWSMock">
 		<property name="businessObjectHolder">
 			<bean
@@ -225,7 +244,7 @@
 			</bean>
 		</property>
 	</bean>
-
+	<!-- END MOCK service beans -->
 	<!-- END sectra facade -->
 	
 	<!--  This class is used as a switch to choose between different BookingFacades depending on witch service that is to be utilized by the user.	-->
@@ -266,9 +285,9 @@
         </constructor-arg>
     </bean>
 
-	<!--
-		Utility bean for dumping methods we don't have a proper home for.
-	-->
+	
+	<!--	Utility bean for dumping methods we don't have a proper home for. -->
+	
 	<bean id="guiUtility" class="se.vgregion.webbtidbok.gui.GUIUtilities">
 		<property name="bookingFacade" ref="bookingFacade" />
 	</bean>

@@ -84,9 +84,6 @@ public class BookingFacadeSwitch implements BookingFacade {
 
 	private static class CompareBookingTime implements Comparator<BookingTime>, Serializable {
 
-		/**
-		 * 
-		 */
 		private static final long serialVersionUID = 1L;
 
 		@Override
@@ -99,4 +96,14 @@ public class BookingFacadeSwitch implements BookingFacade {
 
 	}
 
+	public boolean setMobileNumberForSmsReminder(String mobilenumber, State state) {
+		if (state.setMobileNumber(mobilenumber, state.getMobileNumber())) {
+			return true;
+		}
+		return false;
+	}
+
+	public String getMobileNumberForSmsReminder(State state) {
+		return state.getMobilePhoneNumber();
+	}
 }

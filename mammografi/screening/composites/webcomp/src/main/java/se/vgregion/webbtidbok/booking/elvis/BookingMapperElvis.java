@@ -40,7 +40,7 @@ import se.vgregion.webbtidbok.ws.BookingTime;
  * 
  */
 public class BookingMapperElvis {
-	private boolean forTest = true;
+	private boolean forTest = false;
 
 	/**
 	 * Converts or maps Elvis specific BookingTime {@link se.vgregion.webbtidbok.ws.BookingTime} to this applications domain

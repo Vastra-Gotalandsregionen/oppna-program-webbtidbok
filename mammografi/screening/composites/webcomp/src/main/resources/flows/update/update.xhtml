@@ -31,7 +31,6 @@
 	
     
 		<h1 class="tb_heading">#{sectionMsg.updatepageHeader}</h1>
-
 		<p><h:outputText value="#{sectionMsg.updatepageIntroduction}" escape="false"/></p>
 		<p><h:outputFormat value="#{sectionMsg.updatepageRescheduleInfo}" escape="false">
             <f:param value="#{booking.surgery.surgeryPhone}" /></h:outputFormat></p>
@@ -43,7 +42,7 @@
         <ui:decorate template="update_sectionheader.xhtml">
             <ui:param name="section_heading" value="#{baseMsg.updatepageChooseLocation}"/>
         </ui:decorate>
-        
+
         <div id="tb_selectlocation">    
 			<f:view>
 				<h:form id="selectForm" action="displaytimes">
@@ -52,7 +51,10 @@
 			       	    <f:selectItems value="#{location.selectItems}" />
 					</h:selectOneMenu>
 					<br />
-					<sf:commandButton id="displayButton" value="#{baseMsg.updatepageShowTimes}" processIds="*" action="displaytimes"/>
+					<sf:commandButton id="displayButton" style="display: none" value="#{baseMsg.updatepageShowTimes}" processIds="*" action="displaytimes"/>	
+					<noscript id="noScript">
+						<sf:commandButton id="displayButtonNoScript" rendered="true" value="#{baseMsg.updatepageShowTimes}" processIds="*" action="displaytimes"/>	
+					</noscript>	
 				</h:form>
 			</f:view>
 		</div>

@@ -19,6 +19,7 @@ package se.vgregion.webbtidbok;
 
 import java.io.Serializable;
 
+import se.vgregion.webbtidbok.sms.MobileNumberValidator;
 import se.vgregion.webbtidbok.ws.BookingResponse;
 
 /**
@@ -40,6 +41,7 @@ public class State implements Serializable {
 	private boolean isFirst = true;
 	private String messageBundle = "";
 	private String service = null;
+	private String mobileNumber = null;
 	/**
 	 * elvisExaminationType is used to determine the type of examination since Elvis may cater for time books for several
 	 * different types of examinations.
@@ -127,5 +129,40 @@ public class State implements Serializable {
 	public String getMessageBundle() {
 		System.out.println("*** state.getMessageBundle(). messageBundle: " + messageBundle);
 		return messageBundle;
+	}
+
+	/**
+	 * As the user press OK-button to set the mobile phone number this method sends it thru validation. IT returns true if it was
+	 * set ok and false if it didn't pass validation.
+	 * 
+	 * @param mobilenumber
+	 * @param stateMobNbr
+	 * @return
+	 */
+	public boolean setMobileNumber(String mobilenumber, String stateMobNbr) {
+		boolean value = false;
+		MobileNumberValidator validator = new MobileNumberValidator();
+		this.mobileNumber = validator.validateMobilePhoneNumber(mobilenumber, stateMobNbr);
+		if (!mobileNumber.isEmpty()) {
+			value = true;
+		}
+		return value;
+	}
+
+	public String getMobilePhoneNumber() {
+		return mobileNumber;
+	}
+
+	public String getMobileNumber() {
+		return mobileNumber;
+	}
+
+	/**
+	 * Method used by the UI form to set a mobile number into the state This is only to catch the input parameter from the form.
+	 * 
+	 * @param mobileNumber
+	 */
+	public void setMobileNumber(String mobileNumber) {
+		this.mobileNumber = mobileNumber;
 	}
 }
