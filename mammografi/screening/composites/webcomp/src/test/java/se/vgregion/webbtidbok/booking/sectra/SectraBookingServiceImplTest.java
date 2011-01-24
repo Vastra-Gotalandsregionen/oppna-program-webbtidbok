@@ -50,159 +50,158 @@ import se.vgregion.webbtidbok.ws.sectra.TimeBlock;
 
 public class SectraBookingServiceImplTest {
 
-  private SectraBookingServiceImpl service;
+	private SectraBookingServiceImpl service;
 
-  private static final String examNr = "TEST";
-  private static final String patientNr = "19121212-1212";
-  private static final String sectionId = "TESTSECTION";
+	private static final String examNr = "TEST";
+	private static final String patientNr = "191212121212";
+	private static final String sectionId = "TESTSECTION";
 
-  private TestMock testMock;
+	private TestMock testMock;
 
-  private static LogFactoryMock logFactory;
+	private static LogFactoryMock logFactory;
 
-  @BeforeClass
-  public static void before() {
-    logFactory = LogFactoryMock.createInstance();
-  }
+	@BeforeClass
+	public static void before() {
+		logFactory = LogFactoryMock.createInstance();
+	}
 
-  @AfterClass
-  public static void after() {
-    LogFactoryMock.resetInstance();
-  }
+	@AfterClass
+	public static void after() {
+		LogFactoryMock.resetInstance();
+	}
 
-  @Before
-  public void setUp() throws Exception {
-    service = new SectraBookingServiceImpl();
-    testMock = new TestMock();
-    service.setThePort(testMock);
-    service.setBookingMapperSectra(new BookingMapperSectra());
+	@Before
+	public void setUp() throws Exception {
+		service = new SectraBookingServiceImpl();
+		testMock = new TestMock();
+		service.setThePort(testMock);
+		service.setBookingMapperSectra(new BookingMapperSectra());
 
-    service.setExaminationNr(examNr);
-    service.setPatientNr(patientNr);
-  }
+		service.setExaminationNr(examNr);
+		service.setPatientNr(patientNr);
+	}
 
-  @Test
-  public void testGetBooking() {
-    Booking booking = service.getBooking();
-    assertNotNull(booking);
-    assertEquals(patientNr, testMock.patientId);
-    assertEquals(examNr, testMock.examinationNr);
-  }
+	@Test
+	public void testGetBooking() {
+		Booking booking = service.getBooking();
+		assertNotNull(booking);
+		assertEquals(patientNr, testMock.patientId);
+		assertEquals(examNr, testMock.examinationNr);
+	}
 
-  @Test
-  public void testGetBookingException() {
-    testMock.throwException = true;
-    try {
-      service.getBooking();
-      fail("Should throw exception");
-    } catch (RuntimeException e) {
-      assertEquals("Error response from web service when getting booking.", logFactory.getError(true).replace("\n", ""));
-    }
-  }
+	@Test
+	public void testGetBookingException() {
+		testMock.throwException = true;
+		try {
+			service.getBooking();
+			fail("Should throw exception");
+		} catch (RuntimeException e) {
+			assertEquals("Error response from web service when getting booking.", logFactory.getError(true).replace("\n", ""));
+		}
+	}
 
-  @Test
-  public void testGetSurgeries() {
-    List<Surgery> surgeries = service.getSurgeries();
-    assertNotNull(surgeries);
-    assertEquals(examNr, testMock.examinationNr);
-  }
-  
-  @Test
-  public void testGetSurgeriesException(){
-    testMock.throwException = true;
-    try {
-      service.getSurgeries();
-      fail("Should throw exception");
-    } catch (Exception e) {
-      assertEquals("Error response from web service when getting surgeries.", logFactory.getError(true).replace("\n", ""));
-    }
-    
-  }
+	@Test
+	public void testGetSurgeries() {
+		List<Surgery> surgeries = service.getSurgeries();
+		assertNotNull(surgeries);
+		assertEquals(examNr, testMock.examinationNr);
+	}
 
-  @Test
-  public void testGetFreeDays() {
-    List<Calendar> freeDays = service.getFreeDays(calendarFor(2010, 8, 1), calendarFor(2010, 8, 31), sectionId);
+	@Test
+	public void testGetSurgeriesException() {
+		testMock.throwException = true;
+		try {
+			service.getSurgeries();
+			fail("Should throw exception");
+		} catch (Exception e) {
+			assertEquals("Error response from web service when getting surgeries.", logFactory.getError(true).replace("\n", ""));
+		}
 
-    Calendar cal = freeDays.get(0);
-    assertEquals(2010, cal.get(Calendar.YEAR));
-    assertEquals(7, cal.get(Calendar.MONTH));
-    assertEquals(2, cal.get(Calendar.DAY_OF_MONTH));
+	}
 
-    cal = freeDays.get(1);
-    assertEquals(2010, cal.get(Calendar.YEAR));
-    assertEquals(7, cal.get(Calendar.MONTH));
-    assertEquals(4, cal.get(Calendar.DAY_OF_MONTH));
+	@Test
+	public void testGetFreeDays() {
+		List<Calendar> freeDays = service.getFreeDays(calendarFor(2010, 8, 1), calendarFor(2010, 8, 31), sectionId);
 
-    cal = freeDays.get(2);
-    assertEquals(2010, cal.get(Calendar.YEAR));
-    assertEquals(7, cal.get(Calendar.MONTH));
-    assertEquals(8, cal.get(Calendar.DAY_OF_MONTH));
+		Calendar cal = freeDays.get(0);
+		assertEquals(2010, cal.get(Calendar.YEAR));
+		assertEquals(7, cal.get(Calendar.MONTH));
+		assertEquals(2, cal.get(Calendar.DAY_OF_MONTH));
 
-    cal = freeDays.get(3);
-    assertEquals(2010, cal.get(Calendar.YEAR));
-    assertEquals(7, cal.get(Calendar.MONTH));
-    assertEquals(16, cal.get(Calendar.DAY_OF_MONTH));
-  }
-  
-  @Test
-  public void testGetFreeTimes() {
-      List<BookingTime> times = service.getFreeTimes(calendarFor(2010, 8, 1), calendarFor(2010, 8, 31), sectionId);
-      assertNotNull(times);
-      assertEquals(examNr, testMock.examinationNr);
-      assertEquals(sectionId, testMock.sectionId);
-      
-  }
+		cal = freeDays.get(1);
+		assertEquals(2010, cal.get(Calendar.YEAR));
+		assertEquals(7, cal.get(Calendar.MONTH));
+		assertEquals(4, cal.get(Calendar.DAY_OF_MONTH));
 
-  class TestMock extends SectraEmptyWSMock {
+		cal = freeDays.get(2);
+		assertEquals(2010, cal.get(Calendar.YEAR));
+		assertEquals(7, cal.get(Calendar.MONTH));
+		assertEquals(8, cal.get(Calendar.DAY_OF_MONTH));
 
-    boolean throwException;
-    String patientId;
-    String examinationNr;
-    String sectionId;
+		cal = freeDays.get(3);
+		assertEquals(2010, cal.get(Calendar.YEAR));
+		assertEquals(7, cal.get(Calendar.MONTH));
+		assertEquals(16, cal.get(Calendar.DAY_OF_MONTH));
+	}
 
-    @Override
-    public BookingInfo getBookingInfo(String patientId, String examinationNr) throws IRisRescheduleGetBookingInfoErrorInfoFaultFaultMessage {
-      if (throwException) {
-        throw new IRisRescheduleGetBookingInfoErrorInfoFaultFaultMessage("test exception", null);
-      }
-      this.patientId = patientId;
-      this.examinationNr = examinationNr;
-      return new BookingInfo();
-    }
+	@Test
+	public void testGetFreeTimes() {
+		List<BookingTime> times = service.getFreeTimes(calendarFor(2010, 8, 1), calendarFor(2010, 8, 31), sectionId);
+		assertNotNull(times);
+		assertEquals(examNr, testMock.examinationNr);
+		assertEquals(sectionId, testMock.sectionId);
 
-    @Override
-    public ArrayOfSection listSections(String examinationNr) throws IRisRescheduleListSectionsErrorInfoFaultFaultMessage {
-      if(throwException){
-        throw new IRisRescheduleListSectionsErrorInfoFaultFaultMessage("test exception", null);
-      }
-      this.examinationNr = examinationNr;
-      return new ArrayOfSection();
-    }
+	}
 
-    @Override
-    public ArrayOfdateTime listFreeDays(XMLGregorianCalendar startDate, XMLGregorianCalendar endDate, String examinationNr, String sectionId)
-        throws IRisRescheduleListFreeDaysErrorInfoFaultFaultMessage {
-      List<XMLGregorianCalendar> resList = new ArrayList<XMLGregorianCalendar>();
-      resList.add(xmlCalendarFor(2010, 8, 2));
-      resList.add(xmlCalendarFor(2010, 8, 4));
-      resList.add(xmlCalendarFor(2010, 8, 8));
-      resList.add(xmlCalendarFor(2010, 8, 16));
+	class TestMock extends SectraEmptyWSMock {
 
-      return new ArrayOfdateTimeMock(resList);
-    }
+		boolean throwException;
+		String patientId;
+		String examinationNr;
+		String sectionId;
 
-    @Override
-    public ArrayOfTimeBlock listFreeTimes(XMLGregorianCalendar startDate,
-            XMLGregorianCalendar endDate, String examinationNr,
-            String sectionId)
-            throws IRisRescheduleListFreeTimesErrorInfoFaultFaultMessage {
-      List<TimeBlock> resList = new ArrayList<TimeBlock>();
-      this.examinationNr = examinationNr;
-      this.sectionId = sectionId;
-      
-      return new ArrayOfTimeBlockMock(resList);
-    }
+		@Override
+		public BookingInfo getBookingInfo(String patientId, String examinationNr)
+				throws IRisRescheduleGetBookingInfoErrorInfoFaultFaultMessage {
+			if (throwException) {
+				throw new IRisRescheduleGetBookingInfoErrorInfoFaultFaultMessage("test exception", null);
+			}
+			this.patientId = patientId;
+			this.examinationNr = examinationNr;
+			return new BookingInfo();
+		}
 
-  }
+		@Override
+		public ArrayOfSection listSections(String examinationNr) throws IRisRescheduleListSectionsErrorInfoFaultFaultMessage {
+			if (throwException) {
+				throw new IRisRescheduleListSectionsErrorInfoFaultFaultMessage("test exception", null);
+			}
+			this.examinationNr = examinationNr;
+			return new ArrayOfSection();
+		}
+
+		@Override
+		public ArrayOfdateTime listFreeDays(XMLGregorianCalendar startDate, XMLGregorianCalendar endDate, String examinationNr,
+				String sectionId) throws IRisRescheduleListFreeDaysErrorInfoFaultFaultMessage {
+			List<XMLGregorianCalendar> resList = new ArrayList<XMLGregorianCalendar>();
+			resList.add(xmlCalendarFor(2010, 8, 2));
+			resList.add(xmlCalendarFor(2010, 8, 4));
+			resList.add(xmlCalendarFor(2010, 8, 8));
+			resList.add(xmlCalendarFor(2010, 8, 16));
+
+			return new ArrayOfdateTimeMock(resList);
+		}
+
+		@Override
+		public ArrayOfTimeBlock listFreeTimes(XMLGregorianCalendar startDate, XMLGregorianCalendar endDate, String examinationNr,
+				String sectionId) throws IRisRescheduleListFreeTimesErrorInfoFaultFaultMessage {
+			List<TimeBlock> resList = new ArrayList<TimeBlock>();
+			this.examinationNr = examinationNr;
+			this.sectionId = sectionId;
+
+			return new ArrayOfTimeBlockMock(resList);
+		}
+
+	}
 
 }
