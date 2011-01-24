@@ -186,7 +186,7 @@
 		<property name="serviceFactory" ref="sectraBookingServiceFactory" />
 	</bean>
 
-<!-- toggle Sectra HERE  1/2	
+<!-- toggle Sectra HERE  1/2	-->
 	<bean id="sectraBookingServiceImpl" class="se.vgregion.webbtidbok.booking.sectra.SectraBookingServiceImpl" >
 		<property name="thePort"  ref="sectraRealService">	
 		</property>
@@ -194,7 +194,7 @@
  	
 	<bean id="sectraRealService" factory-bean="sectraClientFactory" factory-method="getBasicHttpBindingIRisReschedule" />	
 	<bean id="sectraClientFactory" class="se.vgregion.webbtidbok.ws.sectra.RISReschedule"/>
--->
+
 	<!--
 	 Creates Sectra web service connections.
 	 This class should not know anything about State - all actions here
@@ -207,13 +207,13 @@
 		class="se.vgregion.webbtidbok.booking.sectra.SectraBookingServiceFactory">
 		<property name="portMap">
 			<map>
-		 <!-- toggle Sectra HERE 2/2
+		
 				<entry key="MAMMO_NU" value-ref="sectraRealService" />
 				<entry key="MAMMO_SU" value-ref="sectraRealService" />
-		-->
+		 <!-- toggle Sectra HERE 2/2
 				<entry key="MAMMO_NU" value-ref="sectraMockServiceNU" />
 				<entry key="MAMMO_SU" value-ref="sectraMockServiceSU" />
-				
+				-->
 			</map>
 		</property>
 		<property name="bookingMapperSectra">

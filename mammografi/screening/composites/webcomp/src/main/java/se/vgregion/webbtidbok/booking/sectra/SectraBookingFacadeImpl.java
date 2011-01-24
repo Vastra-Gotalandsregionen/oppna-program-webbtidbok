@@ -38,8 +38,12 @@ public class SectraBookingFacadeImpl implements BookingFacade {
 		this.serviceFactory = serviceFactory;
 	}
 
-	/*
+	/**
 	 * Use this to get a connection to the proper web service.
+	 * 
+	 * @param state
+	 *            {@link State}
+	 * @return {@link SectraBookingServiceInterface}
 	 */
 	private SectraBookingServiceInterface getService(State state) {
 		return serviceFactory.getServiceInstance(state.getService(), state.getPnr(), state.getPasswd());
@@ -49,8 +53,10 @@ public class SectraBookingFacadeImpl implements BookingFacade {
 	public boolean login(State state) {
 		boolean isLoggedIn = false;
 		try {
-			getService(state).getBooking();
-			isLoggedIn = true;
+			// If there's a patientId then set loggedIn to true
+			if (!getService(state).getBooking().getPatientId().isEmpty()) {
+				isLoggedIn = true;
+			}
 		} catch (RuntimeException e) {
 			// This means we could not log in, probably wrong patient or
 			// password.
