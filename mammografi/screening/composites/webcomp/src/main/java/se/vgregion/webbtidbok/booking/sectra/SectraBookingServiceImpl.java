@@ -51,8 +51,13 @@ public class SectraBookingServiceImpl implements SectraBookingServiceInterface {
 	private String patientNr;
 	private String examinationNr;
 
+	// Removes the "-" in person number before it's used in a request
 	public void setPatientNr(String patientNr) {
-		this.patientNr = patientNr;
+		if (patientNr.contains("-")) {
+			this.patientNr = patientNr.replace("-", "");
+		} else {
+			this.patientNr = patientNr;
+		}
 	}
 
 	public void setExaminationNr(String examinationNr) {

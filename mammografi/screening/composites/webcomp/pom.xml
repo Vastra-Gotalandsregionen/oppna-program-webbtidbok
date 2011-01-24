@@ -82,12 +82,11 @@
 								<!-- <wsdlUrl>https://vgwb0090.vgregion.se/IC/CentralBooking/CentralBookingWS/CentralBookingWS.svc?wsdl</wsdlUrl>   -->
 <!--
 							</wsdlUrls>
--->												
-							<wsdlDirectory>${basedir}/src/main/resources/wsdl/demoElvis/</wsdlDirectory>		
-
-							<!-- toggle Elvis here 	
-							<wsdlLocation>https://webtidbokws.vgregion.se/IC/CentralBooking/CentralBookingWS/CentralBookingWS.svc?wsdl</wsdlLocation>-->
-							<wsdlLocation>https://demo.insieme.se/IC/CentralBooking/CentralBookingWS/CentralBookingWS.svc?wsdl</wsdlLocation>
+-->							
+												
+							<wsdlDirectory>${basedir}/src/main/resources/wsdl/demoElvis/</wsdlDirectory>	
+							<!-- toggle Elvis here 	-->		
+							<wsdlLocation>http://demo.insieme.se/CentralBookingWS/CentralBookingWS.svc?wsdl</wsdlLocation>				
 							<wsdlFiles>
 								<wsdlFile>CentralBookingWS_1.wsdl</wsdlFile>
 							</wsdlFiles>
@@ -107,21 +106,23 @@
 						</goals>
 
 						<configuration>
-							<packageName>se.vgregion.webbtidbok.ws.sectra</packageName>
-							<sourceDestDir>${project.build.directory}/generated-sources/jaxws</sourceDestDir>
-							<staleFile>${project.build.directory}/generated-sources/jaxws/stale/.staleFlagSectra</staleFile>
+						
+							<wsdlDirectory>${basedir}/src/main/resources/wsdl/skarpaSectra/</wsdlDirectory>
+							<wsdlLocation>http://webtidbokws.vgregion.se/RISReschedule/Service.svc?wsdl</wsdlLocation>
+							<wsdlFiles>
+								<wsdlFile>Service_1.wsdl</wsdlFile>
+							</wsdlFiles>
 							
-							<wsdlDirectory>src/main/resources/wsdl/mockSectra</wsdlDirectory> 
+							 <!-- toggle Sectra here 
+							<wsdlDirectory>${basedir}/src/main/resources/wsdl/mockSectra/</wsdlDirectory>
+							<wsdlLocation>http://webtidbokws.vgregion.se/RISReschedule/Service.svc?wsdl</wsdlLocation>
 							<wsdlFiles>
 								<wsdlFile>SectraBookingService.wsdl</wsdlFile>
 							</wsdlFiles>
-							
-							<!-- toggle Sectra here 
-							<wsdlUrls>
-								<wsdlLocation>http://webtidbokws.vgregion.se/RISReschedule/Service.svc?wsdl</wsdlLocation>
-							</wsdlUrls>
-							 -->
-				
+							 		-->		
+							<packageName>se.vgregion.webbtidbok.ws.sectra</packageName>
+							<sourceDestDir>${project.build.directory}/generated-sources/jaxws</sourceDestDir>
+							<staleFile>${project.build.directory}/generated-sources/jaxws/stale/.staleFlagSectra</staleFile>
 							<target>2.1</target>
 						</configuration>
 
