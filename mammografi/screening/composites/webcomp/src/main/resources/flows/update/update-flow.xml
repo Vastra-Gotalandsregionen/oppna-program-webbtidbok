@@ -33,7 +33,7 @@
         <!-- This call is so we get any available times on the same day as the current booking listed automatically
              when the page displays the first time. --> 
         <evaluate expression="bookingFacade.getBookingTime(state, location.locationId, calendarHolder.selectedDate)"
-            result="flowScope.timeListLocal" result-type="dataModel" /> 
+            result="flowScope.timeListLocal" result-type="dataModel" />
     </on-start>
 
 	<view-state id="update" view="/flows/update/update.xhtml">
@@ -69,16 +69,21 @@
         <transition on="cancel" history="invalidate" to="cancel"/>
         <transition on="help" to="help"/>
         <transition on="switch" to="switch"/>
+         <transition on-exception="org.springframework.web.util.NestedServletException" history="invalidate" to="error"/>
 	</view-state>
   
     <view-state id="showConfirmation" view="/flows/update/showUpdateConfirmation.xhtml">
         <on-render >
             <evaluate expression="bookingFacade.getBookingInfo(state)" result="flowScope.booking" /> 
-        </on-render>    
+        </on-render>
+         <transition on-exception="org.springframework.web.util.NestedServletException" history="invalidate" to="error"/>    
     </view-state>
     
     <view-state id="help" view="/flows/help/help.xhtml">
     </view-state>
+    
+    <view-state id="error" view="/flows/error/error.xhtml">
+	</view-state>
     
     <subflow-state id="switch" subflow="switch">
           <input name="state" value="state" />
@@ -91,7 +96,9 @@
 
     <global-transitions>
         <transition on="logout" history="invalidate" to="logout"/>
-        <transition on-exception="java.lang.Error" history="invalidate" to="logout"/>
+        <transition on-exception="java.lang.Error" history="invalidate" to="error"/>
+        <transition on-exception="java.lang.Throwable" history="invalidate" to="error"/>
+        <transition on-exception="org.springframework.web.util.NestedServletException" history="invalidate" to="error"/>
     </global-transitions>
 
 </flow>

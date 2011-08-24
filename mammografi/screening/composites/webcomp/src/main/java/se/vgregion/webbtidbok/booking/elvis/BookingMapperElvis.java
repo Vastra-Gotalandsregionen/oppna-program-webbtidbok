@@ -74,6 +74,9 @@ public class BookingMapperElvis {
 	 */
 	public Booking bookingMapping(BookingResponse bookingResponse) {
 		BookingElvis booking = new BookingElvis();
+		// // TODO: set null here only for DEV prpose while mockin errors
+		// bookingResponse.setNamn(null);
+		// booking.setPatientName(changePatientNameStructure(bookingResponse.getNamn().getValue()));
 		booking.setPatientName(changePatientNameStructure(getStringValueFromBooking(bookingResponse.getNamn())));
 
 		Surgery surgery = new Surgery();
@@ -82,17 +85,12 @@ public class BookingMapperElvis {
 		}
 		surgery.setSurgeryName(getStringValueFromBooking(bookingResponse.getMottagning()));
 		surgery.setSurgeryAddress(getStringValueFromBooking(bookingResponse.getAddress()));
-		// TODO: Shall this be used on Elvis bookings? Currently setting blank.
-		// surgery.setSurgeryPhone(getStringValueFromBooking(bookingResponse.getMobilTel()));
 		surgery.setSurgeryPhone("");
 		booking.setSurgery(surgery);
 		booking.setPatientId(getStringValueFromBooking(bookingResponse.getPnr()));
 		booking.setStartTime(getDateFromCalendar(bookingResponse.getBokadTid()));
 		booking.setUpdateable(isUpdateable(bookingResponse));
-
-		// this is only to emulate future bookingResponse.getExaminationType() or similar to cater for distinction between exam
-		// types gyn and bukaorta
-		booking.setElvisExaminationType(getStringValueFromBooking(bookingResponse.getNamn()));
+		booking.setElvisExaminationType(getStringValueFromBooking(bookingResponse.getUndersokningsTypKod()));
 		return booking;
 	}
 

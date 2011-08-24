@@ -25,7 +25,7 @@
 	<var name="state" class="se.vgregion.webbtidbok.State" />
 		
 	<view-state id="helppage" view="/flows/help/help.xhtml">
-		
+		<transition on-exception="org.springframework.web.util.NestedServletException" history="invalidate" to="error"/>
 	</view-state>
       
 </flow>

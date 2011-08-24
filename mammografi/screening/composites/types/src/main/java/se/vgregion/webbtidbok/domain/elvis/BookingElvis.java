@@ -25,6 +25,10 @@ import se.vgregion.webbtidbok.domain.Booking;
  * example hold time books for both Bukaorta screenings and Gynekology screenings and retrieving examination type enables to
  * differentiate between them and to set the correct message bundle(s).
  * 
+ * response.UndersokningsTypKod=GS01 is for GynScreening
+ * 
+ * response.UndersokningsTypKod=BS01 is for BukaortaScreening
+ * 
  * @author carstm
  * 
  */

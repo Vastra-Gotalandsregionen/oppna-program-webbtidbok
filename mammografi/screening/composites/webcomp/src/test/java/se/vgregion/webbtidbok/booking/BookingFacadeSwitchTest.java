@@ -174,13 +174,11 @@ public class BookingFacadeSwitchTest {
 
 		@Override
 		public void reschedule(BookingTime bookingTime, State state) {
-			// TODO Auto-generated method stub
 
 		}
 
 		@Override
 		public boolean cancelBooking(State state) {
-			// TODO Auto-generated method stub
 			return false;
 		}
 
@@ -222,7 +220,6 @@ public class BookingFacadeSwitchTest {
 
 		@Override
 		public void reschedule(BookingTime bookingTime, State state) {
-			// TODO Auto-generated method stub
 
 		}
 

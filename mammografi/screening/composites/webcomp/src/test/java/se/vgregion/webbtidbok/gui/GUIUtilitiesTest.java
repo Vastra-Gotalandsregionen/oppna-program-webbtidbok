@@ -51,7 +51,7 @@ public class GUIUtilitiesTest {
         assertTrue(guiUtility.getIsTimeListEmpty(list));
         list.add(new Integer(1));
         assertFalse(guiUtility.getIsTimeListEmpty(list));
-        list.add(new Integer(2));
+        list.add(Integer.valueOf(2));
         assertFalse(guiUtility.getIsTimeListEmpty(list));
     }
 

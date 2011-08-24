@@ -1,0 +1,342 @@
+/**
+ * Copyright 2009 Vastra Gotalandsregionen
+ *
+ *   This library is free software; you can redistribute it and/or modify
+ *   it under the terms of version 2.1 of the GNU Lesser General Public
+ *   License as published by the Free Software Foundation.
+ *
+ *   This library is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU Lesser General Public License for more details.
+ *
+ *   You should have received a copy of the GNU Lesser General Public
+ *   License along with this library; if not, write to the
+ *   Free Software Foundation, Inc., 59 Temple Place, Suite 330,
+ *   Boston, MA 02111-1307  USA
+ */
+ 		/*--------------                   -------------------*/
+		/* --------------  LeftNav level 3  ------------------*/
+		/* --------------                   ------------------*/
+ 
+ 
+#leftnavcontainer #leftNav li.Level4 a,
+#leftnavcontainer #leftNav li.Level4-selected { padding-left:4.2em; line-height:12px; }
+
+
+						/* --------------                   -------------------*/
+						
+						/* --------------    LeftNavExtra   -------------------*/
+						
+						/* --------------                   -------------------*/
+#leftNavExtra {
+}
+#leftNavExtra ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+#leftNavExtra li a {
+	padding:0;
+	margin:0;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:1.1em;
+	color: #222;
+	font-weight:normal;
+	line-height:1.8em;
+}
+#leftNavExtra li .selected {
+	font-weight:bold;
+	color:#333;
+}
+												
+												
+#centercontent #searchTabContainer {
+	margin-top:2em;
+	float:left;
+	width:95.4%;
+	background:#fff url("images/bg.gif") repeat-x bottom;
+	line-height:normal;
+}
+#centercontent #searchTabContainer ul {
+	padding:1em 1em 0;
+	list-style:none;
+	margin:0;
+	padding:0;
+}
+#centercontent #searchTabContainer li {
+	float:left;
+	font-size:1.1em;
+	background:url("images/norm_right.gif") no-repeat right top;
+	margin:0;
+	padding:0;
+}
+#searchTabContainer ul, #searchTabContainer ul li {
+	list-style:none;
+}
+#centercontent #searchTabContainer a {
+	display:block;
+	background:url("images/norm_left.gif") no-repeat left top;
+	padding:.5em .7em .4em .7em;
+}
+#centercontent #searchTabContainer .current {
+	background-image:url("images/norm_right_on.gif");
+}
+#centercontent #searchTabContainer .current a {
+	background-image:url("images/norm_left_on.gif");
+	padding-bottom:.5em;
+}
+.nodecoration
+{
+	text-decoration: none !important;
+}
+
+				/* --- SoKBOXEN --- */
+
+#tabBox {
+	clear:both;
+	width:38em;
+	margin:0;
+	padding:0;
+	border-bottom:solid .1em #6d99a6;
+	border-left:solid .1em #6d99a6;
+	border-right:solid .1em #6d99a6;
+	background-color:#f2f1f2;
+	margin-bottom:2em;
+}
+#tabBoxInside {
+	width:35.5em;
+	padding:1em;
+}
+.dropSelecter {
+	font: 1.1em Verdana, Helvetica, sans-serif;
+	border:solid .1em #999;
+	width:15em;
+	margin:0 0 1.2em 0;
+}
+.dropSelecterWithValidator {
+	font: 1.1em Verdana, Helvetica, sans-serif;
+	border:solid .1em #999;
+	width:15em;
+	margin:0 0 0 0;
+}
+.dropSelecterLong {
+	font: 1.1em Verdana, Helvetica, sans-serif;
+	border:solid .1em #999;
+	width:20em;
+	margin:0 0 1.2em 0;
+}
+.dropSelecterWithValidatorLong {
+	font: 1.1em Verdana, Helvetica, sans-serif;
+	border:solid .1em #999;
+	width:20em;
+	margin:0 0 0 0;
+}
+.dropSelecterShort {
+	font: 1.1em Verdana, Helvetica, sans-serif;
+	border:solid .1em #999;
+	width:13em;
+	margin:0 0 1.2em 0;
+}
+.buttonSearch {
+	width:3.2em;
+	height:1.8em;
+	background:url(VGRImages/button-search.gif) left no-repeat;
+	border:none;
+	margin-bottom:0;
+}
+.selectText {
+	font: normal 1.1em/1.2em Verdana, Arial, Helvetica, sans-serif;
+}
+.standardButton { 
+    background: #9c132f;
+    border: double 3px #fff;
+    color: #fff;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: bold;
+    padding: 1px;
+}
+
+.mapSelectField {
+	background-color:#fff;
+	border:solid .1em #ccc;
+	padding:0 0 0 2em;
+	margin:0;
+}
+
+/* --- S�KRESULTAT V�RDS�K --- */
+
+				
+
+
+
+#centercontent #searchResultHead {
+	width:99%;
+	float:left;
+	margin:0;
+	padding:0;
+	padding-bottom:.4em;
+}
+#centercontent #searchResultHead ul {
+	margin:0;
+	padding:0;
+	height:2em;
+	padding: 0;
+	list-style: none;
+	background-color: #9C132F;
+	padding-top:.4em;
+}
+#centercontent #searchResultHead li {
+	display: inline;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:1.1em;
+	padding-left:1em;
+	color: #fff;
+	background-color: #9C132F;
+	font-weight:bold;
+	text-decoration: none;
+}
+#centercontent #searchResultHead li#vardmottagningar {
+	padding-right:6em;
+	padding-left:.4em;
+}
+#centercontent #searchResultHead li#besoksadress {
+	padding-right:4.2em;
+}
+.arrowLinkGreen {
+	display:inline;
+	font:1.1em Verdana, Helvetica, sans-serif;
+	line-height:1.5em;
+	color:#222;
+	background:url(images/arrow-green.gif) left top;
+	background-repeat:no-repeat;
+	padding: 0 0 0 0.7em;
+}
+.arrowLinkGreen a {
+	color:#222;
+}
+.linkGreen {
+	font:1.1em Verdana, Helvetica, sans-serif;
+	color:#222;
+	margin:0;
+	line-height:1.5em;
+	margin-left:2.6em; 		/*********** Tillagt 080110 *****************/
+}
+.linkGreen a {
+	color:#222;
+}
+.vardmottagningar {
+	float:left;
+	width:17.3em;
+}
+.besoksadress {
+	float:left;
+	width:12em;
+}
+.telefonnummer {
+	float:right;
+	width:9em;
+}
+.resultHolder {
+	width:39em;
+	border-bottom: dotted .1em #bed8bb;
+	float:left;
+}
+
+			/* --- BEBISS�K BEBISLOGIN mm --- */
+
+#bebisContainer {
+	/*float:left;*/
+	margin-top:0.4em;
+}
+.bebisFrame { 		/* Anv�nds p� WebbisStartSidan/s�k */
+	float:left;
+	border: solid 0.2em #a5acb2;
+	width:5.8em;
+	height:4.4em;
+	margin-right:0.2em;
+	margin-bottom:0.2em;
+}
+.insideBoxLeftCol {
+	width:19em;
+	float:left;
+}
+.insideBoxRightCol {
+	width:16em;
+	float:right;
+}
+.bebisFrameSwap { /* Anv�nds p� presentationsidan av Webbisen */
+	float:left;
+	border: solid .2em #a5acb2;
+	width:6.4em;
+	height:4.8em;
+	margin-right:1em;
+	margin-bottom:.5em;
+}
+.bebisActive {
+	border:solid 2px #dd1111;
+}
+.bebisFrameUpload { /* Anv�nds p� skapaKontoSidan av Webbisen */
+	float:left;
+	border: solid .2em #a5acb2;
+	width:6.4em;
+	height:5.2em;
+	margin-right:.2em;
+	margin-bottom:.1em;
+}
+.bebisLinkUpload { /* Anv�nds p� skapaKontoSidan av Webbisen */
+	float:left;
+	width:6.3em;
+	margin:0;
+	font: bold 1.0em Verdana, Helvetica, sans-serif;
+	color:#3e3e3e;
+	background:url(images/arrow-green.gif) left top;
+	background-repeat:no-repeat;
+	padding: 0 0 0 0.7em;
+	text-decoration:none;
+}
+.bebisImg {
+	border: solid 0.1em #fff;
+	width:100%;
+	height:100%;
+}
+.bebisImgRed {
+	border: solid 0.1em #CC0000;
+	width:100%;
+	height:100%;
+}
+.visaWebbistext {
+	display:inline;
+	margin:2em 4em 0 0;
+	font: bold 1.0em Verdana, Helvetica, sans-serif;
+	color:#3e3e3e;
+	background:url(images/arrow-green.gif) left top;
+	background-repeat:no-repeat;
+	padding: 0 0 0 0.7em;
+}
+.textInput {
+	font: 1.1em Verdana, Helvetica, sans-serif;
+	border:solid .1em #999;
+	width:32em;
+	margin:0.3em 0 .5em 0em;
+	padding-bottom: .1em;
+}
+.webbisBig {
+	padding:.1em .1em .1em .1em;
+}
+.webbisImgBigFrame {
+	/*float:left;*/
+	border: solid .4em #a5acb2;
+	margin-top:2em;
+	margin-bottom:.5em;
+}
+/*.webbisBg {
+
+	height:16.5em;
+
+	background:url(images/webbis-bg.gif) bottom no-repeat;
+
+	background-color:#dee9d4;
+
+}*/

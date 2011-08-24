@@ -1,0 +1,420 @@
+/**
+ * Copyright 2009 Vastra Gotalandsregionen
+ *
+ *   This library is free software; you can redistribute it and/or modify
+ *   it under the terms of version 2.1 of the GNU Lesser General Public
+ *   License as published by the Free Software Foundation.
+ *
+ *   This library is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU Lesser General Public License for more details.
+ *
+ *   You should have received a copy of the GNU Lesser General Public
+ *   License along with this library; if not, write to the
+ *   Free Software Foundation, Inc., 59 Temple Place, Suite 330,
+ *   Boston, MA 02111-1307  USA
+ */
+ 
+ #centercontent #searchResultHead li#webbisCol {
+	padding-right:14.2em;
+	padding-left:.4em;
+}
+.webbisResultLeft {
+	display:block;
+	float:left;
+	margin:0.8em 0 0.8em 0em;
+	width:28em;
+	cursor:pointer;
+}
+.webbisResultRight {
+	display:block;
+	float:right;
+	width:8em;
+	margin:0.8em 0 0.8em 0em;
+	cursor:pointer;
+}
+.wrongPassword {
+	color:#bb0000;
+	margin-top:0.5em;
+}
+.searchCountResult {
+	display:table;
+	margin:0;
+	padding:0;
+}
+/* --- KARTS�K TR�FFLISTA O.DYL --- */
+
+ 
+
+
+
+#centercontent #routeSearchHitlist ul {
+	display:table;
+	margin:0;
+	padding:0;
+	list-style: none;
+	font-weight:bold;
+}
+#centercontent #routeSearchHitlist ul li ul {
+	padding:0;
+	margin-bottom:1.6em;
+}
+#centercontent #routeSearchHitlist ul li ul li {
+	font:1.1em Verdana, Helvetica, sans-serif;
+	font-weight:bold;
+	color:#3e3e3e;
+}
+#centercontent #routeSearchHitlist ul li ul a {
+	font:1.1em Verdana, Helvetica, sans-serif;
+	line-height:1.2em;
+	color:#222;
+	background:url(/VGRimages/arrow-green.gif) left;
+	background-repeat:no-repeat;
+	padding: 0.2em 0 0 0.7em;
+}
+/* --- KARTS�K V�GBESKRIVNING --- */
+
+ 
+
+
+
+#centercontent #routeDescription ol {
+	display:table;
+	font:1.1em Verdana, Helvetica, sans-serif;
+	line-height:1.4em;
+	margin:0 0 1em 0.6em;
+	padding:0 0 0 1.6em;
+}
+/* --- BEBISS�K BEBISLOGIN mm --- */
+
+
+
+.startWebbis {
+	float:none;
+	width:5.6em;
+	height:4.2em;
+	border:solid 0.2em #a5acb2;
+	margin-right:0.1em;
+}
+.bebisFrame { 		/* Anv�nds p� WebbisStartSidan/s�k */
+	float:left;
+	border:solid 0.2em #a5acb2;
+	width:5.8em;
+	height:4.4em;
+	margin-right:0.2em;
+	margin-bottom:0.2em;
+}
+/*.insideBoxLeftCol {
+
+	width:19em; 
+
+	float:left;
+
+}
+
+.insideBoxRightCol {
+
+	width:16em; 
+
+	float:right;
+
+}*/
+.bebisFrameSwap { /* Anv�nds p� presentationsidan av Webbisen */
+	float:left;
+	border: solid 0.2em #a5acb2;
+	width:6.4em;
+	height:4.8em;
+	margin-right:1em;
+	margin-bottom:0.5em;
+}
+.bebisActive {
+	border:solid 2px #dd1111;
+}
+.bebisFrameUpload { /* Anv�nds p� skapaKontoSidan av Webbisen */
+	float:left;
+	border: solid 0.2em #a5acb2;
+	width:6.4em;
+	height:5.2em;
+	margin-right:0.2em;
+	margin-bottom:0.1em;
+}
+.bebisLinkUpload { /* Anv�nds p� skapaKontoSidan av Webbisen */
+	float:left;
+	width:6.3em;
+	margin:0;
+	font: bold 1.0em Verdana, Helvetica, sans-serif;
+	color:#3e3e3e;
+	background:url(images/arrow-green.gif) left top;
+	background-repeat:no-repeat;
+	padding: 0 0 0 0.7em;
+	text-decoration:none;
+}
+.textInput {
+	font: 1.1em Verdana, Helvetica, sans-serif;
+	border:solid .1em #999;
+	width:32em;
+	margin:0.3em 0 .5em 0em;
+	padding-bottom: .1em;
+}
+.webbisBig {
+	padding:.1em .1em .1em .1em;
+}
+.webbisImgBigFrame {
+	/*float:left;*/
+	border: solid .4em #a5acb2;
+	margin-top:2em;
+	margin-bottom:.5em;
+}
+.webbisBg {
+	height:17em;
+	background:url(images/webbis-bg.gif) bottom right no-repeat;
+	background-color:#dee9d4;
+}
+#centercontent #searchResultHead li#webbisCol {
+	padding-right:14.2em;
+	padding-left:.4em;
+}
+.webbisResultLeft {
+	display:block;
+	float:left;
+	margin:0.8em 0 0.8em 0em;
+	width:28em
+}
+.webbisResultRight {
+	display:block;
+	float:right;
+	width:8em;
+	margin:0.8em 0 0.8em 0em;
+}
+.wrongPassword {
+	color:#bb0000;
+	margin-top:0.5em;
+}
+.searchCountResult {
+	display:table;
+	margin:0;
+	padding:0;
+}
+#centercontent #tabBoxInside .boxWebbisLeft {
+	float: left;
+	width: 22.4em;
+}
+#centercontent #tabBoxInside .boxWebbisRight {
+	display:block;
+	float: right;
+	width: 11em;
+	margin-top:1.2em;
+}
+
+.startpageheader { margin-top: 1em; }
+
+.revidedTag {margin-bottom:-1.1em;}
+
+/* --- Tags --- */
+.tagList li { float: left; margin-right: 0.5em; }
+ul.pageNav li {
+    display:block;
+    float: left;
+    padding: 3px;
+    margin-left: 2px;
+    font-family: georgia;
+}
+ul.pageNav li.currentPage { background-color: #bb0000; }
+#boxright4 ul.pageNav li a { color: #000; margin-left: 2px; }
+#boxright4 ul.pageNav li.currentPage a { color: #fff; }
+
+
+/* --- Webbis --- */
+
+/*#webbis-widget {
+	height: 10em;
+	width: 24.4em;
+	border:0.2em solid #FFFFFF
+}*/
+
+#webbis-img {
+	float : left;
+}
+
+#webbis-txt {
+	font-size: 1em;
+	float : left;
+	height: 8em;
+	padding-top: 0.5em;
+}
+
+#webbis-txt p{
+	padding-left: 0;
+}
+
+#webbis-header {
+	color:#000;
+	font-family:Arial,Helvetica,sans-serif;
+	font-size:1.8em;
+	font-weight:normal;
+	padding-top:0.5em;
+	padding-bottom:0.5em;
+	text-align:left;
+}
+
+
+#webbis-image {
+	width: 10em;
+	height: 8em;
+	padding-top:1.0em;
+	padding-bottom:0.5em;
+	padding-left:0.4em;
+	padding-right:1.0em;
+}
+
+.hrivdiv
+{
+	clear: both;
+	padding-left: 1.5em;
+	margin-top: 1em;
+	margin-bottom: 1em;
+}
+
+.btnHitta {padding:0px 0.154em;background:#fff;border:3px double #999;color:#333;font-weight:bold;font-size:0.923em;cursor: pointer;}
+.btnHitta:hover {background:#fff;border:3px double #555;}
+
+/* ------------ BEGIN YUI AC */ 
+#autocomplete_outer 
+{
+	position: relative;
+	display: none;
+}
+
+#autocomplete_inner
+{
+	position: absolute;
+	top: 0em;
+	left: 0em;
+	width: 400px;
+	margin-left: -206px;
+}
+
+#autocomplete_boxfix
+{
+	/*float: right;*/
+}
+
+#autocomplete_choices
+{
+	border: 1px solid black;
+	background: white;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
+#autocomplete_choices iframe 
+{
+	display: none;
+}
+
+* html div#autocomplete_choices, * html div#autocomplete_boxfix { 
+   height: expression( this.scrollHeight > 249 ? "250px" : "auto" ); /* sets max-height for IE */
+}
+div#autocomplete_choices, div#autocomplete_boxfix {
+   max-height: 250px; /* sets max-height value for all standards-compliant browsers */
+}
+
+iframe.autocomplete_overlayfix 
+{
+	position: absolute;
+	z-index: -1;
+	filter: mask();
+	border: 0;
+	margin: 0;
+	padding: 0;
+	top: 0;
+	left: 0;
+	width: 500px;
+	height: 250px;
+	overflow: hidden;
+	float: left;
+}
+
+.autocomplete_container {
+	/*height: 4em;*/
+}
+
+.yui-skin-sam .yui-ac-content
+{
+	text-align: left;
+	position: relative !important;
+	background: none !important;
+	border: none !important;
+}
+
+.yui-skin-sam .yui-ac-container
+{
+	position: relative !important;
+	top: 0em !important;
+}
+
+.yui-skin-sam .yui-ac-input
+{
+	position: relative !important;
+}
+
+#acIndicator {
+	position: absolute;
+	top: 1px;
+	left: 196px;
+}
+
+div.autocomplete {
+	margin: 0px;
+	margin-bottom: 0.5em;
+	padding: 0px;
+	font-size: 1.2em;
+}
+
+.yui-ac-content {
+	width: auto !important;
+}
+
+.yui-ac-bd ul {
+	list-style-type: none;
+	margin: 0px;
+	padding: 0px;
+}
+
+.yui-ac-bd ul li.selected {
+	background-color: #ffb;
+}
+
+.yui-ac-bd ul li {
+	list-style-type: none;
+	display: block;
+	margin: 0;
+	padding: 2px;
+	padding-right: 1.5em;
+	font-size: 1em;
+	cursor: pointer;
+}
+/*--------------- END YUI AC */
+
+/*-------------- start ADDITION 15:33 20110414 */
+#nav li a {
+
+    border-left: 1px solid #FFFFFF;
+
+    border-right: 1px solid #FFFFFF;
+
+    color: #5C5C5C;
+
+    float: left;
+
+    font-size: 1em;
+
+    font-weight: bold;
+
+    line-height: 42px;
+
+    padding: 0 25px; /* Detta v�rdet har vi �kat upp */
+
+    text-decoration: none;} 
+ /*-------------- end ADDITION 15:33 20110414 */

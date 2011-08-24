@@ -50,11 +50,12 @@
             
             <ui:define name="buttonFloat">
                 <div class="tb_buttonFloat">
-                <!-- enable for DEV only 
+                <!-- enable for DEV only   
                     <h:form id="updateForm" >
                         <sf:commandButton id="updateButton" value="#{baseMsg.locationBoxRescheduleButton}" processIds="*" action="update" disabled="#{booking.updateable}" style="width: 100px;"  />
                     </h:form>
-                  -->
+                    -->
+                <!-- END enable for DEV only -->
                     <h:form id="updateForm" >
                         <sf:commandButton id="updateButton" value="#{baseMsg.locationBoxRescheduleButton}" processIds="*" action="update" disabled="#{!booking.updateable}" style="width: 100px;"  />
                     </h:form>

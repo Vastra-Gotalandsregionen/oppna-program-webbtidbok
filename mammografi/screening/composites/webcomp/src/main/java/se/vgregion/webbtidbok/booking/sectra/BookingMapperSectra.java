@@ -25,6 +25,7 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
+import se.vgregion.webbtidbok.booking.elvis.BookingMapperElvis;
 import se.vgregion.webbtidbok.domain.Booking;
 import se.vgregion.webbtidbok.domain.BookingTime;
 import se.vgregion.webbtidbok.domain.Surgery;
@@ -84,8 +85,6 @@ public class BookingMapperSectra {
 			String[] temp = description.split("#", 2);
 			if (temp.length > 1) {
 				surgeryName = temp[0];
-			} else {
-				// TODO: Log this failure, perhaps?
 			}
 		}
 

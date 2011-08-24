@@ -17,6 +17,7 @@
  */
 package se.vgregion.webbtidbok;
 
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import org.slf4j.Logger;
@@ -43,7 +44,9 @@ public class Login {
 	private BookingFactory bookingFactory;
 	private LookupService lookupService;
 	private ResourceBundle resourceBundle;
-
+	private static final String BUKAORTA_SCREENING = "BS01";
+	private static final String GYN_SCREENING = "GS01";
+	private static final String GYN_SCREENING_SERVICE_DEFINITION_ID = "GYN";
 	private Logger logger;
 
 	public Login() {
@@ -73,42 +76,46 @@ public class Login {
 
 	/**
 	 * Gets the correct {@link BookingFacade} for the current user and if the user is logged in the setMessageBundle method is
-	 * called
+	 * called. When proper service (see service definitions) is set (Elvis(Bukaorta / Gyn) or SectraNU or Sectra SU) Service Type
+	 * is determined. If Elvis is set as Service for the current patient then Service Type is checked and if it equals "GS01" the
+	 * Service Definition is changed to GYN and the correct MessageBundle is set etc.
 	 * 
 	 * @param stateLoginCredentials
 	 *            {@link State}
-	 * @return
+	 * @return isLoggedIn - is set as a Boolean indicator flag whether the patient is found and whether the login credentials
+	 *         checks out okay
 	 * @throws Exception
 	 */
 	public boolean login(State stateLoginCredentials) throws Exception {
+		boolean isLoggedin = false;
 		BookingFacade bookingService = bookingFactory.getService(stateLoginCredentials);
 		if (bookingService.login(stateLoginCredentials)) {
-			// TODO: #### getNamn() is stand in for the real future field which will enable us to determine which message bundle
-			// to
-			// load, Gyn
-			// or Bukaorta
-			// String serviceType = "";
-			// if (loginCredentials.getBookingResponse() != null) {
-			// serviceType = loginCredentials.getBookingResponse().getNamn().getValue();
-			// }
-			// setMessageBundle(loginCredentials, sd);
-			// if (serviceType.equalsIgnoreCase("Näf, Björn") || serviceType.equalsIgnoreCase("Kalle 1")) {
-			// // gyn
-			// Map<String, ServiceDefinition> serviceMap = bookingFactory.getService();
-			// ServiceDefinition serviceDefinition = serviceMap.get("GYN");
-			// setMessageBundle(loginCredentials, serviceDefinition);
-			// } else {
-			// bukaorta
-			setMessageBundle(stateLoginCredentials, sd);
-			// }
-			stateLoginCredentials.setLoggedIn(true);
-			logger.info("Logging in user {}.", stateLoginCredentials.getPnr());
-			return true;
-		} else {
-			stateLoginCredentials.setLoggedIn(false);
-			logger.info("Login failed for user {}.", stateLoginCredentials.getPnr());
-			return false;
+
+			String serviceType = "";
+			if (stateLoginCredentials.getBookingResponse() != null) {
+				serviceType = stateLoginCredentials.getElvisExaminationType();
+			}
+			if (serviceType.equalsIgnoreCase(GYN_SCREENING)) {
+				// if true here then transform Bukaorta Service Definition to GYN
+				Map<String, ServiceDefinition> serviceMap = bookingFactory.getService();
+				ServiceDefinition serviceDefinition = serviceMap.get(GYN_SCREENING_SERVICE_DEFINITION_ID);
+				setMessageBundle(stateLoginCredentials, serviceDefinition);
+				stateLoginCredentials.setLoggedIn(true);
+				logger.info("Logging in user {}.", stateLoginCredentials.getPnr());
+				isLoggedin = true;
+				return isLoggedin;
+			} else {
+				// else if(serviceType.equalsIgnoreCase("BS01")
+				// BUKAORTA
+				setMessageBundle(stateLoginCredentials, sd);
+				stateLoginCredentials.setLoggedIn(true);
+				logger.info("Logging in user {}.", stateLoginCredentials.getPnr());
+				isLoggedin = true;
+				return isLoggedin;
+			}
+
 		}
+		return isLoggedin;
 	}
 
 	/**
@@ -119,7 +126,7 @@ public class Login {
 	 *            {@link State}
 	 * @param loginMessages
 	 *            {@link LoginMessages}
-	 * @return
+	 * @return {@link boolean}
 	 */
 	public boolean lookup(State state, LoginMessages loginMessages) {
 		sd = lookupService.lookup(state);

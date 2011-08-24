@@ -70,64 +70,75 @@
 							<goal>wsimport</goal>
 						</goals>
 						<configuration>
-<!--  							
-							<wsdlUrls>
--->
-								<!-- DEMO WS for Dev purposes, for DMZ & local  		
-								 <wsdlUrl>http://demo.insieme.se/CentralBookingWS/CentralBookingWS.svc?wsdl</wsdlUrl> 
-								 <wsdlUrl>https://demo.insieme.se/IC/CentralBooking/CentralBookingWS/CentralBookingWS.svc?wsdl</wsdlUrl>	-->							
-													
-								<!-- PROD WS. Most current 
-								<wsdlUrl>https://webtidbokws.vgregion.se/IC/CentralBooking/CentralBookingWS/CentralBookingWS.svc?wsdl</wsdlUrl>-->
-								<!-- <wsdlUrl>https://vgwb0090.vgregion.se/IC/CentralBooking/CentralBookingWS/CentralBookingWS.svc?wsdl</wsdlUrl>   -->
-<!--
-							</wsdlUrls>
--->							
-												
+
+							<!-- DEMO WS URL's for Dev purposes, for DMZ & local  		
+							 <wsdlUrl>http://demo.insieme.se/CentralBookingWS/CentralBookingWS.svc?wsdl</wsdlUrl> 
+							 <wsdlUrl>https://demo.insieme.se/IC/CentralBooking/CentralBookingWS/CentralBookingWS.svc?wsdl</wsdlUrl>	-->																	
+							<!-- PROD WS URL's. Most current 
+							<wsdlUrl>https://webtidbokws.vgregion.se/IC/CentralBooking/CentralBookingWS/CentralBookingWS.svc?wsdl</wsdlUrl>-->
+							<!-- <wsdlUrl>https://vgwb0090.vgregion.se/IC/CentralBooking/CentralBookingWS/CentralBookingWS.svc?wsdl</wsdlUrl>   -->
+			
+							<!-- DEMO ELVIS, build locally, run with DEMO WS at INSIEME											
 							<wsdlDirectory>${basedir}/src/main/resources/wsdl/demoElvis/</wsdlDirectory>	
-							<!-- toggle Elvis here 	-->		
-							<wsdlLocation>http://demo.insieme.se/CentralBookingWS/CentralBookingWS.svc?wsdl</wsdlLocation>				
+							<wsdlLocation>http://demo.insieme.se/CentralBookingWS/CentralBookingWS.svc?wsdl</wsdlLocation>
 							<wsdlFiles>
 								<wsdlFile>CentralBookingWS_1.wsdl</wsdlFile>
 							</wsdlFiles>
-						
+								-->
+							
+							<!-- DEMO GYN-ELVIS, build locally, run with DEMO WS at INSIEME												
+							<wsdlDirectory>${basedir}/src/main/resources/wsdl/gynElvis/</wsdlDirectory>	
+							<wsdlLocation>https://demo.insieme.se/IC/CentralBooking/CentralBookingWS/CentralBookingWS.svc?wsdl</wsdlLocation>
+							<wsdlFiles>
+								<wsdlFile>CentralBookingWS_1.wsdl</wsdlFile>
+							</wsdlFiles>
+							-->	
+							
+							<!-- PROD ELVIS, build locally, run with PROD WS --> 	 			
+							<wsdlDirectory>${basedir}/src/main/resources/wsdl/skarpaElvis/</wsdlDirectory>	
+							<!--  <wsdlLocation>http://demo.insieme.se/CentralbookingWS/CentralBookingWS.svc?wsdl</wsdlLocation> -->
+							<wsdlLocation>https://webtidbokws.vgregion.se/IC/CentralBooking/CentralBookingWS/CentralBookingWS.svc?wsdl</wsdlLocation>				
+							<wsdlFiles>
+								<wsdlFile>CentralBookingWS_1.wsdl</wsdlFile>
+							</wsdlFiles>
+							
+							 
 							<packageName>se.vgregion.webbtidbok.ws</packageName>
 							<sourceDestDir>${project.build.directory}/generated-sources/jaxws</sourceDestDir>
 							<staleFile>${project.build.directory}/generated-sources/jaxws/stale/.staleFlagSignicat</staleFile>
 							<target>2.1</target>
 						</configuration>
 					</execution>
-
-					<!--  Generate Sectra classes -->
+					
+				<!--  Generate Sectra classes -->
+					
 					<execution>
-						<id>sectrawsgen</id>
+						<id>sectrawsgenSU</id>
 						<goals>
 							<goal>wsimport</goal>
 						</goals>
-
 						<configuration>
-						
+							<!-- PROD SECTRA SU here. ALSO change in web-application-config.xml -->
 							<wsdlDirectory>${basedir}/src/main/resources/wsdl/skarpaSectra/</wsdlDirectory>
 							<wsdlLocation>http://webtidbokws.vgregion.se/RISReschedule/Service.svc?wsdl</wsdlLocation>
 							<wsdlFiles>
 								<wsdlFile>Service_1.wsdl</wsdlFile>
-							</wsdlFiles>
-							
-							 <!-- toggle Sectra here 
+							</wsdlFiles> 
+							 <!-- MOCK SECTRA here, build locally, run locally. ALSO change in web-application-config.xml	
 							<wsdlDirectory>${basedir}/src/main/resources/wsdl/mockSectra/</wsdlDirectory>
-							<wsdlLocation>http://webtidbokws.vgregion.se/RISReschedule/Service.svc?wsdl</wsdlLocation>
+							<wsdlLocation>http://localhost:8085/webbtidbok-sectraws-module-intsvc/ws/booking/Service.svc?wsdl</wsdlLocation>
 							<wsdlFiles>
 								<wsdlFile>SectraBookingService.wsdl</wsdlFile>
-							</wsdlFiles>
-							 		-->		
+							</wsdlFiles> 
+							 -->
 							<packageName>se.vgregion.webbtidbok.ws.sectra</packageName>
 							<sourceDestDir>${project.build.directory}/generated-sources/jaxws</sourceDestDir>
 							<staleFile>${project.build.directory}/generated-sources/jaxws/stale/.staleFlagSectra</staleFile>
 							<target>2.1</target>
 						</configuration>
-
 					</execution>
 
+					
 				</executions>
 			</plugin>
 		</plugins>
@@ -147,6 +158,19 @@
 			<id>JBOSS</id>
 			<name>JBOSS Maven Repository</name>
 			<url>http://repository.jboss.com/maven2</url>
+		</repository>
+		
+		<!-- TOGGLE local repos -->
+		<repository>
+			<id>for MyMAC</id>
+			<name>localRepos</name>
+			<url>/Users/carstm/.m2/repository</url>
+		</repository>
+		<!-- TOGGLE repos -->
+		<repository>
+			<id>for MyWin</id>
+			<name>localRepos</name>
+			<url>E:/Users/carstm/.m2/repository</url>
 		</repository>
 	</repositories>
 

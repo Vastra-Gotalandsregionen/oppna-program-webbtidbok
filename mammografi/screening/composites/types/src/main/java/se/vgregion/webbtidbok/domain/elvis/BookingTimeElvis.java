@@ -34,7 +34,6 @@ public class BookingTimeElvis extends BookingTime {
 	private String day = "";
 
 	public BookingTimeElvis() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public void setDay(String s) {

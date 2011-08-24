@@ -197,7 +197,8 @@
   </wsdl:binding>
   <wsdl:service name="CentralBookingWS">
     <wsdl:port name="BasicHttpBinding_ICentralBookingWS" binding="tns:BasicHttpBinding_ICentralBookingWS">
-      <soap:address location="https://demo.insieme.se/IC/CentralBooking/CentralBookingWS/CentralBookingWS.svc"/>
+     <!--  <soap:address location="https://demo.insieme.se/IC/CentralBooking/CentralBookingWS/CentralBookingWS.svc"/>  -->
+      <soap:address location="http://demo.insieme.se/CentralBookingWS/CentralBookingWS.svc"/>
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

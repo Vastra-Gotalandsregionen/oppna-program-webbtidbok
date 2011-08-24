@@ -46,15 +46,17 @@ public class ElvisBookingFacadeImpl implements BookingFacade {
 		this.helper = webServiceHelper;
 	}
 
+	/**
+	 * Inserts the respective UndersokningsTypKod into the state. The UndersokningsTypKod determines whether the Elvis WS is to be
+	 * used for Gyn- or Bukaorta patient
+	 */
 	@Override
 	public boolean login(State state) {
 		BookingRequest request = helper.getQueryWSRequest(state);
 		BookingResponse response = helper.getQueryWS(request);
 		state.setBookingResponse(response);
-		// This is just an example to mock a new future field in the WS which will be used to determine the difference between Gyn
-		// and Bukaorta patients
 		if (response != null) {
-			String value = response.getNamn().getValue();
+			String value = response.getUndersokningsTypKod().getValue();
 			state.setElvisExaminationType(value);
 		}
 		return response != null;

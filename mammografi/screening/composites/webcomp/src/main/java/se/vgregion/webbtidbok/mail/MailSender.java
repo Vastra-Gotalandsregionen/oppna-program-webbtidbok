@@ -24,6 +24,8 @@ import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.Transport;
 
+import org.apache.log4j.Logger;
+
 import se.vgregion.webbtidbok.State;
 import se.vgregion.webbtidbok.domain.Booking;
 
@@ -40,7 +42,9 @@ public class MailSender implements Runnable {
 
 	private State state;
 	private Booking booking;
+	private String elvisError;
 	boolean mailSentToServer = false;
+	Logger log = Logger.getLogger("MailSender.class");
 
 	public MailSender() {
 
@@ -60,6 +64,11 @@ public class MailSender implements Runnable {
 		return properties;
 	}
 
+	public void sendElvisErrorMail(String elvisError) {
+		this.elvisError = elvisError;
+		run();
+	}
+
 	public void sendCancellationMail() {
 		run();
 	}
@@ -72,27 +81,46 @@ public class MailSender implements Runnable {
 	public void run() {
 
 		boolean debug = true;
-		String patientName = booking.getPatientName();
+
+		Properties mailProperties = getMailProperties(state);
+		Session session = mailSetup.getSession(mailProperties);
+		session.setDebug(debug);
+		Message messageToSend = null;
 
 		if (!state.getService().equalsIgnoreCase("BUKAORTA")) {
-			Properties mailProperties = getMailProperties(state);
-			Session session = mailSetup.getSession(mailProperties);
-			session.setDebug(debug);
-			Message messageToSend = null;
+			String patientName = booking.getPatientName();
 			if (booking.isSwitchedSurgery()) {
 				messageToSend = messageSetup.getSwitchLocationMessage(session, state, patientName, booking);
+
 			} else if (!booking.isSwitchedSurgery()) {
 				messageToSend = messageSetup.getCancellationMessage(session, state, patientName, booking);
+
 			}
 			try {
 				Transport.send(messageToSend);
 				mailSentToServer = true;
-
+				mailSentToSMTPLogger("**** SWITCH OR CANCELLATION mail sent to SMTP.");
 			} catch (MessagingException e) {
 				e.printStackTrace();
 				mailSentToServer = false;
+				mailSentToSMTPLogger("---- SWITCH OR CANCELLATION mail NOT sent to SMTP.");
 			}
+		} else if (state.getService().equalsIgnoreCase("BUKAORTA")) {
+			messageToSend = messageSetup.getElvisErrorNotificationMessage(session, state, elvisError);
+			try {
+				Transport.send(messageToSend);
+				mailSentToSMTPLogger("**** Elvis ERROR mail sent to SMTP.");
+			} catch (MessagingException e) {
+				e.printStackTrace();
+				mailSentToServer = false;
+				mailSentToSMTPLogger("---- Elvis ERROR  mail NOT sent to SMTP.");
+			}
+			mailSentToServer = true;
 		}
+	}
+
+	private void mailSentToSMTPLogger(String message) {
+		log.info(message);
 	}
 
 	public void setState(State state) {

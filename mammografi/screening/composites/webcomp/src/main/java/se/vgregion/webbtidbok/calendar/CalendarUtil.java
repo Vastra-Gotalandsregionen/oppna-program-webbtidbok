@@ -43,11 +43,13 @@ public class CalendarUtil {
 	 * @return A CalendarHolder usable for backing the calendar on the update page.
 	 */
 	public CalendarHolder createCalendarHolder(State state, Booking booking) {
-		Calendar bookingStart = DateHandler.calendarFromDate(booking.getStartTime());
-		List<Calendar> availableDates = getAvailableDates(state, booking.getSurgery().getSurgeryId(), bookingStart);
 		CalendarHolder holder = new CalendarHolder();
-		holder.setCurrentShowingMonth(bookingStart, availableDates);
-		holder.setSelectedDate(bookingStart);
+		if (booking.getStartTime() != null) {
+			Calendar bookingStart = DateHandler.calendarFromDate(booking.getStartTime());
+			List<Calendar> availableDates = getAvailableDates(state, booking.getSurgery().getSurgeryId(), bookingStart);
+			holder.setCurrentShowingMonth(bookingStart, availableDates);
+			holder.setSelectedDate(bookingStart);
+		}
 		return holder;
 	}
 

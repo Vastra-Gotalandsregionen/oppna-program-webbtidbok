@@ -17,7 +17,13 @@
  */
 package se.vgregion.webbtidbok.booking.elvis;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.io.Writer;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.xml.bind.JAXBElement;
 
@@ -26,12 +32,14 @@ import org.apache.commons.logging.LogFactory;
 
 import se.vgregion.webbtidbok.State;
 import se.vgregion.webbtidbok.crypto.StringEncrypter;
+import se.vgregion.webbtidbok.mail.MailSender;
 import se.vgregion.webbtidbok.ws.ArrayOfBookingPlace;
 import se.vgregion.webbtidbok.ws.ArrayOfBookingTime;
 import se.vgregion.webbtidbok.ws.ArrayOfCalendar;
 import se.vgregion.webbtidbok.ws.BookingRequest;
 import se.vgregion.webbtidbok.ws.BookingResponse;
 import se.vgregion.webbtidbok.ws.BookingTime;
+import se.vgregion.webbtidbok.ws.ICFault;
 import se.vgregion.webbtidbok.ws.ICentralBookingWS;
 import se.vgregion.webbtidbok.ws.ICentralBookingWSCancelBookingICFaultFaultFaultMessage;
 import se.vgregion.webbtidbok.ws.ICentralBookingWSConfirmBookingICFaultFaultFaultMessage;
@@ -55,6 +63,7 @@ public class WebServiceHelper {
 	private final ObjectFactory objectFactory = new ObjectFactory();
 	private ICentralBookingWS elvisWebService;
 	private StringEncrypter encrypter;
+	private Map<String, Integer> errorMap;
 
 	public void setElvisWebService(ICentralBookingWS elvisWebService) {
 		this.elvisWebService = elvisWebService;
@@ -279,25 +288,56 @@ public class WebServiceHelper {
 	}
 
 	/**
-	 * Info concerning the booking, time, place, location, pnr, name etc
+	 * Info concerning the booking, time, place, location, pnr, name etc If any error is sent back from the Elvis WebService this
+	 * is, within the Catch() clause, sent as a mail to insieme
 	 * 
 	 * @param request
 	 *            {@link BookingRequest}
 	 * @return {@link BookingResponse}
 	 */
 	public BookingResponse getQueryWS(BookingRequest request) {
-
 		try {
-
 			return elvisWebService.getBooking(request);
-			// return ws.getBooking(request);
-			// loginCredentials.setBookingResponse(response);
-
 		} catch (ICentralBookingWSGetBookingICFaultFaultFaultMessage ex) {
 			log.error(ex.getMessage(), ex);
-			return null;
+			ICFault faultInfo = ex.getFaultInfo();
 
+			errorMap = new HashMap<String, Integer>();
+			errorMap.put("general error", -1);
+			errorMap.put("-1036", -1036);
+			errorMap.put("-2001", -2001);
+			errorMap.put("-2002", -2002);
+			errorMap.put("faulty value", -10088);
+
+			for (Entry<String, Integer> entry : errorMap.entrySet()) {
+				if (faultInfo.getRetcode() == entry.getValue()) {
+					errorMailer("Error code: " + faultInfo.getRetcode() + ". " + getStackTrace(ex));
+				}
+			}
+			return null;
 		}
+	}
+
+	public String getStackTrace(Throwable aThrowable) {
+		final Writer result = new StringWriter();
+		final PrintWriter printWriter = new PrintWriter(result);
+		aThrowable.printStackTrace(printWriter);
+		return result.toString();
+	}
+
+	/**
+	 * Method used to initiate and send errors about elvis to insieme. State created here is ONLY used to retrieve some mail
+	 * properties from the message bundle. The mail properties are such as SMTP URL.
+	 * 
+	 * @param insiemeWSErrorMessage
+	 *            - the error message from the server
+	 */
+	private void errorMailer(String insiemeWSErrorMessage) {
+		State tempMailState = new State();
+		tempMailState.setMessageBundle("messages/bukaorta/BukAortaMessages");
+		tempMailState.setService("BUKAORTA");
+		MailSender mailer = new MailSender(tempMailState, null);
+		mailer.sendElvisErrorMail(insiemeWSErrorMessage);
 	}
 
 	/***
@@ -313,10 +353,8 @@ public class WebServiceHelper {
 
 			log.debug("---------XXXXXXXXXXXXXX-----------");
 
-			log
-					.debug(request.getBokadTid().getDay() + " " + request.getBokadTid().getMonth() + " "
-							+ request.getBokadTid().getYear() + " " + request.getBokadTid().getHour()
-							+ request.getBokadTid().getMinute());
+			log.debug(request.getBokadTid().getDay() + " " + request.getBokadTid().getMonth() + " "
+					+ request.getBokadTid().getYear() + " " + request.getBokadTid().getHour() + request.getBokadTid().getMinute());
 			log.debug(request.getCentralTidbokID());
 			log.debug(request.getPin());
 			log.debug(request.getPnr());

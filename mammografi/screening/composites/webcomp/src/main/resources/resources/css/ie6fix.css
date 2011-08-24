@@ -15,7 +15,6 @@
  *   Free Software Foundation, Inc., 59 Temple Place, Suite 330,
  *   Boston, MA 02111-1307  USA
  */
-
 #bd { position:relative; clear:both; margin-top:-30px; border: 1px solid #c2c2c2; border-top:none; background:url(../images/bd-btm-bg.png) repeat-x 0 100%; overflow:hidden; }
 .yui-t2 .yui-b { width:250px; } 
 .yui-t2 #yui-main .yui-b { margin-left:250px; } /** @override YUI */

@@ -40,6 +40,7 @@
 			<evaluate expression="guiUtility.setChosenStaticLocation(booking, location.locationId)" />
 		</transition>
 		<transition on="cancel" to="cancel" />
+		 <transition on-exception="org.springframework.web.util.NestedServletException" history="invalidate" to="error"/>
 	</view-state>
 	
 	<action-state id="confirmswitchlocationaction">
@@ -48,10 +49,12 @@
 				<evaluate expression="guiUtility.setSwitchLocation(booking)" />
 				<evaluate expression="guiUtility.sendSwitchLocationMail(state, booking, mailQueue)" />
 		</transition>
+		 <transition on-exception="org.springframework.web.util.NestedServletException" to="error"/>
 	</action-state>
 	
 	<view-state id="confirmswitchlocation" view="/flows/switch/confirmswitchlocation.xhtml">	
 		<transition on="cancel" to="cancel" />
+		 <transition on-exception="org.springframework.web.util.NestedServletException" history="invalidate" to="error"/>
 	</view-state>
 	
 	<end-state id="cancel"/>
@@ -59,7 +62,9 @@
 
 	<global-transitions>
         <transition on="logout" history="invalidate" to="logout"/>
-        <transition on-exception="java.lang.Error" history="invalidate" to="logout"/>
+        <transition on-exception="java.lang.Error" history="invalidate" to="error"/>
+        <transition on-exception="java.lang.Throwable" history="invalidate" to="error"/>
+         <transition on-exception="org.springframework.web.util.NestedServletException" history="invalidate" to="error"/>
     </global-transitions>
 
 </flow>

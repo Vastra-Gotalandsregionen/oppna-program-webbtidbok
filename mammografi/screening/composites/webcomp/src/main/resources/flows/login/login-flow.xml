@@ -47,6 +47,8 @@
     <!-- for debugging you have to replace to="validate" with to="loggedin"-->
     <view-state id="start" view="/flows/login/start.xhtml">
         <transition on="login" to="validate" />
+        <transition on-exception="org.springframework.web.util.NestedServletException" history="invalidate" to="error"/>
+        <transition on-exception="java.lang.Error" history="invalidate" to="error"/>  
     </view-state>
 
     <!-- Validate inputs to make sure id and password are well formed -->    
@@ -56,6 +58,8 @@
         <transition on="no" to="start">
             <evaluate expression="true" result="flashScope.failedLogin" /> 
         </transition>
+        <transition on-exception="org.springframework.web.util.NestedServletException" to="error"/>
+        <transition on-exception="java.lang.Error" to="error"/>  
     </action-state>
 
 	<!-- after password is validated as well formed, parse it and see what serviceID to set, that is lookup what WS to use -->
@@ -75,6 +79,8 @@
     		    <evaluate expression="true" result="flashScope.failedLogin" /> 
     			<!-- evaluate expression="loginmessages.setBadLogin()" / -->
     		</transition>
+    	<transition on-exception="org.springframework.web.util.NestedServletException" to="error"/>
+        <transition on-exception="java.lang.Throwable" to="error"/>  
 	</action-state>
 
     <subflow-state id="loggedin" subflow="display">
@@ -88,13 +94,16 @@
         </on-entry>
 	</end-state>
 
-
 	<view-state id="debug" view="/flows/login/debug.xhtml">
 		<!--  if we have not defined the correct transition yet, transit to this state. -->
 	</view-state>
-		
+	
+	<end-state id="error" view="/flows/error/error.xhtml">
+		<!--transition on="logout" to="loggedout" /--> 
+	</end-state>
 
     <global-transitions>
-        <transition on-exception="java.lang.Error" history="invalidate" to="loggedout"/>
+    	<transition on-exception="org.springframework.web.util.NestedServletException" history="invalidate" to="error"/>
+        <transition on-exception="java.lang.Throwable" history="invalidate" to="error"/>  
     </global-transitions>
 </flow>
