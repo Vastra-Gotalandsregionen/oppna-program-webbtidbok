@@ -58,24 +58,26 @@
 	<p />
 	<br />
 	<p />
-	<div id="location">    
-		<f:view>
-				<h:form id="selectFormStaticLoction" >
-					<h:selectOneMenu rendered="true" id="places" value="#{location.locationId}">
-			       	    <f:selectItems value="#{location.selectItems}" />
-					</h:selectOneMenu>
-					<sf:commandButton rendered="true" value="#{sectionMsg.switchLocationConfirmButton}" processIds="*" action="confirmswitch"/>
-				</h:form>
-		</f:view>
-	</div>
 	
-	<p />
-	<div class="tb_cancelform">
-        <h:form id="cancelForm" >
-            <sf:commandButton id="cancelButton" value="Avbryt" processIds="*" style="width: 100px;" action="cancel" />
-        </h:form>
-	</div>        
-    
+
+		<div id="location">    
+			<f:view>
+					<h:form id="selectFormStaticLoction" >
+						<h:selectOneMenu rendered="true" id="places" value="#{location.locationId}">
+				       	    <f:selectItems value="#{location.selectItems}" />
+						</h:selectOneMenu>
+						<p />
+						<sf:commandButton rendered="true" value="#{sectionMsg.switchLocationConfirmButton}" processIds="*" action="confirmswitch"/>
+					</h:form>
+			</f:view>
+		</div>
+
+		<div class="tb_cancelform">
+	        <h:form id="cancelForm" >
+	            <sf:commandButton id="cancelButton" value="Avbryt" processIds="*" style="width: 100px;" action="cancel" />
+	        </h:form>
+		</div>        
+
 </ui:fragment>
 </ui:define>
 </ui:composition>

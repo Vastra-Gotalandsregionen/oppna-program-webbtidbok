@@ -18,6 +18,7 @@
 package se.vgregion.webbtidbok.booking;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
@@ -67,8 +68,18 @@ public class BookingFacadeSwitch implements BookingFacade {
 
 	@Override
 	public List<BookingTime> getBookingTime(State state, String sectionId, Calendar selectedDate) {
-		List<BookingTime> times = getBookingFacadeForCurrentRequest(state).getBookingTime(state, sectionId, selectedDate);
-		Collections.sort(times, new CompareBookingTime());
+		List<BookingTime> times = new ArrayList<BookingTime>();
+		BookingFacade bookingFacadeForCurrentRequest = getBookingFacadeForCurrentRequest(state);
+		if (bookingFacadeForCurrentRequest.getBookingTime(state, sectionId, selectedDate) == null) {
+			System.out.println("**********&&&&&&&&&&&&&& BAPP!");
+		} else {
+			System.out.println("**********&&&&&&&&&&&&&& NOT BAPP!");
+		}
+		List<BookingTime> bookingTime = bookingFacadeForCurrentRequest.getBookingTime(state, sectionId, selectedDate);
+		if (bookingTime != null) {
+			times = getBookingFacadeForCurrentRequest(state).getBookingTime(state, sectionId, selectedDate);
+			Collections.sort(times, new CompareBookingTime());
+		}
 		return times;
 	}
 

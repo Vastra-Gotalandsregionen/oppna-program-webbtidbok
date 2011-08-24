@@ -108,7 +108,6 @@ public class SectraBookingFacadeImpl implements BookingFacade {
 
 	@Override
 	public boolean cancelBooking(State state) {
-		// TODO Auto-generated method stub
 		// Call some mail client code here which will mail the NU or SU administration that the patient is canceling the
 		// appointment
 		// return true or false depending on what the mail client returned

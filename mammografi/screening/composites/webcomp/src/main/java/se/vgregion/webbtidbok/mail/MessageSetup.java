@@ -51,7 +51,7 @@ public class MessageSetup {
 
 		String bookedTime = booking.getStartTime().toString();
 		MailSetup mailSetup = new MailSetup();
-		ResourceBundle bundle = mailSetup.setUpMailResourceBunle(state);
+		ResourceBundle bundle = mailSetup.setUpMailResourceBundle(state);
 		Message msg = new MimeMessage(session);
 		InternetAddress addressFrom = null;
 
@@ -96,7 +96,7 @@ public class MessageSetup {
 
 		String bookedTime = booking.getStartTime().toString();
 		MailSetup mailSetup = new MailSetup();
-		ResourceBundle bundle = mailSetup.setUpMailResourceBunle(state);
+		ResourceBundle bundle = mailSetup.setUpMailResourceBundle(state);
 		Message msg = new MimeMessage(session);
 		String switchToSurgery = booking.getSwitchToSurgery().getSurgeryName();
 		String switchFromSurgery = booking.getSurgery().getSurgeryName();
@@ -109,11 +109,12 @@ public class MessageSetup {
 			msg.setRecipients(Message.RecipientType.TO, getToAddress(bundle.getString("switchlocationToEmailAddress")));
 			msg.setFrom(new InternetAddress(bundle.getString("switchlocationFromEmailAddress")));
 			msg.setSubject(bundle.getString("switchlocationMailSubject") + patientName + ", " + state.getPasswd());
-			msg.setContent(bundle.getString("switchlocationMailMailBodyPart1") + " " + patientName
-					+ "\n\n Undersökningsnummer: \n\n" + state.getPasswd() + "\n\n Vill omboka sin tid till: " + switchToSurgery
-					+ "\n\n Avbokning av tid på: " + switchFromSurgery + "\n\n Tid som avbokats: " + bookedTime
-					+ "\n\n Meddela hennes uppgifter till önskad enhet för ny kallelse därifrån." + "\n\n\n"
-					+ bundle.getString("cancelationMailMailBodyPart2"), "text/plain");
+			msg.setContent(
+					bundle.getString("switchlocationMailMailBodyPart1") + " " + patientName + "\n\n Undersökningsnummer: \n\n"
+							+ state.getPasswd() + "\n\n Vill omboka sin tid till: " + switchToSurgery
+							+ "\n\n Avbokning av tid på: " + switchFromSurgery + "\n\n Tid som avbokats: " + bookedTime
+							+ "\n\n Meddela hennes uppgifter till önskad enhet för ny kallelse därifrån." + "\n\n\n"
+							+ bundle.getString("cancelationMailMailBodyPart2"), "text/plain");
 
 		} catch (MessagingException e) {
 			e.printStackTrace();
@@ -121,7 +122,34 @@ public class MessageSetup {
 		return msg;
 	}
 
-	// TODO: remove this if it isn't used as the probability of only ONE recipient is more likely than two or more recpients
+	/**
+	 * This method sets up a message which is sent to Insieme Consulting whenever their Elvis WebService throws some kind of
+	 * Exception.
+	 * 
+	 * @param session
+	 *            - {@link Session}
+	 * @param state
+	 *            - {@link State}
+	 * @param error
+	 *            - the exception message caught from Elvis WS
+	 * @return msg - {@link Message}
+	 */
+	public Message getElvisErrorNotificationMessage(Session session, State state, String error) {
+		Message msg = new MimeMessage(session);
+		MailSetup mailSetup = new MailSetup();
+		ResourceBundle bundle = mailSetup.setUpMailResourceBundle(state);
+
+		try {
+			msg.setRecipients(Message.RecipientType.TO, getToAddress(bundle.getString("elvisErrorToEmailAddress")));
+			msg.setFrom(new InternetAddress(bundle.getString("elvisErrorFromEmailAddress")));
+			msg.setSubject(bundle.getString("elvisErrorMailSubject"));
+			msg.setContent(error, "text/plain");
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		}
+		return msg;
+	}
+
 	public InternetAddress[] getToAddresses(String[] emailaddresses) {
 		InternetAddress[] toAddresses = new InternetAddress[emailaddresses.length];
 		for (int i = 0; i < emailaddresses.length; i++) {

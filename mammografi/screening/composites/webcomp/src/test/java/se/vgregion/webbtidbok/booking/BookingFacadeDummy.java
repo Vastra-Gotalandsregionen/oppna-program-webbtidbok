@@ -39,37 +39,31 @@ public class BookingFacadeDummy implements BookingFacade {
 
 	@Override
 	public se.vgregion.webbtidbok.domain.Booking getBookingInfo(State state) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public List<Surgery> getAvailableSurgeries(State state) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public List<Calendar> getFreeDays(State state, String surgeryId, Calendar startDate, Calendar endDate) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public List<BookingTime> getBookingTime(State state, String sectionId, Calendar selectedDate) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public void reschedule(BookingTime bookingTime, State state) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public boolean cancelBooking(State state) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 }

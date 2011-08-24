@@ -44,10 +44,10 @@ public class MailSenderTest {
 	private Session session;
 	private String[] emailaddresses = { "carl.stromhielm@knowit.se", "yes@no.com" };
 
-	final String SMTPHOSTNAME = "smtp.gmail.com";
-	final String SMTPPORT = "465";
-	final String USER = "test01.knowit@gmail.com";
-	final String PASS = "1234Pass";
+	final String SMTPHOSTNAME = "mailhost.vgregion.se";
+	final String SMTPPORT = "25";
+	final String USER = "";
+	final String PASS = "";
 
 	final String CANCELATIONMAILSUBJECT = "this is the subject for NU ";
 	final String CANCELATIONMAILBODY = "this is the mailbody for NU";

@@ -150,7 +150,6 @@ public class BookingServiceTest {
 			try {
 				bookingResponse.setBokadTid(DatatypeFactory.newInstance().newXMLGregorianCalendar());
 			} catch (DatatypeConfigurationException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			return bookingResponse;

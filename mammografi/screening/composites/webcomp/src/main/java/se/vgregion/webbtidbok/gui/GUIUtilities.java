@@ -135,7 +135,6 @@ public class GUIUtilities {
 	 * @param state
 	 * @param locationId
 	 */
-	// TODO: This method is just to make Elvis calls still work. We should remove this.
 	public void setCentralTidbokIDfromLocation(State state, String locationId) {
 		try {
 			int tidboksId = Integer.parseInt(locationId, 10);

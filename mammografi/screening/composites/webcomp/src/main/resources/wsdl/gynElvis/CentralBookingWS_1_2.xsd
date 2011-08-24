@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2009 Vastra Gotalandsregionen
+
+      This library is free software; you can redistribute it and/or modify
+      it under the terms of version 2.1 of the GNU Lesser General Public
+      License as published by the Free Software Foundation.
+
+      This library is distributed in the hope that it will be useful,
+      but WITHOUT ANY WARRANTY; without even the implied warranty of
+      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+      GNU Lesser General Public License for more details.
+
+      You should have received a copy of the GNU Lesser General Public
+      License along with this library; if not, write to the
+      Free Software Foundation, Inc., 59 Temple Place, Suite 330,
+      Boston, MA 02111-1307  USA
+
+-->
+<xs:schema elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/IC.Framework.WCFCommonTypes" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://schemas.datacontract.org/2004/07/IC.Framework.WCFCommonTypes">
+  <xs:complexType name="ICFault">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="description" nillable="true" type="xs:string"/>
+      <xs:element minOccurs="0" name="detail" nillable="true" type="xs:string"/>
+      <xs:element minOccurs="0" name="retcode" type="xs:int"/>
+      <xs:element minOccurs="0" name="source" nillable="true" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ICFault" nillable="true" type="tns:ICFault"/>
+</xs:schema>

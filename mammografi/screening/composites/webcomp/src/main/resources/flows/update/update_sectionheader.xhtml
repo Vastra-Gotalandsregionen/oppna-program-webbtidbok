@@ -24,11 +24,13 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:sf="http://www.springframework.org/tags/faces">
 <h:form>
-<div class="tb_sectionheading">
-	
-    <h3><h:outputText value="#{section_heading}"/></h3>
-    <h:outputLink id="help" value="#{sectionMsg.helppageLink}" target="_blank"><img src="../resources/VGRImages/help.gif" alt="Help symbol"/></h:outputLink>
-
-</div>
- </h:form>
+		<div class="tb_sectionheading">
+			
+		    <h:outputLink id="help" value="#{sectionMsg.helppageLink}" target="_blank">
+		    	<img src="../resources/VGRImages/help.gif" alt="Help symbol" />
+		    </h:outputLink>	
+		    
+		    <h3><h:outputText value="#{section_heading}"/></h3>
+		</div>
+</h:form>
 </ui:composition>

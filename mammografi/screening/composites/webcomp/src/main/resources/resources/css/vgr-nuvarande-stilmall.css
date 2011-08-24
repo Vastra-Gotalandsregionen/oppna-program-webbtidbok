@@ -1913,3 +1913,25 @@ div.autocomplete {
 	cursor: pointer;
 }
 /*--------------- END YUI AC */
+
+/*-------------- start ADDITION 15:33 20110414 */
+#nav li a {
+
+    border-left: 1px solid #FFFFFF;
+
+    border-right: 1px solid #FFFFFF;
+
+    color: #5C5C5C;
+
+    float: left;
+
+    font-size: 1em;
+
+    font-weight: bold;
+
+    line-height: 42px;
+
+    padding: 0 25px; /* Detta värdet har vi ökat upp */
+
+    text-decoration: none;} 
+/*-------------- end ADDITION 15:33 20110414 */

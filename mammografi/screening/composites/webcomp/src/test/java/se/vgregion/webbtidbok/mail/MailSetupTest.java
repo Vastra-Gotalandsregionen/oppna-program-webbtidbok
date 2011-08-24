@@ -35,10 +35,10 @@ public class MailSetupTest {
 	private MailSetup mailsetup;
 	private State state;
 	private Properties props;
-	final String SMTPHOSTNAME = "smtp.gmail.com";
-	final String SMTPPORT = "465";
-	final String USER = "test01.knowit@gmail.com";
-	final String PASS = "1234Pass";
+	final String SMTPHOSTNAME = "mailhost.vgregion.se";
+	final String SMTPPORT = "25";
+	final String USER = "";
+	final String PASS = "";
 
 	final String SOCKETFACTORYCLASS = "javax.net.ssl.SSLSocketFactory";
 
@@ -67,7 +67,7 @@ public class MailSetupTest {
 
 	@Test
 	public void testSetUpMailResourceBunle() {
-		ResourceBundle bundle = mailsetup.setUpMailResourceBunle(state);
+		ResourceBundle bundle = mailsetup.setUpMailResourceBundle(state);
 		assertNotNull(bundle);
 	}
 

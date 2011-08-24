@@ -161,7 +161,6 @@ public class StringEncrypter {
 
 			// key, then sign a byte array called data.
 			/* Initializing the object with a private key */
-			// TODO: remove and use direct keyStore.
 			getCipher();
 			Key key = keyStore.getKey(keyAlias, "asd".toCharArray());
 			PrivateKey privateKey = (PrivateKey) key;

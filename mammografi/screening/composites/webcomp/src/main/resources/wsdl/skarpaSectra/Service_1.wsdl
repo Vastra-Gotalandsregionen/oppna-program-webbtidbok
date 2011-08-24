@@ -171,7 +171,7 @@
   </wsdl:binding>
   <wsdl:service name="RISReschedule">
     <wsdl:port name="BasicHttpBinding_IRisReschedule" binding="tns:BasicHttpBinding_IRisReschedule">
-      <soap:address location="http://vgwb0090.vgregion.se/RISReschedule/Service.svc"/>
+      <soap:address location="http://webtidbokws.vgregion.se/RISReschedule/Service.svc"/>
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

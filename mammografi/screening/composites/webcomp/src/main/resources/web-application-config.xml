@@ -44,10 +44,11 @@
 	sectraMockServiceSU
 	sectraMockServiceNU
 	
--->
+
 	<import resource="testdata-su.xml" />
 	<import resource="testdata-nu.xml" />
 	<import resource="elvisMockConfig.xml" />
+-->
 	
 	<!-- Scans for application @Components to deploy -->
 	<context:component-scan base-package="org.springframework.webflow.samples.booking" />
@@ -58,14 +59,14 @@
 				<ref bean="serviceDefinitionMammografiSU" />
 				<ref bean="serviceDefinitionMammografiNU" />
 				<ref bean="serviceDefinitionBukAorta" />
+				<!-- TOGGLE GYN SERVICE HERE 1/4 -->
 				<ref bean="serviceDefinitionGyn" />
+				
 			</list>
 		</property>
 	</bean>
 
-	<!--
-		Service definitions should be moved later, but for now this will do.
-	-->
+	<!-- Service definitions should be moved later, but for now this will do.-->
 	<bean id="serviceDefinitionMammografiSU" class="se.vgregion.webbtidbok.servicedef.ServiceDefinition">
 		<property name="serviceID" value="MAMMO_SU" />
 		<property name="messageBundleBase" value="messages/mammografi/MammografiMessagesSU" />
@@ -78,6 +79,14 @@
 		<property name="bookingService" ref="sectraBookingService" />
 	</bean>
 
+	<!-- A service definition for bukaorta, using Elvis. -->
+	<bean id="serviceDefinitionBukAorta" class="se.vgregion.webbtidbok.servicedef.ServiceDefinition">
+		<property name="serviceID" value="BUKAORTA" />
+		<property name="messageBundleBase" value="messages/bukaorta/BukAortaMessages" />
+		<property name="bookingService" ref="elvisBookingService" />
+	</bean>
+	
+	<!-- TOGGLE GYN SERVICE HERE 2/4 -->
 	<!-- A service definition for gyn, using Elvis. -->
 	<bean id="serviceDefinitionGyn" class="se.vgregion.webbtidbok.servicedef.ServiceDefinition">
 		<property name="serviceID" value="GYN" />
@@ -85,14 +94,6 @@
 		<property name="bookingService" ref="elvisBookingService" />
 	</bean>
 	
-	<!-- A service definition for bukaorta, using Elvis. -->
-	<bean id="serviceDefinitionBukAorta" class="se.vgregion.webbtidbok.servicedef.ServiceDefinition">
-		<property name="serviceID" value="BUKAORTA" />
-		<property name="messageBundleBase" value="messages/bukaorta/BukAortaMessages" />
-		<property name="bookingService" ref="elvisBookingService" />
-	</bean>
-
-
 	<!-- Login services. -->
 	<bean id="loginService" class="se.vgregion.webbtidbok.Login">
 		<property name="bookingFactory" ref="bookingFactory" />
@@ -123,7 +124,9 @@
 				<ref bean="lookupServiceSU" />
 				<ref bean="lookupServiceNU" />
 				<ref bean="elvisLookupService" />
-<!--				<ref bean="elvisLookupServiceGyn" />-->
+				
+				<!-- TOGGLE GYN SERVICE HERE 3/4 -->
+				<ref bean="elvisLookupServiceGyn" />
 			</list>
 		</property>
 	</bean>
@@ -141,6 +144,7 @@
 		<property name="regexp" value="^SEMUDD.*$" />
 	</bean>
 
+<!-- TOGGLE GYN SERVICE HERE 4/4 -->
 	<bean id="elvisLookupServiceGyn" class="se.vgregion.webbtidbok.servicedef.LoginLookupService">
 		<property name="serviceDefinition" ref="serviceDefinitionGyn" />
 	</bean>
@@ -167,13 +171,14 @@
 		lazy-init="false">
 		<property name="encrypter" ref="stringEncrypter" />
 
-<!-- for using the local elvis ws mock and mock data from elvisMockData.xml		-->
-<!--		<property name="elvisWebService" ref="elvisWebserviceMock" />-->
-
-<!-- for using the elwis ws specified in the current pom-->
+<!-- TOGGLE ELVIS WS MOCK and MOCK DATA from elvisMockData.xml	1/2	
+		<property name="elvisWebService" ref="elvisWebserviceMock" /> 
+-->
+<!-- TOGGLE ELVIS WS to what's specified in the current POM 2/2-->
 		<property name="elvisWebService">
 			<bean factory-bean="elvisWebService" factory-method="getBasicHttpBindingICentralBookingWS"/>
 		</property>
+
 	</bean>
 
 	<bean id="elvisWebService" class="se.vgregion.webbtidbok.ws.CentralBookingWS" />
@@ -186,43 +191,71 @@
 		<property name="serviceFactory" ref="sectraBookingServiceFactory" />
 	</bean>
 
-<!-- toggle Sectra HERE  1/2	-->
+<!-- TOGGLE SECTRA HERE  1/3. ALSO change in POM.XML -->	
 	<bean id="sectraBookingServiceImpl" class="se.vgregion.webbtidbok.booking.sectra.SectraBookingServiceImpl" >
 		<property name="thePort"  ref="sectraRealService">	
 		</property>
 	</bean>	
  	
+ 	<bean id="sectraNUClientFactory" class="se.vgregion.webbtidbok.ws.sectra.RISReschedule">
+	    <constructor-arg type="java.net.URL" value="http://vgas0561.vgregion.se/RISReschedule/Service.svc?wsdl" />
+	    <constructor-arg type="javax.xml.namespace.QName">
+	        <bean class="javax.xml.namespace.QName">
+	            <constructor-arg index="0" value="http://tempuri.org/" />
+	            <constructor-arg index="1" value="RISReschedule" />
+	        </bean>
+	    </constructor-arg>
+	</bean>
+ 	
 	<bean id="sectraRealService" factory-bean="sectraClientFactory" factory-method="getBasicHttpBindingIRisReschedule" />	
+	<bean id="sectraNURealService" factory-bean="sectraNUClientFactory" factory-method="getBasicHttpBindingIRisReschedule" />	
 	<bean id="sectraClientFactory" class="se.vgregion.webbtidbok.ws.sectra.RISReschedule"/>
+	<!-- bean id="sectraNUClientFactory" class="se.vgregion.webbtidbok.ws.sectraNU.RISReschedule"/-->
+<!-- END  TOGGLE SECTRA HERE  1/3 -->
+	
 
-	<!--
-	 Creates Sectra web service connections.
+	
+	
+	<!-- Creates Sectra web service connections.
 	 This class should not know anything about State - all actions here
 	 should be strictly WS-specific.
 	 If Sectra services should diverge for any reason (versions etc), this is
-	the place to differentiate between services.
-	-->
+	the place to differentiate between services.-->
 	
 	<bean id="sectraBookingServiceFactory"
 		class="se.vgregion.webbtidbok.booking.sectra.SectraBookingServiceFactory">
+
 		<property name="portMap">
 			<map>
-		
-				<entry key="MAMMO_NU" value-ref="sectraRealService" />
-				<entry key="MAMMO_SU" value-ref="sectraRealService" />
-		 <!-- toggle Sectra HERE 2/2
+				<entry key="MAMMO_SU" value-ref="sectraRealService" />	
+				<entry key="MAMMO_NU" value-ref="sectraNURealService"/>
+<!-- TOGGLE SECTRA HERE 2/3
 				<entry key="MAMMO_NU" value-ref="sectraMockServiceNU" />
 				<entry key="MAMMO_SU" value-ref="sectraMockServiceSU" />
-				-->
+END TOGGLE SECTRA HERE 2/3-->
 			</map>
 		</property>
+		<!-- property name="portMapNU">
+			<map>
+				<entry key="MAMMO_NU" value-ref="sectraNURealService"/>
+			</map>
+		</property>
+		
+		<property name="portMapContainer">
+			<map>
+				<entry key="Mammo_SU_Map" value-ref="portMap"/>
+				<entry key="Mammo_SU_Map" value-ref="portMapNU"/>
+			</map>
+		</property-->
 		<property name="bookingMapperSectra">
 			<bean class="se.vgregion.webbtidbok.booking.sectra.BookingMapperSectra" />
 		</property>
+		<!-- property name="bookingMapperSectraNU">
+			<bean class="se.vgregion.webbtidbok.booking.sectraNU.BookingMapperSectraNU" />
+		</property -->
 	</bean>
 
-
-	<!-- MOCK service beans -->
+<!-- SECTRA MOCK service beans 3/3 
 	<bean id="sectraMockServiceNU" class="se.vgregion.webbtidbok.booking.sectra.SectraWSMock">
 		<property name="businessObjectHolder">
 			<bean
@@ -244,8 +277,9 @@
 			</bean>
 		</property>
 	</bean>
-	<!-- END MOCK service beans -->
-	<!-- END sectra facade -->
+-->	
+<!-- END SECTRA MOCK service beans 3/3 -->
+<!-- END sectra facade -->
 	
 	<!--  This class is used as a switch to choose between different BookingFacades depending on witch service that is to be utilized by the user.	-->
 	<bean id="bookingFacade" class="se.vgregion.webbtidbok.booking.BookingFacadeSwitch">
@@ -286,8 +320,7 @@
     </bean>
 
 	
-	<!--	Utility bean for dumping methods we don't have a proper home for. -->
-	
+	<!-- Utility bean for dumping methods we don't have a proper home for. -->	
 	<bean id="guiUtility" class="se.vgregion.webbtidbok.gui.GUIUtilities">
 		<property name="bookingFacade" ref="bookingFacade" />
 	</bean>
@@ -297,10 +330,7 @@
 		class="se.vgregion.webbtidbok.errorhandling.ExceptionFlowHandler">
 	</bean>
 
-	<!--
-		Imports the configurations of the different infrastructure systems of
-		the application
-	-->
+	<!-- Imports the configurations of the different infrastructure systems of the application	-->
 	<import resource="webflow-config.xml" />
 	<import resource="webmvc-config.xml" />
 </beans>

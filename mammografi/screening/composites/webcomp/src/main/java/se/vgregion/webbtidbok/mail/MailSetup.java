@@ -23,6 +23,8 @@ import java.util.ResourceBundle;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 
+import org.apache.log4j.Logger;
+
 import se.vgregion.webbtidbok.State;
 
 /**
@@ -34,13 +36,26 @@ import se.vgregion.webbtidbok.State;
  * 
  */
 public class MailSetup {
+	Logger logger;
 
+	public MailSetup() {
+		logger = Logger.getLogger("MailSetup constructor");
+	}
+
+	/**
+	 * This method sets up the necessary smtp paramateres to send mail thru the vgregions mailhost it uses params set in message
+	 * bundle.
+	 * 
+	 * @param state
+	 *            {@link State}
+	 * @return properties - {@link Properties}
+	 */
 	public Properties setUpMailProperties(State state) {
 		String SMTP_HOST_NAME;
 		String SMTP_PORT;
 		String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
-		String user;
-		String pass;
+		String user = "";
+		String pass = "";
 
 		ResourceBundle bundle = ResourceBundle.getBundle(state.getMessageBundle());
 
@@ -56,15 +71,15 @@ public class MailSetup {
 		properties.put("mail.debug", "true");
 		properties.put("mail.smtp.port", SMTP_PORT);
 		properties.put("mail.smtp.socketFactory.port", SMTP_PORT);
-		properties.put("mail.smtp.socketFactory.class", SSL_FACTORY);
+		// properties.put("mail.smtp.socketFactory.class", SSL_FACTORY);
 		properties.put("mail.smtp.socketFactory", "false");
 		properties.put("userName", user);
 		properties.put("userKey", pass);
-
+		logger.debug("MailSetup mail properties are set");
 		return properties;
 	}
 
-	public ResourceBundle setUpMailResourceBunle(State state) {
+	public ResourceBundle setUpMailResourceBundle(State state) {
 		ResourceBundle bundle = ResourceBundle.getBundle(state.getMessageBundle());
 		return bundle;
 	}

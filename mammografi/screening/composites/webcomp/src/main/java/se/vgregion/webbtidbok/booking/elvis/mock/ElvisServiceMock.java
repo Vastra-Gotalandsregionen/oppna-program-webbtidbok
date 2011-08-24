@@ -60,7 +60,7 @@ public class ElvisServiceMock implements ICentralBookingWS {
 
 	public void createMockData() throws DatatypeConfigurationException {
 		elvisMockData = new HashMap<String, Object>();
-		// Creagte bookings.
+		// Create bookings.
 		Map<String, BookingResponse> bookings = new HashMap<String, BookingResponse>();
 		String pNR1 = "19700123-9297";
 		String pNR2 = "20100312-2222";
@@ -199,7 +199,6 @@ public class ElvisServiceMock implements ICentralBookingWS {
 
 	@Override
 	public BookingResponse confirmBooking(BookingRequest request) throws ICentralBookingWSConfirmBookingICFaultFaultFaultMessage {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
