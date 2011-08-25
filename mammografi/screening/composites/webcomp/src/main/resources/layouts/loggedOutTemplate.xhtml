@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--
+
+    Copyright 2009 Vastra Gotalandsregionen
+
+      This library is free software; you can redistribute it and/or modify
+      it under the terms of version 2.1 of the GNU Lesser General Public
+      License as published by the Free Software Foundation.
+
+      This library is distributed in the hope that it will be useful,
+      but WITHOUT ANY WARRANTY; without even the implied warranty of
+      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+      GNU Lesser General Public License for more details.
+
+      You should have received a copy of the GNU Lesser General Public
+      License along with this library; if not, write to the
+      Free Software Foundation, Inc., 59 Temple Place, Suite 330,
+      Boston, MA 02111-1307  USA
+
+-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:sf="http://www.springframework.org/tags/faces">
+
+<ui:composition template="tidbokBaseTemplate.xhtml">
+
+    <!-- Part of official VGR layout. -->
+    <ui:define name="headerLanguages">
+        <ul>
+            <li><a href="http://vard.vgregion.se/sv/Other-languages/" target="_blank">Other languages</a></li>
+            <li>&nbsp; | &nbsp;<a href="http://spoxy4.insipio.com/generator/se/vard.vgregion.se/sv/Mina-tjanster/?id=359548&amp;epslanguage=sv" title="Lyssna på denna sida" class="lyssnaIkon" accesskey="L" target="_blank">Lyssna</a></li>
+            <li>&nbsp; | &nbsp;<a href="http://vard.vgregion.se/sv/Teckenspraksfilmer/" target="_blank">Teckenspråk</a></li>
+        </ul>
+    </ui:define>
+
+    <!-- Part of official VGR layout. -->
+    <ui:define name="headerSearch">
+        <form action="http://vard.vgregion.se/sv/Sok1/" method="get" target="_blank">
+            <div class="search-text-lft"><input name="quicksearchquery" class="search-text" accesskey="4" /></div>
+            <input name="Search" class="search-btn" value="Sök" type="submit" />
+        </form>
+    </ui:define>
+
+    <!-- Part of official VGR layout. -->
+    <ui:define name="headerMenu">
+        <div id="nav" class="rounded">
+            <div class="rounded-bot-lft"></div>
+            <div class="rounded-bot-rt"></div>
+            <div class="rounded-bot-center">
+                <ul>
+                    <li class="sel first"><a href="http://vard.vgregion.se/sv/" title="Startsidan" target="_blank">Startsidan</a></li>
+                    <li><a href="http://vard.vgregion.se/sv/Fakta-och-rad/" title="Fakta och råd" target="_blank">Fakta och råd</a></li>
+                    <li><a href="http://vard.vgregion.se/sv/Teman1/" title="Teman" target="_blank">Teman</a></li>
+                    <li><a href="http://hittavard.vgregion.se/hriv/" title="Hitta rätt i vården" target="_blank">Hitta rätt i vården</a></li>
+                    <li><a href="http://vard.vgregion.se/sv/Regler-och-rattigheter/" title="Regler och rättigheter" target="_blank">Regler och rättigheter</a></li>
+                    <li><a href="http://vard.vgregion.se/sv/Mina-tjanster/" title="Mina tjänster" target="_blank">Mina tjänster</a></li>
+                </ul>
+            </div>
+        </div>
+    </ui:define>
+
+    <!-- Have a small element to adapt the layout when not having a logout button. -->
+    <ui:define name="templateContent">
+        <div id="tb_logout_replacement" />
+        <ui:insert name="content" />
+    </ui:define>
+
+    <!-- Part of official VGR layout. -->
+    <ui:define name="footerInformationOfficer">
+        <span>Informationsansvarig: <a href="mailto:vardredaktion@vgregion.se">Ann-Sofie Mellqvist.</a> Denna sida är en del av <a href="http://www.vgregion.se/" target="_blank">www.vgregion.se</a></span>
+    </ui:define>
+
+</ui:composition>
+
+</html>
