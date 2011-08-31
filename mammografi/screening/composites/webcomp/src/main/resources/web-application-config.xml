@@ -299,15 +299,6 @@ END TOGGLE SECTRA HERE 2/3-->
 		<property name="bookingFacade" ref="bookingFacade" />
 	</bean>
 
-	<bean id="loggingAdvice" class="se.vgregion.webbtidbok.logging.LoggingAdvice" />
-	<aop:config>
-		<aop:aspect ref="loggingAdvice">
-			<aop:pointcut id="loggingBookingServ"
-				expression="execution(* se.vgregion.webbtidbok.booking.elvis.BookingService.*(..))" />
-			<aop:around method="around" pointcut-ref="loggingBookingServ" />
-		</aop:aspect>
-	</aop:config>
-	
 	<!-- Creating the thread pool and the executor the the threads used to mail cancellation and switch location mails with	-->
     <bean id="mailQueue" class="java.util.concurrent.ThreadPoolExecutor">
         <constructor-arg index="0" type="int" value="1"/> <!-- Minimum threads -->

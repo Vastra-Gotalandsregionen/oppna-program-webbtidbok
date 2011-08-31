@@ -94,10 +94,10 @@
 							</wsdlFiles>
 							-->	
 							
-							<!-- PROD ELVIS, build locally, run with PROD WS --> 	 			
+							<!-- PROD ELVIS, build locally, run with PROD WS if <wsdlLocation> points to demo elvis WS you can run with test patients. --> 	 			
 							<wsdlDirectory>${basedir}/src/main/resources/wsdl/skarpaElvis/</wsdlDirectory>	
-							<!--  <wsdlLocation>http://demo.insieme.se/CentralbookingWS/CentralBookingWS.svc?wsdl</wsdlLocation> -->
-							<wsdlLocation>https://webtidbokws.vgregion.se/IC/CentralBooking/CentralBookingWS/CentralBookingWS.svc?wsdl</wsdlLocation>				
+							<wsdlLocation>http://demo.insieme.se/CentralbookingWS/CentralBookingWS.svc?wsdl</wsdlLocation>
+							<!--wsdlLocation>https://webtidbokws.vgregion.se/IC/CentralBooking/CentralBookingWS/CentralBookingWS.svc?wsdl</wsdlLocation-->				
 							<wsdlFiles>
 								<wsdlFile>CentralBookingWS_1.wsdl</wsdlFile>
 							</wsdlFiles>
@@ -341,7 +341,7 @@
 			<scope>provided</scope>
 		</dependency>
 
-		<dependency>
+		<!--dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjweaver</artifactId>
 			<version>1.6.8</version>
@@ -354,7 +354,7 @@
 			<version>1.6.8</version>
 			<type>jar</type>
 			<scope>compile</scope>
-		</dependency>
+		</dependency-->
 		<dependency>
 			<groupId>ognl</groupId>
 			<artifactId>ognl</artifactId>
