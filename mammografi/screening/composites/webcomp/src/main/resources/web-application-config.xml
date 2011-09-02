@@ -58,6 +58,7 @@
 			<list>
 				<ref bean="serviceDefinitionMammografiSU" />
 				<ref bean="serviceDefinitionMammografiNU" />
+				<ref bean="serviceDefinitionMammografiAVE" />
 				<ref bean="serviceDefinitionBukAorta" />
 				<!-- TOGGLE GYN SERVICE HERE 1/4 -->
 				<ref bean="serviceDefinitionGyn" />
@@ -78,11 +79,18 @@
 		<property name="messageBundleBase" value="messages/mammografi/MammografiMessagesNU" />
 		<property name="bookingService" ref="sectraBookingService" />
 	</bean>
+	
+	<bean id="serviceDefinitionMammografiAVE" class="se.vgregion.webbtidbok.servicedef.ServiceDefinition">
+		<property name="serviceID" value="MAMMO_AVE" />
+		<property name="messageBundleBase" value="messages/mammografi/MammografiMessagesAVE" />
+		<property name="bookingService" ref="sectraBookingService" />
+	</bean>
 
 	<!-- A service definition for bukaorta, using Elvis. -->
 	<bean id="serviceDefinitionBukAorta" class="se.vgregion.webbtidbok.servicedef.ServiceDefinition">
 		<property name="serviceID" value="BUKAORTA" />
-		<property name="messageBundleBase" value="messages/bukaorta/BukAortaMessages" />
+		<property name="messageBundleBase" value="messages/bukaorta/BukAortaMessages"/>
+		<!-- property name="messageBundleBase" value="messages/mammografi/MammografiMessagesAVE"/-->
 		<property name="bookingService" ref="elvisBookingService" />
 	</bean>
 	
@@ -123,6 +131,7 @@
 			<list>
 				<ref bean="lookupServiceSU" />
 				<ref bean="lookupServiceNU" />
+				<ref bean="lookupServiceAVE" />
 				<ref bean="elvisLookupService" />
 				
 				<!-- TOGGLE GYN SERVICE HERE 3/4 -->
@@ -142,6 +151,12 @@
 		class="se.vgregion.webbtidbok.servicedef.PasswordMatchLookupService">
 		<property name="serviceDefinition" ref="serviceDefinitionMammografiNU" />
 		<property name="regexp" value="^SEMUDD.*$" />
+	</bean>
+	
+	<bean id="lookupServiceAVE"
+		class="se.vgregion.webbtidbok.servicedef.PasswordMatchLookupService">
+		<property name="serviceDefinition" ref="serviceDefinitionMammografiAVE" />
+		<property name="regexp" value="^SEMAVE.*$" />
 	</bean>
 
 <!-- TOGGLE GYN SERVICE HERE 4/4 -->
@@ -197,7 +212,15 @@
 		</property>
 	</bean>	
  	
- 	<bean id="sectraNUClientFactory" class="se.vgregion.webbtidbok.ws.sectra.RISReschedule">
+
+	
+	<bean id="sectraRealService" factory-bean="sectraClientFactory" factory-method="getBasicHttpBindingIRisReschedule" />	
+	<bean id="sectraNURealService" factory-bean="sectraNUClientFactory" factory-method="getBasicHttpBindingIRisReschedule" />
+	<bean id="sectraAVERealService" factory-bean="sectraAVEClientFactory" factory-method="getBasicHttpBindingIRisReschedule" />	
+	
+	<bean id="sectraClientFactory" class="se.vgregion.webbtidbok.ws.sectra.RISReschedule"/>
+	
+	<bean id="sectraNUClientFactory" class="se.vgregion.webbtidbok.ws.sectra.RISReschedule">
 	    <constructor-arg type="java.net.URL" value="http://vgas0561.vgregion.se/RISReschedule/Service.svc?wsdl" />
 	    <constructor-arg type="javax.xml.namespace.QName">
 	        <bean class="javax.xml.namespace.QName">
@@ -206,10 +229,18 @@
 	        </bean>
 	    </constructor-arg>
 	</bean>
- 	
-	<bean id="sectraRealService" factory-bean="sectraClientFactory" factory-method="getBasicHttpBindingIRisReschedule" />	
-	<bean id="sectraNURealService" factory-bean="sectraNUClientFactory" factory-method="getBasicHttpBindingIRisReschedule" />	
-	<bean id="sectraClientFactory" class="se.vgregion.webbtidbok.ws.sectra.RISReschedule"/>
+	
+ 	<bean id="sectraAVEClientFactory" class="se.vgregion.webbtidbok.ws.sectra.RISReschedule">
+	    <constructor-arg type="java.net.URL" value="http://vgas0561.vgregion.se/RISReschedule/Service.svc?wsdl" />
+	    <constructor-arg type="javax.xml.namespace.QName">
+	        <bean class="javax.xml.namespace.QName">
+	            <constructor-arg index="0" value="http://tempuri.org/" />
+	            <constructor-arg index="1" value="RISReschedule" />
+	        </bean>
+	    </constructor-arg>
+	</bean>
+	
+	
 	<!-- bean id="sectraNUClientFactory" class="se.vgregion.webbtidbok.ws.sectraNU.RISReschedule"/-->
 <!-- END  TOGGLE SECTRA HERE  1/3 -->
 	
@@ -229,6 +260,7 @@
 			<map>
 				<entry key="MAMMO_SU" value-ref="sectraRealService" />	
 				<entry key="MAMMO_NU" value-ref="sectraNURealService"/>
+				<entry key="MAMMO_AVE" value-ref="sectraAVERealService"/>
 <!-- TOGGLE SECTRA HERE 2/3
 				<entry key="MAMMO_NU" value-ref="sectraMockServiceNU" />
 				<entry key="MAMMO_SU" value-ref="sectraMockServiceSU" />
