@@ -96,8 +96,8 @@
 							
 							<!-- PROD ELVIS, build locally, run with PROD WS if <wsdlLocation> points to demo elvis WS you can run with test patients. --> 	 			
 							<wsdlDirectory>${basedir}/src/main/resources/wsdl/skarpaElvis/</wsdlDirectory>	
-							<wsdlLocation>http://demo.insieme.se/CentralbookingWS/CentralBookingWS.svc?wsdl</wsdlLocation>
-							<!--wsdlLocation>https://webtidbokws.vgregion.se/IC/CentralBooking/CentralBookingWS/CentralBookingWS.svc?wsdl</wsdlLocation-->				
+							<!-- wsdlLocation>http://demo.insieme.se/CentralbookingWS/CentralBookingWS.svc?wsdl</wsdlLocation -->
+							<wsdlLocation>https://webtidbokws.vgregion.se/IC/CentralBooking/CentralBookingWS/CentralBookingWS.svc?wsdl</wsdlLocation>				
 							<wsdlFiles>
 								<wsdlFile>CentralBookingWS_1.wsdl</wsdlFile>
 							</wsdlFiles>
