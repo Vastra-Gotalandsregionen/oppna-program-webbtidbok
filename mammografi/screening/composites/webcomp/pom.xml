@@ -110,7 +110,8 @@
 						</configuration>
 					</execution>
 					
-				<!--  Generate Sectra classes -->
+				<!--  Generate Sectra classes
+				Same WS is used for MAMMO_SU (Sahlgrenska), MAMMO_NU (Nu Sjukvården) & AVESINA (privat) -->
 					
 					<execution>
 						<id>sectrawsgenSU</id>
@@ -137,7 +138,6 @@
 							<target>2.1</target>
 						</configuration>
 					</execution>
-
 					
 				</executions>
 			</plugin>
