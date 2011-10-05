@@ -132,12 +132,12 @@ a {
 }
 
 #top-nav {
-	background: url(../images/sprite.png) repeat-x 0 -280px;
+	/*background: url(../images/sprite.png) repeat-x 0 -280px;*/
 	height: 20px;
-	border-left: 1px solid #c2c2c2;
+	/*border-left: 1px solid #c2c2c2;
 	border-right: 1px solid #c2c2c2;
 	border-bottom: 1px solid #fff;
-	padding: 0.25em;
+	padding: 0.25em; */
 	overflow: hidden;
 }
 
@@ -164,10 +164,11 @@ a {
 }
 
 #logo {
-	background: url(../images/logo-bg-24-rebuilt.png) no-repeat 0 0;
-	margin: 0 0 0 -10px;
+	/*background: url(../images/logo-bg-24-rebuilt.png) no-repeat 0 0;*/
+	margin: 0 0 0 0px;
 	float: left;
 	position: relative;
+	margin-left: 17px;
 }
 
 #logo a {
