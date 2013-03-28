@@ -35,24 +35,9 @@
         <enabled>true</enabled>
       </releases>
     </repository>
-    
-    <!-- Internal VGR repo -->
-    <!-- <repository>
-         <id>central</id>
-         <name>vgr internal repo</name>
-         <url>http://portalutv.vgregion.se/nexus/content/groups/all</url>
-      </repository> -->
   </repositories>
   
   <!--NB! SCM config below assumes system name equals VGR subversion/googlecode project name! -->
-
-  <!-- Internal VGR subversion repo -->
-  <!--
-      <scm>
-	<developerConnection>scm:svn:svn://vgr-utv-win01.vgregion.se/vgr/webbtidbok/trunk</developerConnection>
-	<url>svn://vgr-utv-win01.vgregion.se/</url>
-      </scm>
-  -->
 
     <!-- Defaulting to open project configuration -->
     <scm>
