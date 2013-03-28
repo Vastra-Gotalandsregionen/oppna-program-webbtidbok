@@ -386,6 +386,7 @@ public class BookingTimeTest {
 	/**
 	 * @throws java.lang.Exception
 	 */
+	@Ignore
 	@Test
 	public void testBookingTimeFunkyDate() {
 		State credentials = new State();
@@ -439,6 +440,7 @@ public class BookingTimeTest {
 	/**
 	 * @throws java.lang.Exception
 	 */
+	@Ignore
 	@Test
 	public void testBookingTimeNoDate() {
 		State credentials = new State();
@@ -492,6 +494,7 @@ public class BookingTimeTest {
 	/**
 	 * @throws java.lang.Exception
 	 */
+	@Ignore
 	@Test
 	public void testBookingTimeStringDate() {
 		State credentials = new State();
@@ -546,6 +549,7 @@ public class BookingTimeTest {
 	/**
 	 * @throws java.lang.Exception
 	 */
+	@Ignore
 	@Test
 	public void testBookingTimeStringNullDate() {
 		State credentials = new State();
@@ -599,6 +603,7 @@ public class BookingTimeTest {
 	/**
 	 * @throws java.lang.Exception
 	 */
+	@Ignore
 	@Test
 	public void testBookingTimeInAccurateStringDate() {
 		State credentials = new State();

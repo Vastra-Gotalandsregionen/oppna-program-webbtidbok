@@ -62,6 +62,7 @@ public class BookingServiceTest {
 		state = new State();
 	}
 
+	@Ignore
 	@Test
 	public void testGetBooking() {
 		Booking booking = bookingService.getBooking(state);
@@ -73,6 +74,7 @@ public class BookingServiceTest {
 
 	}
 
+	@Ignore
 	@Test
 	public void testGetBookingPlace() {
 		List<Surgery> bookingPlace = bookingService.getBookingPlace(state);
@@ -82,6 +84,7 @@ public class BookingServiceTest {
 		assertEquals(2, bookingPlace.size());
 	}
 
+	@Ignore
 	@Test
 	public void testGetBookingTime() {
 		Calendar cal = Calendar.getInstance();

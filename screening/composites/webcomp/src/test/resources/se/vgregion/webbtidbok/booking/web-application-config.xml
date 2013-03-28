@@ -42,12 +42,12 @@
 		<property name="encrypter" ref="stringEncrypter" />
 
 		<property name="elvisWebService">
-			<bean factory-bean="elvisWebService" factory-method="getBasicHttpBindingICentralBookingWS" />
+			<bean class="se.vgregion.webbtidbok.booking.elvis.mock.ElvisServiceMock.java"/>
 		</property>
 
 	</bean>
 
-	<bean id="elvisWebService" class="se.vgregion.webbtidbok.ws.CentralBookingWS" />
+	<!-- bean id="elvisWebService" class="se.vgregion.webbtidbok.ws.CentralBookingWS" /-->
 
 	<bean id="stringEncrypter" class="se.vgregion.webbtidbok.crypto.StringEncrypter">
 		<property name="keyStoreFile" value="classpath:asd.pfx" />
