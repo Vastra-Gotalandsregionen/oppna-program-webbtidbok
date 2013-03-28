@@ -24,7 +24,6 @@
 		<artifactId>webbtidbok-screening</artifactId>
 		<version>1.0-SNAPSHOT</version>
 	</parent>
-	<groupId>se.vgregion.webbtidbok</groupId>
 	<artifactId>webbtidbok-screening-module-web</artifactId>
 	<packaging>war</packaging>
 	<name>${project.artifactId}</name>
