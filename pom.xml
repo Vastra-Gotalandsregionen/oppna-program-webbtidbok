@@ -10,7 +10,7 @@
   <parent>
     <groupId>se.vgregion.common</groupId>
     <artifactId>profile</artifactId>
-    <version>1.2</version>
+    <version>1.11</version>
   </parent>
 
   <groupId>se.vgregion.webbtidbok</groupId>
