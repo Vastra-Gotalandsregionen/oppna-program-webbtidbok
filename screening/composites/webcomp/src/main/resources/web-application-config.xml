@@ -43,12 +43,12 @@
 	The content of these files are referenced below in beans:
 	sectraMockServiceSU
 	sectraMockServiceNU
-	
+-->	
 
 	<import resource="testdata-su.xml" />
 	<import resource="testdata-nu.xml" />
 	<import resource="elvisMockConfig.xml" />
--->
+
 	
 	<!-- Scans for application @Components to deploy -->
 	<context:component-scan base-package="org.springframework.webflow.samples.booking" />
@@ -58,10 +58,10 @@
 			<list>
 				<ref bean="serviceDefinitionMammografiSU" />
 				<ref bean="serviceDefinitionMammografiNU" />
-				<ref bean="serviceDefinitionMammografiAVE" />
-				<ref bean="serviceDefinitionBukAorta" />
+				<!--ref bean="serviceDefinitionMammografiAVE" /-->
+				<!--ref bean="serviceDefinitionBukAorta" /-->
 				<!-- TOGGLE GYN SERVICE HERE 1/4 -->
-				<ref bean="serviceDefinitionGyn" />
+				<!--ref bean="serviceDefinitionGyn" /-->
 				
 			</list>
 		</property>
@@ -186,17 +186,18 @@
 		lazy-init="false">
 		<property name="encrypter" ref="stringEncrypter" />
 
-<!-- TOGGLE ELVIS WS MOCK and MOCK DATA from elvisMockData.xml	1/2	
+<!-- TOGGLE ELVIS WS MOCK and MOCK DATA from elvisMockData.xml	1/2	-->
 		<property name="elvisWebService" ref="elvisWebserviceMock" /> 
--->
-<!-- TOGGLE ELVIS WS to what's specified in the current POM 2/2-->
+
+<!-- TOGGLE ELVIS WS to what's specified in the current POM 2/2
 		<property name="elvisWebService">
 			<bean factory-bean="elvisWebService" factory-method="getBasicHttpBindingICentralBookingWS"/>
 		</property>
-
+-->
 	</bean>
 
-	<bean id="elvisWebService" class="se.vgregion.webbtidbok.ws.CentralBookingWS" />
+	<!-- bean id="elvisWebService" class="se.vgregion.webbtidbok.ws.CentralBookingWS" /-->
+	<bean id="elvisWebserviceMock" class="se.vgregion.webbtidbok.booking.elvis.mock.ElvisServiceMock"/>
 	
 	<!-- END Elvis facade -->
 
@@ -207,7 +208,7 @@
 	</bean>
 
 <!-- TOGGLE SECTRA HERE  1/3. ALSO change in POM.XML -->	
-	<bean id="sectraBookingServiceImpl" class="se.vgregion.webbtidbok.booking.sectra.SectraBookingServiceImpl" >
+	<!--bean id="sectraBookingServiceImpl" class="se.vgregion.webbtidbok.booking.sectra.SectraBookingServiceImpl" >
 		<property name="thePort"  ref="sectraRealService">	
 		</property>
 	</bean>	
@@ -238,7 +239,7 @@
 	            <constructor-arg index="1" value="RISReschedule" />
 	        </bean>
 	    </constructor-arg>
-	</bean>
+	</bean-->
 	
 	
 	<!-- bean id="sectraNUClientFactory" class="se.vgregion.webbtidbok.ws.sectraNU.RISReschedule"/-->
@@ -258,13 +259,13 @@
 
 		<property name="portMap">
 			<map>
+<!-- TOGGLE SECTRA HERE 2/3
 				<entry key="MAMMO_SU" value-ref="sectraRealService" />	
 				<entry key="MAMMO_NU" value-ref="sectraNURealService"/>
 				<entry key="MAMMO_AVE" value-ref="sectraAVERealService"/>
-<!-- TOGGLE SECTRA HERE 2/3
+END TOGGLE SECTRA HERE 2/3-->
 				<entry key="MAMMO_NU" value-ref="sectraMockServiceNU" />
 				<entry key="MAMMO_SU" value-ref="sectraMockServiceSU" />
-END TOGGLE SECTRA HERE 2/3-->
 			</map>
 		</property>
 		<!-- property name="portMapNU">
@@ -287,7 +288,7 @@ END TOGGLE SECTRA HERE 2/3-->
 		</property -->
 	</bean>
 
-<!-- SECTRA MOCK service beans 3/3 
+<!-- SECTRA MOCK service beans 3/3 -->
 	<bean id="sectraMockServiceNU" class="se.vgregion.webbtidbok.booking.sectra.SectraWSMock">
 		<property name="businessObjectHolder">
 			<bean
@@ -309,7 +310,7 @@ END TOGGLE SECTRA HERE 2/3-->
 			</bean>
 		</property>
 	</bean>
--->	
+	
 <!-- END SECTRA MOCK service beans 3/3 -->
 <!-- END sectra facade -->
 	
