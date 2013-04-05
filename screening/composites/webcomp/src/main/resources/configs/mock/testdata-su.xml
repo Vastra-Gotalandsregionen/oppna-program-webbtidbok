@@ -257,7 +257,7 @@
         <entry key="examNo" value="SEMSUS000001"/>
         <entry key="type" value="Mammografi"/>
         <entry key="code" value="MAM"/>
-        <entry key="patientId" value="19770707-0004"/>
+        <entry key="patientId" value="197707070004"/>
         <entry key="name" value="Sara Svensson"/>
         <entry key="time" value="SU_s1_time_2"/>
         <entry key="laterality" value="S"/>
@@ -277,7 +277,7 @@
         <entry key="examNo" value="SEMSUS000003"/>
         <entry key="type" value="Mammografi"/>
         <entry key="code" value="MAM"/>
-        <entry key="patientId" value="19770707-0046"/>
+        <entry key="patientId" value="197707070046"/>
         <entry key="name" value="Xi Li"/>
         <entry key="time" value="SU_s2_time_3"/>
         <entry key="laterality" value="S"/>
@@ -287,7 +287,7 @@
         <entry key="examNo" value="SEMSUS000004"/>
         <entry key="type" value="Mammografi"/>
         <entry key="code" value="MAM"/>
-        <entry key="patientId" value="19770707-0061"/>
+        <entry key="patientId" value="197707070061"/>
         <entry key="name" value="Olga Roos"/>
         <entry key="time" value="SU_s2_time_5"/>
         <entry key="laterality" value="S"/>
@@ -297,7 +297,7 @@
         <entry key="examNo" value="SEMSUS000005"/>
         <entry key="type" value="Mammografi"/>
         <entry key="code" value="MAM"/>
-        <entry key="patientId" value="19770707-K087"/>
+        <entry key="patientId" value="19770707K087"/>
         <entry key="name" value="Alga Rosen"/>
         <entry key="time" value="SU_s2_time_8"/>
         <entry key="laterality" value="S"/>
