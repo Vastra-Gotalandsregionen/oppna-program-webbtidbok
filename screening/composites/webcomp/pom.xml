@@ -29,7 +29,38 @@
 	<packaging>jar</packaging>
 	<name>${project.artifactId}</name>
 
+	<profiles>
+		<profile>
+			<id>production</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<conf.dir>prod</conf.dir>
+			</properties>
+		</profile>
+		<profile>
+			<id>test</id>
+			<properties>
+				<conf.dir>test</conf.dir>
+			</properties>
+		</profile>
+		<profile>
+			<id>mock</id>
+			<properties>
+				<conf.dir>mock</conf.dir>
+			</properties>
+		</profile>
+	</profiles>
+
 	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+
 		<plugins>
 			<plugin>
 				<!--
@@ -196,6 +227,11 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.webflow</groupId>
+			<artifactId>spring-faces</artifactId>
+			<version>${spring.webflow.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.webflow</groupId>
 			<artifactId>spring-webflow</artifactId>
 			<version>${spring.webflow.version}</version>
 		</dependency>
@@ -269,22 +305,22 @@
 			<scope>test</scope>
 		</dependency>
             
-		<!--        <dependency>-->
-		<!--            <groupId>ognl</groupId>-->
-		<!--            <artifactId>ognl</artifactId>-->
-		<!--            <version>2.7.3</version>-->
-		<!--            <scope>test</scope>-->
-		<!--        </dependency>-->
 		<dependency>
 			<groupId>net.java.dev.ajax4jsf</groupId>
 			<artifactId>ajax4jsf</artifactId>
 			<version>1.0.6</version>
 		</dependency>
 		<dependency>
-			<groupId>commons-el</groupId>
-			<artifactId>commons-el</artifactId>
-			<version>1.0</version>
-			<scope>compile</scope>
+			<groupId>javax.el</groupId>
+			<artifactId>el-api</artifactId>
+			<version>2.2</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.web</groupId>
+			<artifactId>el-impl</artifactId>
+			<version>2.2</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>commons-beanutils</groupId>
@@ -332,26 +368,6 @@
 			<artifactId>com.springsource.javax.portlet</artifactId>
 			<version>1.0.0</version>
 			<scope>provided</scope>
-		</dependency>
-
-		<!--dependency>
-			<groupId>org.aspectj</groupId>
-			<artifactId>aspectjweaver</artifactId>
-			<version>1.6.8</version>
-			<type>jar</type>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.aspectj</groupId>
-			<artifactId>aspectjrt</artifactId>
-			<version>1.6.8</version>
-			<type>jar</type>
-			<scope>compile</scope>
-		</dependency-->
-		<dependency>
-			<groupId>ognl</groupId>
-			<artifactId>ognl</artifactId>
-			<version>2.6.9</version>
 		</dependency>
 	</dependencies>
 
