@@ -23,6 +23,7 @@
 		<groupId>se.vgregion.webbtidbok</groupId>
 		<artifactId>webbtidbok-screening</artifactId>
 		<version>1.0-SNAPSHOT</version>
+		<relativePath>../../pom.xml</relativePath>
 	</parent>
 	<artifactId>webbtidbok-screening-module-web</artifactId>
 	<packaging>war</packaging>
