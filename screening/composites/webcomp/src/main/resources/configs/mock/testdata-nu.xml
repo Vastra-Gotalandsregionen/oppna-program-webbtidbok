@@ -233,7 +233,7 @@
         <entry key="examNo" value="SEMUDD000001"/>
         <entry key="type" value="Mammografi"/>
         <entry key="code" value="MAM"/>
-        <entry key="patientId" value="19660606-0009"/>
+        <entry key="patientId" value="196606060009"/>
         <entry key="name" value="Karin Karlsson"/>
         <entry key="time" value="NU_s1_time_2"/>
         <entry key="laterality" value="S"/>
@@ -243,7 +243,7 @@
         <entry key="examNo" value="SEMUDD000002"/>
         <entry key="type" value="Mammografi"/>
         <entry key="code" value="MAM"/>
-        <entry key="patientId" value="19660606-0025"/>
+        <entry key="patientId" value="196606060025"/>
         <entry key="name" value="Hildegaard Heimlich"/>
         <entry key="time" value="NU_s1_time_3"/>
         <entry key="laterality" value="S"/>
@@ -253,7 +253,7 @@
         <entry key="examNo" value="SEMUDD000003"/>
         <entry key="type" value="Mammografi"/>
         <entry key="code" value="MAM"/>
-        <entry key="patientId" value="19660606-0041"/>
+        <entry key="patientId" value="196606060041"/>
         <entry key="name" value="Brigitte Stroup"/>
         <entry key="time" value="NU_s2_time_3"/>
         <entry key="laterality" value="S"/>
@@ -263,7 +263,7 @@
         <entry key="examNo" value="SEMUDD000004"/>
         <entry key="type" value="Mammografi"/>
         <entry key="code" value="MAM"/>
-        <entry key="patientId" value="19660606-0066"/>
+        <entry key="patientId" value="196606060066"/>
         <entry key="name" value="Frida Farbo"/>
         <entry key="time" value="NU_s2_time_5"/>
         <entry key="laterality" value="S"/>

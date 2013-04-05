@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2010 Västra Götalandsregionen
+
+      This library is free software; you can redistribute it and/or modify
+      it under the terms of version 2.1 of the GNU Lesser General Public
+      License as published by the Free Software Foundation.
+
+      This library is distributed in the hope that it will be useful,
+      but WITHOUT ANY WARRANTY; without even the implied warranty of
+      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+      GNU Lesser General Public License for more details.
+
+      You should have received a copy of the GNU Lesser General Public
+      License along with this library; if not, write to the
+      Free Software Foundation, Inc., 59 Temple Place, Suite 330,
+      Boston, MA 02111-1307  USA
+
+
+-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:util="http://www.springframework.org/schema/util"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+           http://www.springframework.org/schema/util
+           http://www.springframework.org/schema/util/spring-util-3.2.xsd">
+
+
+	<!--
+		This config file lists ookup definitions to match PNR + password
+		to desired backend service.
+		Enabling of lookup definitions is done in each profile (mock/test/prod).
+		See services-config.xml in the corresponding config directory.
+	-->
+
+	<!-- The ones for Sectra check password to find service to use. -->
+	<bean id="lookupServiceSU"
+		class="se.vgregion.webbtidbok.servicedef.PasswordMatchLookupService">
+		<property name="serviceDefinition" ref="serviceDefinitionMammografiSU" />
+		<property name="regexp" value="^SEMSUS.*$" />
+	</bean>
+
+	<bean id="lookupServiceNU"
+		class="se.vgregion.webbtidbok.servicedef.PasswordMatchLookupService">
+		<property name="serviceDefinition" ref="serviceDefinitionMammografiNU" />
+		<property name="regexp" value="^SEMUDD.*$" />
+	</bean>
+	
+	<bean id="lookupServiceAVE"
+		class="se.vgregion.webbtidbok.servicedef.PasswordMatchLookupService">
+		<property name="serviceDefinition" ref="serviceDefinitionMammografiAVE" />
+		<property name="regexp" value="^SEMAVE.*$" />
+	</bean>
+
+	<!-- Elvis lookups need to login to check if definition applies. -->
+	<bean id="elvisLookupService" class="se.vgregion.webbtidbok.servicedef.LoginLookupService">
+		<property name="serviceDefinition" ref="serviceDefinitionBukAorta" />
+	</bean>
+
+	<bean id="elvisLookupServiceGyn" class="se.vgregion.webbtidbok.servicedef.LoginLookupService">
+		<property name="serviceDefinition" ref="serviceDefinitionGyn" />
+	</bean>
+
+</beans>
