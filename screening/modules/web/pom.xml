@@ -53,6 +53,23 @@
 					</dependency>
 				</dependencies>
 			</plugin>
+			<plugin>
+				<groupId>org.mortbay.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
+				<configuration>
+					<useTestClasspath>true</useTestClasspath>
+					<webAppConfig>
+						<allowDuplicateFragmentNames>true</allowDuplicateFragmentNames>
+						<contextPath>/webbtidbok-screening-module-web</contextPath>
+					</webAppConfig> 
+					<!-- systemProperties>
+						<systemProperty>
+							<name>propertyName</name>
+							<value>propertyValue</value>
+						</systemProperty>
+					</systemProperties-->
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 
