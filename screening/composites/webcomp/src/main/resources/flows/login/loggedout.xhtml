@@ -35,4 +35,9 @@
 	</ui:fragment>
 
 </ui:define>
+<ui:define name="trackingScript">
+		  ga('send', 'event', '#{analytics.eCategoryInteraction}', '#{analytics.eLoggedOut}',
+			  {'#{analytics.mLogout}': 1}
+		  );
+</ui:define>
 </ui:composition>

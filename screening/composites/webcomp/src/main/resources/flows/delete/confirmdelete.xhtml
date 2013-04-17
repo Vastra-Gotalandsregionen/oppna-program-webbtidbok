@@ -34,4 +34,9 @@
 			<br /><p><br /><h:outputText value="#{sectionMsg.confirmcancelationpageInformation}" escape="false"/> </p>
 </ui:fragment>
 </ui:define>
+<ui:define name="trackingScript">
+		  ga('send', 'event', '#{analytics.eCategoryInteraction}', '#{analytics.eCancellation}',
+			  {'#{analytics.mCancellation}': 1}
+		  );
+</ui:define>
 </ui:composition>

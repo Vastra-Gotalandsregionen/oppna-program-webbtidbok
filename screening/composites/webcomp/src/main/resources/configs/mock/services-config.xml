@@ -33,7 +33,8 @@
 
 	<!-- This config is for using MOCK services. -->
 
-
+	<!-- This is used to config analytics for local use -->
+	<import resource="analytics.xml" />
 	<!-- This creates the mock data to use. Mock both sectra and elvis. -->
 	<import resource="testdata-su.xml" />
 	<import resource="testdata-nu.xml" />

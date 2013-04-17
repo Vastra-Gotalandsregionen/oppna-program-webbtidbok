@@ -76,4 +76,14 @@
 
 </ui:fragment>
 </ui:define>
+<ui:define name="trackingScript">
+		  ga('set', {
+			  '#{analytics.dOrganization}': '#{sectionMsg.organizationName}',
+			  '#{analytics.dClinic}': '#{booking.surgery.surgeryName}',
+			  '#{analytics.dDaysBeforeBooking}': '#{booking.daysBeforeBooking}',
+			  '#{analytics.dPatientAge}': '#{booking.patientAge}',
+			  '#{analytics.dBookingDate}': '<h:outputText value="#{booking.startTime}"><f:convertDateTime type="both" pattern="yyyy/MM/dd" locale="sv" timeZone="Europe/Stockholm" /></h:outputText>',
+			  '#{analytics.dBookingTime}': '<h:outputText value="#{booking.startTime}"><f:convertDateTime type="both" pattern="HH:mm" locale="sv" timeZone="Europe/Stockholm" /></h:outputText>'
+		  });
+</ui:define>
 </ui:composition>
