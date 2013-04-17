@@ -20,6 +20,8 @@
 package se.vgregion.webbtidbok.domain;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -67,6 +69,7 @@ public abstract class Booking implements Serializable {
 		return patientId;
 	}
 
+	
 	public void setPatientId(String patientId) {
 		this.patientId = patientId;
 	}
@@ -121,5 +124,57 @@ public abstract class Booking implements Serializable {
 	public void setSwitchToSurgery(Surgery switchToSurgery) {
 		this.switchToSurgery = switchToSurgery;
 	}
-
+	/**
+	 * Only used for google analytics
+	 * 
+	 * Calculates the patient's age in year in relation to the server's local time.
+	 * 
+	 * @return the patient's age
+	 */
+	public int getPatientAge(){
+		int age;
+		try{
+			Calendar today = Calendar.getInstance();
+			Calendar dateOfBirth = Calendar.getInstance();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+			dateOfBirth.setTime(sdf.parse(this.getPatientId().substring(0, 8)));
+			age = today.get(Calendar.YEAR) - dateOfBirth.get(Calendar.YEAR);
+			int monthDiff = today.get(Calendar.MONTH) - dateOfBirth.get(Calendar.MONTH);
+			if (monthDiff < 0 || (monthDiff == 0 && today.get(Calendar.DAY_OF_MONTH) < dateOfBirth.get(Calendar.DAY_OF_MONTH))){
+				age--;
+			}
+		} catch (Exception e){
+			return 0;
+		}
+		return age;
+	}
+	/**
+	 * Only used for google analytics
+	 * 
+	 * Calculates the number of days until the following booking in relation to the server's
+	 * local time. Days are calculated disregarding the time of day.
+	 * 
+	 * @return the difference between the booking date and todays date
+	 */
+	public int getDaysBeforeBooking(){
+		if(this.getStartTime() == null)
+			return Integer.MIN_VALUE;
+		int dayInMillis = 24*60*60*1000;
+		Calendar currTime = Calendar.getInstance();
+		Calendar startTime = Calendar.getInstance();
+		startTime.setTime(this.getStartTime());
+		
+		int startDays = (int) (clearTimePart(startTime).getTimeInMillis() / dayInMillis);
+		int currDays = (int) (clearTimePart(currTime).getTimeInMillis() / dayInMillis);	
+		
+		return startDays - currDays;
+	}
+	private Calendar clearTimePart(Calendar date){
+		date.set(Calendar.HOUR_OF_DAY, 0);
+		date.set(Calendar.MINUTE, 0);
+		date.set(Calendar.SECOND, 0);
+		date.set(Calendar.MILLISECOND, 0);
+		
+		return date;
+	}
 }

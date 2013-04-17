@@ -41,4 +41,10 @@
 	<h:outputText value="#{sectionMsg.confirmswitchlocationpagBody2}" escape="false" />
 </ui:fragment>
 </ui:define>
+<ui:define name="trackingScript">
+		  ga('send', 'event', '#{analytics.eCategoryInteraction}', '#{analytics.eSwitchOrg}', '#{booking.switchToSurgery.surgeryName}',
+		  	  {'#{analytics.mChangeOfOrg}': 1}
+		  );
+		  ga('set', '#{analytics.dOrgChangedTo}', '#{booking.switchToSurgery.surgeryName}');
+</ui:define>
 </ui:composition>

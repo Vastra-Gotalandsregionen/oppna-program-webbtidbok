@@ -44,4 +44,11 @@
 
 </ui:fragment>
 </ui:define>
+<ui:define name="trackingScript">
+		  var newTime = '<h:outputText value="#{booking.startTime}"><f:convertDateTime type="both" pattern="yyyy/MM/dd HH:mm" locale="sv" timeZone="Europe/Stockholm" /></h:outputText>';
+		  ga('send', 'event', '#{analytics.eCategoryInteraction}', '#{analytics.eReschedule}', newTime,
+	  		  {'#{analytics.mReschedule}': 1}
+		  );
+		  ga('set', '#{analytics.dClinicChangedTo}', '#{booking.surgery.surgeryName}');
+</ui:define>
 </ui:composition>

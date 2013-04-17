@@ -33,6 +33,8 @@
 
 	<!-- This config is for using PRODUCTION services. -->
 
+	<!-- This is used to config analytics for local use -->
+	<import resource="analytics.xml" />
 
 	<!-- Service definitions -->
 	<util:list id="serviceDefinitions">
