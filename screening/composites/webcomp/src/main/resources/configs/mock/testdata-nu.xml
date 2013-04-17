@@ -85,37 +85,37 @@
     <util:map id="NU_s1_time_1">
         <entry key="id" value="NU_s1_time_1"/>
         <entry key="section" value="NU_section_1"/>
-        <entry key="time" value="2010-09-01T10:00:00+02:00"/>
+        <entry key="time" value="2013-05-01T10:00:00+02:00"/>
         <entry key="length" value="15"/>
     </util:map>
     <util:map id="NU_s1_time_2">
         <entry key="id" value="NU_s1_time_2"/>
         <entry key="section" value="NU_section_1"/>
-        <entry key="time" value="2010-09-01T10:15:00+02:00"/>
+        <entry key="time" value="2013-05-01T10:15:00+02:00"/>
         <entry key="length" value="15"/>
     </util:map>
     <util:map id="NU_s1_time_3">
         <entry key="id" value="NU_s1_time_3"/>
         <entry key="section" value="NU_section_1"/>
-        <entry key="time" value="2010-09-01T10:30:00+02:00"/>
+        <entry key="time" value="2013-05-01T10:30:00+02:00"/>
         <entry key="length" value="15"/>
     </util:map>
     <util:map id="NU_s1_time_4">
         <entry key="id" value="NU_s1_time_4"/>
         <entry key="section" value="NU_section_1"/>
-        <entry key="time" value="2010-09-01T10:45:00+02:00"/>
+        <entry key="time" value="2013-05-01T10:45:00+02:00"/>
         <entry key="length" value="15"/>
     </util:map>
     <util:map id="NU_s1_time_5">
         <entry key="id" value="NU_s1_time_5"/>
         <entry key="section" value="NU_section_1"/>
-        <entry key="time" value="2010-09-15T14:00:00+02:00"/>
+        <entry key="time" value="2013-05-15T14:00:00+02:00"/>
         <entry key="length" value="15"/>
     </util:map>
     <util:map id="NU_s1_time_6">
         <entry key="id" value="NU_s1_time_6"/>
         <entry key="section" value="NU_section_1"/>
-        <entry key="time" value="2010-09-15T14:15:00+02:00"/>
+        <entry key="time" value="2013-05-15T14:15:00+02:00"/>
         <entry key="length" value="15"/>
     </util:map>
     <util:map id="NU_s1_time_7">
@@ -134,91 +134,91 @@
     <util:map id="NU_s2_time_1">
         <entry key="id" value="NU_s2_time_1"/>
         <entry key="section" value="NU_section_2"/>
-        <entry key="time" value="2010-09-02T11:00:00+02:00"/>
+        <entry key="time" value="2013-05-02T11:00:00+02:00"/>
         <entry key="length" value="15"/>
     </util:map>
     <util:map id="NU_s2_time_2">
         <entry key="id" value="NU_s2_time_2"/>
         <entry key="section" value="NU_section_2"/>
-        <entry key="time" value="2010-09-02T11:15:00+02:00"/>
+        <entry key="time" value="2013-05-02T11:15:00+02:00"/>
         <entry key="length" value="15"/>
     </util:map>
     <util:map id="NU_s2_time_3">
         <entry key="id" value="NU_s2_time_3"/>
         <entry key="section" value="NU_section_2"/>
-        <entry key="time" value="2010-09-02T13:00:00+02:00"/>
+        <entry key="time" value="2013-05-02T13:00:00+02:00"/>
         <entry key="length" value="15"/>
     </util:map>
     <util:map id="NU_s2_time_4">
         <entry key="id" value="NU_s2_time_4"/>
         <entry key="section" value="NU_section_2"/>
-        <entry key="time" value="2010-09-02T13:15:00+02:00"/>
+        <entry key="time" value="2013-05-02T13:15:00+02:00"/>
         <entry key="length" value="15"/>
     </util:map>
     <util:map id="NU_s2_time_5">
         <entry key="id" value="NU_s2_time_5"/>
         <entry key="section" value="NU_section_2"/>
-        <entry key="time" value="2010-09-15T14:00:00+02:00"/>
+        <entry key="time" value="2013-05-15T14:00:00+02:00"/>
         <entry key="length" value="15"/>
     </util:map>
     <util:map id="NU_s2_time_6">
         <entry key="id" value="NU_s2_time_6"/>
         <entry key="section" value="NU_section_2"/>
-        <entry key="time" value="2010-09-15T14:15:00+02:00"/>
+        <entry key="time" value="2013-05-15T14:15:00+02:00"/>
         <entry key="length" value="15"/>
     </util:map>
     <util:map id="NU_s2_time_7">
         <entry key="id" value="NU_s2_time_7"/>
         <entry key="section" value="NU_section_2"/>
-        <entry key="time" value="2010-09-30T11:00:00+02:00"/>
+        <entry key="time" value="2013-05-30T11:00:00+02:00"/>
         <entry key="length" value="15"/>
     </util:map>
     <util:map id="NU_s2_time_8">
         <entry key="id" value="NU_s2_time_8"/>
         <entry key="section" value="NU_section_2"/>
-        <entry key="time" value="2010-09-15T11:00:00+02:00"/>
+        <entry key="time" value="2013-05-15T11:00:00+02:00"/>
         <entry key="length" value="15"/>
     </util:map>
 	<util:map id="NU_s2_time_9">
         <entry key="id" value="NU_s2_time_9"/>
         <entry key="section" value="NU_section_2"/>
-        <entry key="time" value="2010-09-20T11:00:00+02:00"/>
+        <entry key="time" value="2013-05-20T11:00:00+02:00"/>
         <entry key="length" value="15"/>
     </util:map>
     <util:map id="NU_s2_time_10">
         <entry key="id" value="NU_s2_time_10"/>
         <entry key="section" value="NU_section_2"/>
-        <entry key="time" value="2010-09-21T11:00:00+02:00"/>
+        <entry key="time" value="2013-05-21T11:00:00+02:00"/>
         <entry key="length" value="15"/>
     </util:map>
     <util:map id="NU_s2_time_11">
         <entry key="id" value="NU_s2_time_11"/>
         <entry key="section" value="NU_section_2"/>
-        <entry key="time" value="2010-09-21T12:00:00+02:00"/>
+        <entry key="time" value="2013-05-21T12:00:00+02:00"/>
         <entry key="length" value="15"/>
     </util:map>
     <util:map id="NU_s2_time_12">
         <entry key="id" value="NU_s2_time_12"/>
         <entry key="section" value="NU_section_2"/>
-        <entry key="time" value="2010-09-21T13:00:00+02:00"/>
+        <entry key="time" value="2013-05-21T13:00:00+02:00"/>
         <entry key="length" value="15"/>
     </util:map>
     <util:map id="NU_s2_time_13">
         <entry key="id" value="NU_s2_time_13"/>
         <entry key="section" value="NU_section_2"/>
-        <entry key="time" value="2010-09-30T09:00:00+02:00"/>
+        <entry key="time" value="2013-05-30T09:00:00+02:00"/>
         <entry key="length" value="15"/>
     </util:map>
     <util:map id="NU_s2_time_14">
         <entry key="id" value="NU_s2_time_14"/>
         <entry key="section" value="NU_section_2"/>
-        <entry key="time" value="2010-09-30T10:00:00+02:00"/>
+        <entry key="time" value="2013-05-30T10:00:00+02:00"/>
         <entry key="length" value="15"/>
     </util:map>
     <util:map id="NU_s2_time_15">
         <entry key="id" value="NU_s2_time_15"/>
         <entry key="section" value="NU_section_2"/>
-        <entry key="time" value="2010-09-30T11:00:00+02:00"/>
+        <entry key="time" value="2013-05-30T11:00:00+02:00"/>
         <entry key="length" value="15"/>
     </util:map>
 
@@ -263,7 +263,7 @@
         <entry key="examNo" value="SEMUDD000004"/>
         <entry key="type" value="Mammografi"/>
         <entry key="code" value="MAM"/>
-        <entry key="patientId" value="196606060066"/>
+        <entry key="patientId" value="198806060066"/>
         <entry key="name" value="Frida Farbo"/>
         <entry key="time" value="NU_s2_time_5"/>
         <entry key="laterality" value="S"/>
