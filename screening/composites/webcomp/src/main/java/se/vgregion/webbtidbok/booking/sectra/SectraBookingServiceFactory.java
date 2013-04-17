@@ -59,6 +59,8 @@ public class SectraBookingServiceFactory {
 			tmpMap.put("MAMMO_SU", tmp);
 			tmp = (se.vgregion.webbtidbok.ws.sectra.IRisReschedule) portMap.get("MAMMO_NU");
 			tmpMap.put("MAMMO_NU", tmp);
+			tmp = (se.vgregion.webbtidbok.ws.sectra.IRisReschedule) portMap.get("MAMMO_AVE");
+			tmpMap.put("MAMMO_AVE", tmp);
 		}
 
 		// this.portMap = portMap;
