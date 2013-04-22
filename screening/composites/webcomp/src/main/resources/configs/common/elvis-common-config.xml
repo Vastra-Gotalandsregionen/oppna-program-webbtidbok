@@ -48,7 +48,7 @@
 	<bean id="helper" class="se.vgregion.webbtidbok.booking.elvis.WebServiceHelper"
 		lazy-init="false">
 		<property name="encrypter" ref="stringEncrypter" />
-		<property name="elvisWebService" ref="elvisWebservice" /> <!-- Env specific -->
+		<property name="elvisWebService" ref="elvisWebService" /> <!-- Env specific -->
 	</bean>
 	
 	<!-- Used for sending a Crypted Key to communicate with the Elvis WebService.

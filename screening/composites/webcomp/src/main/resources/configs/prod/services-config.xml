@@ -83,12 +83,16 @@
 	<bean id="sectraSUClientFactory" class="se.vgregion.webbtidbok.ws.sectra.RISReschedule"/>
 	
 	<bean id="sectraNUClientFactory" class="se.vgregion.webbtidbok.ws.sectra.RISReschedule">
-	    <constructor-arg type="java.net.URL" value="http://vgas0561.vgregion.se/RISReschedule/Service.svc?wsdl" />
+		<constructor-arg type="java.net.URL" value="http://vgas0561.vgregion.se/RISReschedule/Service.svc?wsdl" />
+		<constructor-arg type="javax.xml.namespace.QName">
+		    <bean class="javax.xml.namespace.QName">
+		        <constructor-arg index="0" value="http://tempuri.org/" />
+		        <constructor-arg index="1" value="RISReschedule" />
+		    </bean>
+		</constructor-arg>
 	</bean>
 	
- 	<bean id="sectraAVEClientFactory" class="se.vgregion.webbtidbok.ws.sectra.RISReschedule">
-	    <constructor-arg type="java.net.URL" value="http://vgas0561.vgregion.se/RISReschedule/Service.svc?wsdl" />
-	</bean>
+ 	<bean id="sectraAVEClientFactory" class="se.vgregion.webbtidbok.ws.sectra.RISReschedule" />
 
 	<!-- End of Sectra specific beans -->
 
