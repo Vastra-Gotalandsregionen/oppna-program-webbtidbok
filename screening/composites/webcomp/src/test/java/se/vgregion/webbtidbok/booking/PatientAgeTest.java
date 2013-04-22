@@ -33,43 +33,96 @@ import se.vgregion.webbtidbok.domain.sectra.BookingSectra;
 
 public class PatientAgeTest {
 	
-	private static Calendar today, todayMinusThirtyYears;
+	private static Calendar today;
+	private static Calendar todayMinusThirtyYears, tmpDate; 
+	private static String todayMinusThirtyYearsL, todayMinusThirtyYearsLD, 
+								todayMinusThirtyYearsS, todayMinusThirtyYearsSD;
+	private static String[] personalNumbers = {todayMinusThirtyYearsL, todayMinusThirtyYearsLD,
+										todayMinusThirtyYearsS, todayMinusThirtyYearsSD};
 	private static final int THIRTY = 30;
-	private static final SimpleDateFormat pnrFormat = new SimpleDateFormat("yyyyMMdd-0101");
+	private static final SimpleDateFormat pnrFormatLong = new SimpleDateFormat("yyyyMMdd0101");
+	private static final SimpleDateFormat pnrFormatLongDash = new SimpleDateFormat("yyyyMMdd-0101");
+	private static final SimpleDateFormat pnrFormatShort = new SimpleDateFormat("yyMMdd0101");
+	private static final SimpleDateFormat pnrFormatShortDash = new SimpleDateFormat("yyMMdd-0101");
+	private static final SimpleDateFormat[] formats = {pnrFormatLong, pnrFormatLongDash,
+														pnrFormatShort, pnrFormatShortDash};
 	private BookingSectra bookingSectra;
 	private BookingElvis bookingElvis;
 
 	@Before
 	public void setUp() throws Exception {
 		today = Calendar.getInstance();
+		tmpDate = ((Calendar) today.clone());
 		todayMinusThirtyYears = ((Calendar) today.clone());
-		todayMinusThirtyYears.roll(Calendar.YEAR, -THIRTY);
-		
-		String pnr = pnrFormat.format(todayMinusThirtyYears.getTime());
-		
+		todayMinusThirtyYears.roll(Calendar.YEAR, -THIRTY);			
+
 		bookingSectra = new BookingSectra();
-		bookingSectra.setPatientId(pnr);
+		bookingSectra.setPatientId(personalNumbers[0]);
 		
 		bookingElvis = new BookingElvis();
-		bookingElvis.setPatientId(pnr);
+		bookingElvis.setPatientId(personalNumbers[0]);
+		
+		this.setupFormats();
 	}
 
+	private void setupFormats(){
+		for(int i=0;i<personalNumbers.length && personalNumbers.length == formats.length;i++){
+			personalNumbers[i] = formats[i].format(todayMinusThirtyYears.getTime());
+		}
+	}
+	
+	//Makes test with all possible date formats (see formats)
+	private void testAllFormats(int expected, Booking booking){
+		for(String personalNumber : personalNumbers){
+			booking.setPatientId(personalNumber);
+			assertEquals(expected, booking.getPatientAge());
+		}
+	}
 	
 	public void testAge(Booking booking) {
-		assertEquals(THIRTY, booking.getPatientAge());
+		this.testAllFormats(THIRTY, booking);
 		
 		//Make sure age is unchanged one day back
 		todayMinusThirtyYears.roll(Calendar.DAY_OF_YEAR, -1);
-		this.setPatientAge(booking, todayMinusThirtyYears);
-		assertEquals(THIRTY, booking.getPatientAge());
+		this.setupFormats();
+		this.testAllFormats(THIRTY, booking);
 		//Make sure age has decreased one day ahead
 		todayMinusThirtyYears.roll(Calendar.DAY_OF_YEAR, 2);
-		this.setPatientAge(booking, todayMinusThirtyYears);
-		assertEquals(THIRTY-1, booking.getPatientAge());	
+		this.setupFormats();
+		this.testAllFormats(THIRTY-1, booking);	
 	}
 	
-	public void testNullAge(Booking booking) {
+	private void testMalformedPNr(Booking booking){
+		booking.setPatientId("19801010-1234FF");
 		assertEquals(0, booking.getPatientAge());
+	}
+	
+	private void testNullAge(Booking booking) {
+		assertEquals(0, booking.getPatientAge());
+	}
+	
+	private void testTwoDigitYear(Booking booking){
+		//The date should go back 99 years from now
+		tmpDate.add(Calendar.YEAR, -99);
+		booking.setPatientId(pnrFormatShort.format(tmpDate.getTime()));
+		assertEquals(booking.getPatientAge(), 99);
+		
+		//Resets at 100
+		tmpDate.add(Calendar.YEAR, -1);
+		booking.setPatientId(pnrFormatShort.format(tmpDate.getTime()));
+		assertEquals(booking.getPatientAge(), 0);
+		
+		//Reset
+		tmpDate.add(Calendar.YEAR, 100);
+	}
+	
+	@Test
+	public void testTwoDigitYearSectra(){
+		this.testTwoDigitYear(bookingSectra);
+	}
+	@Test
+	public void testTwoDigitYearElvis(){
+		this.testTwoDigitYear(bookingElvis);
 	}
 	
 	@Test
@@ -92,8 +145,13 @@ public class PatientAgeTest {
 		this.testNullAge(new BookingElvis());
 	}
 	
-	private void setPatientAge(Booking booking, Calendar cal){
-		booking.setPatientId(pnrFormat.format(cal.getTime()));
+	@Test
+	public void testMalformedPNrSectra(){
+		this.testMalformedPNr(bookingSectra);
+	}
+	@Test
+	public void testMalformedPNrElvis(){
+		this.testMalformedPNr(bookingElvis);
 	}
 
 }
