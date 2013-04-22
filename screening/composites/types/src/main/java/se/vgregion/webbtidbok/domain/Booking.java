@@ -20,6 +20,8 @@
 package se.vgregion.webbtidbok.domain;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -124,6 +126,33 @@ public abstract class Booking implements Serializable {
 	public void setSwitchToSurgery(Surgery switchToSurgery) {
 		this.switchToSurgery = switchToSurgery;
 	}
+	
+	/**
+	 * Used to parse out the personal number to the correct date representation
+	 * for use when calculating and formatting the patient id.
+	 * @return set to the patients birth date
+	 * @throws ParseException
+	 */
+	public Date getPersonalNrAsDate() throws ParseException{
+		Calendar dateOfBirth = Calendar.getInstance();
+		SimpleDateFormat pnrFormat;
+		if(this.getPatientId().matches("[0-9]{8}[+-]?[a-zA-Z0-9][0-9]{3}")){
+			pnrFormat = new SimpleDateFormat("yyyyMMdd");
+			dateOfBirth.setTime(pnrFormat.parse(this.getPatientId().substring(0, 8)));
+		}
+		else if(this.getPatientId().matches("[0-9]{6}[+-]?[a-zA-Z0-9][0-9]{3}")){
+			pnrFormat = new SimpleDateFormat("yyMMdd");
+			Calendar hundredYearsFromNow = Calendar.getInstance();
+			hundredYearsFromNow.add(Calendar.YEAR, -100);
+			pnrFormat.set2DigitYearStart(hundredYearsFromNow.getTime());
+			dateOfBirth.setTime(pnrFormat.parse(this.getPatientId().substring(0, 6)));
+		}
+		else{
+			throw new ParseException("Could not parse " + this.getPatientId() + " as a personal number", 0);
+		}
+
+		return dateOfBirth.getTime();
+	}
 	/**
 	 * Only used for google analytics
 	 * 
@@ -136,8 +165,8 @@ public abstract class Booking implements Serializable {
 		try{
 			Calendar today = Calendar.getInstance();
 			Calendar dateOfBirth = Calendar.getInstance();
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-			dateOfBirth.setTime(sdf.parse(this.getPatientId().substring(0, 8)));
+			dateOfBirth.setTime(this.getPersonalNrAsDate());
+			
 			age = today.get(Calendar.YEAR) - dateOfBirth.get(Calendar.YEAR);
 			int monthDiff = today.get(Calendar.MONTH) - dateOfBirth.get(Calendar.MONTH);
 			if (monthDiff < 0 || (monthDiff == 0 && today.get(Calendar.DAY_OF_MONTH) < dateOfBirth.get(Calendar.DAY_OF_MONTH))){
