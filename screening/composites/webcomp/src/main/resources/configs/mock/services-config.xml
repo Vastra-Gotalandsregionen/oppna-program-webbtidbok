@@ -59,7 +59,7 @@
 
 
 	<!-- Elvis specific beans -->
-	<bean id="elvisWebservice" class="se.vgregion.webbtidbok.booking.elvis.mock.ElvisServiceMock"/>
+	<bean id="elvisWebService" class="se.vgregion.webbtidbok.booking.elvis.mock.ElvisServiceMock"/>
 	<!-- End of Elvis specific beans -->
 
 
