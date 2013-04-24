@@ -166,11 +166,11 @@ public class CalendarHolder implements Serializable {
 
     private DayItem createDayItem(int day, boolean hasAvailableTimes, boolean isHistoric) {
         DayState color = getCellState(hasAvailableTimes, isHistoric);
-        return new DayItem(Integer.toString(day), color, hasAvailableTimes, true);  
+        return new DayItem(Integer.toString(day), color, !isHistoric && hasAvailableTimes, true);  
     }
     
     private boolean isToday(Calendar today, Calendar month, int day) {
-        return isSameMonth(today, month) && today.get(Calendar.DAY_OF_MONTH) == day;
+        return isSameMonth(today, month) && today.get(Calendar.DAY_OF_MONTH) > day;
     }
     
     private boolean isSameMonth(Calendar date1, Calendar date2) {
