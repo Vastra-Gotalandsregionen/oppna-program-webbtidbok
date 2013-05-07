@@ -46,6 +46,7 @@
 		<property name="serviceID" value="MAMMO_SU" />
 		<property name="messageBundleBase" value="messages/mammografi/MammografiMessagesSU" />
 		<property name="bookingService" ref="sectraBookingService" />
+		<property name="includeClinics" ref="suIncludeClinics" />
 	</bean>
 
 	<bean id="serviceDefinitionMammografiNU" class="se.vgregion.webbtidbok.servicedef.ServiceDefinition">
@@ -58,6 +59,7 @@
 		<property name="serviceID" value="MAMMO_AVE" />
 		<property name="messageBundleBase" value="messages/mammografi/MammografiMessagesAVE" />
 		<property name="bookingService" ref="sectraBookingService" />
+		<property name="excludeClinics" ref="aveExcludeClinics" />
 	</bean>
 
 	<!-- A service definition for bukaorta, using Elvis. -->

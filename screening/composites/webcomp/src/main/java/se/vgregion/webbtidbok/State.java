@@ -44,6 +44,9 @@ public class State implements Serializable {
 	private String messageBundle = "";
 	private String service = null;
 	private String mobileNumber = null;
+	//Passed on from ServiceDefinition
+	private String[] includeClinics, excludeClinics;
+
 	/**
 	 * elvisExaminationType is used to determine the type of examination since Elvis may cater for time books for several
 	 * different types of examinations.
@@ -81,6 +84,22 @@ public class State implements Serializable {
 
 	public void setFirst(boolean first) {
 		this.isFirst = first;
+	}
+
+	public String[] getIncludeClinics() {
+		return includeClinics;
+	}
+	
+	public void setIncludeClinics(String[] includeClinics) {
+		this.includeClinics = includeClinics;
+	}
+	
+	public String[] getExcludeClinics() {
+		return excludeClinics;
+	}
+	
+	public void setExcludeClinics(String[] excludeClinics) {
+		this.excludeClinics = excludeClinics;
 	}
 
 	public boolean isFirst() {

@@ -59,6 +59,9 @@ public class GUIUtilities {
 	 * This is called from the flow in order to populate alternative locations available for the current user to choose from when
 	 * updating or changing his/hers appointment by switching to another location within the same area of operations.
 	 * 
+	 * The locations available are filtered by passing on the includes and excludes IDs which are set by the 
+	 * current state mapped to corresponding service definition. 
+	 * 
 	 * @param booking {@link Booking} 
 	 * @param state {@link State
 	 * @return holder {@link LocationHolder} contains a list of available surgeries
@@ -67,6 +70,9 @@ public class GUIUtilities {
 		LocationHolder holder = new LocationHolder();
 		holder.setAvailableLocations(bookingFacade.getAvailableSurgeries(state));
 
+		holder.setExcludeClinics(state.getExcludeClinics());
+		holder.setIncludeClinics(state.getIncludeClinics());
+		
 		if (booking != null && booking.getSurgery() != null && booking.getSurgery().getSurgeryId() != null) {
 			holder.setLocationId(booking.getSurgery().getSurgeryId());
 		}

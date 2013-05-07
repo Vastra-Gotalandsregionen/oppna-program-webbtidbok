@@ -26,8 +26,32 @@ public class ServiceDefinition {
     private String serviceID;
     private String messageBundleBase;
     private BookingFacade bookingService;
+    /**
+     * Stores surgery IDs which should be either included or excluded from the places selection
+     * includeClinics = all surgeries with IDs not matching any IDs in includeClinics will be removed
+     * 		empty array equals include all.
+     * excludeClinics = all surgeries with IDs matching any ID in excludeClinics will be removed
+     */
+    private String[] includeClinics = {}, excludeClinics = {};
+    
 
-    public String getServiceID() {
+    public String[] getIncludeClinics() {
+		return includeClinics;
+	}
+
+	public void setIncludeClinics(String[] includeClinics) {
+		this.includeClinics = includeClinics;
+	}
+
+	public String[] getExcludeClinics() {
+		return excludeClinics;
+	}
+
+	public void setExcludeClinics(String[] excludeClinics) {
+		this.excludeClinics = excludeClinics;
+	}
+
+	public String getServiceID() {
         return serviceID;
     }
 

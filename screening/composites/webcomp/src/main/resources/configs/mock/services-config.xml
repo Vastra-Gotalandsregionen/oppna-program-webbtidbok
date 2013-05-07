@@ -70,8 +70,28 @@
 		<entry key="MAMMO_SU" value-ref="sectraMockServiceSU" />
 		<entry key="MAMMO_AVE" value-ref="sectraMockServiceSU" />
 	</util:map>
+	
+	<util:list id="suIncludeClinics">
+		<value>SU_section_1</value>
+		<value>SU_section_2</value>
+	</util:list>
 
-
+	<util:list id="aveExcludeClinics">
+		<value>SU_section_1</value>
+		<value>SU_section_2</value>
+	</util:list>
+	
+<!-- 	<bean id="sectraSUService" factory-bean="sectraSUClientFactory" factory-method="getBasicHttpBindingIRisReschedule" />
+	<bean id="sectraSUClientFactory" class="se.vgregion.webbtidbok.ws.sectra.RISReschedule">
+		<constructor-arg type="java.net.URL" value="http://localhost:8088/mockBasicHttpBinding_IRisReschedule?WSDL" />
+		<constructor-arg type="javax.xml.namespace.QName">
+		    <bean class="javax.xml.namespace.QName">
+		        <constructor-arg index="0" value="http://tempuri.org/" />
+		        <constructor-arg index="1" value="RISReschedule" />
+		    </bean>
+		</constructor-arg>
+	</bean>
+ -->
 	<bean id="sectraMockServiceNU" class="se.vgregion.webbtidbok.booking.sectra.SectraWSMock">
 		<property name="businessObjectHolder">
 			<bean

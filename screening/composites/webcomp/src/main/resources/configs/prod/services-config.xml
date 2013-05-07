@@ -76,6 +76,18 @@
 		<entry key="MAMMO_AVE" value-ref="sectraAVEService"/>
 	</util:map>
 
+	<!-- Sectra specific includes for SU since unilabs is using the same service -->
+	<util:list id="suIncludeClinics">
+		<value>D47449ECCCE34B1B9085AB125C4E3E2A</value> <!-- MAMMOGRAFI Sahlgrenska Sjukhuset  -->
+		<value>EB39638C560946A7A0D2FBD7F0FB7506</value> <!-- RÖNTGEN-MAMMOGRAFI Mölndals Sjukhus -->
+	</util:list>
+	
+	<!-- Sectra specific excludes for Unilabs to remove SU-specific sections running on the sam service -->
+	<util:list id="aveExcludeClinics">
+		<value>D47449ECCCE34B1B9085AB125C4E3E2A</value> <!-- MAMMOGRAFI Sahlgrenska Sjukhuset  -->
+		<value>EB39638C560946A7A0D2FBD7F0FB7506</value> <!-- RÖNTGEN-MAMMOGRAFI Mölndals Sjukhus -->
+	</util:list>
+
 	<bean id="sectraSUService" factory-bean="sectraSUClientFactory" factory-method="getBasicHttpBindingIRisReschedule" />	
 	<bean id="sectraNUService" factory-bean="sectraNUClientFactory" factory-method="getBasicHttpBindingIRisReschedule" />
 	<bean id="sectraAVEService" factory-bean="sectraAVEClientFactory" factory-method="getBasicHttpBindingIRisReschedule" />	

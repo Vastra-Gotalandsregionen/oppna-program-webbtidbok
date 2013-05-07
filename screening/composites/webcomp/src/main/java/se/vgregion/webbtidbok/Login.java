@@ -110,6 +110,7 @@ public class Login {
 				// else if(serviceType.equalsIgnoreCase("BS01")
 				// BUKAORTA
 				setMessageBundle(stateLoginCredentials, sd);
+				setExcludeIncludeClinics(stateLoginCredentials, sd);
 				stateLoginCredentials.setLoggedIn(true);
 				logger.info("Logging in user {}.", stateLoginCredentials.getPnr());
 				isLoggedin = true;
@@ -157,5 +158,10 @@ public class Login {
 	 */
 	public void setMessageBundle(State state, ServiceDefinition sd) {
 		state.setMessageBundle(sd.getMessageBundleBase());
+	}
+	
+	public void setExcludeIncludeClinics(State state, ServiceDefinition sd) {
+		state.setIncludeClinics(sd.getIncludeClinics());
+		state.setExcludeClinics(sd.getExcludeClinics());
 	}
 }
