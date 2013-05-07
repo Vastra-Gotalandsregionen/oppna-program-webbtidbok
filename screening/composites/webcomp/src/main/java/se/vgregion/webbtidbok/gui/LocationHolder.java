@@ -21,6 +21,7 @@ package se.vgregion.webbtidbok.gui;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -39,6 +40,23 @@ public class LocationHolder implements Serializable {
 
 	private String locationId;
 	private List<Surgery> availableLocations;
+	private String[] includeClinics = {}, excludeClinics = {};
+
+	public String[] getIncludeClinics() {
+		return includeClinics;
+	}
+
+	public void setIncludeClinics(String[] includeClinics) {
+		this.includeClinics = includeClinics;
+	}
+
+	public String[] getExcludeClinics() {
+		return excludeClinics;
+	}
+
+	public void setExcludeClinics(String[] excludeClinics) {
+		this.excludeClinics = excludeClinics;
+	}
 
 	/**
 	 * Create an empty holder, with no locations and no selected location.
@@ -117,19 +135,52 @@ public class LocationHolder implements Serializable {
 	/**
 	 * Used to populate the select menu.
 	 * 
+	 * Filters out surgeries which are not supposed contained in the excludes and includes 
+	 * definitions of corresponding service.
+	 * 
 	 * @return Select items describing the available surgeries.
 	 */
 	public List<SelectItem> getSelectItems() {
-		List<SelectItem> selectedItems = new ArrayList<SelectItem>();
-		for (Surgery surgery : availableLocations) {
-			SelectItem s = new SelectItem();
-			s.setLabel(surgery.getSurgeryName());
-			s.setValue(surgery.getSurgeryId());
-			selectedItems.add(s);
+		if((this.getExcludeClinics() == null || this.getExcludeClinics().length == 0) && 
+				(this.getIncludeClinics() == null || this.getIncludeClinics().length == 0))
+			return this.getSelectItemsSimple();
+		else
+			return this.getSelectItemsExclusion(this.getExcludeClinics(), this.getIncludeClinics());
+	}
+
+	/**
+	 * Used to avoid unnecessary checks when clinics has no exclude or include conditions
+	 * 
+	 * @return list with surgeries formatted as SelectItems
+	 */
+	private List<SelectItem> getSelectItemsSimple(){
+		List<SelectItem> selectedItems = new ArrayList<SelectItem>();		
+		for(Surgery surgery : availableLocations){
+			selectedItems.add(new SelectItem(surgery.getSurgeryId(), surgery.getSurgeryName()));
 		}
 		return selectedItems;
 	}
-
+	
+	/**
+	 * Used to filter out specific surgeries from the current service and convert them to SelectItems
+	 *  
+	 * @param excludeIds removes all entities where a surgery id matches a string in the array.
+	 * @param includeIds removes all entities where a surgery id does not match a string in the array.
+	 * @return 
+	 */
+	private List<SelectItem> getSelectItemsExclusion(String[] excludeIds, String includeIds[]){
+		List<SelectItem> selectedItems = new ArrayList<SelectItem>();
+		for (Surgery surgery : availableLocations) {
+			String surgeryId = surgery.getSurgeryId();
+			if ( (excludeIds == null || excludeIds.length == 0 || !Arrays.asList(excludeIds).contains(surgeryId))
+					&& (includeIds == null || includeIds.length == 0 || Arrays.asList(includeIds).contains(surgeryId))) {
+				selectedItems.add(new SelectItem(surgeryId, surgery.getSurgeryName()));
+			}
+		}
+		return selectedItems;
+	}
+	
+	
 	/**
 	 * Used to populate the select menu with static locations which are used if patient wants to switch location between areas.
 	 * 
@@ -147,6 +198,7 @@ public class LocationHolder implements Serializable {
 		}
 		return selectedItems;
 	}
+	
 
 	/**
 	 * Used to retrieve a {@link Surgery} by the string locationId If no match is found the returned Surgery is an empty object.
