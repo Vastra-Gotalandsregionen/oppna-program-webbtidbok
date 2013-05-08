@@ -130,7 +130,13 @@ public class CalendarHolder implements Serializable {
      */
     private List<List<DayItem>> updateCalendar(Calendar today) {
         List<List<DayItem>> calendarGrid = new ArrayList<List<DayItem>>();
+        
+        Calendar todayDate = DateHandler.cloneCalendar(today);
+        DateHandler.removeTimePart(todayDate);
 
+        Calendar currentDate = DateHandler.cloneCalendar(currentShowingMonth);
+        DateHandler.removeTimePart(currentDate);
+        
         int monthLength = currentShowingMonth.getActualMaximum(Calendar.DAY_OF_MONTH);
         int firstDay = currentShowingMonth.get(Calendar.DAY_OF_WEEK);
         int emptySlots = firstDay == Calendar.SUNDAY ? 6 : firstDay - 2; // Calendar.MONDAY is day 2 in week. 
@@ -144,8 +150,9 @@ public class CalendarHolder implements Serializable {
         }
 
         for (int dayIndex = 1; dayIndex <= monthLength; dayIndex++) {
+        	currentDate.set(Calendar.DAY_OF_MONTH, dayIndex);
             currentRow.add(createDayItem(dayIndex, availableDatesForMonth.contains(Integer.valueOf(dayIndex)),
-                    isToday(today, currentShowingMonth, dayIndex)));
+                    currentDate.compareTo(todayDate) == -1));
             if (currentRow.size() >= 7) {
                 currentRow = new ArrayList<DayItem>();
                 calendarGrid.add(currentRow);
@@ -168,7 +175,7 @@ public class CalendarHolder implements Serializable {
         DayState color = getCellState(hasAvailableTimes, isHistoric);
         return new DayItem(Integer.toString(day), color, !isHistoric && hasAvailableTimes, true);  
     }
-    
+        
     private boolean isToday(Calendar today, Calendar month, int day) {
         return isSameMonth(today, month) && today.get(Calendar.DAY_OF_MONTH) > day;
     }

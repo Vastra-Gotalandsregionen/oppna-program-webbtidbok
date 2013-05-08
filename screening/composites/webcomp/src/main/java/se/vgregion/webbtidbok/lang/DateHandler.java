@@ -107,4 +107,11 @@ public class DateHandler {
 			return null;
 		}
 	}
+	
+    public static void removeTimePart(Calendar date){
+    	date.set(Calendar.HOUR_OF_DAY, 0);
+    	date.set(Calendar.MINUTE, 0);
+    	date.set(Calendar.SECOND, 0);
+    	date.set(Calendar.MILLISECOND, 0);
+    }
 }
