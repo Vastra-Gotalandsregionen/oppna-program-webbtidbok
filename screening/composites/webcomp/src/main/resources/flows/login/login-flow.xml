@@ -76,13 +76,18 @@
 	<!-- set loggedIn bool in state -->
 	<action-state id="doLogin">
 		<evaluate expression="loginService.login(state)" />
-    		<transition on="yes" to="loggedin" />
-    		<transition on="no" to="start">
-    		    <evaluate expression="true" result="flashScope.failedLogin" /> 
-    			<!-- evaluate expression="loginmessages.setBadLogin()" / -->
-    		</transition>
-    	<transition on-exception="org.springframework.web.util.NestedServletException" to="error"/>
-        <transition on-exception="java.lang.Throwable" to="error"/>  
+		<transition on="yes" to="loggedin" />
+		<transition on="no" to="start">
+			<evaluate expression="true" result="flashScope.failedLogin" />
+			<!-- evaluate expression="loginmessages.setBadLogin()" / -->
+		</transition>
+		<transition on-exception="se.vgregion.webbtidbok.errorhandling.UnableToConnectToWSException"
+			to="start">
+			<evaluate expression="true" result="flashScope.WSConnectionError" />
+		</transition>
+		<transition on-exception="org.springframework.web.util.NestedServletException"
+			to="error" />
+		<transition on-exception="java.lang.Throwable" to="error" />
 	</action-state>
 
     <subflow-state id="loggedin" subflow="display">
@@ -105,6 +110,9 @@
 	</end-state>
 
     <global-transitions>
+        <transition on-exception="se.vgregion.webbtidbok.errorhandling.UnableToConnectToWSException" to="start">
+        	<evaluate expression="true" result="flashScope.WSConnectionError" />
+        </transition>
     	<transition on-exception="org.springframework.web.util.NestedServletException" history="invalidate" to="error"/>
         <transition on-exception="java.lang.Throwable" history="invalidate" to="error"/>  
     </global-transitions>

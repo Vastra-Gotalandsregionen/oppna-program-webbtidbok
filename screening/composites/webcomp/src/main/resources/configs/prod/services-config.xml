@@ -60,10 +60,12 @@
 
 
 	<!-- Elvis specific beans -->
-
-	<bean id="elvisWebService" factory-bean="elvisWebServiceFactory" factory-method="getBasicHttpBindingICentralBookingWS"/>
-
-	<bean id="elvisWebServiceFactory" class="se.vgregion.webbtidbok.ws.CentralBookingWS" />
+	
+	<bean id="elvisWebService" class="se.vgregion.webbtidbok.booking.elvis.ElvisTryWebService" >
+		<constructor-arg ref="mailQueue"/>
+		<constructor-arg type="java.lang.String" value="messages/ErrorMail" />
+		<constructor-arg type="java.lang.String" value="Elvis Central Booking (Gyn/Buk)" />
+	</bean>
 
 	<!-- End of Elvis specific beans -->
 
@@ -88,24 +90,32 @@
 		<value>EB39638C560946A7A0D2FBD7F0FB7506</value> <!-- RÖNTGEN-MAMMOGRAFI Mölndals Sjukhus -->
 	</util:list>
 
-	<bean id="sectraSUService" factory-bean="sectraSUClientFactory" factory-method="getBasicHttpBindingIRisReschedule" />	
-	<bean id="sectraNUService" factory-bean="sectraNUClientFactory" factory-method="getBasicHttpBindingIRisReschedule" />
-	<bean id="sectraAVEService" factory-bean="sectraAVEClientFactory" factory-method="getBasicHttpBindingIRisReschedule" />	
-	
-	<bean id="sectraSUClientFactory" class="se.vgregion.webbtidbok.ws.sectra.RISReschedule"/>
-	
-	<bean id="sectraNUClientFactory" class="se.vgregion.webbtidbok.ws.sectra.RISReschedule">
-		<constructor-arg type="java.net.URL" value="http://vgas0561.vgregion.se/RISReschedule/Service.svc?wsdl" />
+	<bean id="sectraSUService" class="se.vgregion.webbtidbok.booking.sectra.SectraTryWebService">
+		<constructor-arg ref="mailQueue"/>
+		<constructor-arg type="java.lang.String" value="messages/ErrorMail" />
+		<constructor-arg type="java.lang.String" value="Sectra - Mammografi SU" />
+	</bean>
+
+	<bean id="sectraAVEService" class="se.vgregion.webbtidbok.booking.sectra.SectraTryWebService">
+		<constructor-arg ref="mailQueue"/>
+		<constructor-arg type="java.lang.String" value="messages/ErrorMail" />
+		<constructor-arg type="java.lang.String" value="Sectra - Mammografi AVE (Unilabs)" />
+	</bean>
+
+	<bean id="sectraNUService" class="se.vgregion.webbtidbok.booking.sectra.SectraTryWebService">
+		<constructor-arg type="java.net.URL"
+			value="http://vgas0561.vgregion.se/RISReschedule/Service.svc?wsdl" />
 		<constructor-arg type="javax.xml.namespace.QName">
-		    <bean class="javax.xml.namespace.QName">
-		        <constructor-arg index="0" value="http://tempuri.org/" />
-		        <constructor-arg index="1" value="RISReschedule" />
-		    </bean>
+			<bean class="javax.xml.namespace.QName">
+				<constructor-arg index="0" value="http://tempuri.org/" />
+				<constructor-arg index="1" value="RISReschedule" />
+			</bean>
 		</constructor-arg>
+		<constructor-arg ref="mailQueue"/>
+		<constructor-arg type="java.lang.String" value="messages/ErrorMail" />
+		<constructor-arg type="java.lang.String" value="Sectra - Mammografi NU" />
 	</bean>
 	
- 	<bean id="sectraAVEClientFactory" class="se.vgregion.webbtidbok.ws.sectra.RISReschedule" />
-
 	<!-- End of Sectra specific beans -->
 
 </beans>

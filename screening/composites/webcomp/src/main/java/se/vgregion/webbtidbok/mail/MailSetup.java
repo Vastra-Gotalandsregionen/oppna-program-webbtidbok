@@ -53,21 +53,23 @@ public class MailSetup {
 	 * @return properties - {@link Properties}
 	 */
 	public Properties setUpMailProperties(State state) {
+		return this.setUpMailProperties(ResourceBundle.getBundle(state.getMessageBundle()));
+	}
+	
+	public Properties setUpMailProperties(ResourceBundle bundle){
 		String SMTP_HOST_NAME;
 		String SMTP_PORT;
 		String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
 		String user = "";
 		String pass = "";
-
-		ResourceBundle bundle = ResourceBundle.getBundle(state.getMessageBundle());
-
+		
 		Properties properties = new Properties();
-
+		
 		SMTP_HOST_NAME = bundle.getString("smtpHostName");
 		SMTP_PORT = bundle.getString("smtpPort");
 		user = bundle.getString("user");
 		pass = bundle.getString("pass");
-
+		
 		properties.put("mail.smtp.host", SMTP_HOST_NAME);
 		properties.put("mail.smtp.auth", "true");
 		properties.put("mail.debug", "true");
@@ -78,6 +80,7 @@ public class MailSetup {
 		properties.put("userName", user);
 		properties.put("userKey", pass);
 		logger.debug("MailSetup mail properties are set");
+		
 		return properties;
 	}
 

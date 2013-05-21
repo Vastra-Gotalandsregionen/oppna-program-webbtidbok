@@ -28,6 +28,7 @@ import se.vgregion.webbtidbok.domain.Booking;
 import se.vgregion.webbtidbok.domain.BookingTime;
 import se.vgregion.webbtidbok.domain.Surgery;
 import se.vgregion.webbtidbok.domain.sectra.BookingSectra;
+import se.vgregion.webbtidbok.errorhandling.UnableToConnectToWSException;
 import se.vgregion.webbtidbok.lang.DateHandler;
 
 public class SectraBookingFacadeImpl implements BookingFacade {
@@ -59,7 +60,11 @@ public class SectraBookingFacadeImpl implements BookingFacade {
 			if (!getService(state).getBooking().getPatientId().isEmpty()) {
 				isLoggedIn = true;
 			}
-		} catch (RuntimeException e) {
+		} catch (UnableToConnectToWSException e){
+			//Let spring catch this in the flow instead to enable error output...
+			throw e;
+		}
+		catch (RuntimeException e) {
 			// This means we could not log in, probably wrong patient or
 			// password.
 			// Just stay not logged in.

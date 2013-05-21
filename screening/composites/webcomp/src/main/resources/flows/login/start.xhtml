@@ -72,8 +72,13 @@
                             <li><h:outputText value="#{baseMsg.loginpageErrorLoginFailedAdvice2}"/></li>
 						</ul>
 					</ui:fragment>
+					<ui:fragment rendered="#{WSConnectionError}">      
+               			<p><h:outputText value="#{baseMsg.loginpageErrorWebServiceConnectionError1}" /></p>
+               			<ul>
+               				<li><h:outputText value="#{baseMsg.loginpageErrorWebServiceConnectionError2}"/></li>
+						</ul>
+					</ui:fragment>
 				</div>
-				
 			</h:form>
 			</div>
 			</div>
