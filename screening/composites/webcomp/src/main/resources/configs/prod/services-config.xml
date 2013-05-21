@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2010 Västra Götalandsregionen
+
+      This library is free software; you can redistribute it and/or modify
+      it under the terms of version 2.1 of the GNU Lesser General Public
+      License as published by the Free Software Foundation.
+
+      This library is distributed in the hope that it will be useful,
+      but WITHOUT ANY WARRANTY; without even the implied warranty of
+      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+      GNU Lesser General Public License for more details.
+
+      You should have received a copy of the GNU Lesser General Public
+      License along with this library; if not, write to the
+      Free Software Foundation, Inc., 59 Temple Place, Suite 330,
+      Boston, MA 02111-1307  USA
+
+
+-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:util="http://www.springframework.org/schema/util"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-3.2.xsd
+           http://www.springframework.org/schema/util
+           http://www.springframework.org/schema/util/spring-util-3.2.xsd">
+
+	<!-- This config is for using PRODUCTION services. -->
+
+	<!-- This is used to config analytics for local use -->
+	<import resource="analytics.xml" />
+
+	<!-- Service definitions -->
+	<util:list id="serviceDefinitions">
+		<ref bean="serviceDefinitionMammografiSU" />
+		<ref bean="serviceDefinitionMammografiNU" />
+		<ref bean="serviceDefinitionMammografiAVE" />
+		<ref bean="serviceDefinitionBukAorta" />
+		<ref bean="serviceDefinitionGyn" />
+	</util:list>
+
+	<!-- List of backend services to look for using PRN + password -->
+	<util:list id="lookupChain">
+		<ref bean="lookupServiceSU" />
+		<ref bean="lookupServiceNU" />
+		<ref bean="lookupServiceAVE" />
+
+		<!-- This actually logs in to Elvis. Needs to be after the Sectra services for performance -->
+		<ref bean="elvisLookupService" />
+
+		<!-- TOGGLE GYN SERVICE HERE 3/4 -->
+		<ref bean="elvisLookupServiceGyn" />
+	</util:list>
+
+
+	<!-- Elvis specific beans -->
+	
+	<bean id="elvisWebService" class="se.vgregion.webbtidbok.booking.elvis.ElvisTryWebService" >
+		<constructor-arg ref="mailQueue"/>
+		<constructor-arg type="java.lang.String" value="messages/ErrorMail" />
+		<constructor-arg type="java.lang.String" value="Elvis Central Booking (Gyn/Buk)" />
+	</bean>
+
+	<!-- End of Elvis specific beans -->
+
+
+	<!-- Sectra specific beans -->
+
+	<util:map id="sectraBackendServices">
+		<entry key="MAMMO_SU" value-ref="sectraSUService" />	
+		<entry key="MAMMO_NU" value-ref="sectraNUService"/>
+		<entry key="MAMMO_AVE" value-ref="sectraAVEService"/>
+	</util:map>
+
+	<!-- Sectra specific includes for SU since unilabs is using the same service -->
+	<util:list id="suIncludeClinics">
+		<value>D47449ECCCE34B1B9085AB125C4E3E2A</value> <!-- MAMMOGRAFI Sahlgrenska Sjukhuset  -->
+		<value>EB39638C560946A7A0D2FBD7F0FB7506</value> <!-- RÖNTGEN-MAMMOGRAFI Mölndals Sjukhus -->
+	</util:list>
+	
+	<!-- Sectra specific excludes for Unilabs to remove SU-specific sections running on the sam service -->
+	<util:list id="aveExcludeClinics">
+		<value>D47449ECCCE34B1B9085AB125C4E3E2A</value> <!-- MAMMOGRAFI Sahlgrenska Sjukhuset  -->
+		<value>EB39638C560946A7A0D2FBD7F0FB7506</value> <!-- RÖNTGEN-MAMMOGRAFI Mölndals Sjukhus -->
+	</util:list>
+
+	<bean id="sectraSUService" class="se.vgregion.webbtidbok.booking.sectra.SectraTryWebService">
+		<constructor-arg ref="mailQueue"/>
+		<constructor-arg type="java.lang.String" value="messages/ErrorMail" />
+		<constructor-arg type="java.lang.String" value="Sectra - Mammografi SU" />
+	</bean>
+
+	<bean id="sectraAVEService" class="se.vgregion.webbtidbok.booking.sectra.SectraTryWebService">
+		<constructor-arg ref="mailQueue"/>
+		<constructor-arg type="java.lang.String" value="messages/ErrorMail" />
+		<constructor-arg type="java.lang.String" value="Sectra - Mammografi AVE (Unilabs)" />
+	</bean>
+
+	<bean id="sectraNUService" class="se.vgregion.webbtidbok.booking.sectra.SectraTryWebService">
+		<constructor-arg type="java.net.URL"
+			value="http://vgas0561.vgregion.se/RISReschedule/Service.svc?wsdl" />
+		<constructor-arg type="javax.xml.namespace.QName">
+			<bean class="javax.xml.namespace.QName">
+				<constructor-arg index="0" value="http://tempuri.org/" />
+				<constructor-arg index="1" value="RISReschedule" />
+			</bean>
+		</constructor-arg>
+		<constructor-arg ref="mailQueue"/>
+		<constructor-arg type="java.lang.String" value="messages/ErrorMail" />
+		<constructor-arg type="java.lang.String" value="Sectra - Mammografi NU" />
+	</bean>
+	
+	<!-- End of Sectra specific beans -->
+
+</beans>

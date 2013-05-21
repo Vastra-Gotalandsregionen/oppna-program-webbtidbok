@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2010 Västra Götalandsregionen
+
+      This library is free software; you can redistribute it and/or modify
+      it under the terms of version 2.1 of the GNU Lesser General Public
+      License as published by the Free Software Foundation.
+
+      This library is distributed in the hope that it will be useful,
+      but WITHOUT ANY WARRANTY; without even the implied warranty of
+      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+      GNU Lesser General Public License for more details.
+
+      You should have received a copy of the GNU Lesser General Public
+      License along with this library; if not, write to the
+      Free Software Foundation, Inc., 59 Temple Place, Suite 330,
+      Boston, MA 02111-1307  USA
+
+
+-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:util="http://www.springframework.org/schema/util"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+           http://www.springframework.org/schema/util
+           http://www.springframework.org/schema/util/spring-util-3.2.xsd">
+
+
+	<!-- Config file for the main structure of the web application.
+		 (Beans not related to any particular backend.)
+	-->
+
+
+	<bean id="bookingFactory" class="se.vgregion.webbtidbok.booking.BookingFactoryImpl">
+		<property name="serviceDefinitions" ref="serviceDefinitions" /> <!-- Env specific -->
+	</bean>
+
+	<!-- Login services. -->
+	<bean id="loginService" class="se.vgregion.webbtidbok.Login">
+		<property name="bookingFactory" ref="bookingFactory" />
+		<property name="lookupService" ref="lookupService" />
+		<property name="resourceBundle">
+			<bean id="messages" class="java.util.ResourceBundle"
+				factory-method="getBundle">
+				<constructor-arg value="messages/BaseMessages" />
+			</bean>
+		</property>
+	</bean>
+
+	<!--
+		validates login accordingly and also sets service matching to provided
+		password into state
+	-->
+	<bean id="validationService" class="se.vgregion.webbtidbok.ValidationLogin" />
+
+	<!--
+		Our lookup service. Lookups are performed in the order listed - trial
+		logins (such as Elvis) should be at the bottom of the list.
+	-->
+	<bean id="lookupService" class="se.vgregion.webbtidbok.servicedef.ChainLookupService">
+		<property name="lookupChain" ref="lookupChain" /> <!-- Env specific -->
+	</bean>
+
+	<!--  This class is used as a switch to choose between different BookingFacades depending on witch service that is to be utilized by the user.	-->
+	<bean id="bookingFacade" class="se.vgregion.webbtidbok.booking.BookingFacadeSwitch">
+		<property name="bookingFactory" ref="bookingFactory" />
+	</bean>
+	
+	<!-- Creating a calendarService bean with various calendar related utilities -->
+	<bean id="calendarService" class="se.vgregion.webbtidbok.calendar.CalendarUtil">
+		<property name="bookingFacade" ref="bookingFacade" />
+	</bean>
+
+	<!-- Creating the thread pool and the executor the the threads used to mail cancellation and switch location mails with	-->
+    <bean id="mailQueue" class="java.util.concurrent.ThreadPoolExecutor">
+        <constructor-arg index="0" type="int" value="1"/> <!-- Minimum threads -->
+        <constructor-arg index="1" type="int" value="4"/> <!-- Maximum threads -->
+        <constructor-arg index="2" type="long" value="30"/> <!-- Surplus thread keep-alive time, in seconds (see below) -->
+        <constructor-arg index="3" type="java.util.concurrent.TimeUnit" value="SECONDS"/>
+        <constructor-arg index="4"> <!-- We use a linked list queue, which should be unbounded. -->
+            <bean class="java.util.concurrent.LinkedBlockingQueue" />
+        </constructor-arg>
+    </bean>
+
+	
+	<!-- Utility bean for dumping methods we don't have a proper home for. -->	
+	<bean id="guiUtility" class="se.vgregion.webbtidbok.gui.GUIUtilities">
+		<property name="bookingFacade" ref="bookingFacade" />
+	</bean>
+
+	<!-- Flow handler handling exceptions for the 'login' flow. -->
+	<bean name="login"
+		class="se.vgregion.webbtidbok.errorhandling.ExceptionFlowHandler">
+	</bean>
+
+</beans>

@@ -1,0 +1,199 @@
+/**
+ * Copyright 2010 Västra Götalandsregionen
+ *
+ *   This library is free software; you can redistribute it and/or modify
+ *   it under the terms of version 2.1 of the GNU Lesser General Public
+ *   License as published by the Free Software Foundation.
+ *
+ *   This library is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU Lesser General Public License for more details.
+ *
+ *   You should have received a copy of the GNU Lesser General Public
+ *   License along with this library; if not, write to the
+ *   Free Software Foundation, Inc., 59 Temple Place, Suite 330,
+ *   Boston, MA 02111-1307  USA
+ *
+ */
+
+
+#centercontent ul {
+	padding:0 0 1em 2em;
+	margin:0;
+}
+
+#centercontent .leftCenterCol {
+	float:left;
+	width:19.5em;
+	margin-top:1em;
+}
+#centercontent .leftCenterCol ul{
+	margin:0;
+	padding:0;
+	list-style: none;
+	padding-bottom:.4em;
+}
+#centercontent .leftCenterCol .kategori {
+	font-weight:bold;
+	color:#222;
+	margin-bottom:0em;
+	padding-bottom:0em;
+}
+#centercontent .leftCenterCol ul li {
+	display: inline;
+	color:#222;
+	line-height:1.5em;
+}
+#centercontent .leftCenterCol a{
+	font: normal 0.9em Verdana, Arial, Helvetica, sans-serif;
+	display:block;
+	color:#222;
+	line-height:1.5em;
+	padding:0;
+	margin:0;
+}
+
+#centercontent .rightCenterCol {
+	float:left;
+	width:19.5em;
+	margin-top:1em;
+}
+
+#centercontent .rightCenterCol ul{
+	margin:0;
+	padding:0;
+	list-style: none;
+	padding-bottom:.4em;
+}
+#centercontent .rightCenterCol .kategori {
+	font-weight:bold;
+	color:#222;
+	margin-bottom:0em;
+	padding-bottom:0em;
+}
+#centercontent .rightCenterCol ul li {
+	display: inline;
+	color:#222;
+	line-height:1.5em;
+}
+#centercontent .rightCenterCol a{
+	font: normal 0.9em Verdana, Arial, Helvetica, sans-serif;
+	display:block;
+	color:#222;
+	line-height:1.5em;
+	padding:0;
+	margin:0;
+}
+.leftCenterCol a:hover, .rightCenterCol a:hover 
+{
+	text-decoration:none !important;}
+
+/* Stilmallar for sokning med omnifind */
+
+.SearchHelpDiv
+{
+	width:85%;
+	padding-top: 10px;
+}
+
+.SearchResultHeader
+{
+	 padding-bottom: 10px; 
+	 padding-top: 10px;
+}
+
+.SearchResultLeftColumn
+{
+	width: 10%;	
+	float:left;
+}
+.SearchResultRightColumn
+{
+	width:85%;
+	float:left;
+}
+
+.SearchHidden
+{
+	display:none;
+}
+										/*-----------------------------------------------*/
+										/*------------------          -------------------*/
+										/* ---------------              -----------------*/
+										/*--------------    LEFT NAV      ---------------*/
+										/*----------------              -----------------*/
+										/*------------------          -------------------*/
+										/*-----------------------------------------------*/
+
+
+#leftnavcontainer { margin-bottom:1em; }
+#leftnavcontainer #leftNav, #leftnavcontainer #leftNav ul  { margin:0; padding:0; list-style: none; }
+
+#leftnavcontainer #leftNav li { display: block; background-color:#f4f4f4; }
+#leftnavcontainer #leftNav li a { display: block; padding:0.5em 0.5em 0.5em 1.5em; text-decoration: none; outline: none; display: block; color: #222; font-weight:normal; }
+#leftnavcontainer #leftNav li a:hover { text-decoration:underline; }
+
+
+		/*--------------                   -------------------*/
+		/* --------------  LeftNav level 1  ------------------*/
+		/* --------------                   ------------------*/
+
+#leftnavcontainer #leftNav li.Level1, 
+#leftnavcontainer #leftNav li.Level1-morelinks { background:#fff; border-top:1px solid #e1e1e1; }
+#leftnavcontainer #leftNav li.Level1-morelinks-open,
+#leftnavcontainer #leftNav li.Level1-morelinks-selected { background:url(images/sec-nav-group-bg.png) 0 0 repeat-x; border-top:1px solid #c2c2c2; }
+
+#leftnavcontainer #leftNav li.Level1-morelinks a,
+#leftnavcontainer #leftNav li.Level2-morelinks a,
+#leftnavcontainer #leftNav li.Level3-morelinks a { background:url(images/sec-nav-more.png) 0.75em 50% no-repeat; }
+
+#leftnavcontainer #leftNav li.Level1-morelinks-open a,
+#leftnavcontainer #leftNav li.Level2-morelinks-open a,
+#leftnavcontainer #leftNav li.Level3-morelinks-open a,
+#leftnavcontainer #leftNav li.Level1-morelinks-selected a,
+#leftnavcontainer #leftNav li.Level2-morelinks-selected a,
+#leftnavcontainer #leftNav li.Level3-morelinks-selected a { background: url(images/sec-nav-more-open.png) 0.75em 50% no-repeat;}
+
+#leftnavcontainer #leftNav li.Level1-morelinks-selected a { padding-top:0.75em; }
+
+#leftnavcontainer #leftNav li.Level1-selected a, 
+#leftnavcontainer #leftNav li.Level2-selected a, 
+#leftnavcontainer #leftNav li.Level3-selected a,
+#leftnavcontainer #leftNav li.Level4-selected a,
+#leftnavcontainer #leftNav li.Level3-selected a,
+#leftnavcontainer #leftNav li.Level1-morelinks-selected a,
+#leftnavcontainer #leftNav li.Level2-morelinks-selected a,
+#leftnavcontainer #leftNav li.Level3-morelinks-selected a,
+#leftnavcontainer #leftNav li.Level1-open a,
+#leftnavcontainer #leftNav li.Level2-open a { color:#9c132f; font-weight:bold; }
+
+		/*--------------                   -------------------*/
+		/* --------------  LeftNav level 2  ------------------*/
+		/* --------------                   ------------------*/
+
+#leftnavcontainer #leftNav li.Level2 a, 
+#leftnavcontainer #leftNav li.Level2-selected a, 
+#leftnavcontainer #leftNav li.Level2-morelinks a, 
+#leftnavcontainer #leftNav li.Level2-morelinks-open a, 
+#leftnavcontainer #leftNav li.Level2-morelinks-selected a, 
+#leftnavcontainer #leftNav li.Level2-open a { padding-left:2.5em; }
+
+#leftnavcontainer #leftNav li.Level2-morelinks a, 
+#leftnavcontainer #leftNav li.Level2-morelinks-open a, 
+#leftnavcontainer #leftNav li.Level2-morelinks-selected a {	background-position: 1.5em 50%; }
+
+/*--------------                   -------------------*/
+		/* --------------  LeftNav level 3  ------------------*/
+		/* --------------                   ------------------*/
+
+
+#leftnavcontainer #leftNav li.Level3 a,
+#leftnavcontainer #leftNav li.Level3-selected a,
+#leftnavcontainer #leftNav li.Level3-morelinks a,
+#leftnavcontainer #leftNav li.Level3-morelinks-open a,
+#leftnavcontainer #leftNav li.Level3-morelinks-selected a { padding-left:3.2em; }
+
+#leftnavcontainer #leftNav li.Level3-morelinks a,
+#leftnavcontainer #leftNav li.Level3-morelinks-open a,
+#leftnavcontainer #leftNav li.Level3-morelinks-selected a { background-position: 2.5em 50%; }

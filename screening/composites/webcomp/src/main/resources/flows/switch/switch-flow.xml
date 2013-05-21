@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2010 Västra Götalandsregionen
+
+      This library is free software; you can redistribute it and/or modify
+      it under the terms of version 2.1 of the GNU Lesser General Public
+      License as published by the Free Software Foundation.
+
+      This library is distributed in the hope that it will be useful,
+      but WITHOUT ANY WARRANTY; without even the implied warranty of
+      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+      GNU Lesser General Public License for more details.
+
+      You should have received a copy of the GNU Lesser General Public
+      License along with this library; if not, write to the
+      Free Software Foundation, Inc., 59 Temple Place, Suite 330,
+      Boston, MA 02111-1307  USA
+
+
+-->
+
+<flow xmlns="http://www.springframework.org/schema/webflow"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
+    
+    <input name="state" />
+    <input name="booking" />
+    
+    <on-start>
+        <evaluate expression="guiUtility.setupStaticLocations(booking, state)"  result="flowScope.location"  />
+        <evaluate expression="calendarService.createCalendarHolder(state, booking)" result="flowScope.calendarHolder" />
+        <!-- This call is so we get any available times on the same day as the current booking listed automatically
+             when the page displays the first time. --> 
+        <evaluate expression="bookingFacade.getBookingTime(state, location.locationId, calendarHolder.selectedDate)"
+            result="flowScope.timeListLocal" result-type="dataModel" /> 
+    </on-start>
+        
+    <view-state id="switch" view="/flows/switch/switchlocation.xhtml">	  
+		<transition on="confirmswitch" to="confirmswitchlocationaction">
+			<evaluate expression="guiUtility.setChosenStaticLocation(booking, location.locationId)" />
+		</transition>
+		<transition on="cancel" to="cancel" />
+		 <transition on-exception="org.springframework.web.util.NestedServletException" history="invalidate" to="error"/>
+	</view-state>
+	
+	<action-state id="confirmswitchlocationaction">
+		<evaluate expression="guiUtility.getStaticLocationByLocationId(location.locationId)" result="flowScope.switchToLocation" />
+		<transition to="confirmswitchlocation">
+				<evaluate expression="guiUtility.setSwitchLocation(booking)" />
+				<evaluate expression="guiUtility.sendSwitchLocationMail(state, booking, mailQueue)" />
+		</transition>
+		 <transition on-exception="org.springframework.web.util.NestedServletException" to="error"/>
+	</action-state>
+	
+	<view-state id="confirmswitchlocation" view="/flows/switch/confirmswitchlocation.xhtml">	
+		<transition on="cancel" to="cancel" />
+		 <transition on-exception="org.springframework.web.util.NestedServletException" history="invalidate" to="error"/>
+	</view-state>
+	
+	<end-state id="cancel"/>
+	<end-state id="logout"/>
+
+	<global-transitions>
+        <transition on="logout" history="invalidate" to="logout"/>
+        <transition on-exception="java.lang.Error" history="invalidate" to="error"/>
+        <transition on-exception="java.lang.Throwable" history="invalidate" to="error"/>
+         <transition on-exception="org.springframework.web.util.NestedServletException" history="invalidate" to="error"/>
+    </global-transitions>
+
+</flow>

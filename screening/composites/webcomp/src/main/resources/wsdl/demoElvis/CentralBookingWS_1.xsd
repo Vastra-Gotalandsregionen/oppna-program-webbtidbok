@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2010 Västra Götalandsregionen
+
+      This library is free software; you can redistribute it and/or modify
+      it under the terms of version 2.1 of the GNU Lesser General Public
+      License as published by the Free Software Foundation.
+
+      This library is distributed in the hope that it will be useful,
+      but WITHOUT ANY WARRANTY; without even the implied warranty of
+      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+      GNU Lesser General Public License for more details.
+
+      You should have received a copy of the GNU Lesser General Public
+      License along with this library; if not, write to the
+      Free Software Foundation, Inc., 59 Temple Place, Suite 330,
+      Boston, MA 02111-1307  USA
+
+
+-->
+
+<xs:schema elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/WCFCentralBookingWS" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://schemas.datacontract.org/2004/07/WCFCentralBookingWS">
+  <xs:complexType name="BookingRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BokadTid" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="CentralTidbokID" type="xs:int"/>
+      <xs:element minOccurs="0" name="Cert" nillable="true" type="xs:string"/>
+      <xs:element minOccurs="0" name="CryptedKey" nillable="true" type="xs:string"/>
+      <xs:element minOccurs="0" name="Epost" nillable="true" type="xs:string"/>
+      <xs:element minOccurs="0" name="FromDat" nillable="true" type="xs:string"/>
+      <xs:element minOccurs="0" name="Key" nillable="true" type="xs:string"/>
+      <xs:element minOccurs="0" name="MobilTel" nillable="true" type="xs:string"/>
+      <xs:element minOccurs="0" name="Pin" nillable="true" type="xs:string"/>
+      <xs:element minOccurs="0" name="Pnr" nillable="true" type="xs:string"/>
+      <xs:element minOccurs="0" name="ToDat" nillable="true" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="BookingRequest" nillable="true" type="tns:BookingRequest"/>
+  <xs:complexType name="BookingResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Address" nillable="true" type="xs:string"/>
+      <xs:element minOccurs="0" name="AntalOmbok" type="xs:int"/>
+      <xs:element minOccurs="0" name="BokadTid" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="CentralTidbokID" type="xs:int"/>
+      <xs:element minOccurs="0" name="Epost" nillable="true" type="xs:string"/>
+      <xs:element minOccurs="0" name="ExternalID" nillable="true" type="xs:string"/>
+      <xs:element minOccurs="0" name="MaxAntalOmbok" type="xs:int"/>
+      <xs:element minOccurs="0" name="MobilTel" nillable="true" type="xs:string"/>
+      <xs:element minOccurs="0" name="Mottagning" nillable="true" type="xs:string"/>
+      <xs:element minOccurs="0" name="Namn" nillable="true" type="xs:string"/>
+      <xs:element minOccurs="0" name="Pnr" nillable="true" type="xs:string"/>
+      <xs:element minOccurs="0" name="Vardgivare" nillable="true" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="BookingResponse" nillable="true" type="tns:BookingResponse"/>
+  <xs:complexType name="ArrayOfBookingPlace">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="BookingPlace" nillable="true" type="tns:BookingPlace"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfBookingPlace" nillable="true" type="tns:ArrayOfBookingPlace"/>
+  <xs:complexType name="BookingPlace">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Address" nillable="true" type="xs:string"/>
+      <xs:element minOccurs="0" name="CentralTidbokID" type="xs:int"/>
+      <xs:element minOccurs="0" name="Mottagning" nillable="true" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="BookingPlace" nillable="true" type="tns:BookingPlace"/>
+  <xs:complexType name="ArrayOfCalendar">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Calendar" nillable="true" type="tns:Calendar"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfCalendar" nillable="true" type="tns:ArrayOfCalendar"/>
+  <xs:complexType name="Calendar">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Datum" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="Sparr" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="Status" nillable="true" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Calendar" nillable="true" type="tns:Calendar"/>
+  <xs:complexType name="ArrayOfBookingTime">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="BookingTime" nillable="true" type="tns:BookingTime"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfBookingTime" nillable="true" type="tns:ArrayOfBookingTime"/>
+  <xs:complexType name="BookingTime">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Antal" type="xs:int"/>
+      <xs:element minOccurs="0" name="Datum" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="Klocka" nillable="true" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="BookingTime" nillable="true" type="tns:BookingTime"/>
+</xs:schema>

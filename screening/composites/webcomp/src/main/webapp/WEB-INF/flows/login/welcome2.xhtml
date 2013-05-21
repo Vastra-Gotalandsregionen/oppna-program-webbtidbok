@@ -1,0 +1,129 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--
+
+    Copyright 2010 Västra Götalandsregionen
+
+      This library is free software; you can redistribute it and/or modify
+      it under the terms of version 2.1 of the GNU Lesser General Public
+      License as published by the Free Software Foundation.
+
+      This library is distributed in the hope that it will be useful,
+      but WITHOUT ANY WARRANTY; without even the implied warranty of
+      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+      GNU Lesser General Public License for more details.
+
+      You should have received a copy of the GNU Lesser General Public
+      License along with this library; if not, write to the
+      Free Software Foundation, Inc., 59 Temple Place, Suite 330,
+      Boston, MA 02111-1307  USA
+
+
+-->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:sf="http://www.springframework.org/tags/faces"	  			
+				template="/WEB-INF/layouts/standard.xhtml">
+				
+				
+				
+<ui:define name="content">
+
+<ui:fragment id="loginFragment">
+	
+		<div id="boxcontainer" style="padding-bottom: 1em;">
+		<div id="boxleft" />
+		<div id="boxmiddle">
+			<p/>
+				state.messageBundle: #{state.messageBundle}
+			<br/>
+
+			<f:loadBundle basename="se.vgregion.webbtidbok.#{state.messageBundle}" var="bundle"/>
+
+			<h1 style="display: inline">#{bundle.welcome_page_header_value} #{booking.displayName}</h1>
+
+				<h:form id="mainForm" style="display: inline; text-align: right; padding-left: 5em;" >
+				    <div align="right">
+					   <sf:commandButton id="logout" value="Logga ut" processIds="*" action="logout"/>
+				    </div>
+				</h:form>
+				<p/>			
+				<br/>
+				<p>#{bundle.welcome_page_body_value_1}<br/>
+				</p>
+				<p>#{bundle.welcome_page_body_value_2} <a href="#{bundle.welcome_page_body_email_value}">#{bundle.welcome_page_body_email_value}</a>.<br/></p>
+				<p>
+					<a href="#{bundle.welcome_page_body_link_1}" target="_new">#{bundle.welcome_page_body_link_1_text}</a>
+                </p>
+		
+					<div id="boxleft1" style="width: 100%">		
+		
+						<p>#{bundle.welcome_page_body_box_value_1}<br/>
+						  <a href="#{bundle.welcome_page_body_box_link_1}" target="_new">#{bundle.welcome_page_body_box_link_1_text}</a><br/>
+						  <a href="#{bundle.welcome_page_body_box_link_2}" target="_new">#{bundle.welcome_page_body_box_link_2_text}</a>
+                        </p>
+						<h:outputLabel for="deleteButton"><p style="color:red; font-style: italic"> #{cancelbookingMessages.cancelBookingMessage}</p></h:outputLabel>
+						<table>
+							<tr>
+								<td valign="top" >
+									<p>
+										#{bundle.welcome_page_body_box_value_2}
+									</p>
+								</td>
+								<td width="100%" valign="top">  
+									<p>
+										#{booking.mainSector}, #{booking.address}
+									</p>
+								</td>
+								<td style="text-align: right; padding-right: 1em;" valign="top">
+									<h:form id="updateForm" >
+										<sf:commandButton id="updateButton" value="Omboka tid" processIds="*" action="update" disabled="#{booking.isDisabled}" style="width: 100px;"  />
+									</h:form>
+								</td>
+							</tr>
+							<tr>
+								<td></td>
+								<td></td>
+								<td>
+									<h:outputText rendered="#{booking.isDisabled}"><p style="text-align: left;color:red; font-style: italic">#{bundle.welcome_page_body_box_value_4}</p></h:outputText>
+								</td>
+							</tr>
+							
+							<tr>
+								<td valign="top">
+									<p>
+										#{bundle.welcome_page_body_box_value_3}
+									</p>
+								</td>
+								<td valign="top"> 
+									<p>
+										#{booking.timeBookingString}.
+									</p>
+								</td>
+								<td style="text-align: right; padding-right: 1em;" valign="top">
+									<h:form id="deleteForm" >
+										
+											<sf:commandButton id="deleteButton" value="Avboka tid" processIds="*" action="delete" style="width: 100px;"  />
+										
+									</h:form>
+								</td>
+							</tr>
+							<tr>
+								<td></td>
+								<td>
+									
+									#{bundle.welcome_page_body_box_value_5}
+									
+								</td>
+							</tr>
+				</table>
+				
+				</div>	
+				</div>
+				</div>
+		
+</ui:fragment>
+</ui:define>
+</ui:composition>

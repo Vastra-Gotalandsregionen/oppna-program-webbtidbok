@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2010 Västra Götalandsregionen
+
+      This library is free software; you can redistribute it and/or modify
+      it under the terms of version 2.1 of the GNU Lesser General Public
+      License as published by the Free Software Foundation.
+
+      This library is distributed in the hope that it will be useful,
+      but WITHOUT ANY WARRANTY; without even the implied warranty of
+      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+      GNU Lesser General Public License for more details.
+
+      You should have received a copy of the GNU Lesser General Public
+      License along with this library; if not, write to the
+      Free Software Foundation, Inc., 59 Temple Place, Suite 330,
+      Boston, MA 02111-1307  USA
+
+
+-->
+
+<flow xmlns="http://www.springframework.org/schema/webflow"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
+	
+	<!--  <var name="returnNbr" class="se.vgregion.webbtidbok.State"/> -->
+    <input name="state" />
+    <input name="mobilenumber" type="string"/>
+	
+	<view-state id="welcome" view="/flows/display/welcome.xhtml" model="booking">
+		<on-render>
+<!--		 TODO: on render: check method which checks service in state and perform evaluate expressions accordingly! -->
+<!--	maybe pick up some variable here from a backing bean....	TALK to BookingFacade here-->
+<!--			<evaluate expression="bookingService.getBooking(state)" result="flowScope.booking" />-->
+			<evaluate expression="bookingFacade.getBookingInfo(state)" result="flowScope.booking"  />
+ 		</on-render>
+ 		 		
+		<transition on="update" to="update" />
+		<transition on="delete" to="delete" />
+		<transition on-exception="java.lang.Error" to="error"/>  
+        <transition on-exception="java.lang.Throwable" to="error"/>
+        <transition on-exception="org.springframework.web.util.NestedServletException" history="invalidate" to="error"/>
+<!--  		<transition on="ok" to="sms" />-->
+	</view-state>
+
+    <subflow-state id="update" subflow="update">
+        <input name="state" value="state" />
+        <input name="booking" value="booking" />
+        <transition on="cancel" to="welcome"/>
+      <transition on-exception="java.lang.Error" to="error"/>  
+        <transition on-exception="java.lang.Throwable" to="error"/>
+        <transition on-exception="org.springframework.web.util.NestedServletException" to="error"/>
+    </subflow-state>
+
+    <subflow-state id="delete" subflow="delete">
+        <input name="state" value="state" />
+        <input name="booking" value="booking" />
+        <transition on="cancel" to="welcome"/>
+        <transition on-exception="java.lang.Error" to="error"/>  
+        <transition on-exception="java.lang.Throwable" to="error"/>
+        <transition on-exception="org.springframework.web.util.NestedServletException" to="error"/>
+    </subflow-state>
+	
+	<action-state id="sms">
+		<evaluate expression="bookingFacade.setMobileNumberForSmsReminder(mobilenumber, state)" />		
+		<transition on="yes" to="welcome">
+			<evaluate expression="true" result="flashScope.okMobNbr" /> 
+		</transition>
+		<transition on="no" to="welcome">
+		<!-- store "true" value in the flashScope variable failedMobNbr whcih is then chect ju JSF in the .xhtlm whether to render error msg or not -->
+			<evaluate expression="true" result="flashScope.failedMobNbr" /> 
+		</transition>
+		<transition on-exception="org.springframework.web.util.NestedServletException" to="error"/>
+	</action-state>
+	
+	<!--view-state id="error" view="/flows/error/error.xhtml">
+	</view-state-->
+	
+	<view-state id="error" view="/flows/error/error.xhtml">
+	</view-state>
+	
+	<end-state id="logout"/>
+	
+    <global-transitions>
+        <transition on="logout" history="invalidate" to="logout"/>
+        <transition on-exception="java.lang.Error" to="error"/>  
+        <transition on-exception="java.lang.Throwable" history="invalidate" to="error"/>
+        <transition on-exception="org.springframework.web.util.NestedServletException" history="invalidate" to="error"/>
+    </global-transitions>
+
+</flow>

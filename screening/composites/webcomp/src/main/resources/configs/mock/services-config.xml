@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2010 Västra Götalandsregionen
+
+      This library is free software; you can redistribute it and/or modify
+      it under the terms of version 2.1 of the GNU Lesser General Public
+      License as published by the Free Software Foundation.
+
+      This library is distributed in the hope that it will be useful,
+      but WITHOUT ANY WARRANTY; without even the implied warranty of
+      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+      GNU Lesser General Public License for more details.
+
+      You should have received a copy of the GNU Lesser General Public
+      License along with this library; if not, write to the
+      Free Software Foundation, Inc., 59 Temple Place, Suite 330,
+      Boston, MA 02111-1307  USA
+
+
+-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:util="http://www.springframework.org/schema/util"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-3.2.xsd
+           http://www.springframework.org/schema/util
+           http://www.springframework.org/schema/util/spring-util-3.2.xsd">
+
+	<!-- This config is for using MOCK services. -->
+
+	<!-- This is used to config analytics for local use -->
+	<import resource="analytics.xml" />
+	<!-- This creates the mock data to use. Mock both sectra and elvis. -->
+	<import resource="testdata-su.xml" />
+	<import resource="testdata-nu.xml" />
+	<import resource="elvisMockConfig.xml" />
+
+
+	<!-- Service definitions for mock - only two for mammo plus elvis mock -->
+	<util:list id="serviceDefinitions">
+		<ref bean="serviceDefinitionMammografiSU" />
+		<ref bean="serviceDefinitionMammografiNU" />
+		<ref bean="serviceDefinitionMammografiAVE" />
+		<ref bean="serviceDefinitionBukAorta" />
+	</util:list>
+	
+	<!-- List of backend services to look for using PRN + password -->
+	<util:list id="lookupChain">
+		<ref bean="lookupServiceSU" />
+		<ref bean="lookupServiceNU" />
+		<ref bean="lookupServiceAVE" />
+		<ref bean="elvisLookupService" />
+	</util:list>
+
+
+	<!-- Elvis specific beans -->
+	<bean id="elvisWebService" class="se.vgregion.webbtidbok.booking.elvis.mock.ElvisServiceMock"/>
+	<!-- End of Elvis specific beans -->
+
+
+	<!-- Sectra specific beans -->
+
+	<util:map id="sectraBackendServices">
+		<entry key="MAMMO_NU" value-ref="sectraMockServiceNU" />
+		<entry key="MAMMO_SU" value-ref="sectraMockServiceSU" />
+		<entry key="MAMMO_AVE" value-ref="sectraMockServiceSU" />
+	</util:map>
+	
+	<util:list id="suIncludeClinics">
+		<value>SU_section_1</value>
+		<value>SU_section_2</value>
+	</util:list>
+
+	<util:list id="aveExcludeClinics">
+		<value>SU_section_1</value>
+		<value>SU_section_2</value>
+	</util:list>
+	
+<!-- 	<bean id="sectraSUService" factory-bean="sectraSUClientFactory" factory-method="getBasicHttpBindingIRisReschedule" />
+	<bean id="sectraSUClientFactory" class="se.vgregion.webbtidbok.ws.sectra.RISReschedule">
+		<constructor-arg type="java.net.URL" value="http://localhost:8088/mockBasicHttpBinding_IRisReschedule?WSDL" />
+		<constructor-arg type="javax.xml.namespace.QName">
+		    <bean class="javax.xml.namespace.QName">
+		        <constructor-arg index="0" value="http://tempuri.org/" />
+		        <constructor-arg index="1" value="RISReschedule" />
+		    </bean>
+		</constructor-arg>
+	</bean>
+ -->
+	<bean id="sectraMockServiceNU" class="se.vgregion.webbtidbok.booking.sectra.SectraWSMock">
+		<property name="businessObjectHolder">
+			<bean
+				class="se.vgregion.webbtidbok.booking.sectra.mock.BusinessObjectHolder">
+				<constructor-arg ref="NU_sections" />
+				<constructor-arg ref="NU_timeblocks" />
+				<constructor-arg ref="NU_bookings" />
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="sectraMockServiceSU" class="se.vgregion.webbtidbok.booking.sectra.SectraWSMock">
+		<property name="businessObjectHolder">
+			<bean
+				class="se.vgregion.webbtidbok.booking.sectra.mock.BusinessObjectHolder">
+				<constructor-arg ref="SU_sections" />
+				<constructor-arg ref="SU_timeblocks" />
+				<constructor-arg ref="SU_bookings" />
+			</bean>
+		</property>
+	</bean>
+	
+	<!-- End of Sectra specific beans -->
+
+</beans>

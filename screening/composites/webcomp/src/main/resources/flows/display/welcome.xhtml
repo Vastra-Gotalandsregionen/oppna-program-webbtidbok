@@ -1,0 +1,89 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--
+
+    Copyright 2010 Västra Götalandsregionen
+
+      This library is free software; you can redistribute it and/or modify
+      it under the terms of version 2.1 of the GNU Lesser General Public
+      License as published by the Free Software Foundation.
+
+      This library is distributed in the hope that it will be useful,
+      but WITHOUT ANY WARRANTY; without even the implied warranty of
+      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+      GNU Lesser General Public License for more details.
+
+      You should have received a copy of the GNU Lesser General Public
+      License along with this library; if not, write to the
+      Free Software Foundation, Inc., 59 Temple Place, Suite 330,
+      Boston, MA 02111-1307  USA
+
+
+-->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:sf="http://www.springframework.org/tags/faces"	  			
+				template="/layouts/loggedInTemplate.xhtml">
+
+<ui:define name="content">
+
+<ui:fragment id="loginFragment">
+		<h1 style="display: inline"><h:outputFormat value="#{sectionMsg.welcomepageWelcomeNN}">
+            <f:param value="#{booking.patientName}" /></h:outputFormat>
+        </h1>
+		<p/>
+		<p><h:outputText value="#{sectionMsg.welcomepageIntroductionMain}" escape="false"/></p>
+		<p><h:outputFormat value="#{sectionMsg.welcomepageIntroductionContact}" escape="false">
+		    <f:param value="#{booking.surgery.surgeryPhone}" /></h:outputFormat>
+		</p>
+		<p><h:outputText value="#{sectionMsg.welcomepageIntroductionContact2}" escape="false"/></p>
+		
+		<p><h:outputText value="#{sectionMsg.welcomepageExamInformationAdditional}" escape="false"/></p>
+        <ui:decorate template="/flows/bookinginfo-wherewhen.xhtml">
+            <ui:define name="topInformationSection">
+                <p class="tb_informationHeading"><h:outputText value="#{sectionMsg.welcomepageExamInformation}" escape="false"/></p>
+                
+                <!-- This one should have a rendered attribute. -->
+                <h:outputLabel for="deleteButton"><p style="color:red; font-style: italic"> #{cancelbookingMessages.cancelBookingMessage}</p></h:outputLabel>
+                <h:outputText rendered="#{!booking.updateable}"><p style="text-align: left;color:red; font-style: italic"><h:outputText value="#{sectionMsg.locationBoxRescheduleCapped}"/></p></h:outputText>
+            </ui:define>
+            
+            <ui:define name="buttonFloat">
+                <div class="tb_buttonFloat">
+                <!-- enable for DEV only   
+                    <h:form id="updateForm" >
+                        <sf:commandButton id="updateButton" value="#{baseMsg.locationBoxRescheduleButton}" processIds="*" action="update" disabled="#{booking.updateable}" style="width: 100px;"  />
+                    </h:form>
+                    -->
+                <!-- END enable for DEV only -->
+                    <h:form id="updateForm" >
+                        <sf:commandButton id="updateButton" value="#{baseMsg.locationBoxRescheduleButton}" processIds="*" action="update" disabled="#{!booking.updateable}" style="width: 100px;"  />
+                    </h:form>
+                    <h:form id="deleteForm" >
+                        <sf:commandButton id="deleteButton" value="#{baseMsg.locationBoxCancelButton}" processIds="*" action="delete" style="width: 100px;"  />
+                    </h:form>
+                </div>
+            </ui:define>
+            <ui:define name="bottomInformationSection">
+                <p class="tb_booking_bread"><h:outputText value="#{sectionMsg.welcomepageExamLength}"/></p>
+            </ui:define>
+        </ui:decorate>
+        <p />
+        
+ <!--        <ui:decorate template="/flows/sms-reminder-form.xhtml" />   -->
+
+</ui:fragment>
+</ui:define>
+<ui:define name="trackingScript">
+		  ga('set', {
+			  '#{analytics.dOrganization}': '#{sectionMsg.organizationName}',
+			  '#{analytics.dClinic}': '#{booking.surgery.surgeryName}',
+			  '#{analytics.dDaysBeforeBooking}': '#{booking.daysBeforeBooking}',
+			  '#{analytics.dPatientAge}': '#{booking.patientAge}',
+			  '#{analytics.dBookingDate}': '<h:outputText value="#{booking.startTime}"><f:convertDateTime type="both" pattern="yyyy/MM/dd" locale="sv" timeZone="Europe/Stockholm" /></h:outputText>',
+			  '#{analytics.dBookingTime}': '<h:outputText value="#{booking.startTime}"><f:convertDateTime type="both" pattern="HH:mm" locale="sv" timeZone="Europe/Stockholm" /></h:outputText>'
+		  });
+</ui:define>
+</ui:composition>

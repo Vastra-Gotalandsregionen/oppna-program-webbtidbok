@@ -1,0 +1,162 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--
+
+    Copyright 2010 Västra Götalandsregionen
+
+      This library is free software; you can redistribute it and/or modify
+      it under the terms of version 2.1 of the GNU Lesser General Public
+      License as published by the Free Software Foundation.
+
+      This library is distributed in the hope that it will be useful,
+      but WITHOUT ANY WARRANTY; without even the implied warranty of
+      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+      GNU Lesser General Public License for more details.
+
+      You should have received a copy of the GNU Lesser General Public
+      License along with this library; if not, write to the
+      Free Software Foundation, Inc., 59 Temple Place, Suite 330,
+      Boston, MA 02111-1307  USA
+
+
+-->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:sf="http://www.springframework.org/tags/faces"
+				template="/layouts/loggedInTemplate.xhtml">
+
+<ui:define name="content">
+
+    <ui:fragment id="loginFragment">
+	
+    
+		<h1 class="tb_heading">#{sectionMsg.updatepageHeader}</h1>
+		<p><h:outputText value="#{sectionMsg.updatepageIntroduction}" escape="false"/></p>
+		<p><h:outputFormat value="#{sectionMsg.updatepageRescheduleInfo}" escape="false">
+            <f:param value="#{booking.surgery.surgeryPhone}" /></h:outputFormat></p>
+		
+				<ui:decorate template="/flows/bookinginfo-patientdata.xhtml">
+		        	<ui:param name="location_heading" value="#{baseMsg.updatepageOriginalTimeHeading}"/>
+		        </ui:decorate>
+
+        <ui:decorate template="update_sectionheader.xhtml">
+            <ui:param name="section_heading" value="#{baseMsg.updatepageChooseLocation}"/>
+        </ui:decorate>
+
+        <div id="tb_selectlocation">    
+			<f:view>
+				<h:form id="selectForm" action="displaytimes">
+					<h:selectOneMenu rendered="true" id="places" value="#{location.locationId}"
+					       onchange="triggerButton('selectForm:displayButton');">
+			       	    <f:selectItems value="#{location.selectItems}" />
+					</h:selectOneMenu>
+					<br />
+					<sf:commandButton id="displayButton" style="display: none" value="#{baseMsg.updatepageShowTimes}" processIds="*" action="displaytimes"/>	
+					<noscript id="noScript">
+						<sf:commandButton id="displayButtonNoScript" rendered="true" value="#{baseMsg.updatepageShowTimes}" processIds="*" action="displaytimes"/>	
+					</noscript>	
+				</h:form>
+			</f:view>
+		</div>
+
+<p class="tb_update_new_location_header"><h:outputFormat value="#{baseMsg.updatepageDirectionHeader}">
+	<f:param value="#{location.currentLocation.surgeryName}"></f:param>
+</h:outputFormat></p>
+
+<ui:fragment id="directionFragment" render="#{!empty location.currentLocation.surgeryAddress}">
+	<p>#{sectionMsg.updatepageLocationDirection}#{location.currentLocation.surgeryAddress}</p>
+</ui:fragment>
+<ui:fragment id="switchFragment" render="#{!empty sectionMsg.updatepageSwitchLocationLink}">
+		<div id="link_switchlocation">
+			<h:form>
+				<h:commandLink id="switch" action="switch" value="#{sectionMsg.updatepageSwitchLocationLink}" /> 
+			</h:form>
+		</div>
+</ui:fragment>
+				 
+        <ui:decorate template="update_sectionheader.xhtml">
+            <ui:param name="section_heading" value="#{baseMsg.updatepageChooseDate}"/>
+        </ui:decorate>
+        <p class="tb_surgery_address_header">#{location.currentLocation.surgeryName}</p>
+
+		<ui:fragment rendered="#{booking.surgery.surgeryId != location.currentLocation.surgeryId}">
+		    <p id="tb_location_switch_warning"><h:outputText value="#{baseMsg.updatepageSwitchedLocationWarning}" escape="false" /></p>
+		</ui:fragment>
+											
+		<ui:fragment id="calendarFragment">
+		    <div class="placediv_date">
+		    <h:form id="displayDateForm" style="display: inline; text-align: right;padding-left: 37.5em;" >
+			<table class="tb_calendar">
+                <!--        HEADER      -->
+                <!--     <   April  >       -->
+			    <tr class="tb_calendar_heading">
+					<th><h:commandLink id="prev" value="&lt;" action="prev"/></th>
+					<th colspan="5"><h:outputText value="#{calendarHolder.currentMonthString}" /></th>
+					<th><h:commandLink id="next" value="&gt;" action="next"/></th>
+			    </tr>
+			    <!--		HEADER		-->
+                <!--    Må Ti On To Fr Lö Sö    -->
+		        <tr>
+			        <th>Må</th><th>Ti</th><th>On</th>
+			        <th>To</th><th>Fr</th><th>Lö</th><th>Sö</th>
+                </tr>
+                <ui:repeat value="#{calendarHolder.calendar}" var="weekRow">
+                    <tr>
+                        <ui:repeat value="#{weekRow}" var="dayCell">
+                            <td class="#{dayCell.style}">
+                                <ui:fragment rendered="#{dayCell.isLink}">
+                                    <h:commandLink escape="false" id="cal#{dayCell.day}" value="#{dayCell.day}" action="showTimeCalendar" >
+                                        <f:param name="selectedDay" value="#{dayCell.day}"></f:param>
+                                    </h:commandLink>
+                                </ui:fragment>
+                                <ui:fragment rendered="#{!dayCell.isLink}">#{dayCell.day}</ui:fragment>
+                            </td>
+                        </ui:repeat>
+                    </tr>
+                </ui:repeat>
+		    </table>
+            </h:form>
+			</div>
+			<h:outputText value="Blått fält = lediga tider finns." escape="false"/>
+        </ui:fragment>
+
+        <!-- Only show timelist if we have selected a date in the current month, and there
+             are empty slots for that date. -->
+        <!-- TODO: Make this work for empty timeListLocal -->
+        <ui:fragment rendered="#{calendarHolder.selectedDateIsInCurrentMonth}">         
+          <ui:fragment rendered="#{timeListLocal.rowCount > 0}">         
+				 
+				<ui:decorate template="update_sectionheader.xhtml">
+                <ui:param name="section_heading" value="#{baseMsg.updatepageChooseTime}"/>
+            </ui:decorate>
+            <p class="tb_surgery_address_header">#{location.currentLocation.surgeryName}</p>
+			
+
+			<div id="placediv_time">
+				<h:form id="timeForm">
+					<h:dataTable id="timeTable" columnClasses="col1,col2" rowClasses="oddRow,evenRow" value="#{timeListLocal}" var="btl" rendered="#{!empty timeListLocal}">
+					    <f:facet name="header">
+                            <div class="tb_time_datestring">#{calendarHolder.selectedDateString}</div>
+                        </f:facet>
+						<h:column id="col1">
+    						<f:facet name="header" ><div class="tb_time_header">Tid</div></f:facet>
+				    		<h:outputText value="#{btl.dateTime}"><f:convertDateTime type="time" pattern="HH:mm" locale="sv" timeZone="Europe/Stockholm"/></h:outputText>
+						</h:column>
+						<h:column id="col2">
+							<h:commandButton id="timeButton" value="Välj" action="selecttime" processIds="*" immediate="true" />
+						</h:column>
+					</h:dataTable>
+				</h:form>
+			</div>   <!-- placediv_time -->
+          </ui:fragment>              
+		</ui:fragment>				
+
+        <ui:decorate template="update_cancelbutton.xhtml" />
+
+    </ui:fragment>
+</ui:define>
+
+
+</ui:composition>

@@ -1,0 +1,88 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--
+
+    Copyright 2010 Västra Götalandsregionen
+
+      This library is free software; you can redistribute it and/or modify
+      it under the terms of version 2.1 of the GNU Lesser General Public
+      License as published by the Free Software Foundation.
+
+      This library is distributed in the hope that it will be useful,
+      but WITHOUT ANY WARRANTY; without even the implied warranty of
+      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+      GNU Lesser General Public License for more details.
+
+      You should have received a copy of the GNU Lesser General Public
+      License along with this library; if not, write to the
+      Free Software Foundation, Inc., 59 Temple Place, Suite 330,
+      Boston, MA 02111-1307  USA
+
+
+-->
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:sf="http://www.springframework.org/tags/faces"
+				template="/layouts/loggedOutTemplate.xhtml">
+
+<ui:define name="content">
+
+	<ui:fragment id="loginFragment">
+		    <h1><h:outputText value="#{baseMsg.loginpageMainHeader}"/></h1>
+		    <p><h:outputText value="#{baseMsg.loginpageIntroMsg1}"/></p>
+		    <p><h:outputText value="#{baseMsg.loginpageIntroMsg2}"/></p>
+		    <p><h:outputText value="#{baseMsg.loginpageIntroInfoLink}" escape="false" /></p>
+		    <p><h:outputText value="#{baseMsg.loginpageIntroHelpLink}" escape="false" /></p>
+			
+			<div id="header-input-field-container">
+			<div id="forms-container">
+				<h:form id="mainForm" class="centerContent">
+				<h2><h:outputText value="#{baseMsg.loginpageSubHeaderLogin}"/></h2>
+				<br />
+				<h:outputLabel for="pnr"><p><h:outputText value="#{baseMsg.loginpagePasswordInstruction}"/></p></h:outputLabel>
+				<p />
+				<div style="width: 10em;float:left;" >
+				<p />
+					<div class="label">
+	                    <h:outputLabel for="passwd"><p><h:outputText value="#{baseMsg.loginpageIdNumberLabel}"/></p></h:outputLabel>
+					</div>
+					<div class="input">
+	                    <h:inputText id="pnr" value="#{state.pnr}"/>
+	                </div>
+					<p></p>
+					<div class="label">
+	                    <h:outputLabel for="passwd"><p><h:outputText value="#{baseMsg.loginpagePasswordLabel}"/></p></h:outputLabel>
+					</div>
+					<div class="input">
+				         <h:inputSecret id="passwd" value="#{state.passwd}" />
+	                </div>
+	                <div class="button">
+                		<sf:commandButton id="login" value="Logga in" processIds="*" action="login" />
+                	</div>
+                </div>
+                
+				
+               	<div id="error_message" style="float: right;width: 27em;list-style-image: none;">
+               		<ui:fragment rendered="#{failedLogin}">      
+               			<p><h:outputText value="#{baseMsg.loginpageErrorLoginFailed}"/></p>
+               			<ul>
+               				<li><h:outputText value="#{baseMsg.loginpageErrorLoginFailedAdvice1}"/></li>
+                            <li><h:outputText value="#{baseMsg.loginpageErrorLoginFailedAdvice2}"/></li>
+						</ul>
+					</ui:fragment>
+					<ui:fragment rendered="#{WSConnectionError}">      
+               			<p><h:outputText value="#{baseMsg.loginpageErrorWebServiceConnectionError1}" /></p>
+               			<ul>
+               				<li><h:outputText value="#{baseMsg.loginpageErrorWebServiceConnectionError2}"/></li>
+						</ul>
+					</ui:fragment>
+				</div>
+			</h:form>
+			</div>
+			</div>
+	</ui:fragment>
+
+</ui:define>
+</ui:composition>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2010 Västra Götalandsregionen
+
+      This library is free software; you can redistribute it and/or modify
+      it under the terms of version 2.1 of the GNU Lesser General Public
+      License as published by the Free Software Foundation.
+
+      This library is distributed in the hope that it will be useful,
+      but WITHOUT ANY WARRANTY; without even the implied warranty of
+      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+      GNU Lesser General Public License for more details.
+
+      You should have received a copy of the GNU Lesser General Public
+      License along with this library; if not, write to the
+      Free Software Foundation, Inc., 59 Temple Place, Suite 330,
+      Boston, MA 02111-1307  USA
+
+
+-->
+
+<!-- 
+		
+		BACKING BEANS / SPRING BEANS ARE DECLARED HERE, i.e. classes to be used thru the spring flow(s).
+		
+		SERVICE DEFINITIONS ARE DECLARED HERE, defines Service Id ex.: BUKAORTA, message bundle ex.: messages/bukaorta/BukAortaMessages and corresponding service ex.: elvisBookingService
+		
+		Each serviceDefinition should have a corresponding lookupService.
+		The look up services are responsible for doing a "lookup" on each user that tries to log on to pick the correct Service Definition and its content that user should have
+		
+		Each differentiating WebService should have a corresponding mapper class which converts WS specific classes into our own domain objects.
+		For example an Elvis Booking object is different from a Sectra RIS Booking class but both are converted by mapper classes into a Booking object defined in this application.
+		That Booking object in turn is then used through out our application.
+ -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="
+	   http://www.springframework.org/schema/aop
+	   http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-3.2.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd">
+
+
+	<!-- Common definitions for all environments -->
+	<import resource="configs/common/service-definitions.xml" />
+	<import resource="configs/common/lookup-definitions.xml" />
+	<import resource="configs/common/main-structure.xml" />
+	<import resource="configs/common/elvis-common-config.xml" />
+	<import resource="configs/common/sectra-common-config.xml" />
+
+	<!-- Environment dependent definitions
+
+		All beans marked as "Env specific" below are defined in these files.
+		These include:
+		 - serviceDefinitions
+		 - lookupChain
+		 - elvisWebservice
+		 - sectraBackendServices
+		
+		No common beans should be defined in these files. 
+	-->
+	<import resource="configs/${conf.dir}/services-config.xml" />
+
+
+	<!-- Imports the configurations of the different infrastructure systems of the application	-->
+	<import resource="webflow-config.xml" />
+	<import resource="webmvc-config.xml" />
+</beans>

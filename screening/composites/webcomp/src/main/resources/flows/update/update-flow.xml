@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2010 Västra Götalandsregionen
+
+      This library is free software; you can redistribute it and/or modify
+      it under the terms of version 2.1 of the GNU Lesser General Public
+      License as published by the Free Software Foundation.
+
+      This library is distributed in the hope that it will be useful,
+      but WITHOUT ANY WARRANTY; without even the implied warranty of
+      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+      GNU Lesser General Public License for more details.
+
+      You should have received a copy of the GNU Lesser General Public
+      License along with this library; if not, write to the
+      Free Software Foundation, Inc., 59 Temple Place, Suite 330,
+      Boston, MA 02111-1307  USA
+
+
+-->
+
+<flow xmlns="http://www.springframework.org/schema/webflow"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
+
+
+    <input name="state" />
+    <input name="booking" />
+
+    <on-start>
+        <evaluate expression="guiUtility.setupLocations(booking, state)"  result="flowScope.location"  />
+        <evaluate expression="calendarService.createCalendarHolder(state, booking)" result="flowScope.calendarHolder" />
+        <!-- This call is so we get any available times on the same day as the current booking listed automatically
+             when the page displays the first time. --> 
+        <evaluate expression="bookingFacade.getBookingTime(state, location.locationId, calendarHolder.selectedDate)"
+            result="flowScope.timeListLocal" result-type="dataModel" />
+    </on-start>
+
+	<view-state id="update" view="/flows/update/update.xhtml">
+        <!-- User selects an item in dropdown box. -->
+        <transition on="displaytimes">
+            <!-- location.locationId holds the id of the selected section. -->
+            
+            <!-- For backwards compatibility. CentralTidbokID should be phased out. -->
+            <evaluate expression="guiUtility.setCentralTidbokIDfromLocation(state, location.locationId)" />
+            <evaluate expression="calendarHolder.clearSelectedDate()" />
+            <evaluate expression="calendarService.switchLocation(state, calendarHolder, location.locationId)"  /> 
+        </transition>
+        <!-- User has selected a date in the calendar. -->
+		<transition on="showTimeCalendar">
+			<evaluate expression="calendarHolder.setSelectedDate(requestParameters.selectedDay)" />
+		 	<evaluate expression="bookingFacade.getBookingTime(state, location.locationId, calendarHolder.selectedDate)"
+		 	        result="flowScope.timeListLocal" result-type="dataModel" /> 
+		</transition>
+		<!-- User has pressed ok on a time button, and wants the time booked. -->
+		<transition on="selecttime" to="showConfirmation">
+			<set name="flowScope.timeTable" value="timeListLocal.selectedRow" />
+			<!-- TODO: Elvis should validate the booking in this call. -->
+			<evaluate expression="bookingFacade.reschedule(flowScope.timeTable, state)" />
+		</transition>
+		<transition on="prev">
+			<evaluate expression="calendarService.showPreviousMonth(state, calendarHolder, location.locationId)" />
+			<render fragments="displayTimeForm:calendarFragment" />
+		</transition>	
+		<transition on="next">
+			<evaluate expression="calendarService.showNextMonth(state, calendarHolder, location.locationId)" />
+			<render fragments="displayTimeForm:calendarFragment" />
+		</transition>	
+        <transition on="cancel" history="invalidate" to="cancel"/>
+        <transition on="help" to="help"/>
+        <transition on="switch" to="switch"/>
+         <transition on-exception="org.springframework.web.util.NestedServletException" history="invalidate" to="error"/>
+	</view-state>
+  
+    <view-state id="showConfirmation" view="/flows/update/showUpdateConfirmation.xhtml">
+        <on-render >
+            <evaluate expression="bookingFacade.getBookingInfo(state)" result="flowScope.booking" /> 
+        </on-render>
+         <transition on-exception="org.springframework.web.util.NestedServletException" history="invalidate" to="error"/>    
+    </view-state>
+    
+    <view-state id="help" view="/flows/help/help.xhtml">
+    </view-state>
+    
+    <view-state id="error" view="/flows/error/error.xhtml">
+	</view-state>
+    
+    <subflow-state id="switch" subflow="switch">
+          <input name="state" value="state" />
+          <input name="booking" value="booking" />
+        <transition on="cancel" to="cancel"/>
+    </subflow-state>
+
+    <end-state id="cancel"/>
+    <end-state id="logout"/>
+
+    <global-transitions>
+        <transition on="logout" history="invalidate" to="logout"/>
+        <transition on-exception="java.lang.Error" history="invalidate" to="error"/>
+        <transition on-exception="java.lang.Throwable" history="invalidate" to="error"/>
+        <transition on-exception="org.springframework.web.util.NestedServletException" history="invalidate" to="error"/>
+    </global-transitions>
+
+</flow>

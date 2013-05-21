@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2010 Västra Götalandsregionen
+
+      This library is free software; you can redistribute it and/or modify
+      it under the terms of version 2.1 of the GNU Lesser General Public
+      License as published by the Free Software Foundation.
+
+      This library is distributed in the hope that it will be useful,
+      but WITHOUT ANY WARRANTY; without even the implied warranty of
+      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+      GNU Lesser General Public License for more details.
+
+      You should have received a copy of the GNU Lesser General Public
+      License along with this library; if not, write to the
+      Free Software Foundation, Inc., 59 Temple Place, Suite 330,
+      Boston, MA 02111-1307  USA
+
+
+-->
+
+<flow xmlns="http://www.springframework.org/schema/webflow"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
+
+<!--	declaring instance variables, allocated when flow starts. Corresponding classes must implement java.io.Serializeable
+-->
+	<var name="state" class="se.vgregion.webbtidbok.State" />
+	<var name="loginmessages" class="se.vgregion.webbtidbok.LoginMessages" />
+
+<!--	declaring flow input attributes	and assigning them values thru expressions
+-->
+	<input name="pnr" type="string" value="flowScope.state.pnr"/>
+	<input name="passwd" type="string" value="flowScope.state.passwd"/>
+	<input name="messageBundle" type="string" value="flowScope.state.messageBundle" />
+
+
+
+<!--	===========================		-->
+<!--	THE FLOW STUFF STARTS BELOW 	-->
+<!--	===========================		-->
+
+<!-- <evaluate expression="someClass.someMethod(param1, param2)" /> -->
+<!-- this means that the flow calls methods in SpringBeans which are configured / declared in web-application.xml -->
+<!-- often the parameters are the variables declared above. -->
+
+
+    <!-- for debugging you have to replace to="validate" with to="loggedin"-->
+    <view-state id="start" view="/flows/login/start.xhtml">
+        <transition on="login" to="validate" />
+        <transition on-exception="org.springframework.web.util.NestedServletException" history="invalidate" to="error"/>
+        <transition on-exception="java.lang.Error" history="invalidate" to="error"/>  
+    </view-state>
+
+    <!-- Validate inputs to make sure id and password are well formed -->    
+    <action-state id="validate">
+        <evaluate expression="validationService.validateLogin(state, loginmessages)" />
+        <transition on="yes" to="lookupService" />
+        <transition on="no" to="start">
+            <evaluate expression="true" result="flashScope.failedLogin" /> 
+        </transition>
+        <transition on-exception="org.springframework.web.util.NestedServletException" to="error"/>
+        <transition on-exception="java.lang.Error" to="error"/>  
+    </action-state>
+
+	<!-- after password is validated as well formed, parse it and see what serviceID to set, that is lookup what WS to use -->
+    <action-state id="lookupService">
+        <evaluate expression="loginService.lookup(state, loginmessages)"></evaluate>
+        <transition on="yes" to="doLogin"/>
+        <transition on="no" to="start">
+            <evaluate expression="true" result="flashScope.failedLogin" /> 
+        </transition>
+    </action-state>
+	
+	<!-- set loggedIn bool in state -->
+	<action-state id="doLogin">
+		<evaluate expression="loginService.login(state)" />
+		<transition on="yes" to="loggedin" />
+		<transition on="no" to="start">
+			<evaluate expression="true" result="flashScope.failedLogin" />
+			<!-- evaluate expression="loginmessages.setBadLogin()" / -->
+		</transition>
+		<transition on-exception="se.vgregion.webbtidbok.errorhandling.UnableToConnectToWSException"
+			to="start">
+			<evaluate expression="true" result="flashScope.WSConnectionError" />
+		</transition>
+		<transition on-exception="org.springframework.web.util.NestedServletException"
+			to="error" />
+		<transition on-exception="java.lang.Throwable" to="error" />
+	</action-state>
+
+    <subflow-state id="loggedin" subflow="display">
+        <input name="state" value="state" />
+        <transition on="logout" to="loggedout" /> 
+    </subflow-state>
+
+	<end-state id="loggedout" view="/flows/login/loggedout.xhtml">
+		<on-entry>
+            <evaluate expression="loginService.logout(state)" />
+        </on-entry>
+	</end-state>
+
+	<view-state id="debug" view="/flows/login/debug.xhtml">
+		<!--  if we have not defined the correct transition yet, transit to this state. -->
+	</view-state>
+	
+	<end-state id="error" view="/flows/error/error.xhtml">
+		<!--transition on="logout" to="loggedout" /--> 
+	</end-state>
+
+    <global-transitions>
+        <transition on-exception="se.vgregion.webbtidbok.errorhandling.UnableToConnectToWSException" to="start">
+        	<evaluate expression="true" result="flashScope.WSConnectionError" />
+        </transition>
+    	<transition on-exception="org.springframework.web.util.NestedServletException" history="invalidate" to="error"/>
+        <transition on-exception="java.lang.Throwable" history="invalidate" to="error"/>  
+    </global-transitions>
+</flow>

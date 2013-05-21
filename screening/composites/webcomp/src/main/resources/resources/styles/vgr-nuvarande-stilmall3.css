@@ -1,0 +1,360 @@
+/**
+ * Copyright 2010 Västra Götalandsregionen
+ *
+ *   This library is free software; you can redistribute it and/or modify
+ *   it under the terms of version 2.1 of the GNU Lesser General Public
+ *   License as published by the Free Software Foundation.
+ *
+ *   This library is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU Lesser General Public License for more details.
+ *
+ *   You should have received a copy of the GNU Lesser General Public
+ *   License along with this library; if not, write to the
+ *   Free Software Foundation, Inc., 59 Temple Place, Suite 330,
+ *   Boston, MA 02111-1307  USA
+ *
+ */
+
+ .showHideLink {
+	}
+#SVRLinkHide {
+	}
+.artikelShowHide {
+	}
+
+
+				/* --------------  Right BOXES CONTENT ---------------- */
+
+.searchHolder {					/* NY CLASS 080609 */
+	display:block;
+	margin-bottom:1em;}
+
+.rightColSearch {
+	font: 1.1em Verdana, Helvetica, sans-serif;
+	border:solid .1em #999;
+	margin:0.3em 0 1em 1.8em;
+	padding-bottom: .1em;
+	width:132px;
+}
+.searchtext {
+	margin:0 0 0 2em;
+	font: bold 1.0em Verdana, Helvetica, sans-serif;
+	color:#3e3e3e; 
+	padding-bottom:0;
+}
+.button {
+	font: bold 1.1em Verdana, Helvetica, sans-serif;
+	color:#333;
+	height:1.8em;
+	margin:0.5em 0 0.8em 0.3em;
+	padding:0;
+}
+
+				/* --------------                   -------------------*/
+				/* --------------      FOOTER       -------------------*/
+				/* --------------                   -------------------*/
+
+/** html #wrapFooter {  /* For IE6 */ 
+	/*width:94.3em;
+}
+*:first-child+html #wrapFooter
+{
+	/* for IE7 */
+/*	width:94.1em;
+}*/
+	
+.footerholder {
+	clear: both;
+	display:block;
+	height: 2em;
+	margin:0;
+	padding:0;
+	width: 94.2em;
+}
+#footerleft {
+	height: 2em;
+	margin: 0;
+	background-color:#9c132f;
+	width: 69.2em;
+	float:left;
+}
+* html #footerleft {  /* For IE6 */ 
+	width:69.2em;
+}
+*:first-child+html #footerleft { /* for IE7 */
+	width:69.3em;
+}
+#footerright {
+	height: 2em;
+	background-color:#9c132f;
+	width: 25em;
+	float:left;
+}
+#minifootholder{
+	clear: both;
+	height: 0.2em;
+	min-height:0.2em;
+	margin:0;
+	padding:0;
+	width: 94.2em;
+}
+ 
+ #footbordertopLeft{
+	height: 0.2em;
+	min-height:0.2em;
+	margin:0;
+	padding:0;
+	margin-bottom:0.2em;
+	border-bottom: 0.1em solid #91adb4;
+	border-left: 0.1em solid #91adb4;
+	border-right: 0.1em solid #91adb4;
+	width: 24.8em;
+	float:left;
+}
+#footbordertopRight{
+	height: 0.2em;
+	min-height:0.2em;
+	margin:0;
+	margin-bottom:0.2em;
+	border-bottom: 0.1em solid #91adb4;
+	border-left: 0.1em solid #91adb4;
+	border-right: 0.1em solid #91adb4;
+	width: 24.8em;
+	float:right;
+}
+.footertextmini {
+	font-size: 0.01em;
+}
+.footertext 
+{
+    background-color:#9c132f;
+	font-size:1.0em;
+	font-weight:normal;
+	color:#fff;
+	padding-left:1.5em;
+	margin-top:0.4em;
+	float:left;
+}
+.footertextBottom {
+	padding-left:1.5em;
+	float:left;
+}
+.mail-link 
+{
+    background-color:#9c132f;
+	color:#fff;
+}
+.bottomLogo { 
+	margin-right:1.5em;
+}
+
+								/* --------------                   -------------------*/
+								/* --------------    S�KRESULTAT    -------------------*/
+								/* --------------                   -------------------*/
+
+/*#centercontent #searchResultHead {
+	width:99%;
+	float:left;
+	margin:0;
+	padding:0;
+	padding-bottom:.4em;
+}
+#centercontent #searchResultHead ul {
+	margin:0;
+	padding:0;
+	height:2em;
+	padding: 0;
+	list-style: none;
+	background-color: #9C132F;
+	padding-top:.4em;
+}
+#centercontent #searchResultHead li {
+	display: inline;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:1.1em;
+	color: #fff;
+	font-weight:bold;
+	text-decoration: none;
+}*/
+
+#centercontent #searchResultHead li#vardmottagningar {
+	padding-right:6em;
+	padding-left:.4em;
+}
+
+#centercontent #searchResultHead li#besoksadress {
+	padding-right:4.2em;
+}
+
+.arrowLinkGreen {
+	display:block;
+	font:1.1em Verdana, Helvetica, sans-serif;
+	/*line-height:1.5em;*/
+	color:#222; 
+	background:url(images/arrow-green.gif) left top;
+	background-repeat:no-repeat; 
+	padding: 0 0 0 0.7em;
+	margin-bottom:0.6em;
+}
+.arrowLinkGreen a{
+	color:#222; 
+}
+
+.blockfloatleft {
+	display:block; 
+	float: left;	
+}
+
+#centercontent .arrowLinkGreen 
+{
+	float: left;
+}
+/*
+.vardmottagningar {
+	display:block;
+	float:left; 
+	width:17.3em;
+}
+
+.besoksadress {
+	float:left; 
+	width:13.2em;
+}
+
+.telefonnummer {
+	float:left; 
+	width:9em;
+}
+.resultHolder {
+	border-bottom: dotted .1em #bed8bb; 
+	float:left;
+	width:98%;
+}
+*/
+				/* --------------                   -------------------*/
+				/* --------------    POLLENGrej     -------------------*/
+				/* --------------    Anv�nds EJ     -------------------*/
+
+
+/*.pollenBox {
+	font: normal 1.1em Arial, Helvetica, sans-serif;
+	color:#333;
+	margin-left:1.8em;
+}
+
+.pollenitem {
+	float: left;
+	margin: 0;
+	padding: 0;
+	width: 16em;
+	border-style: none;
+	border-bottom: solid 1px #bbb;
+}
+.label-low {
+	float: left;
+	font: normal 1.1em Arial, Helvetica, sans-serif;
+	color:#333;
+	margin: 0;
+	padding: 0.2em 0em;
+	width: 7.5em;
+	text-align: right;
+	border-style: none;
+}
+.label-high {
+	float: left;
+	font: normal 1.1em Arial, Helvetica, sans-serif;
+	color:#333;
+	margin: 0;
+	padding: 0.2em 0;
+	width: 7.1em;
+	text-align: right;
+	border-style: none;
+}
+.last {
+	border-bottom-style: none;
+}
+.pollenitem .text {
+	float: left;
+	padding: 0.1em 0.1em 0.1em 0;
+	width: 6.5em;
+	margin:0 0 0 0;
+	border-style: none;
+	border-right: solid 1px #bbb;
+}
+.pollenitem .graphNone {
+  float: left;
+  padding: 0.1em 0;
+  width: 9em;
+  margin:0 0 0 0.2em;
+  border-style: none;
+}
+.pollenitem .graphHigh {
+  float: left;
+  background:url(images/pollengraph-high.gif) left repeat-x;
+  padding: 0.1em 0;
+  width: 9.2em;
+  margin:0 0 0 0;
+  border-style: none;
+}
+.pollenitem .graphMedium {
+  float: left;
+  background:url(images/pollengraph-high.gif) left repeat-x;
+  padding: 0.1em 0;
+  width: 4.5em;
+  margin:0 0 0 0;
+  border-style: none;
+}
+.pollenitem .graphLow {
+  float: left;
+  background:url(images/pollengraph-high.gif) left no-repeat;
+  padding: 0.1em 0;
+  width: 1.5em;
+  margin:0 0 0 0;
+  border-style: none;
+}
+.pollenBg {
+background:url(images/pollen-bg.gif) top right no-repeat;
+}*/
+
+
+				/* --------------                      -------------------*/
+				/* -------------- Sjukv�rdr�dgivningen -------------------*/
+				/* --------------      grejer          -------------------*/
+
+
+.artikelShowHide {
+	/*margin-left:3em;*/
+	border-top:solid .1em #dee9d4;
+	width:90%;
+	margin-top:1em;
+	padding-top:.3em;
+	margin-bottom:1em;
+}
+
+.artikelFoot {
+	color:#888;
+	margin-left:3em;
+	border-top:solid .1em #dee9d4;
+	width:90%;
+	margin-top:1em;
+	padding-top:.3em;
+	margin-bottom:1em;
+}
+.artikelFoot a{
+	color:#888;
+}
+
+.h2Chapter
+{
+	color:#9C132F;
+	background-color:#fff;
+	font-family: Arial, Verdana, Sans-Serif;
+	font-size:1.4em;
+	margin-bottom:0px;
+	margin-top:0.6em;
+	width:5em;
+	
+	border-bottom:solid 1px #ccc;
+}
