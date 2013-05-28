@@ -38,6 +38,7 @@
 			</activation>
 			<properties>
 				<conf.dir>prod</conf.dir>
+				<log.level>WARN</log.level>
 				<sectraWsdlLocation>http://webtidbokws.vgregion.se/RISReschedule/Service.svc?wsdl</sectraWsdlLocation>
 				<elvisWsdlLocation>https://webtidbokws.vgregion.se/IC/CentralBooking/CentralBookingWS/CentralBookingWS.svc?wsdl</elvisWsdlLocation>
 			</properties>
@@ -46,6 +47,7 @@
 			<id>test</id>
 			<properties>
 				<conf.dir>test</conf.dir>
+				<log.level>DEBUG</log.level>
 				<sectraWsdlLocation>http://webtidbokws.vgregion.se/RISReschedule/Service.svc?wsdl</sectraWsdlLocation>
 				<elvisWsdlLocation>https://webtidbokws.vgregion.se/IC/CentralBooking/CentralBookingWS/CentralBookingWS.svc?wsdl</elvisWsdlLocation>
 			</properties>
@@ -54,6 +56,7 @@
 			<id>mock</id>
 			<properties>
 				<conf.dir>mock</conf.dir>
+				<log.level>DEBUG</log.level>
 				<sectraWsdlLocation>http://localhost:8088/mockBasicHttpBinding_IRisReschedule?WSDL</sectraWsdlLocation>
 				<elvisWsdlLocation>http://localhost:8088/mockElvis?WSDL</elvisWsdlLocation>
 			</properties>
@@ -62,6 +65,7 @@
 			<id>mockws</id>
 			<properties>
 				<conf.dir>mockws</conf.dir>
+				<log.level>DEBUG</log.level>
 				<sectraWsdlLocation>http://localhost:8088/mockBasicHttpBinding_IRisReschedule?WSDL</sectraWsdlLocation>
 				<elvisWsdlLocation>http://localhost:8088/mockElvis?WSDL</elvisWsdlLocation>
 			</properties>
