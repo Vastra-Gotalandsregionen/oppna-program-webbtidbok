@@ -24,7 +24,6 @@ import javax.xml.ws.WebServiceException;
  * Used to determine errors when trying to establish a connection to 
  * a web service.
  * 
- * @author frelun
  *
  */
 public class UnableToConnectToWSException extends WebServiceException {

@@ -54,7 +54,6 @@ import se.vgregion.webbtidbok.ws.CentralBookingWS;
  *   TODO: tryConnection should be running repeatedly in a thread in order to regain
  *   connection when WS is back online.
  * 
- * @author frelun
  *
  */
 public class ElvisTryWebService implements ICentralBookingWS {

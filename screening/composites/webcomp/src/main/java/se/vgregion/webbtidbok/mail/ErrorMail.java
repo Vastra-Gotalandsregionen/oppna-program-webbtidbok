@@ -35,7 +35,6 @@ import org.apache.log4j.Logger;
  * Used to send a mail notification to Insieme when Webbtidboken has problems
  * connecting to any of the web services on startup
  * 
- * @author frelun
  *
  */
 public class ErrorMail implements Runnable {
