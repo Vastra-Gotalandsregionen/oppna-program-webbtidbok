@@ -31,17 +31,12 @@
            http://www.springframework.org/schema/util
            http://www.springframework.org/schema/util/spring-util-3.2.xsd">
 
-	<!-- This config is for using MOCK services. -->
+	<!-- This config is for using PRODUCTION services. -->
 
 	<!-- This is used to config analytics for local use -->
 	<import resource="analytics.xml" />
-	<!-- This creates the mock data to use. Mock both sectra and elvis. -->
-	<import resource="testdata-su.xml" />
-	<import resource="testdata-nu.xml" />
-	<import resource="elvisMockConfig.xml" />
 
-
-	<!-- Service definitions for mock - only two for mammo plus elvis mock -->
+	<!-- Service definitions -->
 	<util:list id="serviceDefinitions">
 		<ref bean="serviceDefinitionMammografiSU" />
 		<ref bean="serviceDefinitionMammografiNU" />
@@ -49,72 +44,68 @@
 		<ref bean="serviceDefinitionBukAorta" />
 		<ref bean="serviceDefinitionGyn" />
 	</util:list>
-	
+
 	<!-- List of backend services to look for using PRN + password -->
 	<util:list id="lookupChain">
 		<ref bean="lookupServiceSU" />
 		<ref bean="lookupServiceNU" />
 		<ref bean="lookupServiceAVE" />
+
+		<!-- This actually logs in to Elvis. Needs to be after the Sectra services for performance -->
 		<ref bean="elvisLookupService" />
+
+		<!-- TOGGLE GYN SERVICE HERE 3/4 -->
+		<ref bean="elvisLookupServiceGyn" />
 	</util:list>
 
 
 	<!-- Elvis specific beans -->
-	<bean id="elvisWebService" class="se.vgregion.webbtidbok.booking.elvis.mock.ElvisServiceMock"/>
+
+<!-- 	<bean id="elvisWebService" factory-bean="elvisWebServiceFactory" factory-method="getBasicHttpBindingICentralBookingWS"/>
+
+	<bean id="elvisWebServiceFactory" class="se.vgregion.webbtidbok.ws.CentralBookingWS" /> -->
+	
+	<bean id="elvisWebService" class="se.vgregion.webbtidbok.booking.elvis.ElvisTryWebService" >
+		<constructor-arg ref="mailQueue"/>
+		<constructor-arg type="java.lang.String" value="messages/ErrorMail" />
+		<constructor-arg type="java.lang.String" value="Elvis Central Booking (Gyn/Buk)" />
+	</bean>
+
 	<!-- End of Elvis specific beans -->
 
 
 	<!-- Sectra specific beans -->
 
-	<util:map id="sectraBackendServices">
-		<entry key="MAMMO_NU" value-ref="sectraMockServiceNU" />
-		<entry key="MAMMO_SU" value-ref="sectraMockServiceSU" />
-		<entry key="MAMMO_AVE" value-ref="sectraMockServiceSU" />
-	</util:map>
-	
 	<util:list id="suIncludeClinics">
-		<value>SU_section_1</value>
-		<value>SU_section_2</value>
 	</util:list>
-
+	
 	<util:list id="aveExcludeClinics">
-		<value>SU_section_1</value>
-		<value>SU_section_2</value>
 	</util:list>
-	
-<!-- 	<bean id="sectraSUService" factory-bean="sectraSUClientFactory" factory-method="getBasicHttpBindingIRisReschedule" />
-	<bean id="sectraSUClientFactory" class="se.vgregion.webbtidbok.ws.sectra.RISReschedule">
-		<constructor-arg type="java.net.URL" value="http://localhost:8088/mockBasicHttpBinding_IRisReschedule?WSDL" />
-		<constructor-arg type="javax.xml.namespace.QName">
-		    <bean class="javax.xml.namespace.QName">
-		        <constructor-arg index="0" value="http://tempuri.org/" />
-		        <constructor-arg index="1" value="RISReschedule" />
-		    </bean>
-		</constructor-arg>
-	</bean>
- -->
-	<bean id="sectraMockServiceNU" class="se.vgregion.webbtidbok.booking.sectra.SectraWSMock">
-		<property name="businessObjectHolder">
-			<bean
-				class="se.vgregion.webbtidbok.booking.sectra.mock.BusinessObjectHolder">
-				<constructor-arg ref="NU_sections" />
-				<constructor-arg ref="NU_timeblocks" />
-				<constructor-arg ref="NU_bookings" />
-			</bean>
-		</property>
+
+	<util:map id="sectraBackendServices">
+		<entry key="MAMMO_SU" value-ref="sectraSUService" />	
+		<entry key="MAMMO_NU" value-ref="sectraNUService"/>
+		<entry key="MAMMO_AVE" value-ref="sectraAVEService"/>
+	</util:map>
+
+	<bean id="sectraSUService" class="se.vgregion.webbtidbok.booking.sectra.SectraTryWebService">
+		<constructor-arg ref="mailQueue"/>
+		<constructor-arg type="java.lang.String" value="messages/ErrorMail" />
+		<constructor-arg type="java.lang.String" value="Sectra Mammografi SU" />
 	</bean>
 
-	<bean id="sectraMockServiceSU" class="se.vgregion.webbtidbok.booking.sectra.SectraWSMock">
-		<property name="businessObjectHolder">
-			<bean
-				class="se.vgregion.webbtidbok.booking.sectra.mock.BusinessObjectHolder">
-				<constructor-arg ref="SU_sections" />
-				<constructor-arg ref="SU_timeblocks" />
-				<constructor-arg ref="SU_bookings" />
-			</bean>
-		</property>
+	<bean id="sectraAVEService" class="se.vgregion.webbtidbok.booking.sectra.SectraTryWebService">
+		<constructor-arg ref="mailQueue"/>
+		<constructor-arg type="java.lang.String" value="messages/ErrorMail" />
+		<constructor-arg type="java.lang.String" value="Sectra Mammografi AVE" />
 	</bean>
-	
+
+	<bean id="sectraNUService" class="se.vgregion.webbtidbok.booking.sectra.SectraTryWebService">
+		<constructor-arg ref="mailQueue"/>
+		<constructor-arg type="java.lang.String" value="messages/ErrorMail" />
+		<constructor-arg type="java.lang.String" value="Sectra Mammografi NU" />
+	</bean>
+		
 	<!-- End of Sectra specific beans -->
 
 </beans>

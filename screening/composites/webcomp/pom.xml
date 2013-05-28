@@ -38,18 +38,32 @@
 			</activation>
 			<properties>
 				<conf.dir>prod</conf.dir>
+				<sectraWsdlLocation>http://webtidbokws.vgregion.se/RISReschedule/Service.svc?wsdl</sectraWsdlLocation>
+				<elvisWsdlLocation>https://webtidbokws.vgregion.se/IC/CentralBooking/CentralBookingWS/CentralBookingWS.svc?wsdl</elvisWsdlLocation>
 			</properties>
 		</profile>
 		<profile>
 			<id>test</id>
 			<properties>
 				<conf.dir>test</conf.dir>
+				<sectraWsdlLocation>http://webtidbokws.vgregion.se/RISReschedule/Service.svc?wsdl</sectraWsdlLocation>
+				<elvisWsdlLocation>https://webtidbokws.vgregion.se/IC/CentralBooking/CentralBookingWS/CentralBookingWS.svc?wsdl</elvisWsdlLocation>
 			</properties>
 		</profile>
 		<profile>
 			<id>mock</id>
 			<properties>
 				<conf.dir>mock</conf.dir>
+				<sectraWsdlLocation>http://localhost:8088/mockBasicHttpBinding_IRisReschedule?WSDL</sectraWsdlLocation>
+				<elvisWsdlLocation>http://localhost:8088/mockElvis?WSDL</elvisWsdlLocation>
+			</properties>
+		</profile>
+		<profile>
+			<id>mockws</id>
+			<properties>
+				<conf.dir>mockws</conf.dir>
+				<sectraWsdlLocation>http://localhost:8088/mockBasicHttpBinding_IRisReschedule?WSDL</sectraWsdlLocation>
+				<elvisWsdlLocation>http://localhost:8088/mockElvis?WSDL</elvisWsdlLocation>
 			</properties>
 		</profile>
 	</profiles>
@@ -128,7 +142,7 @@
 							<!-- PROD ELVIS, build locally, run with PROD WS if <wsdlLocation> points to demo elvis WS you can run with test patients. --> 	 			
 							<wsdlDirectory>${basedir}/src/main/resources/wsdl/skarpaElvis/</wsdlDirectory>	
 							<!-- wsdlLocation>http://demo.insieme.se/CentralbookingWS/CentralBookingWS.svc?wsdl</wsdlLocation -->
-							<wsdlLocation>https://webtidbokws.vgregion.se/IC/CentralBooking/CentralBookingWS/CentralBookingWS.svc?wsdl</wsdlLocation>				
+							<wsdlLocation>${elvisWsdlLocation}</wsdlLocation>				
 							<wsdlFiles>
 								<wsdlFile>CentralBookingWS_1.wsdl</wsdlFile>
 							</wsdlFiles>
@@ -152,7 +166,7 @@
 						<configuration>
 							<!-- PROD SECTRA SU here. ALSO change in web-application-config.xml -->
 							<wsdlDirectory>${basedir}/src/main/resources/wsdl/skarpaSectra/</wsdlDirectory>
-							<wsdlLocation>http://webtidbokws.vgregion.se/RISReschedule/Service.svc?wsdl</wsdlLocation>
+							<wsdlLocation>${sectraWsdlLocation}</wsdlLocation>
 							<wsdlFiles>
 								<wsdlFile>Service_1.wsdl</wsdlFile>
 							</wsdlFiles> 
