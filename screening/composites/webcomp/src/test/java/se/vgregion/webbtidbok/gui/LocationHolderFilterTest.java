@@ -37,7 +37,6 @@ public class LocationHolderFilterTest {
     private LocationHolder holder;
     private Surgery s1,s2,s3,s4;
     private List<Surgery> surgeries;
-//    private Surgery[] surgeries = {s1,s2,s3,s4};
     private static final String[] EMPTY_STRING_ARRAY = {};
     
     

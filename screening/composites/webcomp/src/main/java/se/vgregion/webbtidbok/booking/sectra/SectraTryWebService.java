@@ -57,7 +57,6 @@ import org.apache.log4j.Logger;
  *   TODO: tryConnection should be running repeatedly in a thread in order to regain
  *   connection when WS is back online.
  * 
- * @author frelun
  *
  */
 public class SectraTryWebService implements IRisReschedule {

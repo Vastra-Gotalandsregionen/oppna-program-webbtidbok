@@ -66,8 +66,8 @@ public class ElvisServiceMock implements ICentralBookingWS {
 		Map<String, BookingResponse> bookings = new HashMap<String, BookingResponse>();
 		String pNR1 = "19700123-9297";
 		String pNR2 = "20100312-2222";
-		bookings.put(pNR1, createBookings(pNR1, "KALLE 1", "ADRESS 1", "MOTAGNING 1", xmlCalendarFor(2010, 8, 24, 11, 0, 0), 1));
-		bookings.put(pNR2, createBookings(pNR2, "KALLE 2", "ADRESS 2", "MOTAGNING 2", xmlCalendarFor(2010, 8, 26, 12, 0, 0), 2));
+		bookings.put(pNR1, createBookings(pNR1, "KALLE 1", "ADRESS 1", "MOTAGNING 1", xmlCalendarFor(2010, 8, 24, 11, 0, 0), 1, "GS01"));
+		bookings.put(pNR2, createBookings(pNR2, "KALLE 2", "ADRESS 2", "MOTAGNING 2", xmlCalendarFor(2010, 8, 26, 12, 0, 0), 2, "BS01"));
 		elvisMockData.put("bookings", bookings);
 
 		// Create bookingPlaces.
@@ -112,12 +112,13 @@ public class ElvisServiceMock implements ICentralBookingWS {
 	}
 
 	private BookingResponse createBookings(String PNR, String NAME, String ADDRESS, String MOTTAGNING,
-			XMLGregorianCalendar xmlGregorianCalendar, int centralTidbokID) {
+			XMLGregorianCalendar xmlGregorianCalendar, int centralTidbokID, String undersokningsTypKod) {
 		BookingResponse bookingResponse = new BookingResponse();
 		bookingResponse.setPnr(objectFactory.createString(PNR));
 		bookingResponse.setNamn(objectFactory.createString(NAME));
 		bookingResponse.setAddress(objectFactory.createString(ADDRESS));
 		bookingResponse.setMottagning(objectFactory.createString(MOTTAGNING));
+		bookingResponse.setUndersokningsTypKod(objectFactory.createString(undersokningsTypKod));
 		bookingResponse.setAntalOmbok(0);
 		bookingResponse.setMaxAntalOmbok(4);
 		bookingResponse.setCentralTidbokID(centralTidbokID);
