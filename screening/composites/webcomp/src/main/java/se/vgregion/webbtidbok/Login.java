@@ -55,8 +55,6 @@ public class Login {
 		logger = LoggerFactory.getLogger("se.vgregion.webbtidbok");
 	}
 
-	ServiceDefinition sd = new ServiceDefinition();
-
 	public void setResourceBundle(ResourceBundle resourceBundle) {
 		this.resourceBundle = resourceBundle;
 	}
@@ -109,8 +107,6 @@ public class Login {
 			} else {
 				// else if(serviceType.equalsIgnoreCase("BS01")
 				// BUKAORTA
-				setMessageBundle(stateLoginCredentials, sd);
-				setExcludeIncludeClinics(stateLoginCredentials, sd);
 				stateLoginCredentials.setLoggedIn(true);
 				logger.info("Logging in user {}.", stateLoginCredentials.getPnr());
 				isLoggedin = true;
@@ -132,12 +128,11 @@ public class Login {
 	 * @return {@link boolean}
 	 */
 	public boolean lookup(State state, LoginMessages loginMessages) {
-		sd = lookupService.lookup(state);
+		ServiceDefinition sd = lookupService.lookup(state);
 		if (sd != null) {
 			state.setService(sd.getServiceID());
-			if (!sd.getServiceID().equalsIgnoreCase("BUKAORTA")) {
-				setMessageBundle(state, sd);
-			}
+			setMessageBundle(state, sd);
+			setExcludeIncludeClinics(state, sd);
 			logger.debug("Service lookup succeeded for user {}: service is {}.", state.getPnr(), state.getService());
 			return true;
 		} else {
