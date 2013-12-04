@@ -21,65 +21,70 @@
 -->
 
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	    		xmlns:ui="http://java.sun.com/jsf/facelets"
-	  			xmlns:h="http://java.sun.com/jsf/html"
-	  			xmlns:f="http://java.sun.com/jsf/core"
-	  			xmlns:sf="http://www.springframework.org/tags/faces"
-				template="/layouts/loggedInTemplate.xhtml">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:sf="http://www.springframework.org/tags/faces"
+	template="/layouts/loggedInTemplate.xhtml">
 
-<ui:define name="content">
+	<ui:define name="content">
 
-<ui:fragment id="loginFragment">
+		<ui:fragment id="loginFragment">
+			<div class="row-fluid">
+				<h3>#{sectionMsg.switchlocationpageHeader}</h3>
 
-	<h1>#{sectionMsg.switchlocationpageHeader}</h1>
-	
-  	<p><h:outputText value="#{sectionMsg.switchlocationpageBody}" escape="false" /></p>
-   
-    <ui:fragment id="list" rendered="#{!empty sectionMsg.switchlocationpageBodyList}">
-    		<div id="centercontent">
-    			<div id="centercontentlist">
-    				<h:outputText value="#{sectionMsg.switchlocationpageBodyList}" escape="false" />
-    			</div>
- 			</div>
-    </ui:fragment>
-   
+				<p>
+					<h:outputText value="#{sectionMsg.switchlocationpageBody}"
+						escape="false" />
+				</p>
+				<ui:fragment id="list"
+					rendered="#{!empty sectionMsg.switchlocationpageBodyList}">
+					<h:outputText value="#{sectionMsg.switchlocationpageBodyList}"
+						escape="false" />
+				</ui:fragment>
 
-    <ui:decorate template="/flows/bookinginfo-patientdata.xhtml">
-        <ui:param name="location_heading" value="#{baseMsg.updatepageOriginalTimeHeading}"/>
-    </ui:decorate>
-	<p />
-	<br />
-	<p />
-	<br />
-	<p />
-	<ui:decorate template="/flows/update/update_sectionheader.xhtml">
-         <ui:param name="section_heading" value="#{baseMsg.updatepageChooseOtherRegionLocation}"/>
-    </ui:decorate>
-	<p />
-	<br />
-	<p />
-	<br />
-	<p />
-	
+				<div class="well">
+					<ui:decorate template="/flows/bookinginfo-patientdata.xhtml">
+						<ui:param name="location_heading"
+							value="#{baseMsg.updatepageOriginalTimeHeading}" />
+					</ui:decorate>
+				</div>
+			</div>
+			<div class="row-fluid">
+				<ui:decorate template="/flows/update/update_sectionheader.xhtml">
+					<ui:param name="section_heading"
+						value="#{baseMsg.updatepageChooseOtherRegionLocation}" />
+				</ui:decorate>
+				<div id="location">
+					<f:view>
+						<h:form id="selectFormStaticLoction">
+							<div class="controls">
+								<h:selectOneMenu rendered="true" id="places"
+									value="#{location.locationId}" styleClass="span7">
+									<f:selectItems value="#{location.selectItems}" />
+								</h:selectOneMenu>
+							</div>
+							<div class="controls pull-right">
+								<h:commandButton rendered="true"
+									value="#{sectionMsg.switchLocationConfirmButton}"
+									processIds="*" action="confirmswitch"
+									styleClass="btn btn-success" />
+								<h:outputText value="&#160;" />
+								<h:commandButton id="cancelButton" value="Avbryt"
+									processIds="*" action="cancel"
+									styleClass="btn" />
+							</div>
+						</h:form>
+					</f:view>
+				</div>
+			</div>
+			<!-- 			<div class="row-fluid">
+				<h:form id="cancelForm">
+					<sf:commandButton id="cancelButton" value="Avbryt" processIds="*"
+						style="width: 100px;" action="cancel" styleClass="btn btn-danger pull-right" />
+				</h:form>
+			</div> -->
 
-		<div id="location">    
-			<f:view>
-					<h:form id="selectFormStaticLoction" >
-						<h:selectOneMenu rendered="true" id="places" value="#{location.locationId}">
-				       	    <f:selectItems value="#{location.selectItems}" />
-						</h:selectOneMenu>
-						<p />
-						<sf:commandButton rendered="true" value="#{sectionMsg.switchLocationConfirmButton}" processIds="*" action="confirmswitch"/>
-					</h:form>
-			</f:view>
-		</div>
-
-		<div class="tb_cancelform">
-	        <h:form id="cancelForm" >
-	            <sf:commandButton id="cancelButton" value="Avbryt" processIds="*" style="width: 100px;" action="cancel" />
-	        </h:form>
-		</div>        
-
-</ui:fragment>
-</ui:define>
+		</ui:fragment>
+	</ui:define>
 </ui:composition>

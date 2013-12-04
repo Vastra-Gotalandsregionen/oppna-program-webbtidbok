@@ -31,9 +31,10 @@
 	<view-state id="welcome" view="/flows/display/welcome.xhtml" model="booking">
 		<on-render>
 <!--		 TODO: on render: check method which checks service in state and perform evaluate expressions accordingly! -->
-<!--	maybe pick up some variable here from a backing bean....	TALK to BookingFacade here-->
-<!--			<evaluate expression="bookingService.getBooking(state)" result="flowScope.booking" />-->
-			<evaluate expression="bookingFacade.getBookingInfo(state)" result="flowScope.booking"  />
+<!--		maybe pick up some variable here from a backing bean....	TALK to BookingFacade here					   -->
+<!--			<evaluate expression="bookingService.getBooking(state)" result="flowScope.booking" />				   -->
+			<evaluate expression="bookingFacade.getBookingInfo(state)" result="flowScope.booking" />
+			<evaluate expression="guiUtility.logFromGUI(state.messageBundle)" result="flowScope.messageBundleLocation" />
  		</on-render>
  		 		
 		<transition on="update" to="update" />
@@ -41,7 +42,7 @@
 		<transition on-exception="java.lang.Error" to="error"/>  
         <transition on-exception="java.lang.Throwable" to="error"/>
         <transition on-exception="org.springframework.web.util.NestedServletException" history="invalidate" to="error"/>
-<!--  		<transition on="ok" to="sms" />-->
+<!--  	<transition on="ok" to="sms" />-->
 	</view-state>
 
     <subflow-state id="update" subflow="update">

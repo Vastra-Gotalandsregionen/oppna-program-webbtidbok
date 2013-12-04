@@ -28,11 +28,12 @@
 <h:form>
 		<div class="tb_sectionheading">
 			
-		    <h:outputLink id="help" value="#{sectionMsg.helppageLink}" target="_blank">
-		    	<img src="../resources/VGRImages/help.gif" alt="Help symbol" />
+		    <h:outputLink id="help" value="#{sectionMsg.helppageLink}" target="_blank" styleClass="pull-right">
+		    	<!-- <img src="../resources/VGRImages/help.gif" alt="Help symbol" /> -->
+		    	<i class="icon-question-sign"></i>
 		    </h:outputLink>	
 		    
-		    <h3><h:outputText value="#{section_heading}"/></h3>
+		    <h4><h:outputText value="#{section_heading}"/></h4>
 		</div>
 </h:form>
 </ui:composition>
