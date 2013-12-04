@@ -22,8 +22,8 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:sf="http://www.springframework.org/tags/faces">
+      xmlns:f="http://java.sun.com/jsf/core">
+      <!-- xmlns:sf="http://www.springframework.org/tags/faces"> -->
 
 <ui:composition template="VGRTemplate2.xhtml">
 
@@ -37,18 +37,18 @@
     </ui:define>
 
     <ui:define name="localJS">
-        <sf:resourceGroup>
-            <sf:resource path="dojo/dojo.js" />
-            <sf:resource path="spring/Spring.js" />
-            <sf:resource path="spring/Spring-Dojo.js" />
+<!--         <sf:resourceGroup>
+            <sf:resource path="spring/dojo/dojo.js" />
+            <sf:resource path="spring/spring/Spring.js" />
+            <sf:resource path="spring/spring/Spring-Dojo.js" />
         </sf:resourceGroup>
         <sf:includeStyles />
-        <sf:resource path="/JS/JSResources.js" />
+        <sf:resource path="/JS/JSResources.js" /> -->
     </ui:define>
 
     <ui:define name="localStyles">
-        <sf:resource path="/styles/tidbok1.css" />
-        <sf:resource path="/styles/tidbok2.css" />
+<!--         <sf:resource path="/styles/tidbok1.css" />
+        <sf:resource path="/styles/tidbok2.css" /> -->
         <style type="text/css">
           .col1 { width: 230px; }
           .col2 { width: 30px; }
@@ -56,11 +56,7 @@
     </ui:define>
 
     <ui:define name="tidbokBaseWrapper">
-        <div id="tb_wrapper">
-            <div id="tb_content">
-                <ui:insert name="templateContent" />
-            </div>
-        </div>
+		<ui:insert name="templateContent" />
     </ui:define>
 
 </ui:composition>

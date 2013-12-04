@@ -30,15 +30,18 @@
 <ui:define name="content">
 <ui:fragment id="loginFragment">
 
-	<h1><h:outputText value="#{sectionMsg.confirmswitchlocationpageHeader}"/></h1>
-	<p />
+	<h3><h:outputText value="#{sectionMsg.confirmswitchlocationpageHeader}"/></h3>
+	<p>
 	<h:outputText value="#{sectionMsg.confirmswitchlocationpagBody1}"/>
-	<p />
+	</p>
+    <p>
+	<h:outputText value="#{sectionMsg.confirmswitchlocationpagBody2}" escape="false" />
+	</p>
+	<div class="well">
     <ui:decorate template="/flows/bookinginfo-switchlocation-wherewhen.xhtml">
         <ui:param name="location_heading" value="#{baseMsg.locationBoxWhen}"/>
     </ui:decorate>
-    <p />
-	<h:outputText value="#{sectionMsg.confirmswitchlocationpagBody2}" escape="false" />
+    </div>
 </ui:fragment>
 </ui:define>
 <ui:define name="trackingScript">

@@ -205,7 +205,11 @@ table.tb_calendar td.tb_cal_no_times {
 }
 
 table.tb_calendar td.tb_cal_today {
-    background: #66CCFF;
+    border: solid 0.1em #ff0000
+}
+
+table.tb_calendar td.tb_cal_selected {
+    background: #aaeeFF;
 }
 
 table.tb_calendar td a {
