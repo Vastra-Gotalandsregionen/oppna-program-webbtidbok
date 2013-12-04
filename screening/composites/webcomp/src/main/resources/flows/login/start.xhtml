@@ -21,63 +21,92 @@
 -->
 
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	    		xmlns:ui="http://java.sun.com/jsf/facelets"
-	  			xmlns:h="http://java.sun.com/jsf/html"
-	  			xmlns:f="http://java.sun.com/jsf/core"
-	  			xmlns:sf="http://www.springframework.org/tags/faces"
-				template="/layouts/loggedOutTemplate.xhtml">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/layouts/loggedOutTemplate.xhtml">
 
-<ui:define name="content">
+	<ui:define name="content">
 
-	<ui:fragment id="loginFragment">
-		    <h1><h:outputText value="#{baseMsg.loginpageMainHeader}"/></h1>
-		    <p><h:outputText value="#{baseMsg.loginpageIntroMsg1}"/></p>
-		    <p><h:outputText value="#{baseMsg.loginpageIntroMsg2}"/></p>
-		    <p><h:outputText value="#{baseMsg.loginpageIntroInfoLink}" escape="false" /></p>
-		    <p><h:outputText value="#{baseMsg.loginpageIntroHelpLink}" escape="false" /></p>
-			
-			<div id="header-input-field-container">
-			<div id="forms-container">
-				<h:form id="mainForm" class="centerContent">
-				<h2><h:outputText value="#{baseMsg.loginpageSubHeaderLogin}"/></h2>
-				<br />
-				<h:outputLabel for="pnr"><p><h:outputText value="#{baseMsg.loginpagePasswordInstruction}"/></p></h:outputLabel>
-				<p />
-				<div style="width: 10em;float:left;" >
-				<p />
-					<div class="label">
-	                    <h:outputLabel for="passwd"><p><h:outputText value="#{baseMsg.loginpageIdNumberLabel}"/></p></h:outputLabel>
-					</div>
-					<div class="input">
-	                    <h:inputText id="pnr" value="#{state.pnr}"/>
-	                </div>
-					<p></p>
-					<div class="label">
-	                    <h:outputLabel for="passwd"><p><h:outputText value="#{baseMsg.loginpagePasswordLabel}"/></p></h:outputLabel>
-					</div>
-					<div class="input">
-				         <h:inputSecret id="passwd" value="#{state.passwd}" />
-	                </div>
-	                <div class="button">
-                		<sf:commandButton id="login" value="Logga in" processIds="*" action="login" />
-                	</div>
-                </div>
-                
-				
-               	<div id="error_message" style="float: right;width: 27em;list-style-image: none;">
-               		<ui:fragment rendered="#{failedLogin}">      
-               			<p><h:outputText value="#{baseMsg.loginpageErrorLoginFailed}"/></p>
-               			<ul>
-               				<li><h:outputText value="#{baseMsg.loginpageErrorLoginFailedAdvice1}"/></li>
-                            <li><h:outputText value="#{baseMsg.loginpageErrorLoginFailedAdvice2}"/></li>
-						</ul>
-					</ui:fragment>
+		<ui:fragment id="loginFragment">
+			<div class="row-fluid">
+				<div class="hidden-phone">
+					<h3>
+						<h:outputText value="#{baseMsg.loginpageMainHeader}" />
+					</h3>
+					<p>
+						<h:outputText value="#{baseMsg.loginpageIntroMsg1}" />
+					</p>
+					<p>
+						<h:outputText value="#{baseMsg.loginpageIntroMsg2}" />
+					</p>
+					<p>
+						<h:outputText value="#{baseMsg.loginpageIntroInfoLink}"
+							escape="false" />
+					</p>
+					<p>
+						<h:outputText value="#{baseMsg.loginpageIntroHelpLink}"
+							escape="false" />
+					</p>
 				</div>
-				
-			</h:form>
-			</div>
-			</div>
-	</ui:fragment>
 
-</ui:define>
+				<div id="forms-container" class="span8 offset2 login-container">
+					<div class="well">
+						<h:form id="mainForm" class="form-horizontal">
+							<legend>
+								<h:outputText value="#{baseMsg.loginpageSubHeaderLogin}" />
+							</legend>
+							<ui:fragment rendered="#{failedLogin}">
+								<div class="alert alert-error">
+									<strong><h:outputText
+											value="#{baseMsg.loginpageErrorLoginFailed}" /> </strong>
+									<p>
+										<h:outputText
+											value="#{baseMsg.loginpageErrorLoginFailedAdvice1}" />
+									</p>
+									<p class="hidden-phone">
+										<h:outputText
+											value="#{baseMsg.loginpageErrorLoginFailedAdvice2}" />
+									</p>
+								</div>
+							</ui:fragment>
+							<ui:fragment rendered="#{WSConnectionError}">
+								<div class="alert alert-error">
+									<strong><h:outputText
+											value="#{baseMsg.loginpageErrorWebServiceConnectionError1}" /></strong>
+									<p><h:outputText
+											value="#{baseMsg.loginpageErrorWebServiceConnectionError2}" /></p>
+								</div>
+							</ui:fragment>
+							<p>
+								<h:outputText value="#{baseMsg.loginpagePasswordInstruction}" />
+							</p>
+							<div class="control-group">
+								<h:outputLabel for="pnr" class="control-label">
+									<h:outputText value="#{baseMsg.loginpageIdNumberLabel}" />
+								</h:outputLabel>
+								<div class="controls">
+									<h:inputText id="pnr" value="#{state.pnr}" />
+								</div>
+							</div>
+							<div class="control-group">
+								<h:outputLabel for="passwd" class="control-label">
+									<h:outputText value="#{baseMsg.loginpagePasswordLabel}" />
+								</h:outputLabel>
+								<div class="controls">
+									<h:inputSecret id="passwd" value="#{state.passwd}" />
+								</div>
+							</div>
+							<div class="control-group">
+								<div class="controls">
+									<h:commandButton id="login" styleClass="btn btn-primary"
+										value="Logga in" processIds="*" action="login" />
+								</div>
+							</div>
+						</h:form>
+					</div>
+				</div>
+			</div>
+		</ui:fragment>
+	</ui:define>
 </ui:composition>

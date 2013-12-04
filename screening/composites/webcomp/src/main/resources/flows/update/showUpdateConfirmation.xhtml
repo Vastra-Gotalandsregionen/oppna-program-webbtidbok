@@ -30,18 +30,19 @@
 <ui:define name="content">
 
 <ui:fragment id="loginFragment">
-	<h1>#{sectionMsg.updateconfirmationHeader}</h1>
+<div class="row-fluid">
+	<h3>#{sectionMsg.updateconfirmationHeader}</h3>
 	<p><h:outputFormat value="#{sectionMsg.updateconfirmationRescheduleInfo}" escape="false">
             <f:param value="#{booking.surgery.surgeryPhone}" /></h:outputFormat></p><br/>
 				
-	<h3>#{sectionMsg.updateconfirmationRescheduledMessage}</h3>
-
-    <ui:decorate template="/flows/bookinginfo-wherewhen.xhtml" />
-
-    <div id="print" class="print">
-    	<p><a href="#" onclick="window.print()">#{baseMsg.print} <img alt="#{baseMsg.print}" src="#{facesContext.externalContext.requestContextPath}/resources/VGRImages/printer.png"/></a></p>
+	<h4>#{sectionMsg.updateconfirmationRescheduledMessage}</h4>
+	<div class="well">
+    	<ui:decorate template="/flows/bookinginfo-wherewhen.xhtml" />
+	</div>
+    <div id="print" class="clearfix hidden-phone">
+    	<p class="pull-right"><a href="#" onclick="window.print()">#{baseMsg.print} <img alt="#{baseMsg.print}" src="#{facesContext.externalContext.requestContextPath}/resources/VGRImages/printer.png"/></a></p>
     </div>
-
+</div>
 </ui:fragment>
 </ui:define>
 <ui:define name="trackingScript">

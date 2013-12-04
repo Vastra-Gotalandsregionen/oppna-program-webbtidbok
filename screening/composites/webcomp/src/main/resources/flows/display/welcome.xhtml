@@ -23,54 +23,89 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	    		xmlns:ui="http://java.sun.com/jsf/facelets"
 	  			xmlns:h="http://java.sun.com/jsf/html"
-	  			xmlns:f="http://java.sun.com/jsf/core"
-	  			xmlns:sf="http://www.springframework.org/tags/faces"	  			
+	  			xmlns:f="http://java.sun.com/jsf/core"	  			
 				template="/layouts/loggedInTemplate.xhtml">
 
 <ui:define name="content">
 
 <ui:fragment id="loginFragment">
-		<h1 style="display: inline"><h:outputFormat value="#{sectionMsg.welcomepageWelcomeNN}">
-            <f:param value="#{booking.patientName}" /></h:outputFormat>
-        </h1>
-		<p/>
-		<p><h:outputText value="#{sectionMsg.welcomepageIntroductionMain}" escape="false"/></p>
-		<p><h:outputFormat value="#{sectionMsg.welcomepageIntroductionContact}" escape="false">
-		    <f:param value="#{booking.surgery.surgeryPhone}" /></h:outputFormat>
-		</p>
-		<p><h:outputText value="#{sectionMsg.welcomepageIntroductionContact2}" escape="false"/></p>
-		
-		<p><h:outputText value="#{sectionMsg.welcomepageExamInformationAdditional}" escape="false"/></p>
-        <ui:decorate template="/flows/bookinginfo-wherewhen.xhtml">
-            <ui:define name="topInformationSection">
-                <p class="tb_informationHeading"><h:outputText value="#{sectionMsg.welcomepageExamInformation}" escape="false"/></p>
-                
-                <!-- This one should have a rendered attribute. -->
-                <h:outputLabel for="deleteButton"><p style="color:red; font-style: italic"> #{cancelbookingMessages.cancelBookingMessage}</p></h:outputLabel>
-                <h:outputText rendered="#{!booking.updateable}"><p style="text-align: left;color:red; font-style: italic"><h:outputText value="#{sectionMsg.locationBoxRescheduleCapped}"/></p></h:outputText>
-            </ui:define>
-            
-            <ui:define name="buttonFloat">
-                <div class="tb_buttonFloat">
-                <!-- enable for DEV only   
+		<div class="row-fluid">
+			<h3>
+				<h:outputFormat value="#{sectionMsg.welcomepageWelcomeNN}">
+					<f:param value="#{booking.patientName}" />
+				</h:outputFormat>
+			</h3>
+			<div class="hidden-phone">
+			<p>
+				<h:outputText value="#{sectionMsg.welcomepageIntroductionMain}"
+					escape="false" />
+			</p>
+			<p>
+				<h:outputFormat value="#{sectionMsg.welcomepageIntroductionContact}"
+					escape="false">
+					<f:param value="#{booking.surgery.surgeryPhone}" />
+				</h:outputFormat>
+			</p>
+			<p>
+				<h:outputText value="#{sectionMsg.welcomepageIntroductionContact2}"
+					escape="false" />
+			</p>
+			<p>
+				<h:outputText
+					value="#{sectionMsg.welcomepageExamInformationAdditional}"
+					escape="false" />
+			</p>
+			</div>
+		<div class="well clearfix">
+			<ui:decorate template="/flows/bookinginfo-wherewhen.xhtml">
+				<ui:define name="topInformationSection">
+					<h4>
+						<h:outputText value="#{sectionMsg.welcomepageExamInformation}"
+							escape="false" />
+					</h4>
+
+					<!-- This one should have a rendered attribute. -->
+					<h:outputLabel for="deleteButton">
+						<p style="color: red; font-style: italic">
+							#{cancelbookingMessages.cancelBookingMessage}</p>
+					</h:outputLabel>
+					<h:outputText rendered="#{!booking.updateable}">
+						<p style="text-align: left; color: red; font-style: italic">
+							<h:outputText value="#{sectionMsg.locationBoxRescheduleCapped}" />
+						</p>
+					</h:outputText>
+				</ui:define>
+
+				<ui:define name="buttonFloat">
+						<!-- enable for DEV only   
                     <h:form id="updateForm" >
                         <sf:commandButton id="updateButton" value="#{baseMsg.locationBoxRescheduleButton}" processIds="*" action="update" disabled="#{booking.updateable}" style="width: 100px;"  />
                     </h:form>
                     -->
-                <!-- END enable for DEV only -->
-                    <h:form id="updateForm" >
-                        <sf:commandButton id="updateButton" value="#{baseMsg.locationBoxRescheduleButton}" processIds="*" action="update" disabled="#{!booking.updateable}" style="width: 100px;"  />
-                    </h:form>
-                    <h:form id="deleteForm" >
-                        <sf:commandButton id="deleteButton" value="#{baseMsg.locationBoxCancelButton}" processIds="*" action="delete" style="width: 100px;"  />
-                    </h:form>
-                </div>
-            </ui:define>
-            <ui:define name="bottomInformationSection">
-                <p class="tb_booking_bread"><h:outputText value="#{sectionMsg.welcomepageExamLength}"/></p>
-            </ui:define>
-        </ui:decorate>
-        <p />
+						<!-- END enable for DEV only -->
+						<h:form id="updateForm" styleClass="pull-right">
+							<h:commandButton id="updateButton"
+								value="#{baseMsg.locationBoxRescheduleButton}" processIds="*"
+								action="update" disabled="#{!booking.updateable}"
+								styleClass="btn btn-primary" /><h:outputText value="&#160;" />
+							<h:commandButton id="deleteButton"
+								value="#{baseMsg.locationBoxCancelButton}" processIds="*"
+								action="delete" styleClass="btn btn-danger"  />
+						</h:form>
+				</ui:define>
+				<ui:define name="bottomInformationSection">
+					<p class="tb_booking_bread">
+						<h:outputText value="#{sectionMsg.welcomepageExamLength}" />
+					</p>
+				</ui:define>
+			</ui:decorate>
+			</div>
+					</div>
+			<p class="hidden-phone">
+				<h:outputText
+					value="#{sectionMsg.welcomepageExamInformationAdditional}"
+					escape="false" />
+			</p>
         
  <!--        <ui:decorate template="/flows/sms-reminder-form.xhtml" />   -->
 

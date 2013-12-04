@@ -21,31 +21,40 @@
 -->
 
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:sf="http://www.springframework.org/tags/faces">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
 
 <ui:composition template="tidbokBaseTemplate.xhtml">
 
-    <ui:define name="localMessageBundles">
-        <f:loadBundle basename="#{state.messageBundle}" var="sectionMsg"/>
-    </ui:define>
+	<ui:define name="localMessageBundles">
+		<f:loadBundle basename="#{state.messageBundle}" var="sectionMsg" />
+	</ui:define>
 
-    <!-- This is an adaptation so layout doesn't look cramped when we-->
-         remove the menu from the VGR header. 
-    <ui:define name="headerMenu">
-        <div id="tb_missing_menu_replacement"/>
-    </ui:define>
+	<!-- This is an adaptation so layout doesn't look cramped when we
+         remove the menu from the VGR header. -->
+     <ui:define name="headerMenu">
+		<div id="tb_missing_menu_replacement" />
+	</ui:define>
 
-    <ui:define name="templateContent">
-        <div id="tb_logout">
-            <h:form id="mainForm">
-                 <sf:commandButton id="logout" value="#{baseMsg.logoutButton}" processIds="*" action="logout" />
-            </h:form>
-        </div>
-        <ui:insert name="content" />
-    </ui:define>
+	<ui:define name="logoutForm">
+		<h:form>
+			<h:commandLink id="logout" value="#{baseMsg.logoutButton}"
+				processIds="*" action="logout" styleClass="btn btn-small pull-right hidden-phone" />
+		</h:form>
+	</ui:define>
+	
+	<ui:define name="logoutFormMobile">
+		<h:form>
+			<h:commandLink id="logout" value="#{baseMsg.logoutButton}"
+				processIds="*" action="logout" styleClass="visible-phone pull-right" />
+		</h:form>
+	</ui:define>
+	
+
+	<ui:define name="templateContent">
+		<ui:insert name="content" />
+	</ui:define>
 
 </ui:composition>
 

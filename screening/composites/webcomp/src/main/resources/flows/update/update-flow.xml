@@ -52,6 +52,7 @@
 			<evaluate expression="calendarHolder.setSelectedDate(requestParameters.selectedDay)" />
 		 	<evaluate expression="bookingFacade.getBookingTime(state, location.locationId, calendarHolder.selectedDate)"
 		 	        result="flowScope.timeListLocal" result-type="dataModel" /> 
+			<render fragments="displayTimeForm:calendarFragment" />
 		</transition>
 		<!-- User has pressed ok on a time button, and wants the time booked. -->
 		<transition on="selecttime" to="showConfirmation">
