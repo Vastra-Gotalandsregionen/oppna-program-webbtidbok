@@ -1,0 +1,96 @@
+/**
+ * Copyright 2010 Västra Götalandsregionen
+ *
+ *   This library is free software; you can redistribute it and/or modify
+ *   it under the terms of version 2.1 of the GNU Lesser General Public
+ *   License as published by the Free Software Foundation.
+ *
+ *   This library is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU Lesser General Public License for more details.
+ *
+ *   You should have received a copy of the GNU Lesser General Public
+ *   License along with this library; if not, write to the
+ *   Free Software Foundation, Inc., 59 Temple Place, Suite 330,
+ *   Boston, MA 02111-1307  USA
+ *
+ */
+
+body {
+	padding-top: 20px;
+	padding-bottom: 40px;
+}
+
+/* Custom container */
+.container-narrow {
+	margin: 0 auto;
+	max-width: 700px;
+}
+
+.container-narrow>hr {
+	margin: 30px 0;
+}
+
+/* Main marketing message and sign up button */
+.jumbotron {
+	margin: 60px 0;
+	text-align: center;
+}
+
+.jumbotron h1 {
+	font-size: 72px;
+	line-height: 1;
+}
+
+.jumbotron .btn {
+	font-size: 21px;
+	padding: 14px 24px;
+}
+
+/* Supporting marketing content */
+.marketing {
+	margin: 60px 0;
+}
+
+.marketing p+h4 {
+	margin-top: 28px;
+}
+
+.tb_center_heading {
+	text-align: center !important;
+}
+
+.label-freetime {
+	background: #32B7E5;
+}
+
+.table-calendar th,.table-calendar td {
+	text-align: center;
+}
+
+@media ( max-width : 767px) {
+	#top-logo {
+		display: block;
+		height: auto;
+		margin-left: auto;
+		margin-right: auto;
+		/* width: 187px; */
+	}
+	.login-container {
+		margin-top: 15px;
+	}
+	.top-logo {
+		
+	}
+	h3 {
+		font-size: 17.5px;
+		line-height: 27px;
+	}
+	h4 {
+		font-size: 13.5px;
+	}
+	hr {
+		margin: 14px 0 9px 0 !important;
+	}
+}

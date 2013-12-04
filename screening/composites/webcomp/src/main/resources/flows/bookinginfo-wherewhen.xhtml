@@ -26,17 +26,15 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:sf="http://www.springframework.org/tags/faces">
 
-    <div id="tb_bookinginfo" class="tb_relcontainer">
         <ui:insert name="topInformationSection" />
-        <ui:insert name="buttonFloat" />
-        <h3>#{booking.patientName}</h3>
+        <h5>#{booking.patientName}</h5>
         <p class="tb_booking_bread">#{booking.patientId}</p>
-        <h3><h:outputText value="#{baseMsg.locationBoxWhere}"/>:</h3>
+        <h5><h:outputText value="#{baseMsg.locationBoxWhere}"/>:</h5>
         <p>#{booking.surgery.surgeryName}</p>           
         <p>#{booking.surgery.surgeryAddress}</p>           
-        <h3><h:outputText value="#{baseMsg.locationBoxWhen}"/>:</h3>
+        <h5><h:outputText value="#{baseMsg.locationBoxWhen}"/>:</h5>
         <p><h:outputText value="#{booking.startTime}"><f:convertDateTime type="both" pattern="EEEE dd MMMM yyyy, HH:mm" locale="sv" timeZone="Europe/Stockholm" /></h:outputText></p>
         <ui:insert name="bottomInformationSection" />
-    </div>
+        <ui:insert name="buttonFloat" />
 
 </ui:composition>
