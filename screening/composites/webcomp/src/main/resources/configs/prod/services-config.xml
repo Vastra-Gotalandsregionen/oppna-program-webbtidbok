@@ -104,7 +104,7 @@
 
 	<bean id="sectraNUService" class="se.vgregion.webbtidbok.booking.sectra.SectraTryWebService">
 		<constructor-arg type="java.net.URL"
-			value="http://vgas0561.vgregion.se/RISReschedule/Service.svc?wsdl" />
+			value="http://vgas1016.vgregion.se/RISReschedule/Service.svc?wsdl" />
 		<constructor-arg type="javax.xml.namespace.QName">
 			<bean class="javax.xml.namespace.QName">
 				<constructor-arg index="0" value="http://tempuri.org/" />
