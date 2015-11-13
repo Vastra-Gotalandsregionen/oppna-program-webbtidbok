@@ -25,6 +25,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebResult;
+import javax.xml.ws.BindingProvider;
 import javax.xml.ws.RequestWrapper;
 import javax.xml.ws.ResponseWrapper;
 
@@ -71,10 +72,19 @@ public class ElvisTryWebService implements ICentralBookingWS {
 		
 		tryConnection();
 	}
-	
+
 	public void tryConnection(){
 		try{
 			this.bookingService = new CentralBookingWS().getBasicHttpBindingICentralBookingWS();
+
+            // Since the wsdl points toward https://vgwb0090.vgregion.se instead of https://webtidbokws.vgregion.se
+            // this prevents this client from trying to use that address instead. The certificates does not include
+            // access to the service by its machine name so it would fail (actually it did for some time).
+            // Better solution would be for the wsdl (https://webtidbokws.vgregion.se/IC/CentralBooking/CentralBookingWS/CentralBookingWS.svc?wsdl)
+            // to reference the services by the url https://webtidbokws.vgregion.se instead.
+			((BindingProvider) bookingService).getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY,
+					"https://webtidbokws.vgregion.se/IC/CentralBooking/CentralBookingWS/CentralBookingWS.svc");
+
 		} catch(Exception e){
 			logger.error("could not connect to... " + this.serviceName, e);
 			mailQueue.execute(new ErrorMail(this.errorMailProperties, this.serviceName, e));

@@ -54,10 +54,12 @@
 	<!-- Used for sending a Crypted Key to communicate with the Elvis WebService.
 		 This crypted key is then sent along with every request to that WS -->
 	<bean id="stringEncrypter" class="se.vgregion.webbtidbok.crypto.StringEncrypter">
+
 		<property name="keyStoreFile" value="classpath:asd.pfx" />
 		<property name="keyAlias"
-			value="a6c21dcdd9534d742aa1bd4afae16210_956e2a3a-b426-49f4-a107-72c603d2f58c" />
+							value="a6c21dcdd9534d742aa1bd4afae16210_956e2a3a-b426-49f4-a107-72c603d2f58c" />
 		<property name="keyPassWord" value="asd" />
+
 	</bean>
 
 </beans>

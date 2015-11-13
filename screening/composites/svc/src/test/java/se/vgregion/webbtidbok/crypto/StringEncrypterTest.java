@@ -38,6 +38,7 @@ import javax.crypto.NoSuchPaddingException;
 
 import org.apache.commons.codec.binary.Base64;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.Resource;
@@ -61,11 +62,13 @@ public class StringEncrypterTest {
         stringEncrypter.setKeyStoreFile(resource);
     }
 
+
     @Test
     public void testEncrypt() throws Exception {
         byte[] encryptedStr = stringEncrypter.encrypt(MESSAGE_TO_ENCRYPT);
         assertNotNull(encryptedStr);
     }
+
 
     @Test
     public void testSignString() throws Exception {

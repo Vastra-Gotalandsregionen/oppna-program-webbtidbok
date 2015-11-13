@@ -131,7 +131,7 @@ public abstract class Booking implements Serializable {
 	 * Used to parse out the personal number to the correct date representation
 	 * for use when calculating and formatting the patient id.
 	 * @return set to the patients birth date
-	 * @throws ParseException
+	 * @throws ParseException when the personal no is faulty.
 	 */
 	public Date getPersonalNrAsDate() throws ParseException{
 		Calendar dateOfBirth = Calendar.getInstance();

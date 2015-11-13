@@ -105,9 +105,9 @@
 		<!--  if we have not defined the correct transition yet, transit to this state. -->
 	</view-state>
 	
-	<end-state id="error" view="/flows/error/error.xhtml">
-		<!--transition on="logout" to="loggedout" /--> 
-	</end-state>
+	<!--end-state id="error" view="/flows/error/error.xhtml"-->
+		<!--transition on="logout" to="loggedout" /-->
+    <end-state id="error" view="/flows/help/error.xhtml"></end-state>
 
     <global-transitions>
         <transition on-exception="se.vgregion.webbtidbok.errorhandling.UnableToConnectToWSException" to="start">

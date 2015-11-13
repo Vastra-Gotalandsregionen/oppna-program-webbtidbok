@@ -77,7 +77,7 @@
 	<!--view-state id="error" view="/flows/error/error.xhtml">
 	</view-state-->
 	
-	<view-state id="error" view="/flows/error/error.xhtml">
+	<view-state id="error" view="/flows/help/error.xhtml">
 	</view-state>
 	
 	<end-state id="logout"/>

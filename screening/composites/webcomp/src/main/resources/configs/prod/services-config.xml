@@ -91,7 +91,10 @@
 	</util:list>
 
 	<bean id="sectraSUService" class="se.vgregion.webbtidbok.booking.sectra.SectraTryWebService">
-		<constructor-arg ref="mailQueue"/>
+		<!--constructor-arg ref="mailQueue"/-->
+		<constructor-arg>
+			<null/>
+				</constructor-arg>
 		<constructor-arg type="java.lang.String" value="messages/ErrorMail" />
 		<constructor-arg type="java.lang.String" value="Sectra - Mammografi SU" />
 	</bean>

@@ -22,8 +22,8 @@ package se.vgregion.webbtidbok.domain.elvis;
 import se.vgregion.webbtidbok.domain.BookingTime;
 
 /**
- * This constitutes the term Booking Time for a Surgery that has it's time book held within Elvis. See {@link BookingMapperElvis}
- * for further information on how and what data are aggregated into a {@link se.webbtidbok.domain.BookingTime}.
+ * This constitutes the term Booking Time for a Surgery that has it's time book held within Elvis. See {@link se.vgregion.webbtidbok.booking.elvis.BookingMapperElvis}
+ * for further information on how and what data are aggregated into a {@link se.vgregion.webbtidbok.domain.BookingTime}.
  * 
  * @author carstm
  * 
