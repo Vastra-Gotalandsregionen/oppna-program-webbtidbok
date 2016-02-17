@@ -45,7 +45,7 @@
 
 	<bean id="lookupServiceNU"
 		class="se.vgregion.webbtidbok.servicedef.PasswordMatchLookupService">
-		<property name="serviceDefinition" ref="serviceDefinitionMammografiNU" />
+			<property name="serviceDefinition" ref="serviceDefinitionMammografiNU" />
 		<property name="regexp" value="^SEMUDD.*$" />
 	</bean>
 	

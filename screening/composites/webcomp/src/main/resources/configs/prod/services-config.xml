@@ -99,7 +99,22 @@
 		<constructor-arg type="java.lang.String" value="Sectra - Mammografi SU" />
 	</bean>
 
+<!--
 	<bean id="sectraAVEService" class="se.vgregion.webbtidbok.booking.sectra.SectraTryWebService">
+		<constructor-arg ref="mailQueue"/>
+		<constructor-arg type="java.lang.String" value="messages/ErrorMail" />
+		<constructor-arg type="java.lang.String" value="Sectra - Mammografi AVE (Unilabs)" />
+	</bean>
+-->
+	<bean id="sectraAVEService" class="se.vgregion.webbtidbok.booking.sectra.SectraTryWebService">
+		<constructor-arg type="java.net.URL"
+										 value="https://nuris.vgregion.se/WorkflowServer/CustomerAdaptations/RisReschedule.svc?wsdl" />
+		<constructor-arg type="javax.xml.namespace.QName">
+			<bean class="javax.xml.namespace.QName">
+				<constructor-arg index="0" value="http://tempuri.org/" />
+				<constructor-arg index="1" value="RisRescheduleService" />
+			</bean>
+		</constructor-arg>
 		<constructor-arg ref="mailQueue"/>
 		<constructor-arg type="java.lang.String" value="messages/ErrorMail" />
 		<constructor-arg type="java.lang.String" value="Sectra - Mammografi AVE (Unilabs)" />
@@ -107,11 +122,11 @@
 
 	<bean id="sectraNUService" class="se.vgregion.webbtidbok.booking.sectra.SectraTryWebService">
 		<constructor-arg type="java.net.URL"
-			value="http://vgas1016.vgregion.se/RISReschedule/Service.svc?wsdl" />
+			value="https://nuris.vgregion.se/WorkflowServer/CustomerAdaptations/RisReschedule.svc?wsdl" />
 		<constructor-arg type="javax.xml.namespace.QName">
 			<bean class="javax.xml.namespace.QName">
 				<constructor-arg index="0" value="http://tempuri.org/" />
-				<constructor-arg index="1" value="RISReschedule" />
+				<constructor-arg index="1" value="RisRescheduleService" />
 			</bean>
 		</constructor-arg>
 		<constructor-arg ref="mailQueue"/>

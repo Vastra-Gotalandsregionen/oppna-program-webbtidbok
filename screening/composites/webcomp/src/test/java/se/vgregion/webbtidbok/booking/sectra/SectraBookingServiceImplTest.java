@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.jws.WebParam;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.junit.AfterClass;
@@ -163,8 +164,7 @@ public class SectraBookingServiceImplTest {
 		String sectionId;
 
 		@Override
-		public BookingInfo getBookingInfo(String patientId, String examinationNr)
-				throws IRisRescheduleGetBookingInfoErrorInfoFaultFaultMessage {
+		public BookingInfo getBookingInfo(@WebParam(name = "patientId", targetNamespace = "http://tempuri.org/") String patientId, @WebParam(name = "examinationNr", targetNamespace = "http://tempuri.org/") String examinationNr, @WebParam(name = "allowMultiExamination", targetNamespace = "http://tempuri.org/") Boolean allowMultiExamination, @WebParam(name = "allowUrgent", targetNamespace = "http://tempuri.org/") Boolean allowUrgent) throws IRisRescheduleGetBookingInfoErrorInfoFaultFaultMessage {
 			if (throwException) {
 				throw new IRisRescheduleGetBookingInfoErrorInfoFaultFaultMessage("test exception", null);
 			}
@@ -174,7 +174,7 @@ public class SectraBookingServiceImplTest {
 		}
 
 		@Override
-		public ArrayOfSection listSections(String examinationNr) throws IRisRescheduleListSectionsErrorInfoFaultFaultMessage {
+		public ArrayOfSection listSections(@WebParam(name = "examinationNr", targetNamespace = "http://tempuri.org/") String examinationNr, @WebParam(name = "allowMultiExamination", targetNamespace = "http://tempuri.org/") Boolean allowMultiExamination, @WebParam(name = "allowUrgent", targetNamespace = "http://tempuri.org/") Boolean allowUrgent) throws IRisRescheduleListSectionsErrorInfoFaultFaultMessage {
 			if (throwException) {
 				throw new IRisRescheduleListSectionsErrorInfoFaultFaultMessage("test exception", null);
 			}
@@ -183,8 +183,7 @@ public class SectraBookingServiceImplTest {
 		}
 
 		@Override
-		public ArrayOfdateTime listFreeDays(XMLGregorianCalendar startDate, XMLGregorianCalendar endDate, String examinationNr,
-				String sectionId) throws IRisRescheduleListFreeDaysErrorInfoFaultFaultMessage {
+		public ArrayOfdateTime listFreeDays(@WebParam(name = "startDate", targetNamespace = "http://tempuri.org/") XMLGregorianCalendar startDate, @WebParam(name = "endDate", targetNamespace = "http://tempuri.org/") XMLGregorianCalendar endDate, @WebParam(name = "examinationNr", targetNamespace = "http://tempuri.org/") String examinationNr, @WebParam(name = "sectionId", targetNamespace = "http://tempuri.org/") String sectionId, @WebParam(name = "allowMultiExamination", targetNamespace = "http://tempuri.org/") Boolean allowMultiExamination, @WebParam(name = "allowUrgent", targetNamespace = "http://tempuri.org/") Boolean allowUrgent) throws IRisRescheduleListFreeDaysErrorInfoFaultFaultMessage {
 			List<XMLGregorianCalendar> resList = new ArrayList<XMLGregorianCalendar>();
 			resList.add(xmlCalendarFor(2010, 8, 2));
 			resList.add(xmlCalendarFor(2010, 8, 4));
@@ -195,8 +194,7 @@ public class SectraBookingServiceImplTest {
 		}
 
 		@Override
-		public ArrayOfTimeBlock listFreeTimes(XMLGregorianCalendar startDate, XMLGregorianCalendar endDate, String examinationNr,
-				String sectionId) throws IRisRescheduleListFreeTimesErrorInfoFaultFaultMessage {
+		public ArrayOfTimeBlock listFreeTimes(@WebParam(name = "startDate", targetNamespace = "http://tempuri.org/") XMLGregorianCalendar startDate, @WebParam(name = "endDate", targetNamespace = "http://tempuri.org/") XMLGregorianCalendar endDate, @WebParam(name = "examinationNr", targetNamespace = "http://tempuri.org/") String examinationNr, @WebParam(name = "sectionId", targetNamespace = "http://tempuri.org/") String sectionId, @WebParam(name = "allowMultiExamination", targetNamespace = "http://tempuri.org/") Boolean allowMultiExamination, @WebParam(name = "allowUrgent", targetNamespace = "http://tempuri.org/") Boolean allowUrgent) throws IRisRescheduleListFreeTimesErrorInfoFaultFaultMessage {
 			List<TimeBlock> resList = new ArrayList<TimeBlock>();
 			this.examinationNr = examinationNr;
 			this.sectionId = sectionId;

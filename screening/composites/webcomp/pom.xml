@@ -39,7 +39,8 @@
 			<properties>
 				<conf.dir>prod</conf.dir>
 				<log.level>WARN</log.level>
-				<sectraWsdlLocation>http://webtidbokws.vgregion.se/RISReschedule/Service.svc?wsdl</sectraWsdlLocation>
+				<sectraWsdlLocationNU>https://nuris.vgregion.se/WorkflowServer/CustomerAdaptations/RisReschedule.svc?wsdl</sectraWsdlLocationNU>
+				<sectraWsdlLocation>https://sumammoris.vgregion.se/WorkflowServer/CustomerAdaptations/RisReschedule.svc?wsdl</sectraWsdlLocation>
 				<elvisWsdlLocation>https://webtidbokws.vgregion.se/IC/CentralBooking/CentralBookingWS/CentralBookingWS.svc?wsdl</elvisWsdlLocation>
 			</properties>
 		</profile>
@@ -48,7 +49,7 @@
 			<properties>
 				<conf.dir>test</conf.dir>
 				<log.level>DEBUG</log.level>
-				<sectraWsdlLocation>http://webtidbokws.vgregion.se/RISReschedule/Service.svc?wsdl</sectraWsdlLocation>
+				<sectraWsdlLocation>https://sumammoris.vgregion.se/WorkflowServer/CustomerAdaptations/RisReschedule.svc?wsdl</sectraWsdlLocation>
 				<elvisWsdlLocation>https://webtidbokws.vgregion.se/IC/CentralBooking/CentralBookingWS/CentralBookingWS.svc?wsdl</elvisWsdlLocation>
 			</properties>
 		</profile>
@@ -107,7 +108,8 @@
 						<artifactId>jaxws-tools</artifactId>
 						<!-- This version is used due to a known bug http://java.net/jira/browse/JAX_WS-864 which creates faulty CentralBookingWS for HTTPS connections
 						which fails build since previous 2.2.1 renders HTTPS WSDL URL's as a a local file resource in CentralBookingWS.-->
-						<version>2.2.2-promoted-b04</version>
+						<!--<version>2.2.2-promoted-b04</version>-->
+						<version>2.2.10</version>
 					</dependency>
 				</dependencies>
 		
@@ -187,7 +189,26 @@
 							<target>2.1</target>
 						</configuration>
 					</execution>
-					
+
+					<!--
+					<execution>
+						<id>sectrawsgenNU</id>
+						<goals>
+							<goal>wsimport</goal>
+						</goals>
+						<configuration>
+							<wsdlDirectory>${basedir}/src/main/resources/wsdl/skarpaSectraNU/</wsdlDirectory>
+							<wsdlLocation>${sectraWsdlLocationNU}</wsdlLocation>
+							<wsdlFiles>
+								<wsdlFile>Service_1.wsdl</wsdlFile>
+							</wsdlFiles>
+							<packageName>se.vgregion.webbtidbok.ws.sectra.nu</packageName>
+							<sourceDestDir>${project.build.directory}/generated-sources/jaxws</sourceDestDir>
+							<staleFile>${project.build.directory}/generated-sources/jaxws/stale/.staleFlagSectraNU</staleFile>
+							<target>2.1</target>
+						</configuration>
+					</execution>
+					-->
 				</executions>
 			</plugin>
 			<plugin>
@@ -390,13 +411,15 @@
 			<groupId>javax.el</groupId>
 			<artifactId>el-api</artifactId>
 			<version>2.2</version>
-			<scope>provided</scope>
+			<!--<scope>provided</scope>-->
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.glassfish.web</groupId>
 			<artifactId>el-impl</artifactId>
 			<version>2.2</version>
-			<scope>provided</scope>
+			<!--<scope>provided</scope>-->
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>commons-beanutils</groupId>

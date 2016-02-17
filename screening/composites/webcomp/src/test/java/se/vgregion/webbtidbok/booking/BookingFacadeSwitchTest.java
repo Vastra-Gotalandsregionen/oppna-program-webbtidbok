@@ -32,6 +32,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import se.vgregion.webbtidbok.State;
@@ -41,6 +42,7 @@ import se.vgregion.webbtidbok.domain.Surgery;
 import se.vgregion.webbtidbok.domain.elvis.BookingElvis;
 import se.vgregion.webbtidbok.domain.sectra.BookingSectra;
 import se.vgregion.webbtidbok.servicedef.ServiceDefinition;
+
 
 public class BookingFacadeSwitchTest {
 

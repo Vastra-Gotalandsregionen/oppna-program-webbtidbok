@@ -64,18 +64,4 @@
       </snapshotRepository>
     </distributionManagement>
 
-    <!-- For internal projects
-      <repository>
-	  <uniqueVersion>false</uniqueVersion>
-	  <id>internal-repo</id>
-	  <url>http://portalutv.vgregion.se/nexus/content/repositories/releases/</url>
-      </repository> 
-      <snapshotRepository>
-	<uniqueVersion>false</uniqueVersion>
-	<id>internal-repo</id>
-	<url>http://portalutv.vgregion.se/nexus/content/repositories/snapshots/</url>
-      </snapshotRepository>
-    </distributionManagement>
-    -->
-
 </project>

@@ -19,32 +19,23 @@
 
 package se.vgregion.webbtidbok.booking.sectra;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import se.vgregion.webbtidbok.domain.Booking;
+import se.vgregion.webbtidbok.domain.BookingTime;
+import se.vgregion.webbtidbok.domain.Surgery;
+import se.vgregion.webbtidbok.ws.sectra.*;
+
+import javax.xml.datatype.XMLGregorianCalendar;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import javax.xml.datatype.XMLGregorianCalendar;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
-import se.vgregion.webbtidbok.domain.Booking;
-import se.vgregion.webbtidbok.domain.BookingTime;
-import se.vgregion.webbtidbok.domain.Surgery;
-import se.vgregion.webbtidbok.ws.sectra.ArrayOfSection;
-import se.vgregion.webbtidbok.ws.sectra.ArrayOfTimeBlock;
-import se.vgregion.webbtidbok.ws.sectra.ArrayOfdateTime;
-import se.vgregion.webbtidbok.ws.sectra.BookingInfo;
-import se.vgregion.webbtidbok.ws.sectra.IRisReschedule;
-import se.vgregion.webbtidbok.ws.sectra.IRisRescheduleGetBookingInfoErrorInfoFaultFaultMessage;
-import se.vgregion.webbtidbok.ws.sectra.IRisRescheduleListFreeDaysErrorInfoFaultFaultMessage;
-import se.vgregion.webbtidbok.ws.sectra.IRisRescheduleListFreeTimesErrorInfoFaultFaultMessage;
-import se.vgregion.webbtidbok.ws.sectra.IRisRescheduleListSectionsErrorInfoFaultFaultMessage;
-import se.vgregion.webbtidbok.ws.sectra.IRisRescheduleRescheduleErrorInfoFaultFaultMessage;
-import se.vgregion.webbtidbok.ws.sectra.Section;
-import se.vgregion.webbtidbok.ws.sectra.TimeBlock;
-
 public class SectraBookingServiceImpl implements SectraBookingServiceInterface {
+
+	private static boolean allowMultiExaminiation = false;
+	private static boolean allowUrgent = false;
+	private static boolean updatePerformingSite = false;
 
 	private final Log log = LogFactory.getLog(SectraBookingServiceImpl.class);
 	private IRisReschedule thePort;
@@ -79,7 +70,7 @@ public class SectraBookingServiceImpl implements SectraBookingServiceInterface {
 		Booking booking;
 
 		try {
-			BookingInfo bi = thePort.getBookingInfo(patientNr, examinationNr);
+			BookingInfo bi = thePort.getBookingInfo(patientNr, examinationNr, allowMultiExaminiation, allowUrgent);
 			booking = bookingMapperSectra.bookingMapping(bi);
 		} catch (IRisRescheduleGetBookingInfoErrorInfoFaultFaultMessage e) {
 			log.error("Error response from web service when getting booking.", e);
@@ -92,7 +83,7 @@ public class SectraBookingServiceImpl implements SectraBookingServiceInterface {
 	public List<Surgery> getSurgeries() {
 		List<Surgery> surgeries = new ArrayList<Surgery>();
 		try {
-			ArrayOfSection sections = thePort.listSections(examinationNr);
+			ArrayOfSection sections = thePort.listSections(examinationNr, allowMultiExaminiation, allowUrgent);
 			List<Section> sectionList = sections.getSection();
 			for (Section section : sectionList) {
 				Surgery surgery = bookingMapperSectra.surgeryMapping(section);
@@ -114,7 +105,7 @@ public class SectraBookingServiceImpl implements SectraBookingServiceInterface {
 		ArrayOfdateTime times;
 		try {
 			times = thePort.listFreeDays(bookingMapperSectra.dateToXmlCalendar(startDate), bookingMapperSectra
-					.dateToXmlCalendar(endDate), examinationNr, sectionId);
+					.dateToXmlCalendar(endDate), examinationNr, sectionId, allowMultiExaminiation, allowUrgent);
 			List<XMLGregorianCalendar> timesList = times.getDateTime();
 			for (XMLGregorianCalendar time : timesList) {
 				Calendar date = bookingMapperSectra.daysMapping(time);
@@ -133,7 +124,7 @@ public class SectraBookingServiceImpl implements SectraBookingServiceInterface {
 
 		try {
 			ArrayOfTimeBlock times = thePort.listFreeTimes(bookingMapperSectra.dateToXmlCalendar(startDate), bookingMapperSectra
-					.dateToXmlCalendar(endDate), examinationNr, sectionId);
+					.dateToXmlCalendar(endDate), examinationNr, sectionId, allowMultiExaminiation, allowUrgent);
 			List<TimeBlock> timesList = times.getTimeBlock();
 			for (TimeBlock time : timesList) {
 				BookingTime bookingTime = bookingMapperSectra.bookingTimeMapping(time);
@@ -148,11 +139,11 @@ public class SectraBookingServiceImpl implements SectraBookingServiceInterface {
 
 	@Override
 	public Booking reschedule(String examinationNr, String newTimeId, XMLGregorianCalendar startTime, Boolean printNewNotice,
-			String rescheduleComment) {
+							  String rescheduleComment) {
 		Booking booking;
 
 		try {
-			BookingInfo bi = thePort.reschedule(examinationNr, newTimeId, startTime, printNewNotice, rescheduleComment);
+			BookingInfo bi = thePort.reschedule(examinationNr, newTimeId, startTime, printNewNotice, rescheduleComment, allowMultiExaminiation, allowUrgent, updatePerformingSite);
 			booking = bookingMapperSectra.bookingMapping(bi);
 			return booking;
 		} catch (IRisRescheduleRescheduleErrorInfoFaultFaultMessage e) {

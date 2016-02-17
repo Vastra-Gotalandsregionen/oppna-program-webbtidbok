@@ -22,6 +22,7 @@ package se.vgregion.webbtidbok.booking.sectra;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.jws.WebParam;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 import se.vgregion.webbtidbok.booking.sectra.mock.BusinessObjectHolder;
@@ -30,20 +31,7 @@ import se.vgregion.webbtidbok.booking.sectra.mock.BusinessObjectHolder.InvalidSe
 import se.vgregion.webbtidbok.booking.sectra.mock.BusinessObjectHolder.InvalidTimeIdException;
 import se.vgregion.webbtidbok.booking.sectra.mock.BusinessObjectHolder.TimeAlreadyBookedException;
 import se.vgregion.webbtidbok.booking.sectra.mock.BusinessObjectHolder.UnknownFailureException;
-import se.vgregion.webbtidbok.ws.sectra.ArrayOfBookingInfo;
-import se.vgregion.webbtidbok.ws.sectra.ArrayOfSection;
-import se.vgregion.webbtidbok.ws.sectra.ArrayOfTimeBlock;
-import se.vgregion.webbtidbok.ws.sectra.ArrayOfdateTime;
-import se.vgregion.webbtidbok.ws.sectra.BookingInfo;
-import se.vgregion.webbtidbok.ws.sectra.IRisReschedule;
-import se.vgregion.webbtidbok.ws.sectra.IRisRescheduleGetBookingInfoErrorInfoFaultFaultMessage;
-import se.vgregion.webbtidbok.ws.sectra.IRisRescheduleGetBookingsErrorInfoFaultFaultMessage;
-import se.vgregion.webbtidbok.ws.sectra.IRisRescheduleListFreeDaysErrorInfoFaultFaultMessage;
-import se.vgregion.webbtidbok.ws.sectra.IRisRescheduleListFreeTimesErrorInfoFaultFaultMessage;
-import se.vgregion.webbtidbok.ws.sectra.IRisRescheduleListSectionsErrorInfoFaultFaultMessage;
-import se.vgregion.webbtidbok.ws.sectra.IRisRescheduleRescheduleErrorInfoFaultFaultMessage;
-import se.vgregion.webbtidbok.ws.sectra.Section;
-import se.vgregion.webbtidbok.ws.sectra.TimeBlock;
+import se.vgregion.webbtidbok.ws.sectra.*;
 
 public class SectraWSMock implements IRisReschedule {
 
@@ -59,13 +47,22 @@ public class SectraWSMock implements IRisReschedule {
 	}
 
 	@Override
-	public BookingInfo getBookingInfo(String patientId, String examinationNr)
-			throws IRisRescheduleGetBookingInfoErrorInfoFaultFaultMessage {
+	public void cancelExamination(@WebParam(name = "examinationNr", targetNamespace = "http://tempuri.org/") String examinationNr, @WebParam(name = "cancelComment", targetNamespace = "http://tempuri.org/") String cancelComment, @WebParam(name = "allowMultiExamination", targetNamespace = "http://tempuri.org/") Boolean allowMultiExamination, @WebParam(name = "allowUrgent", targetNamespace = "http://tempuri.org/") Boolean allowUrgent) throws IRisRescheduleCancelExaminationErrorInfoFaultFaultMessage {
+
+	}
+
+	@Override
+	public BookingInfo getBookingInfo(@WebParam(name = "patientId", targetNamespace = "http://tempuri.org/") String patientId, @WebParam(name = "examinationNr", targetNamespace = "http://tempuri.org/") String examinationNr, @WebParam(name = "allowMultiExamination", targetNamespace = "http://tempuri.org/") Boolean allowMultiExamination, @WebParam(name = "allowUrgent", targetNamespace = "http://tempuri.org/") Boolean allowUrgent) throws IRisRescheduleGetBookingInfoErrorInfoFaultFaultMessage {
 		return businessObjectHolder.getBookingInfo(patientId, examinationNr);
 	}
 
 	@Override
-	public ArrayOfBookingInfo getBookings(String patientId) throws IRisRescheduleGetBookingsErrorInfoFaultFaultMessage {
+	public ArrayOfBookingInfo getBookingInfo2(@WebParam(name = "patientId", targetNamespace = "http://tempuri.org/") String patientId, @WebParam(name = "examinationNr", targetNamespace = "http://tempuri.org/") String examinationNr, @WebParam(name = "allowMultiExamination", targetNamespace = "http://tempuri.org/") Boolean allowMultiExamination, @WebParam(name = "allowUrgent", targetNamespace = "http://tempuri.org/") Boolean allowUrgent) throws IRisRescheduleGetBookingInfo2ErrorInfoFaultFaultMessage {
+		return null;
+	}
+
+	@Override
+	public ArrayOfBookingInfo getBookings(@WebParam(name = "patientId", targetNamespace = "http://tempuri.org/") String patientId, @WebParam(name = "allowMultiExamination", targetNamespace = "http://tempuri.org/") Boolean allowMultiExamination, @WebParam(name = "allowUrgent", targetNamespace = "http://tempuri.org/") Boolean allowUrgent) throws IRisRescheduleGetBookingsErrorInfoFaultFaultMessage {
 		List<BookingInfo> bookings = businessObjectHolder.getBookings(patientId);
 		ArrayOfBookingInfo arrayOfBookingInfo = new ArrayOfBookingInfo();
 		arrayOfBookingInfo.getBookingInfo().addAll(bookings);
@@ -73,24 +70,20 @@ public class SectraWSMock implements IRisReschedule {
 	}
 
 	@Override
-	public ArrayOfdateTime listFreeDays(XMLGregorianCalendar startDate, XMLGregorianCalendar endDate, String examinationNr,
-			String sectionId) throws IRisRescheduleListFreeDaysErrorInfoFaultFaultMessage {
-		List<XMLGregorianCalendar> listFreeDays = new ArrayList<XMLGregorianCalendar>();
+	public ArrayOfSection listSections(@WebParam(name = "examinationNr", targetNamespace = "http://tempuri.org/") String examinationNr, @WebParam(name = "allowMultiExamination", targetNamespace = "http://tempuri.org/") Boolean allowMultiExamination, @WebParam(name = "allowUrgent", targetNamespace = "http://tempuri.org/") Boolean allowUrgent) throws IRisRescheduleListSectionsErrorInfoFaultFaultMessage {
+		List<Section> listSections = new ArrayList<Section>();
 		try {
-			listFreeDays = businessObjectHolder.listFreeDays(startDate, endDate, examinationNr, sectionId);
+			listSections = businessObjectHolder.listSections(examinationNr);
 		} catch (InvalidExamNoException e) {
 			e.printStackTrace();
-		} catch (InvalidSectionIdException e) {
-			e.printStackTrace();
 		}
-		ArrayOfdateTime arrayOfdateTime = new ArrayOfdateTime();
-		arrayOfdateTime.getDateTime().addAll(listFreeDays);
-		return arrayOfdateTime;
+		ArrayOfSection arrayOfSection = new ArrayOfSection();
+		arrayOfSection.getSection().addAll(listSections);
+		return arrayOfSection;
 	}
 
 	@Override
-	public ArrayOfTimeBlock listFreeTimes(XMLGregorianCalendar startDate, XMLGregorianCalendar endDate, String examinationNr,
-			String sectionId) throws IRisRescheduleListFreeTimesErrorInfoFaultFaultMessage {
+	public ArrayOfTimeBlock listFreeTimes(@WebParam(name = "startDate", targetNamespace = "http://tempuri.org/") XMLGregorianCalendar startDate, @WebParam(name = "endDate", targetNamespace = "http://tempuri.org/") XMLGregorianCalendar endDate, @WebParam(name = "examinationNr", targetNamespace = "http://tempuri.org/") String examinationNr, @WebParam(name = "sectionId", targetNamespace = "http://tempuri.org/") String sectionId, @WebParam(name = "allowMultiExamination", targetNamespace = "http://tempuri.org/") Boolean allowMultiExamination, @WebParam(name = "allowUrgent", targetNamespace = "http://tempuri.org/") Boolean allowUrgent) throws IRisRescheduleListFreeTimesErrorInfoFaultFaultMessage {
 		List<TimeBlock> listFreeTimes = new ArrayList<TimeBlock>();
 		try {
 			listFreeTimes = businessObjectHolder.listFreeTimes(startDate, endDate, examinationNr, sectionId);
@@ -106,21 +99,22 @@ public class SectraWSMock implements IRisReschedule {
 	}
 
 	@Override
-	public ArrayOfSection listSections(String examinationNr) throws IRisRescheduleListSectionsErrorInfoFaultFaultMessage {
-		List<Section> listSections = new ArrayList<Section>();
+	public ArrayOfdateTime listFreeDays(@WebParam(name = "startDate", targetNamespace = "http://tempuri.org/") XMLGregorianCalendar startDate, @WebParam(name = "endDate", targetNamespace = "http://tempuri.org/") XMLGregorianCalendar endDate, @WebParam(name = "examinationNr", targetNamespace = "http://tempuri.org/") String examinationNr, @WebParam(name = "sectionId", targetNamespace = "http://tempuri.org/") String sectionId, @WebParam(name = "allowMultiExamination", targetNamespace = "http://tempuri.org/") Boolean allowMultiExamination, @WebParam(name = "allowUrgent", targetNamespace = "http://tempuri.org/") Boolean allowUrgent) throws IRisRescheduleListFreeDaysErrorInfoFaultFaultMessage {
+		List<XMLGregorianCalendar> listFreeDays = new ArrayList<XMLGregorianCalendar>();
 		try {
-			listSections = businessObjectHolder.listSections(examinationNr);
+			listFreeDays = businessObjectHolder.listFreeDays(startDate, endDate, examinationNr, sectionId);
 		} catch (InvalidExamNoException e) {
 			e.printStackTrace();
+		} catch (InvalidSectionIdException e) {
+			e.printStackTrace();
 		}
-		ArrayOfSection arrayOfSection = new ArrayOfSection();
-		arrayOfSection.getSection().addAll(listSections);
-		return arrayOfSection;
+		ArrayOfdateTime arrayOfdateTime = new ArrayOfdateTime();
+		arrayOfdateTime.getDateTime().addAll(listFreeDays);
+		return arrayOfdateTime;
 	}
 
 	@Override
-	public BookingInfo reschedule(String examinationNr, String newTimeId, XMLGregorianCalendar startTime, Boolean printNewNotice,
-			String rescheduleComment) throws IRisRescheduleRescheduleErrorInfoFaultFaultMessage {
+	public BookingInfo reschedule(@WebParam(name = "examinationNr", targetNamespace = "http://tempuri.org/") String examinationNr, @WebParam(name = "newTimeId", targetNamespace = "http://tempuri.org/") String newTimeId, @WebParam(name = "startTime", targetNamespace = "http://tempuri.org/") XMLGregorianCalendar startTime, @WebParam(name = "printNewNotice", targetNamespace = "http://tempuri.org/") Boolean printNewNotice, @WebParam(name = "rescheduleComment", targetNamespace = "http://tempuri.org/") String rescheduleComment, @WebParam(name = "allowMultiExamination", targetNamespace = "http://tempuri.org/") Boolean allowMultiExamination, @WebParam(name = "allowUrgent", targetNamespace = "http://tempuri.org/") Boolean allowUrgent, @WebParam(name = "updatePerformingSite", targetNamespace = "http://tempuri.org/") Boolean updatePerformingSite) throws IRisRescheduleRescheduleErrorInfoFaultFaultMessage {
 		BookingInfo reschedule = null;
 		try {
 			reschedule = businessObjectHolder.reschedule(examinationNr, newTimeId, startTime);
@@ -135,5 +129,4 @@ public class SectraWSMock implements IRisReschedule {
 		}
 		return reschedule;
 	}
-
 }

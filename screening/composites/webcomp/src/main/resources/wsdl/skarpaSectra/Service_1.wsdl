@@ -1,13 +1,432 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<wsdl:definitions name="RISReschedule" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:tns="http://tempuri.org/" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex">
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions name="RisRescheduleService" targetNamespace="http://tempuri.org/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:tns="http://tempuri.org/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+                  xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl"
+                  xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+  <wsp:Policy wsu:Id="https_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:TransportToken>
+              <wsp:Policy>
+                <sp:HttpsToken RequireClientCertificate="false"/>
+              </wsp:Policy>
+            </sp:TransportToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256/>
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict/>
+              </wsp:Policy>
+            </sp:Layout>
+          </wsp:Policy>
+        </sp:TransportBinding>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
   <wsdl:types>
-    <xsd:schema targetNamespace="http://tempuri.org/Imports">
-      <xsd:import schemaLocation="Service.xsd" namespace="http://tempuri.org/"/>
-      <xsd:import schemaLocation="Service_1.xsd" namespace="http://schemas.datacontract.org/2004/07/"/>
-      <xsd:import schemaLocation="Service_1_2.xsd" namespace="http://schemas.microsoft.com/2003/10/Serialization/"/>
-      <xsd:import schemaLocation="Service_1_2_3.xsd" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays"/>
-    </xsd:schema>
+    <xs:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/"
+               xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="http://schemas.datacontract.org/2004/07/"/>
+      <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays"/>
+      <xs:element name="CancelExamination">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="examinationNr" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="cancelComment" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="allowMultiExamination" nillable="true" type="xs:boolean"/>
+            <xs:element minOccurs="0" name="allowUrgent" nillable="true" type="xs:boolean"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="CancelExaminationResponse">
+        <xs:complexType>
+          <xs:sequence/>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetBookingInfo">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="patientId" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="examinationNr" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="allowMultiExamination" nillable="true" type="xs:boolean"/>
+            <xs:element minOccurs="0" name="allowUrgent" nillable="true" type="xs:boolean"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetBookingInfoResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="GetBookingInfoResult" nillable="true" type="q1:BookingInfo"
+                        xmlns:q1="http://schemas.datacontract.org/2004/07/"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetBookingInfo2">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="patientId" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="examinationNr" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="allowMultiExamination" nillable="true" type="xs:boolean"/>
+            <xs:element minOccurs="0" name="allowUrgent" nillable="true" type="xs:boolean"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetBookingInfo2Response">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="GetBookingInfo2Result" nillable="true" type="q2:ArrayOfBookingInfo"
+                        xmlns:q2="http://schemas.datacontract.org/2004/07/"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetBookings">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="patientId" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="allowMultiExamination" nillable="true" type="xs:boolean"/>
+            <xs:element minOccurs="0" name="allowUrgent" nillable="true" type="xs:boolean"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="GetBookingsResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="GetBookingsResult" nillable="true" type="q3:ArrayOfBookingInfo"
+                        xmlns:q3="http://schemas.datacontract.org/2004/07/"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="ListSections">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="examinationNr" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="allowMultiExamination" nillable="true" type="xs:boolean"/>
+            <xs:element minOccurs="0" name="allowUrgent" nillable="true" type="xs:boolean"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="ListSectionsResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="ListSectionsResult" nillable="true" type="q4:ArrayOfSection"
+                        xmlns:q4="http://schemas.datacontract.org/2004/07/"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="ListFreeTimes">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="startDate" type="xs:dateTime"/>
+            <xs:element minOccurs="0" name="endDate" type="xs:dateTime"/>
+            <xs:element minOccurs="0" name="examinationNr" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="sectionId" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="allowMultiExamination" nillable="true" type="xs:boolean"/>
+            <xs:element minOccurs="0" name="allowUrgent" nillable="true" type="xs:boolean"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="ListFreeTimesResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="ListFreeTimesResult" nillable="true" type="q5:ArrayOfTimeBlock"
+                        xmlns:q5="http://schemas.datacontract.org/2004/07/"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="ListFreeDays">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="startDate" type="xs:dateTime"/>
+            <xs:element minOccurs="0" name="endDate" type="xs:dateTime"/>
+            <xs:element minOccurs="0" name="examinationNr" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="sectionId" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="allowMultiExamination" nillable="true" type="xs:boolean"/>
+            <xs:element minOccurs="0" name="allowUrgent" nillable="true" type="xs:boolean"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="ListFreeDaysResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="ListFreeDaysResult" nillable="true" type="q6:ArrayOfdateTime"
+                        xmlns:q6="http://schemas.microsoft.com/2003/10/Serialization/Arrays"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Reschedule">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="examinationNr" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="newTimeId" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="startTime" type="xs:dateTime"/>
+            <xs:element minOccurs="0" name="printNewNotice" type="xs:boolean"/>
+            <xs:element minOccurs="0" name="rescheduleComment" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="allowMultiExamination" nillable="true" type="xs:boolean"/>
+            <xs:element minOccurs="0" name="allowUrgent" nillable="true" type="xs:boolean"/>
+            <xs:element minOccurs="0" name="updatePerformingSite" nillable="true" type="xs:boolean"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="RescheduleResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="RescheduleResult" nillable="true" type="q7:BookingInfo"
+                        xmlns:q7="http://schemas.datacontract.org/2004/07/"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:schema>
+    <xs:schema attributeFormDefault="qualified" elementFormDefault="qualified"
+               targetNamespace="http://schemas.microsoft.com/2003/10/Serialization/"
+               xmlns:xs="http://www.w3.org/2001/XMLSchema"
+               xmlns:tns="http://schemas.microsoft.com/2003/10/Serialization/">
+      <xs:element name="anyType" nillable="true" type="xs:anyType"/>
+      <xs:element name="anyURI" nillable="true" type="xs:anyURI"/>
+      <xs:element name="base64Binary" nillable="true" type="xs:base64Binary"/>
+      <xs:element name="boolean" nillable="true" type="xs:boolean"/>
+      <xs:element name="byte" nillable="true" type="xs:byte"/>
+      <xs:element name="dateTime" nillable="true" type="xs:dateTime"/>
+      <xs:element name="decimal" nillable="true" type="xs:decimal"/>
+      <xs:element name="double" nillable="true" type="xs:double"/>
+      <xs:element name="float" nillable="true" type="xs:float"/>
+      <xs:element name="int" nillable="true" type="xs:int"/>
+      <xs:element name="long" nillable="true" type="xs:long"/>
+      <xs:element name="QName" nillable="true" type="xs:QName"/>
+      <xs:element name="short" nillable="true" type="xs:short"/>
+      <xs:element name="string" nillable="true" type="xs:string"/>
+      <xs:element name="unsignedByte" nillable="true" type="xs:unsignedByte"/>
+      <xs:element name="unsignedInt" nillable="true" type="xs:unsignedInt"/>
+      <xs:element name="unsignedLong" nillable="true" type="xs:unsignedLong"/>
+      <xs:element name="unsignedShort" nillable="true" type="xs:unsignedShort"/>
+      <xs:element name="char" nillable="true" type="tns:char"/>
+      <xs:simpleType name="char">
+        <xs:restriction base="xs:int"/>
+      </xs:simpleType>
+      <xs:element name="duration" nillable="true" type="tns:duration"/>
+      <xs:simpleType name="duration">
+        <xs:restriction base="xs:duration">
+          <xs:pattern value="\-?P(\d*D)?(T(\d*H)?(\d*M)?(\d*(\.\d*)?S)?)?"/>
+          <xs:minInclusive value="-P10675199DT2H48M5.4775808S"/>
+          <xs:maxInclusive value="P10675199DT2H48M5.4775807S"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:element name="guid" nillable="true" type="tns:guid"/>
+      <xs:simpleType name="guid">
+        <xs:restriction base="xs:string">
+          <xs:pattern value="[\da-fA-F]{8}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{12}"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:attribute name="FactoryType" type="xs:QName"/>
+      <xs:attribute name="Id" type="xs:ID"/>
+      <xs:attribute name="Ref" type="xs:IDREF"/>
+    </xs:schema>
+    <xs:schema elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/"
+               xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://schemas.datacontract.org/2004/07/">
+      <xs:import namespace="http://schemas.datacontract.org/2004/07/WorkflowServer.Services.ExternalInterfaces"/>
+      <xs:complexType name="ErrorInfo">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ErrorNumber" type="q1:ErrorCodeEnum"
+                      xmlns:q1="http://schemas.datacontract.org/2004/07/WorkflowServer.Services.ExternalInterfaces"/>
+          <xs:element minOccurs="0" name="ErrorNumberInt" type="xs:int"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ErrorInfo" nillable="true" type="tns:ErrorInfo"/>
+      <xs:complexType name="BookingInfo">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="BookedTime" nillable="true" type="tns:TimeBlock"/>
+          <xs:element minOccurs="0" name="ExamNo" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="ExamType" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="ExamTypeCode" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="Laterality" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="PatientId" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="PatientName" nillable="true" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="BookingInfo" nillable="true" type="tns:BookingInfo"/>
+      <xs:complexType name="TimeBlock">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="Length" type="xs:int"/>
+          <xs:element minOccurs="0" name="SchedulingCode" nillable="true" type="tns:SchedulingCode"/>
+          <xs:element minOccurs="0" name="Section" nillable="true" type="tns:Section"/>
+          <xs:element minOccurs="0" name="StartTime" type="xs:dateTime"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="TimeBlock" nillable="true" type="tns:TimeBlock"/>
+      <xs:complexType name="SchedulingCode">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="SchedulingCode" nillable="true" type="tns:SchedulingCode"/>
+      <xs:complexType name="Section">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Address" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="Mail" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="Phone" nillable="true" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="Section" nillable="true" type="tns:Section"/>
+      <xs:complexType name="ArrayOfBookingInfo">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="BookingInfo" nillable="true" type="tns:BookingInfo"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfBookingInfo" nillable="true" type="tns:ArrayOfBookingInfo"/>
+      <xs:complexType name="ArrayOfSection">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="Section" nillable="true" type="tns:Section"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfSection" nillable="true" type="tns:ArrayOfSection"/>
+      <xs:complexType name="ArrayOfTimeBlock">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="TimeBlock" nillable="true" type="tns:TimeBlock"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfTimeBlock" nillable="true" type="tns:ArrayOfTimeBlock"/>
+    </xs:schema>
+    <xs:schema elementFormDefault="qualified"
+               targetNamespace="http://schemas.datacontract.org/2004/07/WorkflowServer.Services.ExternalInterfaces"
+               xmlns:xs="http://www.w3.org/2001/XMLSchema"
+               xmlns:tns="http://schemas.datacontract.org/2004/07/WorkflowServer.Services.ExternalInterfaces">
+      <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/"/>
+      <xs:simpleType name="ErrorCodeEnum">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="Unknown">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1000</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="CommunicationWithRisFailed">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1010</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="NoLicense">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1020</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="IvalidPatientId">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1500</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="InvalidExaminationId">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1510</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="InvalidSectionId">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1520</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="InvalidTimeId">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1530</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="MultipleBookingsOnExam">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1540</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="TimeSpanExceded">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1550</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="ExaminationLocked">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1560</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="TimeLocked">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1570</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="TimeAlreadyBooked">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1580</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="NoBookingOnExam">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1590</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="CancellationReasonNotAllowed">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1600</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:element name="ErrorCodeEnum" nillable="true" type="tns:ErrorCodeEnum"/>
+    </xs:schema>
+    <xs:schema elementFormDefault="qualified"
+               targetNamespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays"
+               xmlns:xs="http://www.w3.org/2001/XMLSchema"
+               xmlns:tns="http://schemas.microsoft.com/2003/10/Serialization/Arrays">
+      <xs:complexType name="ArrayOfdateTime">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="dateTime" type="xs:dateTime"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="ArrayOfdateTime" nillable="true" type="tns:ArrayOfdateTime"/>
+    </xs:schema>
   </wsdl:types>
+  <wsdl:message name="IRisReschedule_CancelExamination_InputMessage">
+    <wsdl:part name="parameters" element="tns:CancelExamination"/>
+  </wsdl:message>
+  <wsdl:message name="IRisReschedule_CancelExamination_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CancelExaminationResponse"/>
+  </wsdl:message>
+  <wsdl:message name="IRisReschedule_CancelExamination_ErrorInfoFault_FaultMessage">
+    <wsdl:part name="detail" element="q1:ErrorInfo" xmlns:q1="http://schemas.datacontract.org/2004/07/"/>
+  </wsdl:message>
   <wsdl:message name="IRisReschedule_GetBookingInfo_InputMessage">
     <wsdl:part name="parameters" element="tns:GetBookingInfo"/>
   </wsdl:message>
@@ -15,7 +434,16 @@
     <wsdl:part name="parameters" element="tns:GetBookingInfoResponse"/>
   </wsdl:message>
   <wsdl:message name="IRisReschedule_GetBookingInfo_ErrorInfoFault_FaultMessage">
-    <wsdl:part name="detail" element="q1:ErrorInfo" xmlns:q1="http://schemas.datacontract.org/2004/07/"/>
+    <wsdl:part name="detail" element="q2:ErrorInfo" xmlns:q2="http://schemas.datacontract.org/2004/07/"/>
+  </wsdl:message>
+  <wsdl:message name="IRisReschedule_GetBookingInfo2_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetBookingInfo2"/>
+  </wsdl:message>
+  <wsdl:message name="IRisReschedule_GetBookingInfo2_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetBookingInfo2Response"/>
+  </wsdl:message>
+  <wsdl:message name="IRisReschedule_GetBookingInfo2_ErrorInfoFault_FaultMessage">
+    <wsdl:part name="detail" element="q3:ErrorInfo" xmlns:q3="http://schemas.datacontract.org/2004/07/"/>
   </wsdl:message>
   <wsdl:message name="IRisReschedule_GetBookings_InputMessage">
     <wsdl:part name="parameters" element="tns:GetBookings"/>
@@ -24,7 +452,7 @@
     <wsdl:part name="parameters" element="tns:GetBookingsResponse"/>
   </wsdl:message>
   <wsdl:message name="IRisReschedule_GetBookings_ErrorInfoFault_FaultMessage">
-    <wsdl:part name="detail" element="q2:ErrorInfo" xmlns:q2="http://schemas.datacontract.org/2004/07/"/>
+    <wsdl:part name="detail" element="q4:ErrorInfo" xmlns:q4="http://schemas.datacontract.org/2004/07/"/>
   </wsdl:message>
   <wsdl:message name="IRisReschedule_ListSections_InputMessage">
     <wsdl:part name="parameters" element="tns:ListSections"/>
@@ -33,7 +461,7 @@
     <wsdl:part name="parameters" element="tns:ListSectionsResponse"/>
   </wsdl:message>
   <wsdl:message name="IRisReschedule_ListSections_ErrorInfoFault_FaultMessage">
-    <wsdl:part name="detail" element="q3:ErrorInfo" xmlns:q3="http://schemas.datacontract.org/2004/07/"/>
+    <wsdl:part name="detail" element="q5:ErrorInfo" xmlns:q5="http://schemas.datacontract.org/2004/07/"/>
   </wsdl:message>
   <wsdl:message name="IRisReschedule_ListFreeTimes_InputMessage">
     <wsdl:part name="parameters" element="tns:ListFreeTimes"/>
@@ -42,7 +470,7 @@
     <wsdl:part name="parameters" element="tns:ListFreeTimesResponse"/>
   </wsdl:message>
   <wsdl:message name="IRisReschedule_ListFreeTimes_ErrorInfoFault_FaultMessage">
-    <wsdl:part name="detail" element="q4:ErrorInfo" xmlns:q4="http://schemas.datacontract.org/2004/07/"/>
+    <wsdl:part name="detail" element="q6:ErrorInfo" xmlns:q6="http://schemas.datacontract.org/2004/07/"/>
   </wsdl:message>
   <wsdl:message name="IRisReschedule_ListFreeDays_InputMessage">
     <wsdl:part name="parameters" element="tns:ListFreeDays"/>
@@ -51,7 +479,7 @@
     <wsdl:part name="parameters" element="tns:ListFreeDaysResponse"/>
   </wsdl:message>
   <wsdl:message name="IRisReschedule_ListFreeDays_ErrorInfoFault_FaultMessage">
-    <wsdl:part name="detail" element="q5:ErrorInfo" xmlns:q5="http://schemas.datacontract.org/2004/07/"/>
+    <wsdl:part name="detail" element="q7:ErrorInfo" xmlns:q7="http://schemas.datacontract.org/2004/07/"/>
   </wsdl:message>
   <wsdl:message name="IRisReschedule_Reschedule_InputMessage">
     <wsdl:part name="parameters" element="tns:Reschedule"/>
@@ -60,42 +488,89 @@
     <wsdl:part name="parameters" element="tns:RescheduleResponse"/>
   </wsdl:message>
   <wsdl:message name="IRisReschedule_Reschedule_ErrorInfoFault_FaultMessage">
-    <wsdl:part name="detail" element="q6:ErrorInfo" xmlns:q6="http://schemas.datacontract.org/2004/07/"/>
+    <wsdl:part name="detail" element="q8:ErrorInfo" xmlns:q8="http://schemas.datacontract.org/2004/07/"/>
   </wsdl:message>
   <wsdl:portType name="IRisReschedule">
+    <wsdl:operation name="CancelExamination">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRisReschedule/CancelExamination"
+                  message="tns:IRisReschedule_CancelExamination_InputMessage"/>
+      <wsdl:output wsaw:Action="http://tempuri.org/IRisReschedule/CancelExaminationResponse"
+                   message="tns:IRisReschedule_CancelExamination_OutputMessage"/>
+      <wsdl:fault wsaw:Action="http://tempuri.org/IRisReschedule/CancelExaminationErrorInfoFault" name="ErrorInfoFault"
+                  message="tns:IRisReschedule_CancelExamination_ErrorInfoFault_FaultMessage"/>
+    </wsdl:operation>
     <wsdl:operation name="GetBookingInfo">
-      <wsdl:input wsaw:Action="http://tempuri.org/IRisReschedule/GetBookingInfo" message="tns:IRisReschedule_GetBookingInfo_InputMessage"/>
-      <wsdl:output wsaw:Action="http://tempuri.org/IRisReschedule/GetBookingInfoResponse" message="tns:IRisReschedule_GetBookingInfo_OutputMessage"/>
-      <wsdl:fault wsaw:Action="http://tempuri.org/IRisReschedule/GetBookingInfoErrorInfoFault" name="ErrorInfoFault" message="tns:IRisReschedule_GetBookingInfo_ErrorInfoFault_FaultMessage"/>
+      <wsdl:input wsaw:Action="http://tempuri.org/IRisReschedule/GetBookingInfo"
+                  message="tns:IRisReschedule_GetBookingInfo_InputMessage"/>
+      <wsdl:output wsaw:Action="http://tempuri.org/IRisReschedule/GetBookingInfoResponse"
+                   message="tns:IRisReschedule_GetBookingInfo_OutputMessage"/>
+      <wsdl:fault wsaw:Action="http://tempuri.org/IRisReschedule/GetBookingInfoErrorInfoFault" name="ErrorInfoFault"
+                  message="tns:IRisReschedule_GetBookingInfo_ErrorInfoFault_FaultMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetBookingInfo2">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRisReschedule/GetBookingInfo2"
+                  message="tns:IRisReschedule_GetBookingInfo2_InputMessage"/>
+      <wsdl:output wsaw:Action="http://tempuri.org/IRisReschedule/GetBookingInfo2Response"
+                   message="tns:IRisReschedule_GetBookingInfo2_OutputMessage"/>
+      <wsdl:fault wsaw:Action="http://tempuri.org/IRisReschedule/GetBookingInfo2ErrorInfoFault" name="ErrorInfoFault"
+                  message="tns:IRisReschedule_GetBookingInfo2_ErrorInfoFault_FaultMessage"/>
     </wsdl:operation>
     <wsdl:operation name="GetBookings">
-      <wsdl:input wsaw:Action="http://tempuri.org/IRisReschedule/GetBookings" message="tns:IRisReschedule_GetBookings_InputMessage"/>
-      <wsdl:output wsaw:Action="http://tempuri.org/IRisReschedule/GetBookingsResponse" message="tns:IRisReschedule_GetBookings_OutputMessage"/>
-      <wsdl:fault wsaw:Action="http://tempuri.org/IRisReschedule/GetBookingsErrorInfoFault" name="ErrorInfoFault" message="tns:IRisReschedule_GetBookings_ErrorInfoFault_FaultMessage"/>
+      <wsdl:input wsaw:Action="http://tempuri.org/IRisReschedule/GetBookings"
+                  message="tns:IRisReschedule_GetBookings_InputMessage"/>
+      <wsdl:output wsaw:Action="http://tempuri.org/IRisReschedule/GetBookingsResponse"
+                   message="tns:IRisReschedule_GetBookings_OutputMessage"/>
+      <wsdl:fault wsaw:Action="http://tempuri.org/IRisReschedule/GetBookingsErrorInfoFault" name="ErrorInfoFault"
+                  message="tns:IRisReschedule_GetBookings_ErrorInfoFault_FaultMessage"/>
     </wsdl:operation>
     <wsdl:operation name="ListSections">
-      <wsdl:input wsaw:Action="http://tempuri.org/IRisReschedule/ListSections" message="tns:IRisReschedule_ListSections_InputMessage"/>
-      <wsdl:output wsaw:Action="http://tempuri.org/IRisReschedule/ListSectionsResponse" message="tns:IRisReschedule_ListSections_OutputMessage"/>
-      <wsdl:fault wsaw:Action="http://tempuri.org/IRisReschedule/ListSectionsErrorInfoFault" name="ErrorInfoFault" message="tns:IRisReschedule_ListSections_ErrorInfoFault_FaultMessage"/>
+      <wsdl:input wsaw:Action="http://tempuri.org/IRisReschedule/ListSections"
+                  message="tns:IRisReschedule_ListSections_InputMessage"/>
+      <wsdl:output wsaw:Action="http://tempuri.org/IRisReschedule/ListSectionsResponse"
+                   message="tns:IRisReschedule_ListSections_OutputMessage"/>
+      <wsdl:fault wsaw:Action="http://tempuri.org/IRisReschedule/ListSectionsErrorInfoFault" name="ErrorInfoFault"
+                  message="tns:IRisReschedule_ListSections_ErrorInfoFault_FaultMessage"/>
     </wsdl:operation>
     <wsdl:operation name="ListFreeTimes">
-      <wsdl:input wsaw:Action="http://tempuri.org/IRisReschedule/ListFreeTimes" message="tns:IRisReschedule_ListFreeTimes_InputMessage"/>
-      <wsdl:output wsaw:Action="http://tempuri.org/IRisReschedule/ListFreeTimesResponse" message="tns:IRisReschedule_ListFreeTimes_OutputMessage"/>
-      <wsdl:fault wsaw:Action="http://tempuri.org/IRisReschedule/ListFreeTimesErrorInfoFault" name="ErrorInfoFault" message="tns:IRisReschedule_ListFreeTimes_ErrorInfoFault_FaultMessage"/>
+      <wsdl:input wsaw:Action="http://tempuri.org/IRisReschedule/ListFreeTimes"
+                  message="tns:IRisReschedule_ListFreeTimes_InputMessage"/>
+      <wsdl:output wsaw:Action="http://tempuri.org/IRisReschedule/ListFreeTimesResponse"
+                   message="tns:IRisReschedule_ListFreeTimes_OutputMessage"/>
+      <wsdl:fault wsaw:Action="http://tempuri.org/IRisReschedule/ListFreeTimesErrorInfoFault" name="ErrorInfoFault"
+                  message="tns:IRisReschedule_ListFreeTimes_ErrorInfoFault_FaultMessage"/>
     </wsdl:operation>
     <wsdl:operation name="ListFreeDays">
-      <wsdl:input wsaw:Action="http://tempuri.org/IRisReschedule/ListFreeDays" message="tns:IRisReschedule_ListFreeDays_InputMessage"/>
-      <wsdl:output wsaw:Action="http://tempuri.org/IRisReschedule/ListFreeDaysResponse" message="tns:IRisReschedule_ListFreeDays_OutputMessage"/>
-      <wsdl:fault wsaw:Action="http://tempuri.org/IRisReschedule/ListFreeDaysErrorInfoFault" name="ErrorInfoFault" message="tns:IRisReschedule_ListFreeDays_ErrorInfoFault_FaultMessage"/>
+      <wsdl:input wsaw:Action="http://tempuri.org/IRisReschedule/ListFreeDays"
+                  message="tns:IRisReschedule_ListFreeDays_InputMessage"/>
+      <wsdl:output wsaw:Action="http://tempuri.org/IRisReschedule/ListFreeDaysResponse"
+                   message="tns:IRisReschedule_ListFreeDays_OutputMessage"/>
+      <wsdl:fault wsaw:Action="http://tempuri.org/IRisReschedule/ListFreeDaysErrorInfoFault" name="ErrorInfoFault"
+                  message="tns:IRisReschedule_ListFreeDays_ErrorInfoFault_FaultMessage"/>
     </wsdl:operation>
     <wsdl:operation name="Reschedule">
-      <wsdl:input wsaw:Action="http://tempuri.org/IRisReschedule/Reschedule" message="tns:IRisReschedule_Reschedule_InputMessage"/>
-      <wsdl:output wsaw:Action="http://tempuri.org/IRisReschedule/RescheduleResponse" message="tns:IRisReschedule_Reschedule_OutputMessage"/>
-      <wsdl:fault wsaw:Action="http://tempuri.org/IRisReschedule/RescheduleErrorInfoFault" name="ErrorInfoFault" message="tns:IRisReschedule_Reschedule_ErrorInfoFault_FaultMessage"/>
+      <wsdl:input wsaw:Action="http://tempuri.org/IRisReschedule/Reschedule"
+                  message="tns:IRisReschedule_Reschedule_InputMessage"/>
+      <wsdl:output wsaw:Action="http://tempuri.org/IRisReschedule/RescheduleResponse"
+                   message="tns:IRisReschedule_Reschedule_OutputMessage"/>
+      <wsdl:fault wsaw:Action="http://tempuri.org/IRisReschedule/RescheduleErrorInfoFault" name="ErrorInfoFault"
+                  message="tns:IRisReschedule_Reschedule_ErrorInfoFault_FaultMessage"/>
     </wsdl:operation>
   </wsdl:portType>
-  <wsdl:binding name="BasicHttpBinding_IRisReschedule" type="tns:IRisReschedule">
+  <wsdl:binding name="https" type="tns:IRisReschedule">
+    <wsp:PolicyReference URI="#https_policy"/>
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="CancelExamination">
+      <soap:operation soapAction="http://tempuri.org/IRisReschedule/CancelExamination" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="ErrorInfoFault">
+        <soap:fault use="literal" name="ErrorInfoFault" namespace=""/>
+      </wsdl:fault>
+    </wsdl:operation>
     <wsdl:operation name="GetBookingInfo">
       <soap:operation soapAction="http://tempuri.org/IRisReschedule/GetBookingInfo" style="document"/>
       <wsdl:input>
@@ -105,7 +580,19 @@
         <soap:body use="literal"/>
       </wsdl:output>
       <wsdl:fault name="ErrorInfoFault">
-        <soap:fault name="ErrorInfoFault" use="literal"/>
+        <soap:fault use="literal" name="ErrorInfoFault" namespace=""/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetBookingInfo2">
+      <soap:operation soapAction="http://tempuri.org/IRisReschedule/GetBookingInfo2" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="ErrorInfoFault">
+        <soap:fault use="literal" name="ErrorInfoFault" namespace=""/>
       </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="GetBookings">
@@ -117,7 +604,7 @@
         <soap:body use="literal"/>
       </wsdl:output>
       <wsdl:fault name="ErrorInfoFault">
-        <soap:fault name="ErrorInfoFault" use="literal"/>
+        <soap:fault use="literal" name="ErrorInfoFault" namespace=""/>
       </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="ListSections">
@@ -129,7 +616,7 @@
         <soap:body use="literal"/>
       </wsdl:output>
       <wsdl:fault name="ErrorInfoFault">
-        <soap:fault name="ErrorInfoFault" use="literal"/>
+        <soap:fault use="literal" name="ErrorInfoFault" namespace=""/>
       </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="ListFreeTimes">
@@ -141,7 +628,7 @@
         <soap:body use="literal"/>
       </wsdl:output>
       <wsdl:fault name="ErrorInfoFault">
-        <soap:fault name="ErrorInfoFault" use="literal"/>
+        <soap:fault use="literal" name="ErrorInfoFault" namespace=""/>
       </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="ListFreeDays">
@@ -153,7 +640,7 @@
         <soap:body use="literal"/>
       </wsdl:output>
       <wsdl:fault name="ErrorInfoFault">
-        <soap:fault name="ErrorInfoFault" use="literal"/>
+        <soap:fault use="literal" name="ErrorInfoFault" namespace=""/>
       </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="Reschedule">
@@ -165,13 +652,115 @@
         <soap:body use="literal"/>
       </wsdl:output>
       <wsdl:fault name="ErrorInfoFault">
-        <soap:fault name="ErrorInfoFault" use="literal"/>
+        <soap:fault use="literal" name="ErrorInfoFault" namespace=""/>
       </wsdl:fault>
     </wsdl:operation>
   </wsdl:binding>
-  <wsdl:service name="RISReschedule">
-    <wsdl:port name="BasicHttpBinding_IRisReschedule" binding="tns:BasicHttpBinding_IRisReschedule">
-      <soap:address location="http://webtidbokws.vgregion.se/RISReschedule/Service.svc"/>
+  <wsdl:binding name="http" type="tns:IRisReschedule">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="CancelExamination">
+      <soap:operation soapAction="http://tempuri.org/IRisReschedule/CancelExamination" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="ErrorInfoFault">
+        <soap:fault use="literal" name="ErrorInfoFault" namespace=""/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetBookingInfo">
+      <soap:operation soapAction="http://tempuri.org/IRisReschedule/GetBookingInfo" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="ErrorInfoFault">
+        <soap:fault use="literal" name="ErrorInfoFault" namespace=""/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetBookingInfo2">
+      <soap:operation soapAction="http://tempuri.org/IRisReschedule/GetBookingInfo2" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="ErrorInfoFault">
+        <soap:fault use="literal" name="ErrorInfoFault" namespace=""/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetBookings">
+      <soap:operation soapAction="http://tempuri.org/IRisReschedule/GetBookings" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="ErrorInfoFault">
+        <soap:fault use="literal" name="ErrorInfoFault" namespace=""/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ListSections">
+      <soap:operation soapAction="http://tempuri.org/IRisReschedule/ListSections" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="ErrorInfoFault">
+        <soap:fault use="literal" name="ErrorInfoFault" namespace=""/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ListFreeTimes">
+      <soap:operation soapAction="http://tempuri.org/IRisReschedule/ListFreeTimes" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="ErrorInfoFault">
+        <soap:fault use="literal" name="ErrorInfoFault" namespace=""/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ListFreeDays">
+      <soap:operation soapAction="http://tempuri.org/IRisReschedule/ListFreeDays" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="ErrorInfoFault">
+        <soap:fault use="literal" name="ErrorInfoFault" namespace=""/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Reschedule">
+      <soap:operation soapAction="http://tempuri.org/IRisReschedule/Reschedule" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="ErrorInfoFault">
+        <soap:fault use="literal" name="ErrorInfoFault" namespace=""/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="RisRescheduleService">
+    <wsdl:port name="https" binding="tns:https">
+      <soap:address location="https://vgas1495.vgregion.se/WorkflowServer/CustomerAdaptations/RisReschedule.svc"/>
+    </wsdl:port>
+    <wsdl:port name="http" binding="tns:http">
+      <soap:address location="http://vgas1495.vgregion.se/WorkflowServer/CustomerAdaptations/RisReschedule.svc"/>
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>
